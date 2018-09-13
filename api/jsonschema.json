@@ -27,6 +27,990 @@
             }
         }
     },
+
+     "/authentication/addemployee": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    },
+                    "Designation": {
+                        "type": "string"
+                    },
+                    "Company": {
+                        "type": "string"
+                    },
+                    "Site_(Unit)": {
+                        "type": "string"
+                    },
+                    "Employee_No": {
+                        "type": "string"
+                    },
+                    "Rank": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Father_Name": {
+                        "type": "string"
+                    },
+                    "Date_Of_Birth": {
+                        "type": "string"
+                    },
+                    "Gender": {
+                        "type": "string"
+                    },
+                    "Marital_Status": {
+                        "type": "string"
+                    },
+                    "contact_details": {
+                        "type": "string"
+                    },
+                    "Educational_Qualification": {
+                        "type": "string"
+                    },
+                    "Nationality": {
+                        "type": "string"
+                    },
+                    "Permanent_Address": {
+                        "type": "string"
+                    },
+                    "Local_Address": {
+                        "type": "string"
+                    },
+                    "Contact_No": {
+                        "type": "string"
+                    },
+                    "Languages_Known": {
+                        "type": "string"
+                    },
+                    "Work_Experience": {
+                        "type": "string"
+                    },
+                    "EPF_No": {
+                        "type": "string"
+                    },
+                    "ESIC_No": {
+                        "type": "string"
+                    },
+                    "Aadhar_Card_No": {
+                        "type": "string"
+                    },
+                    "Signature_of_the_manager": {
+                        "type": "string"
+                    },
+                    "Signature_of_the_Applicant": {
+                        "type": "string"
+                    },
+                    "BSS_EPF_Number": {
+                        "type": "string"
+                    },
+                    "BSSPL_EPF_Number": {
+                        "type": "string"
+                    },
+                    "MMSPL_EPF_Number": {
+                        "type": "string"
+                    },
+                    "UAN_Number": {
+                        "type": "string"
+                    },
+                    "Date_Of_Joining": {
+                        "type": "string"
+                    },
+                    "Date_Of_Relieving": {
+                        "type": "string"
+                    },
+                    "Voter_ID": {
+                        "type": "string"
+                    },
+                    "Driving_Licence_Number": {
+                        "type": "string"
+                    },
+                    "PF_Elegible": {
+                        "type": "string"
+                    },
+                    "ESI_Elegible": {
+                        "type": "string"
+                    },
+                    "Professional_Tax": {
+                        "type": "string"
+                    },
+                    "Working_Status": {
+                        "type": "string"
+                    },
+                    "Emi": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id",
+                    "Password",
+                    "Designation",
+                    "Company",
+                    "Site_(Unit)",
+                    "Employee_No",
+                    "Rank",
+                    "Name",
+                    "Father_Name",
+                    "Date_Of_Birth",
+                    "Gender",
+                    "Marital_Status",
+                    "contact_details",
+                    "Educational_Qualification",
+                    "Nationality",
+                    "Permanent_Address",
+                    "Local_Address",
+                    "Contact_No",
+                    "Languages_Known",
+                    "Work_Experience",
+                    "EPF_No",
+                    "ESIC_No",
+                    "Aadhar_Card_No",
+                    "Signature_of_the_manager",
+                    "Signature_of_the_Applicant",
+                    "BSS_EPF_Number",
+                    "BSSPL_EPF_Number",
+                    "MMSPL_EPF_Number",
+                    "UAN_Number",
+                    "Date_Of_Joining",
+                    "Date_Of_Relieving",
+                    "Voter_ID",
+                    "Driving_Licence_Number",
+                    "PF_Elegible",
+                    "ESI_Elegible",
+                    "Professional_Tax",
+                    "Working_Status",
+                    "Emi"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/authentication/updateemployee": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    },
+                    "Designation": {
+                        "type": "string"
+                    },
+                    "Company": {
+                        "type": "string"
+                    },
+                    "Site_(Unit)": {
+                        "type": "string"
+                    },
+                    "Employee_No": {
+                        "type": "string"
+                    },
+                    "Rank": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Father_Name": {
+                        "type": "string"
+                    },
+                    "Date_Of_Birth": {
+                        "type": "string"
+                    },
+                    "Gender": {
+                        "type": "string"
+                    },
+                    "Marital_Status": {
+                        "type": "string"
+                    },
+                    "contact_details": {
+                        "type": "string"
+                    },
+                    "Educational_Qualification": {
+                        "type": "string"
+                    },
+                    "Nationality": {
+                        "type": "string"
+                    },
+                    "Permanent_Address": {
+                        "type": "string"
+                    },
+                    "Local_Address": {
+                        "type": "string"
+                    },
+                    "Contact_No": {
+                        "type": "string"
+                    },
+                    "Languages_Known": {
+                        "type": "string"
+                    },
+                    "Work_Experience": {
+                        "type": "string"
+                    },
+                    "EPF_No": {
+                        "type": "string"
+                    },
+                    "ESIC_No": {
+                        "type": "string"
+                    },
+                    "Aadhar_Card_No": {
+                        "type": "string"
+                    },
+                    "Signature_of_the_manager": {
+                        "type": "string"
+                    },
+                    "Signature_of_the_Applicant": {
+                        "type": "string"
+                    },
+                    "BSS_EPF_Number": {
+                        "type": "string"
+                    },
+                    "BSSPL_EPF_Number": {
+                        "type": "string"
+                    },
+                    "MMSPL_EPF_Number": {
+                        "type": "string"
+                    },
+                    "UAN_Number": {
+                        "type": "string"
+                    },
+                    "Date_Of_Joining": {
+                        "type": "string"
+                    },
+                    "Date_Of_Relieving": {
+                        "type": "string"
+                    },
+                    "Voter_ID": {
+                        "type": "string"
+                    },
+                    "Driving_Licence_Number": {
+                        "type": "string"
+                    },
+                    "PF_Elegible": {
+                        "type": "string"
+                    },
+                    "ESI_Elegible": {
+                        "type": "string"
+                    },
+                    "Professional_Tax": {
+                        "type": "string"
+                    },
+                    "Working_Status": {
+                        "type": "string"
+                    },
+                    "Emi": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id",
+                    "Password",
+                    "Designation",
+                    "Company",
+                    "Site_(Unit)",
+                    "Employee_No",
+                    "Rank",
+                    "Name",
+                    "Father_Name",
+                    "Date_Of_Birth",
+                    "Gender",
+                    "Marital_Status",
+                    "contact_details",
+                    "Educational_Qualification",
+                    "Nationality",
+                    "Permanent_Address",
+                    "Local_Address",
+                    "Contact_No",
+                    "Languages_Known",
+                    "Work_Experience",
+                    "EPF_No",
+                    "ESIC_No",
+                    "Aadhar_Card_No",
+                    "Signature_of_the_manager",
+                    "Signature_of_the_Applicant",
+                    "BSS_EPF_Number",
+                    "BSSPL_EPF_Number",
+                    "MMSPL_EPF_Number",
+                    "UAN_Number",
+                    "Date_Of_Joining",
+                    "Date_Of_Relieving",
+                    "Voter_ID",
+                    "Driving_Licence_Number",
+                    "PF_Elegible",
+                    "ESI_Elegible",
+                    "Professional_Tax",
+                    "Working_Status",
+                    "Emi"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/authentication/addusers": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    },
+                    "Designation": {
+                        "type": "string"
+                    },
+                    "Company": {
+                        "type": "string"
+                    },
+                    "Site_(Unit)": {
+                        "type": "string"
+                    },
+                    "Employee_No": {
+                        "type": "string"
+                    },
+                    "Rank": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Father_Name": {
+                        "type": "string"
+                    },
+                    "Date_Of_Birth": {
+                        "type": "string"
+                    },
+                    "Gender": {
+                        "type": "string"
+                    },
+                    "Marital_Status": {
+                        "type": "string"
+                    },
+                    "contact_details": {
+                        "type": "string"
+                    },
+                    "Educational_Qualification": {
+                        "type": "string"
+                    },
+                    "Nationality": {
+                        "type": "string"
+                    },
+                    "Permanent_Address": {
+                        "type": "string"
+                    },
+                    "Local_Address": {
+                        "type": "string"
+                    },
+                    "Contact_No": {
+                        "type": "string"
+                    },
+                    "Languages_Known": {
+                        "type": "string"
+                    },
+                    "Work_Experience": {
+                        "type": "string"
+                    },
+                    "EPF_No": {
+                        "type": "string"
+                    },
+                    "ESIC_No": {
+                        "type": "string"
+                    },
+                    "Aadhar_Card_No": {
+                        "type": "string"
+                    },
+                    "Signature_of_the_manager": {
+                        "type": "string"
+                    },
+                    "Signature_of_the_Applicant": {
+                        "type": "string"
+                    },
+                    "BSS_EPF_Number": {
+                        "type": "string"
+                    },
+                    "BSSPL_EPF_Number": {
+                        "type": "string"
+                    },
+                    "MMSPL_EPF_Number": {
+                        "type": "string"
+                    },
+                    "UAN_Number": {
+                        "type": "string"
+                    },
+                    "Date_Of_Joining": {
+                        "type": "string"
+                    },
+                    "Date_Of_Relieving": {
+                        "type": "string"
+                    },
+                    "Voter_ID": {
+                        "type": "string"
+                    },
+                    "Driving_Licence_Number": {
+                        "type": "string"
+                    },
+                    "PF_Elegible": {
+                        "type": "string"
+                    },
+                    "ESI_Elegible": {
+                        "type": "string"
+                    },
+                    "Professional_Tax": {
+                        "type": "string"
+                    },
+                    "Working_Status": {
+                        "type": "string"
+                    },
+                    "Emi": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id",
+                    "Password",
+                    "Designation",
+                    "Company",
+                    "Site_(Unit)",
+                    "Employee_No",
+                    "Rank",
+                    "Name",
+                    "Father_Name",
+                    "Date_Of_Birth",
+                    "Gender",
+                    "Marital_Status",
+                    "contact_details",
+                    "Educational_Qualification",
+                    "Nationality",
+                    "Permanent_Address",
+                    "Local_Address",
+                    "Contact_No",
+                    "Languages_Known",
+                    "Work_Experience",
+                    "EPF_No",
+                    "ESIC_No",
+                    "Aadhar_Card_No",
+                    "Signature_of_the_manager",
+                    "Signature_of_the_Applicant",
+                    "BSS_EPF_Number",
+                    "BSSPL_EPF_Number",
+                    "MMSPL_EPF_Number",
+                    "UAN_Number",
+                    "Date_Of_Joining",
+                    "Date_Of_Relieving",
+                    "Voter_ID",
+                    "Driving_Licence_Number",
+                    "PF_Elegible",
+                    "ESI_Elegible",
+                    "Professional_Tax",
+                    "Working_Status",
+                    "Emi"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/authentication/updateusers": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    },
+                    "Designation": {
+                        "type": "string"
+                    },
+                    "Company": {
+                        "type": "string"
+                    },
+                    "Site_(Unit)": {
+                        "type": "string"
+                    },
+                    "Employee_No": {
+                        "type": "string"
+                    },
+                    "Rank": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Father_Name": {
+                        "type": "string"
+                    },
+                    "Date_Of_Birth": {
+                        "type": "string"
+                    },
+                    "Gender": {
+                        "type": "string"
+                    },
+                    "Marital_Status": {
+                        "type": "string"
+                    },
+                    "contact_details": {
+                        "type": "string"
+                    },
+                    "Educational_Qualification": {
+                        "type": "string"
+                    },
+                    "Nationality": {
+                        "type": "string"
+                    },
+                    "Permanent_Address": {
+                        "type": "string"
+                    },
+                    "Local_Address": {
+                        "type": "string"
+                    },
+                    "Contact_No": {
+                        "type": "string"
+                    },
+                    "Languages_Known": {
+                        "type": "string"
+                    },
+                    "Work_Experience": {
+                        "type": "string"
+                    },
+                    "EPF_No": {
+                        "type": "string"
+                    },
+                    "ESIC_No": {
+                        "type": "string"
+                    },
+                    "Aadhar_Card_No": {
+                        "type": "string"
+                    },
+                    "Signature_of_the_manager": {
+                        "type": "string"
+                    },
+                    "Signature_of_the_Applicant": {
+                        "type": "string"
+                    },
+                    "BSS_EPF_Number": {
+                        "type": "string"
+                    },
+                    "BSSPL_EPF_Number": {
+                        "type": "string"
+                    },
+                    "MMSPL_EPF_Number": {
+                        "type": "string"
+                    },
+                    "UAN_Number": {
+                        "type": "string"
+                    },
+                    "Date_Of_Joining": {
+                        "type": "string"
+                    },
+                    "Date_Of_Relieving": {
+                        "type": "string"
+                    },
+                    "Voter_ID": {
+                        "type": "string"
+                    },
+                    "Driving_Licence_Number": {
+                        "type": "string"
+                    },
+                    "PF_Elegible": {
+                        "type": "string"
+                    },
+                    "ESI_Elegible": {
+                        "type": "string"
+                    },
+                    "Professional_Tax": {
+                        "type": "string"
+                    },
+                    "Working_Status": {
+                        "type": "string"
+                    },
+                    "Emi": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id",
+                    "Password",
+                    "Designation",
+                    "Company",
+                    "Site_(Unit)",
+                    "Employee_No",
+                    "Rank",
+                    "Name",
+                    "Father_Name",
+                    "Date_Of_Birth",
+                    "Gender",
+                    "Marital_Status",
+                    "contact_details",
+                    "Educational_Qualification",
+                    "Nationality",
+                    "Permanent_Address",
+                    "Local_Address",
+                    "Contact_No",
+                    "Languages_Known",
+                    "Work_Experience",
+                    "EPF_No",
+                    "ESIC_No",
+                    "Aadhar_Card_No",
+                    "Signature_of_the_manager",
+                    "Signature_of_the_Applicant",
+                    "BSS_EPF_Number",
+                    "BSSPL_EPF_Number",
+                    "MMSPL_EPF_Number",
+                    "UAN_Number",
+                    "Date_Of_Joining",
+                    "Date_Of_Relieving",
+                    "Voter_ID",
+                    "Driving_Licence_Number",
+                    "PF_Elegible",
+                    "ESI_Elegible",
+                    "Professional_Tax",
+                    "Working_Status",
+                    "Emi"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/authentication/addclients": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Sl_No": {
+                        "type": "string"
+                    },
+                    "No_of_Sites": {
+                        "type": "string"
+                    },
+                    "Client_Name": {
+                        "type": "string"
+                    },
+                    "Address": {
+                        "type": "string"
+                    },
+                    "Contact_Name": {
+                        "type": "string"
+                    },
+                    "Contact_No": {
+                        "type": "string"
+                    },
+                    "E_Mail_ID": {
+                        "type": "string"
+                    },
+                    "Designations": {
+                        "type": "string"
+                    },
+                    "Deployment": {
+                        "type": "string"
+                    },
+                    "Hrs_pattern": {
+                        "type": "string"
+                    },
+                    "RATES": {
+                        "type": "string"
+                    },
+                    "Value": {
+                        "type": "string"
+                    },
+                    "Allowance": {
+                        "type": "string"
+                    },
+                    "Total_Allowance": {
+                        "type": "string"
+                    },
+                    "Wages": {
+                        "type": "string"
+                    },
+                    "Total_Wages": {
+                        "type": "string"
+                    },
+                    "Add_Value": {
+                        "type": "string"
+                    },
+                    "MARGIN": {
+                        "type": "string"
+                    },
+                    "Contract_Start_Date": {
+                        "type": "string"
+                    },
+                    "Roc_date_From": {
+                        "type": "string"
+                    },
+                    "ROC_to": {
+                        "type": "string"
+                    },
+                    "Signed_by_client": {
+                        "type": "string"
+                    },
+                    "Accts_Info": {
+                        "type": "string"
+                    },
+                    "Invoice_cycle": {
+                        "type": "string"
+                    },
+                    "Credit_Period": {
+                        "type": "string"
+                    },
+                    "Aging_Analysis": {
+                        "type": "string"
+                    },
+                    "created_date": {
+                        "type": "string"
+                    },
+                    "updated_date": {
+                        "type": "string"
+                    },
+                    "updated_by": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Sl_No",
+                    "Aging_Analysis",
+                    "Credit_Period",
+                    "Invoice_cycle",
+                    "Accts_Info",
+                    "Signed_by_client",
+                    "ROC_to",
+                    "Roc_date_From",
+                    "Contract_Start_Date",
+                    "MARGIN",
+                    "Add_Value",
+                    "Total_Wages",
+                    "Wages",
+                    "Total_Allowance",
+                    "Allowance",
+                    "Value",
+                    "RATES",
+                    "Hrs_pattern",
+                    "Deployment",
+                    "Designations",
+                    "No_of_Sites",
+                    "Client_Name",
+                    "Address",
+                    "Contact_Name",
+                    "Contact_No",
+                    "E_Mail_ID",
+                    "created_date",
+                    "updated_date",
+                    "updated_by"                           
+        ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Sl_No": "should have required property userId"
+                    },
+                    "properties": {
+                        "Sl_No": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/authentication/updateclients": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Sl_No": {
+                        "type": "string"
+                    },
+                    "No_of_Sites": {
+                        "type": "string"
+                    },
+                    "Client_Name": {
+                        "type": "string"
+                    },
+                    "Address": {
+                        "type": "string"
+                    },
+                    "Contact_Name": {
+                        "type": "string"
+                    },
+                    "Contact_No": {
+                        "type": "string"
+                    },
+                    "E_Mail_ID": {
+                        "type": "string"
+                    },
+                    "Designations": {
+                        "type": "string"
+                    },
+                    "Deployment": {
+                        "type": "string"
+                    },
+                    "Hrs_pattern": {
+                        "type": "string"
+                    },
+                    "RATES": {
+                        "type": "string"
+                    },
+                    "Value": {
+                        "type": "string"
+                    },
+                    "Allowance": {
+                        "type": "string"
+                    },
+                    "Total_Allowance": {
+                        "type": "string"
+                    },
+                    "Wages": {
+                        "type": "string"
+                    },
+                    "Total_Wages": {
+                        "type": "string"
+                    },
+                    "Add_Value": {
+                        "type": "string"
+                    },
+                    "MARGIN": {
+                        "type": "string"
+                    },
+                    "Contract_Start_Date": {
+                        "type": "string"
+                    },
+                    "Roc_date_From": {
+                        "type": "string"
+                    },
+                    "ROC_to": {
+                        "type": "string"
+                    },
+                    "Signed_by_client": {
+                        "type": "string"
+                    },
+                    "Accts_Info": {
+                        "type": "string"
+                    },
+                    "Invoice_cycle": {
+                        "type": "string"
+                    },
+                    "Credit_Period": {
+                        "type": "string"
+                    },
+                    "Aging_Analysis": {
+                        "type": "string"
+                    },
+                    "created_date": {
+                        "type": "string"
+                    },
+                    "updated_date": {
+                        "type": "string"
+                    },
+                    "updated_by": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Sl_No",
+                    "Aging_Analysis",
+                    "Credit_Period",
+                    "Invoice_cycle",
+                    "Accts_Info",
+                    "Signed_by_client",
+                    "ROC_to",
+                    "Roc_date_From",
+                    "Contract_Start_Date",
+                    "MARGIN",
+                    "Add_Value",
+                    "Total_Wages",
+                    "Wages",
+                    "Total_Allowance",
+                    "Allowance",
+                    "Value",
+                    "RATES",
+                    "Hrs_pattern",
+                    "Deployment",
+                    "Designations",
+                    "No_of_Sites",
+                    "Client_Name",
+                    "Address",
+                    "Contact_Name",
+                    "Contact_No",
+                    "E_Mail_ID",
+                    "created_date",
+                    "updated_date",
+                    "updated_by"                             
+        ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Sl_No": "should have required property userId"
+                    },
+                    "properties": {
+                        "Sl_No": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    
+    
     
    
 
@@ -58,6 +1042,89 @@
             }
         }
     },
+
+
+    "/authentication/userlist": {
+        "POST": {
+                 "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/authentication/employeelist": {
+        "POST": {
+                 "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/authentication/clientlist": {
+        "POST": {
+                 "body": {
+                 "type": "object",
+                "properties": {
+                    "E_Mail_ID": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "E_Mail_ID"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "userId": "should have required property userId"
+                    },
+                    "properties": {
+                        "E_Mail_ID": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
 
     "/authentication/registerpage": {
         "POST": {
@@ -150,7 +1217,7 @@
                     "dob",
                     "gender",
                     "userTag",
-		    "statusText",
+		            "statusText",
                     "password"
                 ],
                 "errorMessage": {

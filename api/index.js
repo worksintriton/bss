@@ -28,6 +28,38 @@ addRoute("/authentication/loginpages", "POST", [middleware.loginpages]);
 
 
 
+
+
+addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
+addRoute("/authentication/addclients", "POST", [middleware.addclients]);
+addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
+
+
+
+addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
+addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
+addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
+
+
+addRoute("/authentication/addusers", "POST", [middleware.addusers]);
+addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
+addRoute("/authentication/userlist", "POST", [middleware.userlist]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.use(router);
 
 exports.init = middleware.init;
