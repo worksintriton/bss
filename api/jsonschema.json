@@ -203,7 +203,7 @@
     },
 
 
-     "/authentication/updateemployee": {
+     "/authentication/updateemplo": {
         "POST": {
             "body": {
                  "type": "object",

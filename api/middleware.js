@@ -139,7 +139,7 @@ function addemployee(req, res, next) {
 ///updateEmployee///
 
 
-function updateemployee(req, res, next) {
+function updateemplo(req, res, next) {
 
        async.waterfall([
             function (waterfallCallback){
@@ -344,7 +344,7 @@ exports.addemployee = addemployee ;
 exports.addusers = addusers;
 exports.addclients = addclients ;
 exports.updateclients = updateclients ; 
-exports.updateemployee = updateemployee ;
+exports.updateemplo = updateemplo ;
 exports.updateusers = updateusers ;
 exports.clientlist = clientlist ;
 exports.employeelist = employeelist ;

@@ -36,7 +36,7 @@ addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 
 
 
-addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
+addRoute("/authentication/updateemplo", "POST", [middleware.updateemplo]);
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
 
