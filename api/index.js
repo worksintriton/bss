@@ -54,6 +54,8 @@ addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 
 
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
+addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
+addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 
 
 

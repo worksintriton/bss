@@ -246,6 +246,23 @@ user.deleteclients = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
+    executor.any('DELETE FROM public.usermanagement WHERE "cliid"=($1) ' , [userInput.cliid])
+        .then(data => {
+          var string = "Deleted Successfully"
+                 resultCallback(null,data );            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.deleteusers = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
     executor.any('DELETE FROM public.usermanagement WHERE "userid"=($1) ' , [userInput.userid])
         .then(data => {
           var string = "Deleted Successfully"
@@ -258,6 +275,24 @@ user.deleteclients = function (userInput, resultCallback) {
 
 
 };
+
+user.deleteemployees = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('DELETE FROM public.usermanagement WHERE "empid"=($1) ' , [userInput.empid])
+        .then(data => {
+          var string = "Deleted Successfully"
+                 resultCallback(null,data );            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
 
 
 module.exports = user;

@@ -508,6 +508,52 @@ function deleteclient(req, res, next) {
 
 }
 
+function deleteuser(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deleteusers(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function deleteemployee(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deleteemployees(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 
 
 
@@ -534,3 +580,5 @@ exports.userid = userid ;
 exports.clientid = clientid ;
 exports.employeeid = employeeid ;
 exports.deleteclient = deleteclient ;
+exports.deleteemployee = deleteemployee ;
+exports.deleteuser = deleteuser ;
