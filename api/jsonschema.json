@@ -325,46 +325,9 @@
                         "type": "string"
                     }
                 },
-        "additionalProperties": false,
+        "additionalProperties": true,
                 "required": [
-                    "Email_id",
-                    "Password",
-                    "Designation",
-                    "Company",
-                    "Site_(Unit)",
-                    "Employee_No",
-                    "Rank",
-                    "Name",
-                    "Father_Name",
-                    "Date_Of_Birth",
-                    "Gender",
-                    "Marital_Status",
-                    "contact_details",
-                    "Educational_Qualification",
-                    "Nationality",
-                    "Permanent_Address",
-                    "Local_Address",
-                    "Contact_No",
-                    "Languages_Known",
-                    "Work_Experience",
-                    "EPF_No",
-                    "ESIC_No",
-                    "Aadhar_Card_No",
-                    "Signature_of_the_manager",
-                    "Signature_of_the_Applicant",
-                    "BSS_EPF_Number",
-                    "BSSPL_EPF_Number",
-                    "MMSPL_EPF_Number",
-                    "UAN_Number",
-                    "Date_Of_Joining",
-                    "Date_Of_Relieving",
-                    "Voter_ID",
-                    "Driving_Licence_Number",
-                    "PF_Elegible",
-                    "ESI_Elegible",
-                    "Professional_Tax",
-                    "Working_Status",
-                    "Emi"
+                   
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -676,46 +639,9 @@
                         "type": "string"
                     }
                 },
-        "additionalProperties": false,
+        "additionalProperties": true,
                 "required": [
-                    "Email_id",
-                    "Password",
-                    "Designation",
-                    "Company",
-                    "Site_(Unit)",
-                    "Employee_No",
-                    "Rank",
-                    "Name",
-                    "Father_Name",
-                    "Date_Of_Birth",
-                    "Gender",
-                    "Marital_Status",
-                    "contact_details",
-                    "Educational_Qualification",
-                    "Nationality",
-                    "Permanent_Address",
-                    "Local_Address",
-                    "Contact_No",
-                    "Languages_Known",
-                    "Work_Experience",
-                    "EPF_No",
-                    "ESIC_No",
-                    "Aadhar_Card_No",
-                    "Signature_of_the_manager",
-                    "Signature_of_the_Applicant",
-                    "BSS_EPF_Number",
-                    "BSSPL_EPF_Number",
-                    "MMSPL_EPF_Number",
-                    "UAN_Number",
-                    "Date_Of_Joining",
-                    "Date_Of_Relieving",
-                    "Voter_ID",
-                    "Driving_Licence_Number",
-                    "PF_Elegible",
-                    "ESI_Elegible",
-                    "Professional_Tax",
-                    "Working_Status",
-                    "Emi"
+                   
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -852,46 +778,9 @@
                         "type": "string"
                     }
                 },
-        "additionalProperties": false,
+        "additionalProperties": true,
                 "required": [
-                    "Email_id",
-                    "Password",
-                    "Designation",
-                    "Company",
-                    "Site_(Unit)",
-                    "Employee_No",
-                    "Rank",
-                    "Name",
-                    "Father_Name",
-                    "Date_Of_Birth",
-                    "Gender",
-                    "Marital_Status",
-                    "contact_details",
-                    "Educational_Qualification",
-                    "Nationality",
-                    "Permanent_Address",
-                    "Local_Address",
-                    "Contact_No",
-                    "Languages_Known",
-                    "Work_Experience",
-                    "EPF_No",
-                    "ESIC_No",
-                    "Aadhar_Card_No",
-                    "Signature_of_the_manager",
-                    "Signature_of_the_Applicant",
-                    "BSS_EPF_Number",
-                    "BSSPL_EPF_Number",
-                    "MMSPL_EPF_Number",
-                    "UAN_Number",
-                    "Date_Of_Joining",
-                    "Date_Of_Relieving",
-                    "Voter_ID",
-                    "Driving_Licence_Number",
-                    "PF_Elegible",
-                    "ESI_Elegible",
-                    "Professional_Tax",
-                    "Working_Status",
-                    "Emi"
+                   
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -1006,7 +895,12 @@
                 },
         "additionalProperties": true,
                 "required": [
+<<<<<<< HEAD
                                   
+=======
+                   
+
+>>>>>>> 547b47771ca5abe35c1dfe7bda05159a9e056638
         ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -1205,9 +1099,9 @@
                         "type": "string"
                     }
                 },
-        "additionalProperties": false,
+        "additionalProperties": true,
                 "required": [
-                    "Email_id"
+                    
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -1232,9 +1126,9 @@
                         "type": "string"
                     }
                 },
-        "additionalProperties": false,
+        "additionalProperties": true,
                 "required": [
-                    "Email_id"
+                    
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -1259,9 +1153,9 @@
                         "type": "string"
                     }
                 },
-        "additionalProperties": false,
+        "additionalProperties": true,
                 "required": [
-                    "E_Mail_ID"
+                    
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",

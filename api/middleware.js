@@ -271,12 +271,13 @@ function addclients(req, res, next) {
 
        async.waterfall([
             function (waterfallCallback){
+                console.log("entered controller");
                 services.user.createclient(req.body, function (err, result) {
                 if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
+                    return res.json(_.merge({
+                    error_is: err 
+                }, utils.errors["500"]));
+
                 }
                 waterfallCallback(null,result);
                 });
