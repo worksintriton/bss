@@ -28,6 +28,183 @@
         }
     },
 
+
+
+    "/authentication/bsslogin": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id",
+                    "password"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property Email_id",
+                        "password": "should have required property password"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/authentication/clientlogin": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id",
+                    "password"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property Email_id",
+                        "password": "should have required property password"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/securitytlogin": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id",
+                    "password"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property Email_id",
+                        "password": "should have required property password"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/authentication/employeeid": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "empid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "empid"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "empid": "should have required property id"
+                    },
+                    "properties": {
+                        "empid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+           "/authentication/clientid": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "cliid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "cliid"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "cliid": "should have required property id"
+                    },
+                    "properties": {
+                        "cliid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },   
+
+
+           "/authentication/userid": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "userid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "userid"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "userid": "should have required property id"
+                    },
+                    "properties": {
+                        "userid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+ 
+
+
+
      "/authentication/addemployee": {
         "POST": {
             "body": {
@@ -822,39 +999,14 @@
                     },
                     "updated_by": {
                         "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
                     }
                 },
-        "additionalProperties": false,
+        "additionalProperties": true,
                 "required": [
-                    "Sl_No",
-                    "Aging_Analysis",
-                    "Credit_Period",
-                    "Invoice_cycle",
-                    "Accts_Info",
-                    "Signed_by_client",
-                    "ROC_to",
-                    "Roc_date_From",
-                    "Contract_Start_Date",
-                    "MARGIN",
-                    "Add_Value",
-                    "Total_Wages",
-                    "Wages",
-                    "Total_Allowance",
-                    "Allowance",
-                    "Value",
-                    "RATES",
-                    "Hrs_pattern",
-                    "Deployment",
-                    "Designations",
-                    "No_of_Sites",
-                    "Client_Name",
-                    "Address",
-                    "Contact_Name",
-                    "Contact_No",
-                    "E_Mail_ID",
-                    "created_date",
-                    "updated_date",
-                    "updated_by"                           
+                                  
         ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",

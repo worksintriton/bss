@@ -44,10 +44,10 @@ user.createemployee = function (userInput, resultCallback) {
                  resultCallback(null,string); 
                }else{
                  console.log("2");
-                 executor.none('INSERT INTO public.employeemanagement("Email_id","Password","Designation","Company","Employee_No","Rank","Name","Father_Name","Date_Of_Birth","Gender","Marital_Status","contact_details","Educational_Qualification","Nationality","Permanent_Address","Local_Address","Contact_No","Languages_Known","Work_Experience","EPF_No","ESIC_No","Aadhar_Card_No","Signature_of_the_manager","Signature_of_the_Applicant","BSS_EPF_Number","BSSPL_EPF_Number","MMSPL_EPF_Number","UAN_Number","Date_Of_Joining","Date_Of_Relieving", "Voter_ID", "Driving_Licence_Number", "PF_Elegible", "ESI_Elegible", "Professional_Tax", "Working_Status", "Emi")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37)',
+                 executor.one('INSERT INTO public.employeemanagement("Email_id","Password","Designation","Company","Employee_No","Rank","Name","Father_Name","Date_Of_Birth","Gender","Marital_Status","contact_details","Educational_Qualification","Nationality","Permanent_Address","Local_Address","Contact_No","Languages_Known","Work_Experience","EPF_No","ESIC_No","Aadhar_Card_No","Signature_of_the_manager","Signature_of_the_Applicant","BSS_EPF_Number","BSSPL_EPF_Number","MMSPL_EPF_Number","UAN_Number","Date_Of_Joining","Date_Of_Relieving", "Voter_ID", "Driving_Licence_Number", "PF_Elegible", "ESI_Elegible", "Professional_Tax", "Working_Status", "Emi")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37)RETURNING *',
                  [userInput.Email_id,userInput.Password,userInput.Designation,userInput.Company,userInput.Employee_No,userInput.Rank,userInput.Name,userInput.Father_Name,userInput.Date_Of_Birth,userInput.Gender,userInput.Marital_Status,userInput.contact_details,userInput.Educational_Qualification,userInput.Nationality,userInput.Permanent_Address,userInput.Local_Address,userInput.Contact_No,userInput.Languages_Known,userInput.Work_Experience,userInput.EPF_No,userInput.ESIC_No,userInput.Aadhar_Card_No,userInput.Signature_of_the_manager,userInput.Signature_of_the_Applicant,userInput.BSS_EPF_Number,userInput.BSSPL_EPF_Number,userInput.MMSPL_EPF_Number,userInput.UAN_Number,userInput.Date_Of_Joining,userInput.Date_Of_Relieving,userInput.Voter_ID,userInput.Driving_Licence_Number,userInput.PF_Elegible,userInput.ESI_Elegible,userInput.Professional_Tax,userInput.Working_Status,userInput.Emi])
                  .then(data => {
-                    console.log("1");
+                 var string = "Added Successfully";                 
               resultCallback(null,data);
                  })
               }          
@@ -68,8 +68,8 @@ user.createclient = function (userInput, resultCallback) {
                  resultCallback(null,string); 
                }else{
                  console.log("2");
-                 executor.none('INSERT INTO public.clientmanagment("Sl_No", "No_of_Sites", "Client_Name", "Address", "Contact_Name", "Contact_No", "email_id", "Designations", "Deployment", "Hrs_pattern", "RATES", "Value", "Allowance", "Total_Allowance", "Wages", "Total_Wages", "Add_Value%age[((I-N-P)/P)*100]", "MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)", "Contract_Start_Date", "Roc_date_From", "ROC_to", "Signed_by_client", "Accts_Info", "Invoice_cycle", "Credit_Period", "Aging_Analysis")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26) RETURNING *',
-                 [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis])
+                 executor.one('INSERT INTO public.clientmanagment("Sl_No", "No_of_Sites", "Client_Name", "Address", "Contact_Name", "Contact_No", "email_id", "Designations", "Deployment", "Hrs_pattern", "RATES", "Value", "Allowance", "Total_Allowance", "Wages", "Total_Wages", "Add_Value%age[((I-N-P)/P)*100]", "MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)", "Contract_Start_Date", "Roc_date_From", "ROC_to", "Signed_by_client", "Accts_Info", "Invoice_cycle", "Credit_Period", "Aging_Analysis","Password")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27) RETURNING *',
+                 [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis,userInput.password])
                  .then(data => {
                     console.log("1");
               resultCallback(null,data);
@@ -164,12 +164,66 @@ user.employeelists = function (userInput, resultCallback) {
 
 };
 
-//userList
+//userList//
 user.userlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
    executor.any('SELECT * FROM public.usermanagement')
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
+//empid//
+user.employeeids = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.employeemanagement WHERE "empid"=($1) ' , [userInput.empid])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+user.clientids = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.clientmanagment WHERE "cliid"=($1) ' , [userInput.cliid])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+user.userids = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.usermanagement WHERE "userid"=($1) ' , [userInput.userid])
         .then(data => {
 
                  resultCallback(null,data );

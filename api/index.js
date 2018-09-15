@@ -26,6 +26,28 @@ addRoute("/authentication/loginpages", "POST", [middleware.loginpages]);
 
 
 
+addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
+
+addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
+
+addRoute("/authentication/securitytlogin", "POST", [middleware.securitytlogin]);
+
+
+
+addRoute("/authentication/employeeid", "POST", [middleware.employeeid]);
+
+addRoute("/authentication/clientid", "POST", [middleware.clientid]);
+
+addRoute("/authentication/userid", "POST", [middleware.userid]);
+
+
+
+
+
+
+
+
+
 
 
 

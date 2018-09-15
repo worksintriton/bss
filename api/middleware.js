@@ -112,6 +112,86 @@ function loginpages(req, res, next) {
         ]);
 
 }
+
+
+//////bsslogin/////////
+
+function bsslogin(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.loginpage.bsslogincheck(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+//////Clientlogin/////////
+
+function clientlogin(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.loginpage.clientlogincheck(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+//////securitytlogin/////////
+
+function securitytlogin(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.loginpage.securitytlogins(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+
 /////addEmployee///////
 
 function addemployee(req, res, next) {
@@ -277,7 +357,7 @@ function clientlist(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata 
+                    data: mydata[0].Email_id 
                 }, utils.errors["200"]));
             }
         ]);
@@ -300,7 +380,7 @@ function employeelist(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata 
+                    data: mydata
                 }, utils.errors["200"]));
             }
         ]);
@@ -317,8 +397,14 @@ function userlist(req, res, next) {
                         error: err
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
+                }else{
+                   if(result.length == 0 ){
+                     return res.json(_.merge({ 
+                     }, utils.errors["200"]));
+                   }else{
+                    waterfallCallback(null,result);
+                   }  
+               }
                 });
             },
             function (mydata, waterfallCallback){
@@ -330,6 +416,73 @@ function userlist(req, res, next) {
 
 }
 
+function employeeid(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.employeeids(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function clientid(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.clientids(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+function userid(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.userids(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
 
 
 
@@ -349,4 +502,9 @@ exports.updateusers = updateusers ;
 exports.clientlist = clientlist ;
 exports.employeelist = employeelist ;
 exports.userlist = userlist ;
-
+exports.bsslogin = bsslogin ;
+exports.clientlogin = clientlogin ;
+exports.securitytlogin = securitytlogin ;
+exports.userid = userid ;
+exports.clientid = clientid ;
+exports.employeeid = employeeid ;
