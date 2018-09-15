@@ -62,13 +62,14 @@ user.createclient = function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
    executor.any('SELECT * FROM public.clientmanagment WHERE "email_id"=($1) ' , [userInput.E_Mail_ID])
         .then(data => {
+          console.log("entered db");
                  if(data.length > 0 )//eruthuchuna
                  {
                   var string = {message:"This Email_id already exits!",status:"falied"} ;
                  resultCallback(null,string); 
                }else{
                  console.log("2");
-                 executor.none('INSERT INTO public.clientmanagment("Sl_No", "No_of_Sites", "Client_Name", "Address", "Contact_Name", "Contact_No", "email_id", "Designations", "Deployment", "Hrs_pattern", "RATES", "Value", "Allowance", "Total_Allowance", "Wages", "Total_Wages", "Add_Value%age[((I-N-P)/P)*100]", "MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)", "Contract_Start_Date", "Roc_date_From", "ROC_to", "Signed_by_client", "Accts_Info", "Invoice_cycle", "Credit_Period", "Aging_Analysis")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26) RETURNING *',
+                 executor.one('INSERT INTO public.clientmanagment("Sl_No", "No_of_Sites", "Client_Name", "Address", "Contact_Name", "Contact_No", "email_id", "Designations", "Deployment", "Hrs_pattern", "RATES", "Value", "Allowance", "Total_Allowance", "Wages", "Total_Wages", "Add_Value%age[((I-N-P)/P)*100]", "MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)", "Contract_Start_Date", "Roc_date_From", "ROC_to", "Signed_by_client", "Accts_Info", "Invoice_cycle", "Credit_Period", "Aging_Analysis")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26) RETURNING *',
                  [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis])
                  .then(data => {
                     console.log("1");
