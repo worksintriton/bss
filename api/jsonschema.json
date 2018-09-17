@@ -176,6 +176,88 @@
     },   
 
 
+
+           "/authentication/deleteclient": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "cliid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "cliid"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "cliid": "should have required property id"
+                    },
+                    "properties": {
+                        "cliid": "userId must be string"
+                    }
+                }
+            }
+           }
+         },   
+
+
+           "/authentication/deleteuser": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "userid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "userid"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "userid": "should have required property id"
+                    },
+                    "properties": {
+                        "userid": "userId must be string"
+                    }
+                }
+            }
+           }
+         },   
+
+         
+           "/authentication/deleteemployee": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "empid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "empid"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "empid": "should have required property id"
+                    },
+                    "properties": {
+                        "empid": "userId must be string"
+                    }
+                }
+            }
+           }
+         },   
+
+
            "/authentication/userid": {
         "POST": {
             "body": {
@@ -465,7 +547,11 @@
                 },
         "additionalProperties": true,
                 "required": [
+<<<<<<< HEAD
                     
+=======
+                   
+>>>>>>> 8deb55357a0831da520aaec588bd68fe9556f188
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",

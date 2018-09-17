@@ -32,12 +32,8 @@ addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
 
 addRoute("/authentication/securitytlogin", "POST", [middleware.securitytlogin]);
 
-
-
 addRoute("/authentication/employeeid", "POST", [middleware.employeeid]);
-
 addRoute("/authentication/clientid", "POST", [middleware.clientid]);
-
 addRoute("/authentication/userid", "POST", [middleware.userid]);
 
 
@@ -55,6 +51,11 @@ addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
 addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
 addRoute("/authentication/userlist", "POST", [middleware.userlist]);
+
+
+addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
+addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
+addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 
 
 
