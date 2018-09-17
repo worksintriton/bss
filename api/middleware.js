@@ -358,7 +358,7 @@ function clientlist(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata[0]
+                    data: mydata
                 }, utils.errors["200"]));
             }
         ]);

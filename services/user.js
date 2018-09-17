@@ -69,15 +69,11 @@ user.createclient = function (userInput, resultCallback) {
                  resultCallback(null,string); 
                }else{
                  console.log("2");
-<<<<<<< HEAD
 
-=======
->>>>>>> 8deb55357a0831da520aaec588bd68fe9556f188
                  executor.one('INSERT INTO public.clientmanagment("Sl_No", "No_of_Sites", "Client_Name", "Address", "Contact_Name", "Contact_No", "email_id", "Designations", "Deployment", "Hrs_pattern", "RATES", "Value", "Allowance", "Total_Allowance", "Wages", "Total_Wages", "Add_Value%age[((I-N-P)/P)*100]", "MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)", "Contract_Start_Date", "Roc_date_From", "ROC_to", "Signed_by_client", "Accts_Info", "Invoice_cycle", "Credit_Period", "Aging_Analysis","Password")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27) RETURNING *',
                  [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis,userInput.password])
 
-                 executor.one('INSERT INTO public.clientmanagment("Sl_No", "No_of_Sites", "Client_Name", "Address", "Contact_Name", "Contact_No", "email_id", "Designations", "Deployment", "Hrs_pattern", "RATES", "Value", "Allowance", "Total_Allowance", "Wages", "Total_Wages", "Add_Value%age[((I-N-P)/P)*100]", "MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)", "Contract_Start_Date", "Roc_date_From", "ROC_to", "Signed_by_client", "Accts_Info", "Invoice_cycle", "Credit_Period", "Aging_Analysis")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26) RETURNING *',
-                 [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis])
+                
 
                  .then(data => {
                     console.log("1");
@@ -93,7 +89,7 @@ user.createclient = function (userInput, resultCallback) {
 ///updateclient//
 user.updateclient = function (userInput , resultCallback) {
   var executor = db.getdaata.getdb();
-      executor.none('UPDATE public.clientmanagment SET  "No_of_Sites"=($2),"Client_Name"=($3),"Address"=($4),"Contact_Name"=($5),"Contact_No"=($6),"email_id"=($7),"Designations"=($8),"Deployment"=($9),"Hrs_pattern"=($10),"RATES"=($11),"Value"=($12),"Allowance"=($13),"Total_Allowance"=($14),"Wages"=($15),"Total_Wages"=($16),"Add_Value%age[((I-N-P)/P)*100]"=($17),"MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)"=($18),"Contract_Start_Date"=($19),"Roc_date_From"=($20),"ROC_to"=($21),"Signed_by_client"=($22),"Accts_Info"=($23),"Invoice_cycle"=($24),"Credit_Period"=($25),"Aging_Analysis"=($26) WHERE "Sl_No"= ($1)',
+      executor.none('UPDATE public.clientmanagment SET  "No_of_Sites"=($2),"Client_Name"=($3),"Address"=($4),"Contact_Name"=($5),"Contact_No"=($6),"email_id"=($7),"Designations"=($8),"Deployment"=($9),"Hrs_pattern"=($10),"RATES"=($11),"Value"=($12),"Allowance"=($13),"Total_Allowance"=($14),"Wages"=($15),"Total_Wages"=($16),"Add_Value"=($17),"MARGIN"=($18),"Contract_Start_Date"=($19),"Roc_date_From"=($20),"ROC_to"=($21),"Signed_by_client"=($22),"Accts_Info"=($23),"Invoice_cycle"=($24),"Credit_Period"=($25),"Aging_Analysis"=($26) WHERE "Sl_No"= ($1)',
         [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis]) 
        .then(data => {
         console.log(data);
@@ -142,8 +138,6 @@ user.clientlists = function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
    executor.any('SELECT * FROM public.clientmanagment')
         .then(data => {
-
-             console.log("in")
 
                  resultCallback(null,data );
             
@@ -247,58 +241,6 @@ user.userids = function (userInput, resultCallback) {
 
 
 };
-
-user.deleteclients = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
-  //\''+userInput.appartment_ukey+'\' 
-    executor.any('DELETE FROM public.usermanagement WHERE "cliid"=($1) ' , [userInput.cliid])
-        .then(data => {
-          var string = "Deleted Successfully"
-                 resultCallback(null,data );            
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            console.log('ERROR:', error);
-        })
-
-
-};
-
-user.deleteusers = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
-  //\''+userInput.appartment_ukey+'\' 
-    executor.any('DELETE FROM public.usermanagement WHERE "userid"=($1) ' , [userInput.userid])
-        .then(data => {
-          var string = "Deleted Successfully"
-                 resultCallback(null,data );            
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            console.log('ERROR:', error);
-        })
-
-
-};
-
-user.deleteemployees = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
-  //\''+userInput.appartment_ukey+'\' 
-    executor.any('DELETE FROM public.usermanagement WHERE "empid"=($1) ' , [userInput.empid])
-        .then(data => {
-          var string = "Deleted Successfully"
-                 resultCallback(null,data );            
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            console.log('ERROR:', error);
-        })
-
-
-};
-
 
 
 module.exports = user;
