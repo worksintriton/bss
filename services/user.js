@@ -69,13 +69,13 @@ user.createclient = function (userInput, resultCallback) {
                  resultCallback(null,string); 
                }else{
                  console.log("2");
-<<<<<<< HEAD
+
                  executor.one('INSERT INTO public.clientmanagment("Sl_No", "No_of_Sites", "Client_Name", "Address", "Contact_Name", "Contact_No", "email_id", "Designations", "Deployment", "Hrs_pattern", "RATES", "Value", "Allowance", "Total_Allowance", "Wages", "Total_Wages", "Add_Value%age[((I-N-P)/P)*100]", "MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)", "Contract_Start_Date", "Roc_date_From", "ROC_to", "Signed_by_client", "Accts_Info", "Invoice_cycle", "Credit_Period", "Aging_Analysis","Password")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27) RETURNING *',
                  [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis,userInput.password])
-=======
+
                  executor.one('INSERT INTO public.clientmanagment("Sl_No", "No_of_Sites", "Client_Name", "Address", "Contact_Name", "Contact_No", "email_id", "Designations", "Deployment", "Hrs_pattern", "RATES", "Value", "Allowance", "Total_Allowance", "Wages", "Total_Wages", "Add_Value%age[((I-N-P)/P)*100]", "MARGIN(MARKUP_STATUTES)(ADD_VALUE-80%)", "Contract_Start_Date", "Roc_date_From", "ROC_to", "Signed_by_client", "Accts_Info", "Invoice_cycle", "Credit_Period", "Aging_Analysis")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26) RETURNING *',
                  [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis])
->>>>>>> 547b47771ca5abe35c1dfe7bda05159a9e056638
+
                  .then(data => {
                     console.log("1");
               resultCallback(null,data);
@@ -139,6 +139,8 @@ user.clientlists = function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
    executor.any('SELECT * FROM public.clientmanagment')
         .then(data => {
+
+             console.log("in")
 
                  resultCallback(null,data );
             

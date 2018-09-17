@@ -216,7 +216,7 @@ function addemployee(req, res, next) {
         ]);
 
 }
-///updateEmployee///
+///lEmployee///
 
 
 function updateemplo(req, res, next) {
@@ -358,7 +358,7 @@ function clientlist(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata[0].Email_id 
+                    data: mydata[0]
                 }, utils.errors["200"]));
             }
         ]);
@@ -381,7 +381,7 @@ function employeelist(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata
+                    data: mydata[0]
                 }, utils.errors["200"]));
             }
         ]);
@@ -410,7 +410,7 @@ function userlist(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata 
+                    data: mydata[0] 
                 }, utils.errors["200"]));
             }
         ]);
@@ -456,7 +456,7 @@ function clientid(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata
+                    data:mydata[0]
                 }, utils.errors["200"]));
             }
         ]);

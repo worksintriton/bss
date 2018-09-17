@@ -41,17 +41,6 @@ addRoute("/authentication/clientid", "POST", [middleware.clientid]);
 addRoute("/authentication/userid", "POST", [middleware.userid]);
 
 
-
-
-
-
-
-
-
-
-
-
-
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 addRoute("/authentication/addclients", "POST", [middleware.addclients]);
 addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
