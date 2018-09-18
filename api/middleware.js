@@ -291,7 +291,7 @@ function addclients(req, res, next) {
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
                     data: {
-        "message": "Employee Details add Successfully",
+        "message": "Client Details add Successfully",
         "status": "Success"
     } 
                 }, utils.errors["200"]));
