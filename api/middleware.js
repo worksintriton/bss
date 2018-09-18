@@ -390,7 +390,7 @@ function employeelist(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata[0]
+                    data: mydata
                 }, utils.errors["200"]));
             }
         ]);
@@ -419,7 +419,7 @@ function userlist(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata[0] 
+                    data: mydata 
                 }, utils.errors["200"]));
             }
         ]);
