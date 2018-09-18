@@ -208,7 +208,7 @@
                  "type": "object",
                 "properties": {
                     "cliid": {
-                        "type": "string"
+                        "type": "number"
                     }
                 },
         "additionalProperties": false,
@@ -221,7 +221,7 @@
                         "cliid": "should have required property id"
                     },
                     "properties": {
-                        "cliid": "userId must be string"
+                        
                     }
                 }
             }
