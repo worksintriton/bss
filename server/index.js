@@ -38,8 +38,8 @@ app.use("/", express.static(path.join(__dirname, "../www")));
 //app.use(utils.logger.attachLogger());
 app.use(api.router);
 app.use(function (error, req, res, next) {
-    var logger = req.log || utils.logger.getLogger();
-    logger.error(error);
+    // var logger = req.log || utils.logger.getLogger();
+    // logger.error(error);
     res.json(utils.errors["500"]);
 });
 

@@ -5,9 +5,16 @@ var express = require("express"),
     jsonschema = require("./jsonschema"),
     middleware = require("./middleware"),
     cors = require("cors");
+    const fileUpload = require('express-fileupload');
 
 var app = express(),
 router = express.Router();
+
+app.use(express.static(__dirname));
+app.set('view engine', 'ejs');
+app.use(fileUpload());
+
+
 
 function addRoute(path, method, middlewares) {
     var handlers = [].concat(middlewares);
@@ -55,7 +62,30 @@ addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
+
+
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
+
+
+// default options
+app.use(fileUpload());
+ 
+
+
+
+app.post('/upload', function(req, res) {
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+   var startup_image = req.files;
+   var fileName = req.body.fileName;
+   // Use the mv() method to place the file somewhere on your server
+   startup_image.mv(__dirname + '/services/images/' + fileName + '.jpg' , function(err) {
+     if(err){
+       console.log(err);
+     }else{
+    console.log("uploaded");
+}
+   });
+ });
 
 
 

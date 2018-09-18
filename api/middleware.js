@@ -291,9 +291,9 @@ function addclients(req, res, next) {
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
                     data: {
-        "message": "Client Details add Successfully",
-        "status": "Success"
-    } 
+                 "message": "Client Details add Successfully",
+                 "status": "Success"
+                } 
                 }, utils.errors["200"]));
             }
         ]);
@@ -562,6 +562,8 @@ function deleteemployee(req, res, next) {
         ]);
 
 }
+
+
 
 
 
