@@ -210,7 +210,10 @@ function addemployee(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata 
+                    data: {
+        "message": "Employee Details add Successfully",
+        "status": "Success"
+    }  
                 }, utils.errors["200"]));
             }
         ]);
@@ -259,7 +262,10 @@ function addusers(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata 
+                    data:  {
+        "message": "User Details add Successfully",
+        "status": "Success"
+    }   
                 }, utils.errors["200"]));
             }
         ]);
@@ -284,7 +290,10 @@ function addclients(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata 
+                    data: {
+        "message": "Employee Details add Successfully",
+        "status": "Success"
+    } 
                 }, utils.errors["200"]));
             }
         ]);
