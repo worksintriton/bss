@@ -155,7 +155,7 @@
                  "type": "object",
                 "properties": {
                     "empid": {
-                        "type": "number"
+                        "type": "string"
                     }
                 },
         "additionalProperties": false,
@@ -237,7 +237,7 @@
                  "type": "object",
                 "properties": {
                     "userid": {
-                        "type": "number"
+                        "type": "string"
                     }
                 },
         "additionalProperties": false,
@@ -263,7 +263,7 @@
                  "type": "object",
                 "properties": {
                     "userid": {
-                        "type": "number"
+                        "type": "string"
                     }
                 },
         "additionalProperties": false,
