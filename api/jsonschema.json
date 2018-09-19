@@ -263,7 +263,7 @@
                  "type": "object",
                 "properties": {
                     "userid": {
-                        "type": "string"
+                        "type": "number"
                     }
                 },
         "additionalProperties": false,
