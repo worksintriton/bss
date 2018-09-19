@@ -67,25 +67,7 @@ addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 
 
-// default options
-app.use(fileUpload());
- 
 
-
-
-app.post('/upload', function(req, res) {
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-   var startup_image = req.files;
-   var fileName = req.body.fileName;
-   // Use the mv() method to place the file somewhere on your server
-   startup_image.mv(__dirname + '/services/images/' + fileName + '.jpg' , function(err) {
-     if(err){
-       console.log(err);
-     }else{
-    console.log("uploaded");
-}
-   });
- });
 
 
 
