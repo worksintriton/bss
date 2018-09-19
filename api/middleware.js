@@ -442,7 +442,7 @@ function employeeid(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata
+                    data: mydata[0]
                 }, utils.errors["200"]));
             }
         ]);
@@ -487,7 +487,7 @@ function userid(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata
+                    data: mydata[0]
                 }, utils.errors["200"]));
             }
         ]);
