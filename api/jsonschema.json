@@ -155,7 +155,7 @@
                  "type": "object",
                 "properties": {
                     "empid": {
-                        "type": "string"
+                        "type": "number"
                     }
                 },
         "additionalProperties": false,
@@ -208,7 +208,7 @@
                  "type": "object",
                 "properties": {
                     "cliid": {
-                        "type": "string"
+                        "type": "number"
                     }
                 },
         "additionalProperties": false,
