@@ -208,6 +208,125 @@ function addemployee(req, res, next) {
                 waterfallCallback(null,result);
                 });
             },
+            function (result, waterfallCallback){ 
+            console.log(result);            
+              services.user.createemployee2 ( result, function (err, updateresult) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: {
+        "message": "Employee Details add Successfully",
+        "status": "Success"
+    }  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+///addemployee1////
+
+function addemployee1(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.createemployee3(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: {
+        "message": "Employee Details add Successfully",
+        "status": "Success"
+    }  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function addemployee2(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.createemployee4(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: {
+        "message": "Employee Details add Successfully",
+        "status": "Success"
+    }  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function addemployee3(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.createemployee5(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: {
+        "message": "Employee Details add Successfully",
+        "status": "Success"
+    }  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function addemployee4(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.createemployee6(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
                     data: {
@@ -563,6 +682,42 @@ function deleteemployee(req, res, next) {
 
 }
 
+function uploads(req, res, next) {
+
+     if (!req.files)
+    return res.status(400).send('No files were uploaded.');
+ 
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let sampleFile = req.files.sampleFile;
+ 
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv('/services/', function(err) {
+    if (err)
+      return res.status(500).send(err);
+ 
+    res.send('File uploaded!');
+       });
+
+       // async.waterfall([
+       //      function (waterfallCallback){
+       //          services.user.deleteemployees(req.body, function (err, result) {
+       //          if (err) {
+       //              req.log.error({
+       //                  error: err
+       //              }, "Error while getting available users by mobiles");
+       //              return res.json(utils.errors["500"]);
+       //          }
+       //          waterfallCallback(null,result);
+       //          });
+       //      },
+       //      function (mydata, waterfallCallback){
+       //          return res.json(_.merge({
+       //              data: mydata
+       //          }, utils.errors["200"]));
+       //      }
+       //  ]);
+
+}
 
 
 
@@ -593,3 +748,8 @@ exports.employeeid = employeeid ;
 exports.deleteclient = deleteclient ;
 exports.deleteemployee = deleteemployee ;
 exports.deleteuser = deleteuser ;
+exports.uploads = uploads ;
+exports.addemployee1 = addemployee1 ;
+exports.addemployee2 = addemployee2 ;
+exports.addemployee3 = addemployee3 ;
+exports.addemployee4 =  addemployee4 ;

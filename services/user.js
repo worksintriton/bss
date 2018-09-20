@@ -57,6 +57,154 @@ user.createemployee = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+user.createemployee2 = function (userInput , resultCallback) {
+  var executor = db.getdaata.getdb();
+        executor.any('INSERT INTO public.employeedetails (empid) VALUES($1)',[userInput.empid])
+       .then(data => {
+        console.log(data);
+        resultCallback(null,data);
+        })
+        .catch(error => {
+          resultCallback(error,{} );
+          console.log('ERROR:', error);
+        });
+};
+
+user.createemployee3 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.any('UPDATE public.employeedetails SET "Written_work" = ($2),"Appearance"=($3),"First_impression"=($4),"Result"=($5),"Designation"=($6),"Entry"=($7),"To_be_Posted_to"=($8),"Receipt_No_Date"=($9),"Amount"=($10),"Med"=($11),"Shoes"=($12),"Id_card"=($13),"N_Tab"=($14),"Receipt_No_Date_1"=($15),"Date_1"=($16),"Amount_1"=($17), "Dues_1"=($18),"Receipt_No_Date_2"=($19),"Date_2"=($20),"Amount_2"=($21),"trainess_Expenses_2"=($22),"Dues_2"=($23),"Blood_Pressure"=($24),"Cardio_Vascular_System"=($25),"Respiratory_System"=($26),"Eyes_Vision"=($27),"Genitals"=($28),"Other_Feature"=($29),"Remarks_of_medical_officer"=($30),"T_No"=($31),"Batch_No"=($32),"IC_No"=($33),"Date_of_Appt"=($34),"Basic"=($35) WHERE empid =($1)',
+[userInput.empid,userInput.Written_work,userInput.Appearance,userInput.First_impression,userInput.Result,userInput.Designation,
+userInput.Entry,
+userInput.To_be_Posted_to,
+userInput.Receipt_No_Date,
+userInput.Amount,
+userInput.Med,
+userInput.Shoes,
+userInput.Id_card,
+userInput.N_Tab,
+userInput.Receipt_No_Date_1,
+userInput.Date_1,
+userInput.Amount_1,
+userInput.Dues_1,
+userInput.Receipt_No_Date_2,
+userInput.Date_2,
+userInput.Amount_2,
+userInput.trainess_Expenses_2,
+userInput.Dues_2,
+userInput.Blood_Pressure,
+userInput.Cardio_Vascular_System,
+userInput.Respiratory_System,
+userInput.Eyes_Vision,
+userInput.Genitals,
+userInput.Other_Feature,
+userInput.Remarks_of_medical_officer,
+userInput.T_No,
+userInput.Batch_No,
+userInput.IC_No,
+userInput.Date_of_Appt,
+userInput.Basic,
+]) .then(data => {
+        console.log(data);
+        resultCallback(null,data);
+        })
+        .catch(error => {
+          resultCallback(error,{} );
+          console.log('ERROR:', error);
+        });
+};
+
+
+user.createemployee4 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.any('UPDATE public.employeedetails SET   "Name_Of_the_Member"=($2),"applicaple"=($3),"Date_of_Birth"=($4),"Gender"=($5),"Marital_Status"=($6),"Email_ID"=($7),"Mobile_No"=($8),"provident"=($9),"pension"=($10),"Universal_Account_Number"=($11),"Pervious_PF_Account_Number"=($12),"Date_of_Exit"=($13),"Scheme_Certificate"=($14),"Pension_Payment"=($15),"International_Worker"=($16),"country_of_orgin"=($17),"Passport_No"=($18),"Validity_Form"=($19),"Validity_To"=($20),"Bank_Name"=($21),"Bank_Account_No"=($22),"Bank_IFSC_Code"=($23),"Aadhar_Number"=($24),"Permanaet_Account"=($25) WHERE empid =($1)',
+[userInput.empid,userInput.Name_Of_the_Member,
+userInput.applicaple,
+userInput.Date_of_Birth,
+userInput.Gender,
+userInput.Marital_Status,
+userInput.Email_ID,
+userInput.Mobile_No,
+userInput.provident,
+userInput.pension,
+userInput.Universal_Account_Number,
+userInput.Pervious_PF_Account_Number,
+userInput.Date_of_Exit,
+userInput.Scheme_Certificate,
+userInput.Pension_Payment,
+userInput.International_Worker,
+userInput.country_of_orgin,
+userInput.Passport_No,
+userInput.Validity_Form,
+userInput.Validity_To,
+userInput.Bank_Name,
+userInput.Bank_Account_No,
+userInput.Bank_IFSC_Code,
+userInput.Aadhar_Number,
+userInput.Permanaet_Account
+]) .then(data => {
+        console.log(data);
+        resultCallback(null,data);
+        })
+        .catch(error => {
+          resultCallback(error,{} );
+          console.log('ERROR:', error);
+        });
+};
+
+
+user.createemployee5 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.any('UPDATE public.employeedetails SET "ag_dayag_daughter"=($2),"ag_residing_no"=($3),"ag_witness1"=($4),"ag_witness2"=($5),"ag_place"=($6),"ag_date"=($7),"ag_day"=($8),"ag_name"=($9),"ag_father"=($10) WHERE empid =($1)',
+[userInput.empid,userInput.ag_dayag_daughter,
+userInput.ag_residing_no,
+userInput.ag_witness1,
+userInput.ag_witness2,
+userInput.ag_place,
+userInput.ag_date,
+userInput.ag_day,
+userInput.ag_name,
+userInput.ag_father
+]) .then(data => {
+        console.log(data);
+        resultCallback(null,data);
+        })
+        .catch(error => {
+          resultCallback(error,{} );
+          console.log('ERROR:', error);
+        });
+};
+
+user.createemployee6 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.any('UPDATE public.employeedetails SET "Name"=($2),"Father"=($3),"Surname"=($4),"Account_No"=($5),"Addres_Per_Temp"=($6),"Nominee_name"=($7),"Address"=($8),"Nominees_Relationship"=($9),"Date_of_birth"=($10),"Total_Amount_share"=($11),"Total_Amount_minority"=($12),"Date_of_Birth1"=($13),"Gender1"=($14),"Marital_Status1"=($15) WHERE empid =($1)',
+[userInput.empid,userInput.Name,
+userInput.Father,
+userInput.Surname,
+userInput.Account_No,
+userInput.Addres_Per_Temp,
+userInput.Nominee_name,
+userInput.Address,
+userInput.Nominees_Relationship,
+userInput.Date_of_birth,
+userInput.Total_Amount_share,
+userInput.Total_Amount_minority,
+userInput.Date_of_Birth1,
+userInput.Gender1,
+userInput.Marital_Status1,
+]) .then(data => {
+        console.log(data);
+        resultCallback(null,data);
+        })
+        .catch(error => {
+          resultCallback(error,{} );
+          console.log('ERROR:', error);
+        });
+};
 user.createclient = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -86,21 +234,8 @@ user.createclient = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
-///updateclient//
-user.updateclient = function (userInput , resultCallback) {
-  var executor = db.getdaata.getdb();
-      executor.none('UPDATE public.clientmanagment SET  "No_of_Sites"=($2),"Client_Name"=($3),"Address"=($4),"Contact_Name"=($5),"Contact_No"=($6),"email_id"=($7),"Designations"=($8),"Deployment"=($9),"Hrs_pattern"=($10),"RATES"=($11),"Value"=($12),"Allowance"=($13),"Total_Allowance"=($14),"Wages"=($15),"Total_Wages"=($16),"Add_Value"=($17),"MARGIN"=($18),"Contract_Start_Date"=($19),"Roc_date_From"=($20),"ROC_to"=($21),"Signed_by_client"=($22),"Accts_Info"=($23),"Invoice_cycle"=($24),"Credit_Period"=($25),"Aging_Analysis"=($26) WHERE "Sl_No"= ($1)',
-        [userInput.Sl_No,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_No,userInput.E_Mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowance,userInput.Wages,userInput.Total_Wages,userInput.Add_Value,userInput.MARGIN,userInput.Contract_Start_Date,userInput.Roc_date_From,userInput.ROC_to,userInput.Signed_by_client,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis]) 
-       .then(data => {
-        console.log(data);
-        var string = "Update Successfully"
-        resultCallback(null,string);
-        })
-        .catch(error => {
-          resultCallback(error,{} );
-          console.log('ERROR:', error);
-        });
-};
+
+
 //updateemployees///
 user.updateemployees = function (userInput , resultCallback) {
   var executor = db.getdaata.getdb();

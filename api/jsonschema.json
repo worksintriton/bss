@@ -61,6 +61,32 @@
         }
     },
 
+     "/authentication/upload": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [
+                    "Files"      
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Files": "should have required property Email_id"
+                    },
+                    "properties": {
+                        "Files": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
      "/authentication/clientlogin": {
         "POST": {
             "body": {
@@ -423,6 +449,355 @@
         }
     },
 
+    "/authentication/addemployee1": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "empid": {
+                        "type": "string"
+                    },
+                    "Written_work": {
+                        "type": "string"
+                    },
+                    "Appearance": {
+                        "type": "string"
+                    },
+                    "First_impression": {
+                        "type": "string"
+                    },
+                    "Result": {
+                        "type": "string"
+                    },
+                    "Designation": {
+                        "type": "string"
+                    },
+                    "Entry": {
+                        "type": "string"
+                    },
+                    "To_be_Posted_to": {
+                        "type": "string"
+                    },
+                    "Receipt_No_Date": {
+                        "type": "string"
+                    },
+                    "Amount": {
+                        "type": "string"
+                    },
+                    "Med": {
+                        "type": "string"
+                    },
+                    "Shoes": {
+                        "type": "string"
+                    },
+                    "Id_card": {
+                        "type": "string"
+                    },
+                    "N_Tab": {
+                        "type": "string"
+                    },
+                    "Receipt_No_Date_1": {
+                        "type": "string"
+                    },
+                    "Date_1": {
+                        "type": "string"
+                    },
+                    "Amount_1": {
+                        "type": "string"
+                    },
+                    "Dues_1": {
+                        "type": "string"
+                    },
+                    "Receipt_No_Date_2": {
+                        "type": "string"
+                    },
+                    "Date_2": {
+                        "type": "string"
+                    },
+                    "Amount_2": {
+                        "type": "string"
+                    },
+                    "trainess_Expenses_2": {
+                        "type": "string"
+                    },
+                    "Dues_2": {
+                        "type": "string"
+                    },
+                    "Blood_Pressure": {
+                        "type": "string"
+                    },
+                    "Cardio_Vascular_System": {
+                        "type": "string"
+                    },
+                    "Respiratory_System": {
+                        "type": "string"
+                    },
+                    "Eyes_Vision": {
+                        "type": "string"
+                    },
+                    "Genitals": {
+                        "type": "string"
+                    },
+                    "Other_Feature": {
+                        "type": "string"
+                    },
+                    "Remarks_of_medical_officer": {
+                        "type": "string"
+                    },
+                    "T_No": {
+                        "type": "string"
+                    },
+                    "Batch_No": {
+                        "type": "string"
+                    },
+                    "IC_No": {
+                        "type": "string"
+                    },
+                    "Date_of_Appt": {
+                        "type": "string"
+                    },
+                    "Basic": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/authentication/addemployee2": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "empid": {
+                        "type": "string"
+                    },
+                    "Name_Of_the_Member": {
+                        "type": "string"
+                    },
+                    "applicaple": {
+                        "type": "string"
+                    },
+                    "Date_of_Birth": {
+                        "type": "string"
+                    },
+                    "Gender": {
+                        "type": "string"
+                    },
+                    "Marital_Status": {
+                        "type": "string"
+                    },
+                    "Email_ID": {
+                        "type": "string"
+                    },
+                    "Mobile_No": {
+                        "type": "string"
+                    },
+                    "provident": {
+                        "type": "string"
+                    },
+                    "pension": {
+                        "type": "string"
+                    },
+                    "Universal_Account_Number": {
+                        "type": "string"
+                    },
+                    "Pervious_PF_Account_Number": {
+                        "type": "string"
+                    },
+                    "Date_of_Exit": {
+                        "type": "string"
+                    },
+                    "Scheme_Certificate": {
+                        "type": "string"
+                    },
+                    "Pension_Payment": {
+                        "type": "string"
+                    },
+                    "International_Worker": {
+                        "type": "string"
+                    },
+                    "country_of_orgin": {
+                        "type": "string"
+                    },
+                    "Passport_No": {
+                        "type": "string"
+                    },
+                    "Validity_Form": {
+                        "type": "string"
+                    },
+                    "Validity_To": {
+                        "type": "string"
+                    },
+                    "Bank_Name": {
+                        "type": "string"
+                    },
+                    "Bank_Account_No": {
+                        "type": "string"
+                    },
+                    "Bank_IFSC_Code": {
+                        "type": "string"
+                    },
+                    "Aadhar_Number": {
+                        "type": "string"
+                    },
+                    "Permanaet_Account": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/addemployee3": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "empid": {
+                        "type": "string"
+                    },
+                    "ag_dayag_daughter": {
+                        "type": "string"
+                    },
+                    "ag_residing_no": {
+                        "type": "string"
+                    },
+                    "ag_witness1": {
+                        "type": "string"
+                    },
+                    "ag_witness2": {
+                        "type": "string"
+                    },
+                    "ag_place": {
+                        "type": "string"
+                    },
+                    "ag_date": {
+                        "type": "string"
+                    },
+                    "ag_day": {
+                        "type": "string"
+                    },
+                    "ag_name": {
+                        "type": "string"
+                    },
+                    "ag_father": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/addemployee4": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "empid": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Father": {
+                        "type": "string"
+                    },
+                    "Surname": {
+                        "type": "string"
+                    },
+                    "Account_No": {
+                        "type": "string"
+                    },
+                    "Addres_Per_Temp": {
+                        "type": "string"
+                    },
+                    "Nominee_name": {
+                        "type": "string"
+                    },
+                    "Address": {
+                        "type": "string"
+                    },
+                    "Nominees_Relationship": {
+                        "type": "string"
+                    },
+                    "Date_of_birth": {
+                        "type": "string"
+                    }
+                    ,
+                    "Total_Amount_share": {
+                        "type": "string"
+                    }
+                    ,
+                    "Total_Amount_minority": {
+                        "type": "string"
+                    },
+                    "Date_of_Birth1": {
+                        "type": "string"
+                    },
+                    "Gender1": {
+                        "type": "string"
+                    },
+                    "Marital_Status1": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
 
      "/authentication/updateemplo": {
         "POST": {

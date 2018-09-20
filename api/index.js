@@ -22,6 +22,11 @@ function addRoute(path, method, middlewares) {
     router[method.toLowerCase()](path, handlers);
 }
 
+function addRoute1(path, method, middlewares) {
+
+}
+
+
 app.use("*", [cors(),middleware.passport.initialize(), middleware.passport.session()]);
 app.options('*', cors());
 
@@ -52,6 +57,12 @@ addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 
 addRoute("/authentication/updateemplo", "POST", [middleware.updateemplo]);
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
+
+addRoute("/authentication/addemployee1", "POST", [middleware.addemployee1]);
+addRoute("/authentication/addemployee2", "POST", [middleware.addemployee2]);
+addRoute("/authentication/addemployee3", "POST", [middleware.addemployee3]);
+addRoute("/authentication/addemployee4", "POST", [middleware.addemployee4]);
+
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
 
 
@@ -66,26 +77,10 @@ addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 
-
-// default options
-app.use(fileUpload());
- 
+addRoute1("/authentication/upload", "POST", [middleware.uploads]);
 
 
 
-app.post('/upload', function(req, res) {
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-   var startup_image = req.files;
-   var fileName = req.body.fileName;
-   // Use the mv() method to place the file somewhere on your server
-   startup_image.mv(__dirname + '/services/images/' + fileName + '.jpg' , function(err) {
-     if(err){
-       console.log(err);
-     }else{
-    console.log("uploaded");
-}
-   });
- });
 
 
 
