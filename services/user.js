@@ -20,8 +20,8 @@ user.createusers = function (userInput, resultCallback) {
                  resultCallback(null,string); 
                }else{
                  console.log("2");
-                 executor.one('INSERT INTO public.usermanage("Employee_ID", "Name", "Designation", "Phone_number", "Email_id", "Password", "Add_by" )VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
-                 [userInput.Employee_ID,userInput.Name,userInput.Designation,userInput.Phone_number,userInput.Email_id,userInput.Password,userInput.Add_by])
+                 executor.one('INSERT INTO public.usermanage( "Employee_ID", "Name", "Designation", "Phone_number", "Email_id", "Password", "Add_by" )VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
+                 [userInput.Employee_ID,userInput.Name,userInput.Designation,userInput.Phone_number,userInput.Email_id,userInput.Password,userInput.Add_by ])
                  .then(data => {
                     console.log("1");
               resultCallback(null,data);
