@@ -204,8 +204,21 @@ function addemployee(req, res, next) {
                         error: err
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
+                }else{
+                    console.log(result.length);
+                       if(result == "0")
+                       {
+                        return res.json(_.merge({
+                    data: {
+                    "message": "Email_id Already used",
+                     "status": "Success"
+                    }  
+                }, utils.errors["200"]));
+               }
+                        else{
+                        waterfallCallback(null,result);
+                       }
+                } 
                 });
             },
             function (result, waterfallCallback){ 
@@ -225,7 +238,8 @@ function addemployee(req, res, next) {
                     data: {
         "message": "Employee Details add Successfully",
         "status": "Success"
-    }  
+    }  ,
+                id:mydata.empid
                 }, utils.errors["200"]));
             }
         ]);
