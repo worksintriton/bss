@@ -395,10 +395,7 @@ function addusers(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data:  {
-        "message": "User Details add Successfully",
-        "status": "Success"
-    }   
+                    data:  mydata  
                 }, utils.errors["200"]));
             }
         ]);

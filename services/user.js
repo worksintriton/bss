@@ -12,9 +12,10 @@ function user() {}
 user.createusers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.usermanagement WHERE "Email_id"=($1) ' , [userInput.Email_id])
+   executor.any('SELECT * FROM public.usermanage WHERE "Email_id"=($1) ' , [userInput.Email_id])
         .then(data => {
-                 if(data.length > 0 )//eruthuchuna
+                 console.log(data.length);
+                 if(data.length == 1 )//eruthuchuna
                  {
                   var string = {message:"This Email_id already exits!",status:"falied"} ;
                  resultCallback(null,string); 
@@ -310,7 +311,7 @@ user.userlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.usermanagement')
+   executor.any('SELECT * FROM public.usermanage')
         .then(data => {
 
                  resultCallback(null,data );
@@ -382,7 +383,7 @@ user.userids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public.usermanagement WHERE "userid"=($1) ' , [userInput.userid])
+    executor.any('SELECT * FROM public.usermanage WHERE "user_id"=($1) ' , [userInput.userid])
         .then(data => {
 
                  resultCallback(null,data );
@@ -418,7 +419,7 @@ user.deleteusers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('Delete FROM public.usermanagement WHERE "userid"=($1) ' , [userInput.userid])
+    executor.any('Delete FROM public.usermanage WHERE "user_id"=($1) ' , [userInput.userid])
         .then(data => {
 
                  resultCallback(null,data );
