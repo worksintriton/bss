@@ -40,8 +40,9 @@ user.createemployee = function (userInput, resultCallback) {
         .then(data => {
                  if(data.length > 0 )//eruthuchuna
                  {
-                  var string = {message:"This Email_id already exits!",status:"falied"} ;
+                  var string = "0";
                  resultCallback(null,string); 
+                
                }else{
                  console.log("2");
                  executor.one('INSERT INTO public.employeemanagement("Email_id","Password","Designation","Company","Employee_No","Rank","Name","Father_Name","Date_Of_Birth","Gender","Marital_Status","contact_details","Educational_Qualification","Nationality","Permanent_Address","Local_Address","Contact_No","Languages_Known","Work_Experience","EPF_No","ESIC_No","Aadhar_Card_No","Signature_of_the_manager","Signature_of_the_Applicant","BSS_EPF_Number","BSSPL_EPF_Number","MMSPL_EPF_Number","UAN_Number","Date_Of_Joining","Date_Of_Relieving", "Voter_ID", "Driving_Licence_Number", "PF_Elegible", "ESI_Elegible", "Professional_Tax", "Working_Status", "Emi")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37)RETURNING *',
@@ -60,7 +61,7 @@ user.createemployee = function (userInput, resultCallback) {
 
 user.createemployee2 = function (userInput , resultCallback) {
   var executor = db.getdaata.getdb();
-        executor.any('INSERT INTO public.employeedetails (empid) VALUES($1)',[userInput.empid])
+        executor.one('INSERT INTO public.employeedetails (empid) VALUES($1)RETURNING *',[userInput.empid])
        .then(data => {
         console.log(data);
         resultCallback(null,data);
