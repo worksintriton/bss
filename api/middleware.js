@@ -573,7 +573,7 @@ function employeeid(req, res, next) {
                 });
             },
             function (mydata, waterfallCallback){
-                console.log("1");
+            
                 services.user.employeeids1(req.body, function (err, result1) {
                 if (err) {
                     req.log.error({
@@ -581,7 +581,7 @@ function employeeid(req, res, next) {
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
                 }
-                 console.log("2");
+               
                 waterfallCallback(null,mydata,result1);
                 });
             },

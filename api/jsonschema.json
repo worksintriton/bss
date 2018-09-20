@@ -943,118 +943,25 @@
             "body": {
                  "type": "object",
                 "properties": {
+                    "Employee_ID": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Designation": {
+                        "type": "string"
+                    },
+                    "Phone_number": {
+                        "type": "string"
+                    },
                     "Email_id": {
                         "type": "string"
                     },
                     "Password": {
                         "type": "string"
                     },
-                    "Designation": {
-                        "type": "string"
-                    },
-                    "Company": {
-                        "type": "string"
-                    },
-                    "Site_(Unit)": {
-                        "type": "string"
-                    },
-                    "Employee_No": {
-                        "type": "string"
-                    },
-                    "Rank": {
-                        "type": "string"
-                    },
-                    "Name": {
-                        "type": "string"
-                    },
-                    "Father_Name": {
-                        "type": "string"
-                    },
-                    "Date_Of_Birth": {
-                        "type": "string"
-                    },
-                    "Gender": {
-                        "type": "string"
-                    },
-                    "Marital_Status": {
-                        "type": "string"
-                    },
-                    "contact_details": {
-                        "type": "string"
-                    },
-                    "Educational_Qualification": {
-                        "type": "string"
-                    },
-                    "Nationality": {
-                        "type": "string"
-                    },
-                    "Permanent_Address": {
-                        "type": "string"
-                    },
-                    "Local_Address": {
-                        "type": "string"
-                    },
-                    "Contact_No": {
-                        "type": "string"
-                    },
-                    "Languages_Known": {
-                        "type": "string"
-                    },
-                    "Work_Experience": {
-                        "type": "string"
-                    },
-                    "EPF_No": {
-                        "type": "string"
-                    },
-                    "ESIC_No": {
-                        "type": "string"
-                    },
-                    "Aadhar_Card_No": {
-                        "type": "string"
-                    },
-                    "Signature_of_the_manager": {
-                        "type": "string"
-                    },
-                    "Signature_of_the_Applicant": {
-                        "type": "string"
-                    },
-                    "BSS_EPF_Number": {
-                        "type": "string"
-                    },
-                    "BSSPL_EPF_Number": {
-                        "type": "string"
-                    },
-                    "MMSPL_EPF_Number": {
-                        "type": "string"
-                    },
-                    "UAN_Number": {
-                        "type": "string"
-                    },
-                    "Date_Of_Joining": {
-                        "type": "string"
-                    },
-                    "Date_Of_Relieving": {
-                        "type": "string"
-                    },
-                    "Voter_ID": {
-                        "type": "string"
-                    },
-                    "Driving_Licence_Number": {
-                        "type": "string"
-                    },
-                    "PF_Elegible": {
-                        "type": "string"
-                    },
-                    "ESI_Elegible": {
-                        "type": "string"
-                    },
-                    "Professional_Tax": {
-                        "type": "string"
-                    },
-                    "Working_Status": {
-                        "type": "string"
-                    },
-                    "Emi": {
+                    "Add_by": {
                         "type": "string"
                     }
                 },
