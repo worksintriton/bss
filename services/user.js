@@ -342,6 +342,24 @@ user.employeeids = function (userInput, resultCallback) {
 
 
 };
+
+user.employeeids1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.employeedetails WHERE "empid"=($1) ' , [userInput.empid])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
 user.clientids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
