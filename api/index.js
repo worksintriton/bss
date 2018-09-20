@@ -77,17 +77,12 @@ addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 
-<<<<<<< HEAD
+
 addRoute1("/authentication/upload", "POST", [middleware.uploads]);
 
 
 
 
-=======
-
-
-
->>>>>>> e5f3ebcb875662e86e20f887c8cee35a2de1d9e3
 
 
 
