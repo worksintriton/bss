@@ -39,5 +39,10 @@ module.exports = {
         message: "Account already Exists",
         status: "Failure",
         code: 500
+    },
+    "402": {
+        message: "No Data Found",
+        status: "Failure",
+        code: 500
     }
 };

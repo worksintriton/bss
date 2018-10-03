@@ -1318,10 +1318,10 @@
                         "type": "number"
                     },
                     "shift_type": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "hour_type": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "salary_am": {
                         "type": "number"
@@ -1447,7 +1447,13 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "Sl_No": {
+                    "cliid": {
+                        "type": "number"
+                    },
+                    "User_name": {
+                        "type": "string"
+                    },
+                    "Password": {
                         "type": "string"
                     },
                     "No_of_Sites": {
@@ -1462,10 +1468,10 @@
                     "Contact_Name": {
                         "type": "string"
                     },
-                    "Contact_No": {
+                    "Contact_Number": {
                         "type": "string"
                     },
-                    "E_Mail_ID": {
+                    "E_mail_ID": {
                         "type": "string"
                     },
                     "Designations": {
@@ -1486,7 +1492,7 @@
                     "Allowance": {
                         "type": "string"
                     },
-                    "Total_Allowance": {
+                    "Total_Allowances": {
                         "type": "string"
                     },
                     "Wages": {
@@ -1495,22 +1501,19 @@
                     "Total_Wages": {
                         "type": "string"
                     },
-                    "Add_Value": {
+                    "Add_Values": {
                         "type": "string"
                     },
                     "MARGIN": {
                         "type": "string"
                     },
-                    "Contract_Start_Date": {
+                    "Contract_Start_Dates": {
                         "type": "string"
                     },
-                    "Roc_date_From": {
+                     "Roc_date_Froms": {
                         "type": "string"
                     },
                     "ROC_to": {
-                        "type": "string"
-                    },
-                    "Signed_by_client": {
                         "type": "string"
                     },
                     "Accts_Info": {
@@ -1525,19 +1528,19 @@
                     "Aging_Analysis": {
                         "type": "string"
                     },
-                    "created_date": {
+                    "Created_date": {
                         "type": "string"
                     },
-                    "updated_date": {
+                    "Updated_date": {
                         "type": "string"
                     },
-                    "updated_by": {
+                    "Updated_by": {
                         "type": "string"
                     }
                 },
         "additionalProperties": true,
                 "required": [
-                                           
+
         ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -1551,6 +1554,10 @@
             }
         }
     },
+
+
+
+   
 
     
     

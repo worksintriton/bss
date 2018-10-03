@@ -34,6 +34,8 @@ user.createusers = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+
 user.createemployee = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -59,6 +61,7 @@ user.createemployee = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
 
 user.createemployee2 = function (userInput , resultCallback) {
   var executor = db.getdaata.getdb();
@@ -207,6 +210,8 @@ userInput.Marital_Status1,
           console.log('ERROR:', error);
         });
 };
+
+
 user.createclient = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -252,7 +257,7 @@ user.createclient1 = function (userInput, resultCallback) {
 user.createclient2 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('UPDATE public.client_amount SET  "No_am"=$2, "No_as"=$3, "No_s"=$4, shift_type=$5, hour_type=$6, "  payment_type"=$7, salary_am=$8, am_bss=$9, am_employee=$10, am_30days=$11, am_31days=$12, am_28days=$13, am_29days=$14, over_time_am=$15, am_ot_bss=$16, am_ot_employee=$17, salary_as=$18, as_bss=$19, as_employee=$20, as_30days=$21, as_31days=$22, as_28days=$23, as_29days=$24, over_time_as=$25, as_ot_employee=$26, as_ot_bss=$27, salary_s=$28, s_bss=$29, s_employee=$30, s_30days=$31, s_31days=$32, s_28days=$33, s_29days=$34, over_time_s=$35, s_ot_bss=$36, s_ot_employee=$37, total_amount=$38, am_tot=$39, as_tot=$40, s_tot =$41 WHERE "cliid"= $1 ',[userInput.cliid,
+    executor.any('UPDATE public.client_amount SET  "No_am"=$2, "No_as"=$3, "No_s"=$4, shift_type=$5, hour_type=$6, "payment_type"=$7, salary_am=$8, am_bss=$9, am_employee=$10, am_30days=$11, am_31days=$12, am_28days=$13, am_29days=$14, over_time_am=$15, am_ot_bss=$16, am_ot_employee=$17, salary_as=$18, as_bss=$19, as_employee=$20, as_30days=$21, as_31days=$22, as_28days=$23, as_29days=$24, over_time_as=$25, as_ot_employee=$26, as_ot_bss=$27, salary_s=$28, s_bss=$29, s_employee=$30, s_30days=$31, s_31days=$32, s_28days=$33, s_29days=$34, over_time_s=$35, s_ot_bss=$36, s_ot_employee=$37, total_amount=$38, am_tot=$39, as_tot=$40, s_tot =$41 WHERE "cliid"= $1 ',[userInput.cliid,
       userInput.No_am,
       userInput.No_as,
       userInput.No_s,
@@ -294,7 +299,9 @@ user.createclient2 = function (userInput, resultCallback) {
       userInput.as_tot,
       userInput.s_tot])
         .then(data => {
-        
+
+            var data = "Success";
+            resultCallback(null,data);
                  
     
                
@@ -304,6 +311,24 @@ user.createclient2 = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+
+user.updateclient = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+   
+                executor.one('UPDATE public."client_Management" SET  "User_name"=$2, "Password"=$3, "No_of_Sites"=$4, "Client_Name"=$5, "Address"=$6, "Contact_Name"=$7, "Contact_Number"=$8, "E_mail_ID"=$9, "Designations"=$10, "Deployment"=$11, "Hrs_pattern"=$12, "RATES"=$13, "Value"=$14, "Allowance"=$15, "Total_Allowances"=$16, "Wages"=$17, "Total_Wages"=$18, "Add_Values"=$19, "MARGIN"=$20, "Contract_Start_Dates"=$21, "Roc_date_Froms"=$22, "ROC_to"=$23, "Accts_Info"=$24, "Invoice_cycle"=$25, "Credit_Period"=$26, "Aging_Analysis"=$27, "Created_date"=$28, "Updated_date"=$29, "Updated_by"=$30 WHERE  "cliid" = $1 RETURNING *',
+                 [userInput.cliid,userInput.User_name,userInput.Password,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_Number,userInput.E_mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowances,userInput.Wages,userInput.Total_Wages,userInput.Add_Values,userInput.MARGIN,userInput.Contract_Start_Dates,userInput.Roc_date_Froms,userInput.ROC_to,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis,userInput.Created_date,userInput.Updated_date,userInput.Updated_by])
+                 .then(data => {
+              resultCallback(null,data);
+                 })      
+                  
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
 
 
 
@@ -344,7 +369,7 @@ user.clientlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.clientmanagment')
+   executor.any('SELECT * FROM public."client_Management"')
         .then(data => {
 
                  resultCallback(null,data );
@@ -437,7 +462,25 @@ user.clientids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public.clientmanagment WHERE "cliid"=($1) ' , [userInput.cliid])
+    executor.any('SELECT * FROM public."client_Management" WHERE "cliid"=($1) ' , [userInput.cliid])
+        .then(data => {
+          console.log(data);
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+user.clientids1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public."client_amount" WHERE "cliid"=($1) ' , [userInput.cliid])
         .then(data => {
 
                  resultCallback(null,data );
@@ -472,7 +515,7 @@ user.deleteclients = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('Delete FROM public.clientmanagment WHERE "cliid"=($1) ' , [userInput.cliid])
+    executor.any('Delete FROM public."client_Management" WHERE "cliid"=($1) ' , [userInput.cliid])
         .then(data => {
 
                  resultCallback(null,data );

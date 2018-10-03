@@ -510,19 +510,14 @@ function updateclients(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
                 services.user.updateclient(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
+                
                 waterfallCallback(null,result);
                 });
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata 
-                }, utils.errors["200"]));
+                   message:"Updated Success"       
+             }, utils.errors["200"]));
             }
         ]);
 
@@ -560,13 +555,14 @@ function clientlist(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
                 services.user.clientlists(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
+                      
+                      if(result.length == 0)
+                      {
+                         return res.json(_.merge({
+                         }, utils.errors["402"]));
+                      }else{
+                         waterfallCallback(null,result);
+                      }
                 });
             },
             function (mydata, waterfallCallback){
@@ -671,23 +667,38 @@ function clientid(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
                 services.user.clientids(req.body, function (err, result) {
+               
+                waterfallCallback(null,result);
+                });
+            },
+            function (Client_details, waterfallCallback){
+
+                 services.user.clientids1(req.body, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
                 }
-                waterfallCallback(null,result);
+                waterfallCallback(null,Client_details,result);
                 });
             },
-            function (mydata, waterfallCallback){
+            function (Client_details,result, waterfallCallback){
                 return res.json(_.merge({
-                    data:mydata[0]
+                    Client_details:Client_details[0],
+                    Client_payment:result[0]
                 }, utils.errors["200"]));
             }
         ]);
 
 }
+
+
+
+
+
+
+
 function userid(req, res, next) {
 
        async.waterfall([
