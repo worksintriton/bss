@@ -29,6 +29,72 @@
     },
 
 
+    "/authentication/employeereqiured": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                     "cliid": {
+                        "type": "string"
+                    },
+                     "no_am": {
+                        "type": "number"
+                    },
+                     "no_sup": {
+                        "type": "number"
+                    },
+                     "no_security": {
+                        "type": "number"
+                    },
+                     "pay_sup": {
+                        "type": "number"
+                    },
+                     "pay_am": {
+                        "type": "number"
+                    },
+                     "pay_security": {
+                        "type": "number"
+                    },
+                     "overtime_pay": {
+                        "type": "number"
+                    },
+                     "bsspay_am": {
+                        "type": "number"
+                    },
+                    "bsspay_security": {
+                        "type": "number"
+                    },
+                    "bsspay_sup": {
+                        "type": "number"
+                    },
+                    "bssovertime_pay": {
+                        "type": "number"
+                    },
+                    "shift_type": {
+                        "type": "string"
+                    },
+                    "shift_hours": {
+                        "type": "string"
+                    }
+
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "shift_type": "should have required property userId"
+                    },
+                    "properties": {
+                        "shift_type": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
 
     "/authentication/bsslogin": {
         "POST": {
@@ -1128,7 +1194,10 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "Sl_No": {
+                    "User_name": {
+                        "type": "string"
+                    },
+                    "Password": {
                         "type": "string"
                     },
                     "No_of_Sites": {
@@ -1143,10 +1212,10 @@
                     "Contact_Name": {
                         "type": "string"
                     },
-                    "Contact_No": {
+                    "Contact_Number": {
                         "type": "string"
                     },
-                    "E_Mail_ID": {
+                    "E_mail_ID": {
                         "type": "string"
                     },
                     "Designations": {
@@ -1167,7 +1236,7 @@
                     "Allowance": {
                         "type": "string"
                     },
-                    "Total_Allowance": {
+                    "Total_Allowances": {
                         "type": "string"
                     },
                     "Wages": {
@@ -1176,22 +1245,19 @@
                     "Total_Wages": {
                         "type": "string"
                     },
-                    "Add_Value": {
+                    "Add_Values": {
                         "type": "string"
                     },
                     "MARGIN": {
                         "type": "string"
                     },
-                    "Contract_Start_Date": {
+                    "Contract_Start_Dates": {
                         "type": "string"
                     },
-                    "Roc_date_From": {
+                     "Roc_date_Froms": {
                         "type": "string"
                     },
                     "ROC_to": {
-                        "type": "string"
-                    },
-                    "Signed_by_client": {
                         "type": "string"
                     },
                     "Accts_Info": {
@@ -1206,17 +1272,155 @@
                     "Aging_Analysis": {
                         "type": "string"
                     },
-                    "created_date": {
+                    "Created_date": {
                         "type": "string"
                     },
-                    "updated_date": {
+                    "Updated_date": {
                         "type": "string"
                     },
-                    "updated_by": {
+                    "Updated_by": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+
+        ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Sl_No": "should have required property userId"
+                    },
+                    "properties": {
+                        "Sl_No": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/authentication/addclients1": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "cliid": {
                         "type": "string"
                     },
-                    "password": {
-                        "type": "string"
+                    "No_am": {
+                        "type": "number"
+                    },
+                    "No_as": {
+                        "type": "number"
+                    },
+                    "No_s": {
+                        "type": "number"
+                    },
+                    "shift_type": {
+                        "type": "number"
+                    },
+                    "hour_type": {
+                        "type": "number"
+                    },
+                    "salary_am": {
+                        "type": "number"
+                    },
+                    "am_bss": {
+                        "type": "number"
+                    },
+                    "am_employee": {
+                        "type": "number"
+                    },
+                    "am_30days": {
+                        "type": "number"
+                    },
+                    "am_31days": {
+                        "type": "number"
+                    },
+                    "am_28days": {
+                        "type": "number"
+                    },
+                    "am_29days": {
+                        "type": "number"
+                    },
+                    "am_ot_bss": {
+                        "type": "number"
+                    },
+                    "am_ot_employee": {
+                        "type": "number"
+                    },
+                    "salary_as": {
+                        "type": "number"
+                    },
+                    "as_bss": {
+                        "type": "number"
+                    },
+                    "as_employee": {
+                        "type": "number"
+                    },
+                    "as_30days": {
+                        "type": "number"
+                    },
+                    "as_31days": {
+                        "type": "number"
+                    },
+                     "as_28days": {
+                        "type": "number"
+                    },
+                    "as_29days": {
+                        "type": "number"
+                    },
+                    "over_time_as": {
+                        "type": "number"
+                    },
+                    "as_ot_bss": {
+                        "type": "number"
+                    },
+                    "as_ot_employee": {
+                        "type": "number"
+                    },
+                    "salary_s": {
+                        "type": "number"
+                    },
+                    "s_bss": {
+                        "type": "number"
+                    },
+                    "s_employee": {
+                        "type": "number"
+                    },
+                    "s_30days": {
+                        "type": "number"
+                    },
+                    "s_31days": {
+                        "type": "number"
+                    },
+                    "s_28days": {
+                        "type": "number"
+                    },
+                    "s_29days": {
+                        "type": "number"
+                    },
+                    "over_time_s": {
+                        "type": "number"
+                    },
+                    "s_ot_bss": {
+                        "type": "number"
+                    },
+                    "s_ot_employee": {
+                        "type": "number"
+                    },
+                    "total_amount": {
+                        "type": "number"
+                    },
+                    "am_tot": {
+                        "type": "number"
+                    },
+                    "as_tot": {
+                        "type": "number"
+                    },
+                    "s_tot": {
+                        "type": "number"
                     }
                 },
         "additionalProperties": true,

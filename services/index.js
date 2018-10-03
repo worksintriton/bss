@@ -3,14 +3,15 @@
 var flatuser = require ("./flatuser");
 var loginpage =  require ("./loginpage");
 var user =  require ("./user");
+var clientmanagement =  require ("./clientmanagement");
 
 
 
 
 exports.flatuser = flatuser;
 exports.loginpage = loginpage ;
-
 exports.user = user;
+exports.clientmanagement = clientmanagement;
 
 
 

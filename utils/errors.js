@@ -34,5 +34,10 @@ module.exports = {
         message: "Internal server error",
         status: "Failure",
         code: 500
+    },
+    "401": {
+        message: "Account already Exists",
+        status: "Failure",
+        code: 500
     }
 };

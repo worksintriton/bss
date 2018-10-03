@@ -65,6 +65,32 @@ function signin(req, res, next) {
         ]);
 
 }
+
+
+function employeereqiured(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.clientmanagement.employeereqiureds(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 ////////register///////
 
 function registerpage(req, res, next) {
@@ -407,15 +433,37 @@ function addclients(req, res, next) {
 
        async.waterfall([
             function (waterfallCallback){
-                console.log("entered controller");
+                
                 services.user.createclient(req.body, function (err, result) {
                 if (err) {
                     return res.json(_.merge({
                     error_is: err 
                 }, utils.errors["500"]));
 
+                }else{
+
+                    if(result.length == 0)
+                    {
+                        return res.json(_.merge({
+                       }, utils.errors["401"]));
+
+                    }else{
+                        waterfallCallback(null,result);
+                    }
                 }
-                waterfallCallback(null,result);
+                });
+            },
+             function (mydata, waterfallCallback){  
+                services.user.createclient1(mydata.cliid , function (err, result) {
+                if (err) {
+                    return res.json(_.merge({
+                    error_is: err 
+                }, utils.errors["500"]));
+
+                }else{
+
+                        waterfallCallback(null,mydata);  
+                }
                 });
             },
             function (mydata, waterfallCallback){
@@ -423,12 +471,38 @@ function addclients(req, res, next) {
                     data: {
                  "message": "Client Details add Successfully",
                  "status": "Success"
-                } 
+                },
+                cliid:mydata.cliid
                 }, utils.errors["200"]));
             }
         ]);
 
 }
+
+function addclients1(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.createclient2(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 ///updateclient//////
 
 function updateclients(req, res, next) {
@@ -777,3 +851,14 @@ exports.addemployee1 = addemployee1 ;
 exports.addemployee2 = addemployee2 ;
 exports.addemployee3 = addemployee3 ;
 exports.addemployee4 =  addemployee4 ;
+
+exports.employeereqiured = employeereqiured ;
+
+
+
+
+exports.addclients1 = addclients1 ;
+
+
+
+
