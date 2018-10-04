@@ -107,6 +107,9 @@ addRoute("/authentication/addclients1", "POST", [middleware.addclients1]);
 addRoute("/authentication/clientid", "POST", [middleware.clientid]);
 addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
+
+
+
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 
 
