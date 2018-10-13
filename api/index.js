@@ -122,6 +122,8 @@ addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 
 
 
+// addRoute("/authentication/test", "POST", [middleware.test]);
+
 
 
 

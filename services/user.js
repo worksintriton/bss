@@ -365,6 +365,8 @@ executor.one('UPDATE public.usermanagement SET  "Password"=($2),"Designation"=($
 
 //////list//////// 
 //clientlist
+
+
 user.clientlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
