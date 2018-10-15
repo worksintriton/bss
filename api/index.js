@@ -4,6 +4,7 @@ var express = require("express"),
     utils = require("../utils"),
     jsonschema = require("./jsonschema"),
     middleware = require("./middleware"),
+    middleware_emp = require("./middleware_emp"),
     cors = require("cors");
     const fileUpload = require('express-fileupload');
 
@@ -36,45 +37,14 @@ addRoute("/authentication/signin", "POST", [middleware.signin]);
 addRoute("/authentication/registerpage", "POST", [middleware.registerpage]);
 addRoute("/authentication/loginpages", "POST", [middleware.loginpages]);
 
-
-
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
-
 addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
-
 addRoute("/authentication/securitytlogin", "POST", [middleware.securitytlogin]);
-
 addRoute("/authentication/employeeid", "POST", [middleware.employeeid]);
-
 addRoute("/authentication/userid", "POST", [middleware.userid]);
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
-
-
-
-
-
-
-
-
-
 addRoute("/authentication/employeereqiured", "POST", [middleware.employeereqiured]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 addRoute("/authentication/updateemplo", "POST", [middleware.updateemplo]);
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
@@ -89,18 +59,7 @@ addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
-addRoute1("/authentication/upload", "POST", [middleware.uploads]);
-addRoute1("/authentication/upload", "POST", [middleware.uploads]);
-
-
-
-
-
-
-
-
-
-
+//addRoute("/authentication/upload", "POST", [middleware.uploads]);
 
 addRoute("/authentication/addclients", "POST", [middleware.addclients]);
 addRoute("/authentication/addclients1", "POST", [middleware.addclients1]);
@@ -108,39 +67,26 @@ addRoute("/authentication/clientid", "POST", [middleware.clientid]);
 addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
-
-
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
-
-
-
-
-
-
-
-
-
-
-
 // addRoute("/authentication/test", "POST", [middleware.test]);
 
 
 
+/*
+Employee Api's
+*/
+
+addRoute("/authentication/employeeLogin", "POST", [middleware_emp.signin]);
+addRoute("/authentication/updateEmpProfile", "POST", [middleware_emp.signin]);
+/*
+Issue Tracking
+*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+addRoute("/issue/create", "POST", [middleware_emp.validateEmployee, middleware.create_issue]);
+addRoute("/issue/createAttachment", "POST", [middleware.create_issue_attachment]);
+addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
+addRoute("/issue/listmyissues", "POST", [middleware_emp.validateEmployee, middleware.list_my_issue]);
 
 app.use(router);
 

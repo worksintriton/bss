@@ -5,7 +5,7 @@ module.exports = {
         status: "Success",
         code: 200
     },
-    "401": {
+    "401a": {
         message: "Authentication failed",
         status: "Failure",
         code: 401

@@ -1800,5 +1800,157 @@
                 }
             }
         }
+    },
+
+ "/authentication/employeeLogin": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "LoginKey": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "LoginKey" , 
+                    "Password"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "LoginKey": "should have required property LoginKey",
+                        "Password": "Password must be used"
+                    },
+                    "properties": {
+                        "LoginKey": "userId must be string",
+                        "Password": "Password must be used"
+                    }
+                }
+            }
+        }
+    },
+    "/issue/create": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "LoginKey": {
+                        "type": "string"
+                    },
+                    "complaint_from": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "posted_on": {
+                        "type": "string"
+                    },
+                    "complaint_type":{
+
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "LoginKey"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "LoginKey": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "LoginKey": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+    "/issue/listallissues": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "LoginKey": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "LoginKey"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "LoginKey": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "LoginKey": "userId must be string"
+                    }
+                }
+            }
+        }
+
+    },
+    "/issue/listmyissues": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "LoginKey": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "LoginKey"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "LoginKey": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "LoginKey": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/issue/createAttachment": {
+        "POST": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        
+                    },
+                    "properties": {
+
+                    }
+                }
+            }
+        }
     }
 }

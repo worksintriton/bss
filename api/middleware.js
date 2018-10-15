@@ -12,6 +12,7 @@ var fs = require("fs"),
     services = require("../services");
 var base64ToImage = require('base64-to-image');
 var uniqid = require('uniqid');
+var path = require('path')
 //var FORGOT_PASSWORD_HTML = fs.readFileSync("www/resetpassword.html", "utf8");
 /*
 To Maintain Local Session
@@ -829,7 +830,194 @@ function uploads(req, res, next) {
 }
 
 
+/*
+Issue Management
+*/
+function create_issue(req, res, next) {
 
+       async.waterfall([
+            function (waterfallCallback){
+                services.issues.createIssue(req.body, function (err,is_inserted, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,is_inserted, result);
+                });
+            },
+
+            function (is_inserted, result, waterfallCallback){
+                if(is_inserted == true){
+                return res.json(_.merge({
+                    issue: result,
+                    message: "Created Succcessfully" 
+                }, utils.errors["200"]));
+                }
+                else{
+                return res.json(_.merge({
+                    issue: result,
+                    message: "Error in Creating this issue, pls Try after some time" 
+                }, utils.errors["400"]));
+                }
+            }
+
+        ]);
+
+}
+function create_issue_attachment(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                 if (!req.files)
+                    return res.status(404).json(utils.errors["404"]);
+               
+                      let sampleFile = req.files.pic;
+                      let basepath = "www/pics/issues/";
+                      var timestamp = uniqid();
+                      var ext = path.extname(sampleFile.name)
+                      let filename = timestamp+ext;
+                        console.log(filename)
+                      sampleFile.mv(basepath+filename, function(err) {
+                        if (err)
+                        return res.json(_.merge({
+                            issue: err,
+                            message: "file uploaded" 
+                        }, utils.errors["400"]));
+                     
+                       waterfallCallback(null, basepath, filename, req.query['issue_id']);
+                      });
+
+            },
+
+            function (basepath, filename, issue_id, waterfallCallback){
+
+                 services.issues.createIssueAttachment(basepath, filename, issue_id, function (err,is_inserted, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+
+                return res.json(_.merge({
+                    issue: result,
+                    message: "file uploaded" 
+                }, utils.errors["200"]));
+
+                
+                });
+
+            }
+
+        ]);
+
+}
+function list_issue(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.issues.listIssues(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, result);
+                });
+            },
+            function (listIssues, waterfallCallback){
+                services.issues.listIssueAttachment(req.body, function (err, listIssueAttachment) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, listIssues, listIssueAttachment);
+                });
+            },
+            
+            function ( listIssues, listIssueAttachment, waterfallCallback){
+              
+                return res.json(_.merge({
+                    issue: listIssues,
+                    attachments: listIssueAttachment,
+                    message: "Done" 
+                }, utils.errors["200"]));
+                
+            }
+
+        ]);
+
+}
+function list_my_issue(req, res, next) {
+
+
+async.waterfall([
+            function (waterfallCallback){
+                services.issues.listMyIssues(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, result);
+                });
+            },
+            function (listIssues, waterfallCallback){
+                services.issues.listmyIssueAttachment(req.body, function (err, listIssueAttachment) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, listIssues, listIssueAttachment);
+                });
+            },
+            
+            function ( listIssues, listIssueAttachment, waterfallCallback){
+              
+                return res.json(_.merge({
+                    issue: listIssues,
+                    attachments: listIssueAttachment,
+                    message: "Done" 
+                }, utils.errors["200"]));
+                
+            }
+
+        ]);
+
+
+       /*async.waterfall([
+            function (waterfallCallback){
+                services.issues.listMyIssues(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, result);
+                });
+            },
+
+            function ( result, waterfallCallback){
+              
+                return res.json(_.merge({
+                    issue: result,
+                    message: "Done" 
+                }, utils.errors["200"]));
+                
+            }
+
+        ]);*/
+
+}
 
 
 
@@ -868,8 +1056,13 @@ exports.employeereqiured = employeereqiured ;
 
 
 
-exports.addclients1 = addclients1 ;
+exports.addclients1 = addclients1;
 
 
-
-
+/*
+Issue Controll
+*/
+exports.create_issue = create_issue;
+exports.list_issue = list_issue;
+exports.list_my_issue =list_my_issue;
+exports.create_issue_attachment = create_issue_attachment;
