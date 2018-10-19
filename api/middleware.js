@@ -219,38 +219,14 @@ function securitytlogin(req, res, next) {
 
 
 
-/////addEmployee///////
+/////addemployee///////
+
 
 function addemployee(req, res, next) {
 
        async.waterfall([
             function (waterfallCallback){
-                services.user.createemployee(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }else{
-                    console.log(result.length);
-                       if(result == "0")
-                       {
-                        return res.json(_.merge({
-                    data: {
-                    "message": "Email_id Already used",
-                     "status": "Success"
-                    }  
-                }, utils.errors["200"]));
-               }
-                        else{
-                        waterfallCallback(null,result);
-                       }
-                } 
-                });
-            },
-            function (result, waterfallCallback){ 
-            console.log(result);            
-              services.user.createemployee2 ( result, function (err, updateresult) {
+                services.user.AddemployeeC(req.body, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
@@ -262,39 +238,7 @@ function addemployee(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: {
-        "message": "Employee Details add Successfully",
-        "status": "Success"
-    }  ,
-                id:mydata.empid
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
-
-///addemployee1////
-
-function addemployee1(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.createemployee3(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: {
-        "message": "Employee Details add Successfully",
-        "status": "Success"
-    }  
+                    data:  mydata  
                 }, utils.errors["200"]));
             }
         ]);
@@ -302,108 +246,11 @@ function addemployee1(req, res, next) {
 }
 
 
-function addemployee2(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.createemployee4(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: {
-        "message": "Employee Details add Successfully",
-        "status": "Success"
-    }  
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
-
-function addemployee3(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.createemployee5(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: {
-        "message": "Employee Details add Successfully",
-        "status": "Success"
-    }  
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
-
-function addemployee4(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.createemployee6(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: {
-        "message": "Employee Details add Successfully",
-        "status": "Success"
-    }  
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
-///lEmployee///
 
 
-function updateemplo(req, res, next) {
 
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.updateemployees(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata 
-                }, utils.errors["200"]));
-            }
-        ]);
 
-}
+
 
 ///addusers////
 function addusers(req, res, next) {
