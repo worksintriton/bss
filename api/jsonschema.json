@@ -127,6 +127,54 @@
         }
     },
 
+
+    "/authentication/confignumber": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Red_alert": {
+                        "type": "number"
+                    },
+                    "Fire_alert": {
+                        "type": "number"
+                    },
+                    "Ambulance_alert": {
+                        "type": "number"
+                    },
+                    "Police_alert": {
+                        "type": "number"
+                    },
+                    "client_ID": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Red_alert",
+                    "Fire_alert",
+                    "Ambulance_alert",
+                    "Police_alert",
+                    "client_ID"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Red_alert": "should have required property Red_alert",
+                        "Fire_alert": "should have required property Fire_alert",
+                        "Ambulance_alert": "should have required property Ambulance_alert",
+                        "Police_alert": "should have required property Police_alert",
+                      "client_ID":"should have required property client_ID"
+
+                    },
+                    "properties": {
+                        "Red_alert": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
      "/authentication/upload": {
         "POST": {
             "body": {
@@ -383,118 +431,118 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "Email_id": {
+                    "Email_ID": {
                         "type": "string"
                     },
                     "Password": {
                         "type": "string"
                     },
-                    "Designation": {
+                    "employee_type": {
                         "type": "string"
                     },
-                    "Company": {
-                        "type": "string"
-                    },
-                    "Site_(Unit)": {
-                        "type": "string"
-                    },
-                    "Employee_No": {
-                        "type": "string"
-                    },
-                    "Rank": {
+                    "employee_id": {
                         "type": "string"
                     },
                     "Name": {
                         "type": "string"
                     },
-                    "Father_Name": {
+                    "father_name": {
                         "type": "string"
                     },
-                    "Date_Of_Birth": {
+                    "Date_of_birth": {
                         "type": "string"
                     },
-                    "Gender": {
+                    "gender": {
                         "type": "string"
                     },
-                    "Marital_Status": {
+                    "material_status": {
                         "type": "string"
                     },
-                    "contact_details": {
+                    "Edq": {
                         "type": "string"
                     },
-                    "Educational_Qualification": {
+                    "nationality": {
                         "type": "string"
                     },
-                    "Nationality": {
+                    "Address": {
                         "type": "string"
                     },
-                    "Permanent_Address": {
+                    "Mobile_No": {
                         "type": "string"
                     },
-                    "Local_Address": {
+                    "languages": {
                         "type": "string"
                     },
-                    "Contact_No": {
+                    "work_exp": {
                         "type": "string"
                     },
-                    "Languages_Known": {
+                    "aadhar_card": {
                         "type": "string"
                     },
-                    "Work_Experience": {
+                    "date_joining": {
                         "type": "string"
                     },
-                    "EPF_No": {
+                    "voter_id": {
                         "type": "string"
                     },
-                    "ESIC_No": {
+                    "driving_licence": {
                         "type": "string"
                     },
-                    "Aadhar_Card_No": {
+                    "attach": {
                         "type": "string"
                     },
-                    "Signature_of_the_manager": {
+                    "epn_no": {
                         "type": "string"
                     },
-                    "Signature_of_the_Applicant": {
+                    "epn_amount": {
                         "type": "string"
                     },
-                    "BSS_EPF_Number": {
+                    "esic_no": {
                         "type": "string"
                     },
-                    "BSSPL_EPF_Number": {
+                    "esic_amount": {
                         "type": "string"
                     },
-                    "MMSPL_EPF_Number": {
+                    "epf_no": {
                         "type": "string"
                     },
-                    "UAN_Number": {
+                    "epf_amount": {
                         "type": "string"
                     },
-                    "Date_Of_Joining": {
+                    "mmspl_no": {
                         "type": "string"
                     },
-                    "Date_Of_Relieving": {
+                    "mmspl_amount": {
                         "type": "string"
                     },
-                    "Voter_ID": {
+                    "uan_no": {
                         "type": "string"
                     },
-                    "Driving_Licence_Number": {
+                    "uan_amount": {
                         "type": "string"
                     },
-                    "PF_Elegible": {
+                    "pf_elegible": {
+                        "type": "string"
+                    },
+                    "pf_amount": {
+                        "type": "string"
+                    },
+                    "esi_elegible": {
+                        "type": "string"
+                    },
+                    "esi_amount": {
                         "type": "string"
                     },
                     "ESI_Elegible": {
                         "type": "string"
                     },
-                    "Professional_Tax": {
+                    "professional_tax": {
                         "type": "string"
                     },
-                    "Working_Status": {
+                    "professional_type": {
                         "type": "string"
                     },
-                    "Emi": {
+                    "professional_amount": {
                         "type": "string"
                     }
                 },
@@ -667,6 +715,9 @@
                         "type": "string"
                     },
                     "Designation": {
+                        "type": "string"
+                    },
+                     "Level": {
                         "type": "string"
                     },
                     "Phone_number": {

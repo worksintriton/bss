@@ -46,24 +46,42 @@ addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
 addRoute("/authentication/employeereqiured", "POST", [middleware.employeereqiured]);
 
-addRoute("/authentication/updateemplo", "POST", [middleware.updateemplo]);
+
 
 
 
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
+addRoute("/authentication/addusers", "POST", [middleware.addusers]);
+addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
+
+
+
+addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
+
+
+addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
+
+
+addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
+
+
+
 
 
 
 
 
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
-addRoute("/authentication/addusers", "POST", [middleware.addusers]);
-addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
+
 addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 //addRoute("/authentication/upload", "POST", [middleware.uploads]);
+
+
+
+
 
 addRoute("/authentication/addclients", "POST", [middleware.addclients]);
 addRoute("/authentication/addclients1", "POST", [middleware.addclients1]);

@@ -21,8 +21,8 @@ user.createusers = function (userInput, resultCallback) {
                  resultCallback(null,string); 
                }else{
                  console.log("2");
-                 executor.one('INSERT INTO public.usermanage( "Employee_ID", "Name", "Designation", "Phone_number", "Email_id", "Password", "Add_by" )VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
-                 [userInput.Employee_ID,userInput.Name,userInput.Designation,userInput.Phone_number,userInput.Email_id,userInput.Password,userInput.Add_by ])
+                 executor.one('INSERT INTO public.usermanage( "Employee_ID", "Name", "Designation","Level","Phone_number","Email_id", "Password", "Add_by" )VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
+                 [userInput.Employee_ID,userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Email_id,userInput.Password,userInput.Add_by ])
                  .then(data => {
                     console.log("1");
               resultCallback(null,data);
@@ -35,6 +35,24 @@ user.createusers = function (userInput, resultCallback) {
         })
 };
 
+
+
+user.confignumbers = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public.configurenumber("Red_alert", "Fire_alert", "Ambulance_alert","Police_alert","client_ID" )VALUES($1,$2,$3,$4,$5)RETURNING *',
+                 [userInput.Red_alert,userInput.Fire_alert,userInput.Ambulance_alert,userInput.Police_alert,userInput.client_ID])
+                 .then(data => {
+                    console.log("1");
+              resultCallback(null,data);
+                 })
+                       
+        
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 user.AddemployeeC = function (userInput, resultCallback) {
@@ -240,11 +258,12 @@ user.updateemployees = function (userInput , resultCallback) {
           console.log('ERROR:', error);
         });
 };
+
 //updateuser///
-user.updateuser = function (userInput , resultCallback) {
+user.updateuser = function (userInput,resultCallback) {
   var executor = db.getdaata.getdb();
-executor.one('UPDATE public.usermanagement SET  "Password"=($2),"Designation"=($3),"Company"=($4),"Employee_No"=($5),"Rank"=($6),"Name"=($7),"Father_Name"=($8),"Date_Of_Birth"=($9),"Gender"=($10),"Marital_Status"=($11),"contact_details"=($12),"Educational_Qualification"=($13),"Nationality"=($14),"Permanent_Address"=($15),"Local_Address"=($16),"Contact_No"=($17),"Languages_Known"=($18),"Work_Experience"=($19),"EPF_No"=($20),"ESIC_No"=($21),"Aadhar_Card_No"=($22),"Signature_of_the_manager"=($23),"Signature_of_the_Applicant"=($24),"BSS_EPF_Number"=($25),"BSSPL_EPF_Number"=($26),"MMSPL_EPF_Number"=($27),"UAN_Number"=($28),"Date_Of_Joining"=($29),"Date_Of_Relieving"=($30),"Voter_ID"=($31),"Driving_Licence_Number"=($32),"PF_Elegible"=($33),"ESI_Elegible"=($34),"Professional_Tax"=($35),"Working_Status"=($36),"Emi"=($37) WHERE "Email_id" = ($1)RETURNING *',
-        [userInput.Email_id,userInput.Password,userInput.Designation,userInput.Company,userInput.Employee_No,userInput.Rank,userInput.Name,userInput.Father_Name,userInput.Date_Of_Birth,userInput.Gender,userInput.Marital_Status,userInput.contact_details,userInput.Educational_Qualification,userInput.Nationality,userInput.Permanent_Address,userInput.Local_Address,userInput.Contact_No,userInput.Languages_Known,userInput.Work_Experience,userInput.EPF_No,userInput.ESIC_No,userInput.Aadhar_Card_No,userInput.Signature_of_the_manager,userInput.Signature_of_the_Applicant,userInput.BSS_EPF_Number,userInput.BSSPL_EPF_Number,userInput.MMSPL_EPF_Number,userInput.UAN_Number,userInput.Date_Of_Joining,userInput.Date_Of_Relieving,userInput.Voter_ID,userInput.Driving_Licence_Number,userInput.PF_Elegible,userInput.ESI_Elegible,userInput.Professional_Tax,userInput.Working_Status,userInput.Emi])
+executor.one('UPDATE public.usermanage  SET  "Employee_ID"=($2),"Name"=($3),"Designation"=($4),"Level"=($5),"Phone_number"=($6),"Password"=($7),"Add_by"=($8) WHERE "Email_id" = ($1)RETURNING *',
+        [userInput.Email_id,userInput.Employee_ID,userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Password,userInput.Add_by])
        .then(data => {
         console.log(data);
         resultCallback(null,data);
@@ -257,8 +276,6 @@ executor.one('UPDATE public.usermanagement SET  "Password"=($2),"Designation"=($
 
 //////list//////// 
 //clientlist
-
-
 user.clientlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 

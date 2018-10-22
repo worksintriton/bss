@@ -396,6 +396,31 @@ function updateusers(req, res, next) {
 
 }
 
+///Configurenumber//////
+
+function confignumber(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.confignumbers(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 ////list///////
 
 function clientlist(req, res, next) {
@@ -761,6 +786,8 @@ function create_issue_attachment(req, res, next) {
         ]);
 
 }
+
+
 function list_issue(req, res, next) {
 
        async.waterfall([
@@ -878,7 +905,7 @@ exports.addemployee = addemployee ;
 exports.addusers = addusers;
 exports.addclients = addclients ;
 exports.updateclients = updateclients ; 
-exports.updateemplo = updateemplo ;
+
 exports.updateusers = updateusers ;
 exports.clientlist = clientlist ;
 exports.employeelist = employeelist ;
@@ -893,10 +920,9 @@ exports.deleteclient = deleteclient ;
 exports.deleteemployee = deleteemployee ;
 exports.deleteuser = deleteuser ;
 exports.uploads = uploads ;
-exports.addemployee1 = addemployee1 ;
-exports.addemployee2 = addemployee2 ;
-exports.addemployee3 = addemployee3 ;
-exports.addemployee4 =  addemployee4 ;
+
+
+
 
 exports.employeereqiured = employeereqiured ;
 
@@ -904,6 +930,8 @@ exports.employeereqiured = employeereqiured ;
 
 
 exports.addclients1 = addclients1;
+
+exports.confignumber = confignumber;
 
 
 /*

@@ -12,7 +12,7 @@ function login_page() {}
 login_page.bsslogincheck = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.usermanagement WHERE "Email_id"=($1) and "Password"=($2)',[userInput.Email_id,userInput.password])
+   executor.any('SELECT * FROM public.usermanage WHERE "Email_id"=($1) and "Password"=($2)',[userInput.Email_id,userInput.password])
         .then(data => {
           console.log(data.length);
           if(data.length == 0 ){
