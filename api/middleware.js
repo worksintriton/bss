@@ -958,6 +958,8 @@ function list_issue(req, res, next) {
         ]);
 
 }
+
+
 function list_my_issue(req, res, next) {
 
 
@@ -996,11 +998,13 @@ async.waterfall([
             }
 
         ]);
+}
 
+function issuedetails(req, res, next) {
 
-       /*async.waterfall([
+       async.waterfall([
             function (waterfallCallback){
-                services.issues.listMyIssues(req.body, function (err, result) {
+                services.issues.issuedetail(req.body, function (err, result) {
                 if (err) {
                     console.log({
                         error: err
@@ -1010,17 +1014,17 @@ async.waterfall([
                 waterfallCallback(null, result);
                 });
             },
-
-            function ( result, waterfallCallback){
+            function ( listIssues, listIssueAttachment, waterfallCallback){
               
                 return res.json(_.merge({
-                    issue: result,
+                    issue: listIssues[0],
+                    attachments: listIssueAttachment,
                     message: "Done" 
                 }, utils.errors["200"]));
                 
             }
 
-        ]);*/
+        ]);
 
 }
 
@@ -1073,5 +1077,7 @@ exports.updateissues = updateissues;
 exports.taken_by = taken_by;
 exports.list_issue = list_issue;
 exports.report = report;
+exports.issuedetails = issuedetails;
+
 exports.list_my_issue =list_my_issue;
 exports.create_issue_attachment = create_issue_attachment;

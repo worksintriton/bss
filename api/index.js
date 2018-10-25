@@ -115,6 +115,10 @@ addRoute("/issue/updateissues", "POST", [middleware.updateissues]);
 addRoute("/issue/taken_by", "POST", [middleware.taken_by]);
 addRoute("/issue/report", "POST", [middleware.report]);
 
+addRoute("/issue/issuedetails", "POST", [middleware.issuedetails]);
+
+
+
 
 
 
