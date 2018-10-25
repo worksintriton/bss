@@ -1579,6 +1579,121 @@
             }
         }
     },
+
+
+
+    "/issue/updateissues": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "complaint_id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "moved_by": {
+                        "type": "string"
+                    },
+                    "moved_to": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "complaint_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "complaint_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "complaint_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/issue/report": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "complaint_id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "taken_by": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "complaint_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "complaint_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "complaint_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+        "/issue/taken_by": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "complaint_id": {
+                        "type": "string"
+                    },
+                    "taken_by": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "complaint_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "complaint_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "complaint_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
     "/issue/listallissues": {
         "POST": {
             "body": {

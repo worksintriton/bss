@@ -722,22 +722,153 @@ function create_issue(req, res, next) {
 
             function (is_inserted, result, waterfallCallback){
                 if(is_inserted == true){
-                return res.json(_.merge({
+
+            services.issues.createIssuehistory(result,function (err,result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }else{
+                     return res.json(_.merge({
                     issue: result,
                     message: "Created Succcessfully" 
                 }, utils.errors["200"]));
                 }
-                else{
-                return res.json(_.merge({
-                    issue: result,
-                    message: "Error in Creating this issue, pls Try after some time" 
-                }, utils.errors["400"]));
+               
+                });
                 }
             }
-
         ]);
 
 }
+
+
+/*
+Update issues
+*/
+function updateissues(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.issues.updateissue(req.body, function (err,is_inserted, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,is_inserted, result);
+                });
+            },
+
+            function (is_inserted, result, waterfallCallback){
+                if(is_inserted == true){
+
+            services.issues.createIssuehistory(result,function (err,result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }else{
+                     return res.json(_.merge({
+                    issue: result,
+                    message: "Sending Succcessfully" 
+                }, utils.errors["200"]));
+                }
+               
+                });
+                }
+            }
+        ]);
+
+}
+
+
+/*
+taken_by issues
+*/
+function taken_by(req, res, next) {
+console.log("one");
+       async.waterfall([
+            function (waterfallCallback){
+                services.issues.taken_bys(req.body, function (err,is_inserted,result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,is_inserted, result);
+                });
+            },
+
+            function (is_inserted, result, waterfallCallback){
+                if(is_inserted == true){
+
+            services.issues.createIssuehistory(result,function (err,result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }else{
+                     return res.json(_.merge({
+                    issue: result,
+                    message: "Sending Succcessfully" 
+                }, utils.errors["200"]));
+                }
+               
+                });
+                }
+            }
+        ]);
+
+}
+
+// issues report
+
+function report(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.issues.reports(req.body, function (err,is_inserted, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                console.log(result);
+                waterfallCallback(null,is_inserted, result);
+                });
+            },
+            function (is_inserted, result, waterfallCallback){
+                if(is_inserted == true){
+            services.issues.reportupdate(result,function (err,result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }else{
+                     return res.json(_.merge({
+                    issue: result,
+                    message: "Sending Succcessfully" 
+                }, utils.errors["200"]));
+                }
+               
+                });
+                }
+            }
+        ]);
+
+}
+
+
+
+
 function create_issue_attachment(req, res, next) {
 
        async.waterfall([
@@ -938,6 +1069,9 @@ exports.confignumber = confignumber;
 Issue Controll
 */
 exports.create_issue = create_issue;
+exports.updateissues = updateissues;
+exports.taken_by = taken_by;
 exports.list_issue = list_issue;
+exports.report = report;
 exports.list_my_issue =list_my_issue;
 exports.create_issue_attachment = create_issue_attachment;

@@ -111,8 +111,18 @@ Issue Tracking
 
 
 addRoute("/issue/create", "POST", [middleware_emp.validateEmployee, middleware.create_issue]);
+addRoute("/issue/updateissues", "POST", [middleware.updateissues]);
+addRoute("/issue/taken_by", "POST", [middleware.taken_by]);
+addRoute("/issue/report", "POST", [middleware.report]);
+
+
+
+
+
 addRoute("/issue/createAttachment", "POST", [middleware.create_issue_attachment]);
+
 addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
+
 addRoute("/issue/listmyissues", "POST", [middleware_emp.validateEmployee, middleware.list_my_issue]);
 
 app.use(router);
