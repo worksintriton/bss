@@ -118,6 +118,10 @@ addRoute("/issue/report", "POST", [middleware.report]);
 addRoute("/issue/issuedetails", "POST", [middleware.issuedetails]);
 
 
+addRoute("/issue/issuetrack", "POST", [middleware.issuetrack]);
+
+
+
 
 
 

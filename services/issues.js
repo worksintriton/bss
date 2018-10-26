@@ -185,6 +185,18 @@ var executor = db.getdaata.getdb();
         }) 
 };
 
+issues.issuetracks = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+    executor.any('SELECT * FROM public."issues_history" where "complaint_id"=$1',[userInput.complaint_id])
+        .then(data => {
+            resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            
+        }) 
+};
+
 issues.listIssueAttachment = function (issueid, resultCallback) {
 var executor = db.getdaata.getdb();
     executor.any('SELECT * FROM public."issue_attachments" where issue_id in ( select id FROM public."issue_master" where "status" != ($1) )',["closed"])

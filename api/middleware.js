@@ -920,7 +920,6 @@ function create_issue_attachment(req, res, next) {
 
 
 function list_issue(req, res, next) {
-
        async.waterfall([
             function (waterfallCallback){
                 services.issues.listIssues(req.body, function (err, result) {
@@ -1001,7 +1000,6 @@ async.waterfall([
 }
 
 function issuedetails(req, res, next) {
-
        async.waterfall([
             function (waterfallCallback){
                 services.issues.issuedetail(req.body, function (err, result) {
@@ -1015,9 +1013,34 @@ function issuedetails(req, res, next) {
                 });
             },
             function ( listIssues, listIssueAttachment, waterfallCallback){
-              
                 return res.json(_.merge({
                     issue: listIssues[0],
+                    attachments: listIssueAttachment,
+                    message: "Done" 
+                }, utils.errors["200"])); 
+            }
+
+        ]);
+
+}
+
+function issuetrack(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.issues.issuetracks(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, result);
+                });
+            },
+            function ( listIssues, listIssueAttachment, waterfallCallback){
+              
+                return res.json(_.merge({
+                    issue: listIssues,
                     attachments: listIssueAttachment,
                     message: "Done" 
                 }, utils.errors["200"]));
@@ -1025,8 +1048,8 @@ function issuedetails(req, res, next) {
             }
 
         ]);
-
 }
+
 
 
 
@@ -1078,6 +1101,7 @@ exports.taken_by = taken_by;
 exports.list_issue = list_issue;
 exports.report = report;
 exports.issuedetails = issuedetails;
+exports.issuetrack =  issuetrack;
 
 exports.list_my_issue =list_my_issue;
 exports.create_issue_attachment = create_issue_attachment;
