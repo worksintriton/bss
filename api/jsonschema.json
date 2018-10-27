@@ -422,6 +422,131 @@
             }
         }
     },
+
+
+    "/authentication/training": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                     "description": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "title"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property id"
+                    },
+                    "properties": {
+                        "title": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/traininglessons": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "lesson_id": {
+                        "type": "string"
+                    },
+                     "descriptions": {
+                        "type": "string"
+                    },
+                     "title": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "title"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property id"
+                    },
+                    "properties": {
+                        "title": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/authentication/traininglist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "emp_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "emp_id"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "emp_id": "should have required property id"
+                    },
+                    "properties": {
+                        "emp_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/trainingvideos": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                     "descriptions": {
+                        "type": "string"
+                    }
+                    ,
+                     "videos_id": {
+                        "type": "string"
+                    },
+                     "video_url": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "title"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property id"
+                    },
+                    "properties": {
+                        "title": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
  
 
 
@@ -449,7 +574,7 @@
                     "father_name": {
                         "type": "string"
                     },
-                    "Date_of_birth": {
+                    "Date_Of_Birth": {
                         "type": "string"
                     },
                     "gender": {

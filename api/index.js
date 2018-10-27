@@ -37,7 +37,7 @@ addRoute("/authentication/signin", "POST", [middleware.signin]);
 addRoute("/authentication/registerpage", "POST", [middleware.registerpage]);
 addRoute("/authentication/loginpages", "POST", [middleware.loginpages]);
 
-addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
+
 addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
 addRoute("/authentication/securitytlogin", "POST", [middleware.securitytlogin]);
 addRoute("/authentication/employeeid", "POST", [middleware.employeeid]);
@@ -62,7 +62,21 @@ addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
 
 
-addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
+
+
+addRoute("/authentication/training", "POST", [middleware.training]);
+addRoute("/authentication/traininglessons", "POST", [middleware.traininglessons]);
+addRoute("/authentication/trainingvideos", "POST", [middleware.trainingvideos]);
+
+
+
+
+addRoute("/authentication/traininglist", "POST", [middleware.traininglist]);
+
+
+
+
+
 
 
 
@@ -72,6 +86,8 @@ addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
 
 
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
+
+
 
 addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
@@ -114,10 +130,7 @@ addRoute("/issue/create", "POST", [middleware_emp.validateEmployee, middleware.c
 addRoute("/issue/updateissues", "POST", [middleware.updateissues]);
 addRoute("/issue/taken_by", "POST", [middleware.taken_by]);
 addRoute("/issue/report", "POST", [middleware.report]);
-
 addRoute("/issue/issuedetails", "POST", [middleware.issuedetails]);
-
-
 addRoute("/issue/issuetrack", "POST", [middleware.issuetrack]);
 
 

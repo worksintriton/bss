@@ -1051,6 +1051,126 @@ function issuetrack(req, res, next) {
 }
 
 
+/////training blockss///////
+
+///// set of training///////
+
+
+function training(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.training.setoftraining(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function traininglessons(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.training.traininglessons(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function trainingvideos(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.training.trainingvideos(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function traininglist(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.training.traininglists(req.body, function (err, traininglist) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }else{
+                 waterfallCallback(null,traininglist);
+                }
+                });
+            },
+             function (traininglist,waterfallCallback){
+                services.training.traininglessonlist(req.body, function (err, traininglessons) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }else{
+                 waterfallCallback(null,traininglist,traininglessons);
+                }
+                });
+            },
+              function (traininglist,traininglessons,waterfallCallback){
+                services.training.trainingvideoslist(req.body, function (err, trainingvideos) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }else{
+                    return res.json(_.merge({
+                    traininglist:traininglist,
+                    traininglessons:traininglessons,
+                    trainingvideos:trainingvideos
+                }, utils.errors["200"]));
+                }
+                });
+            }
+        ]);
+}
+
+
+
 
 
 
@@ -1090,6 +1210,17 @@ exports.employeereqiured = employeereqiured ;
 exports.addclients1 = addclients1;
 
 exports.confignumber = confignumber;
+
+/*
+set of training
+*/
+exports.training = training;
+exports.traininglessons = traininglessons;
+exports.trainingvideos = trainingvideos;
+exports.traininglist = traininglist;
+
+
+
 
 
 /*
