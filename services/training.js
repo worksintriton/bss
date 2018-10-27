@@ -16,10 +16,10 @@ training.setoftraining = function (userInput, resultCallback) {
                  userInput.description
                  ])
                  .then(data => {
-                    resultCallback(null,true, data);
+                    resultCallback(null,data);
                  })
                  .catch(error => {
-                    resultCallback(null,false, error );
+                    resultCallback(null,error );
                 })
 };
 
@@ -32,10 +32,10 @@ training.traininglessons = function (userInput, resultCallback) {
                  userInput.lesson_id
                  ])
                  .then(data => {
-                    resultCallback(null,true, data);
+                    resultCallback(null,data);
                  })
                  .catch(error => {
-                    resultCallback(null,false, error );
+                    resultCallback(null,error );
                 })
 };
 
@@ -49,10 +49,10 @@ training.trainingvideos = function (userInput, resultCallback) {
                  userInput.videos_id,
                  ])
                  .then(data => {
-                    resultCallback(null,true, data);
+                    resultCallback(null,data);
                  })
                  .catch(error => {
-                    resultCallback(null,false, error );
+                    resultCallback(null,error );
                 })
 };
 
