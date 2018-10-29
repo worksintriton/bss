@@ -92,4 +92,51 @@ var executor = db.getdaata.getdb();
         }) 
 };
 
+
+
+
+training.Trackings = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.one('INSERT INTO public.employee_track("Employee_id","Lat","Long","updated_at","Name")VALUES($1,$2,$3,$4,$5)RETURNING *',
+                 [ 
+                 userInput.Employee_id,
+                 userInput.Lat,
+                 userInput.Long,
+                 userInput.updated_at,
+                 userInput.Name
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+training.Trackingpersons = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+    executor.any('SELECT * FROM public."employee_track" where "Employee_id"=($1) ',[userInput.Employee_id])
+        .then(data => {
+            resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            
+        }) 
+};
+
+training.Trackinglists = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+    executor.any('SELECT * FROM public."employee_track" ',[userInput.client_ID])
+        .then(data => {
+            resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            
+        }) 
+};
+
+
+
 module.exports = training;

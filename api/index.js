@@ -79,6 +79,14 @@ addRoute("/authentication/traininglist", "POST", [middleware.traininglist]);
 
 
 
+addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
+
+addRoute("/authentication/Trackinglist", "POST", [middleware.Trackinglist]);
+
+addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
+
+
+
 
 
 

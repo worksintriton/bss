@@ -1193,6 +1193,81 @@ function traininglist(req, res, next) {
 }
 
 
+/* Point tracking 
+*/
+
+function Tracking(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.training.Trackings(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function Trackingperson(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.training.Trackingpersons(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function Trackinglist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.training.Trackinglists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 
 
@@ -1221,6 +1296,10 @@ exports.deleteclient = deleteclient ;
 exports.deleteemployee = deleteemployee ;
 exports.deleteuser = deleteuser ;
 exports.uploads = uploads ;
+
+exports.Tracking = Tracking;
+exports.Trackinglist = Trackinglist;
+exports.Trackingperson = Trackingperson;
 
 
 

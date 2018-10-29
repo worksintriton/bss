@@ -573,6 +573,102 @@
             }
         }
     },
+
+
+     "/authentication/Tracking": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    },
+                     "Lat": {
+                        "type": "number"
+                    }
+                    ,
+                     "Long": {
+                        "type": "number"
+                    }
+                    ,
+                     "updated_at": {
+                        "type": "string"
+                    },
+                     "Name": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Employee_id": "should have required property id"
+                    },
+                    "properties": {
+                        "Employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/authentication/Trackingperson": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Employee_id": "should have required property id"
+                    },
+                    "properties": {
+                        "Employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/authentication/Trackinglist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "client_ID": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "client_ID"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "client_ID": "should have required property id"
+                    },
+                    "properties": {
+                        "client_ID": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+ 
  
 
 
@@ -781,10 +877,10 @@
                         "type": "string"
                     },
                     "EPF_No": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "ESIC_No": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "Aadhar_Card_No": {
                         "type": "string"
