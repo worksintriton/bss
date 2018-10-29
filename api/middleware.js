@@ -421,6 +421,30 @@ function confignumber(req, res, next) {
 
 }
 
+function getconfignumber(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.getsconfignumbers(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 ////list///////
 
 function clientlist(req, res, next) {
@@ -1210,6 +1234,7 @@ exports.employeereqiured = employeereqiured ;
 exports.addclients1 = addclients1;
 
 exports.confignumber = confignumber;
+exports.getconfignumber = getconfignumber;
 
 /*
 set of training

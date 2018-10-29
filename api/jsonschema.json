@@ -175,6 +175,32 @@
         }
     },
 
+    "/authentication/getconfignumber": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "client_ID": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "client_ID"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                      "client_ID":"should have required property client_ID"
+                    },
+                    "properties": {
+                        "client_ID": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
      "/authentication/upload": {
         "POST": {
             "body": {
@@ -574,7 +600,7 @@
                     "father_name": {
                         "type": "string"
                     },
-                    "Date_Of_Birth": {
+                    "Date_of_birth": {
                         "type": "string"
                     },
                     "gender": {
@@ -1947,5 +1973,5 @@
                 }
             }
         }
-    }
+    } 
 }
