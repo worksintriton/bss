@@ -113,6 +113,25 @@ training.Trackings = function (userInput, resultCallback) {
                 })
 };
 
+
+training.Trackingsupdate = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.one('update public.employee_track set "Lat"= ($2),"Long"= ($3),"updated_at"= ($4),"Name"= ($5) where  "Employee_id" = ($1) RETURNING *',
+                 [ 
+                 userInput.Employee_id,
+                 userInput.Lat,
+                 userInput.Long,
+                 userInput.updated_at,
+                 userInput.Name
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
 training.Trackingpersons = function (userInput, resultCallback) {
 var executor = db.getdaata.getdb();
     executor.any('SELECT * FROM public."employee_track" where "Employee_id"=($1) ',[userInput.Employee_id])

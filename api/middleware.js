@@ -1199,8 +1199,8 @@ function traininglist(req, res, next) {
 function Tracking(req, res, next) {
 
        async.waterfall([
-            function (waterfallCallback){
-                services.training.Trackings(req.body, function (err, result) {
+        function (waterfallCallback){
+                services.training.Trackingpersons(req.body, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
@@ -1209,6 +1209,31 @@ function Tracking(req, res, next) {
                 }
                 waterfallCallback(null,result);
                 });
+            },
+            function (result, waterfallCallback){
+                if(result.length >0){
+                    services.training.Trackingsupdate(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+                }
+                else{
+                    services.training.Trackings(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+                }
+                
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
