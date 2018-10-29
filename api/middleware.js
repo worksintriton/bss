@@ -188,7 +188,6 @@ function clientlogin(req, res, next) {
                 }, utils.errors["200"]));
             }
         ]);
-
 }
 
 //////securitytlogin/////////
