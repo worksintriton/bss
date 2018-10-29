@@ -314,7 +314,7 @@ user.employeelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.employeemanagement')
+   executor.any('SELECT * FROM public.employeedetails')
         .then(data => {
 
                  resultCallback(null,data );
