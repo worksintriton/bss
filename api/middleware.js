@@ -44,101 +44,10 @@ function init() {
 
 
 
-function signin(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.create(req.body.userId, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata 
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
 
 
-function employeereqiured(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.clientmanagement.employeereqiureds(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata 
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
 
 
-////////register///////
-
-function registerpage(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.create(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata 
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
-/////loginpage//////
-function loginpages(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.check(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata 
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
 
 
 //////bsslogin/////////
@@ -190,34 +99,6 @@ function clientlogin(req, res, next) {
         ]);
 }
 
-//////securitytlogin/////////
-
-function securitytlogin(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.loginpage.securitytlogins(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata 
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
-
-
-
-
 /////addemployee///////
 
 
@@ -244,16 +125,8 @@ function addemployee(req, res, next) {
 
 }
 
-
-
-
-
-
-
-
 ///addusers////
 function addusers(req, res, next) {
-
        async.waterfall([
             function (waterfallCallback){
                 services.user.createusers(req.body, function (err, result) {
@@ -522,41 +395,6 @@ function userlist(req, res, next) {
 
 }
 
-function employeeid(req, res, next) {
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.employeeids(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-            
-                services.user.employeeids1(req.body, function (err, result1) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-               
-                waterfallCallback(null,mydata,result1);
-                });
-            },
-            function (mydata,result1,waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata[0],
-                    data1: result1[0]
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
 
 function clientid(req, res, next) {
 
@@ -591,32 +429,6 @@ function clientid(req, res, next) {
 
 
 
-
-
-
-
-function userid(req, res, next) {
-
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.userids(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata[0]
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
 
 function deleteclient(req, res, next) {
 
@@ -686,44 +498,6 @@ function deleteemployee(req, res, next) {
         ]);
 
 }
-
-function uploads(req, res, next) {
-
-     if (!req.files)
-    return res.status(400).send('No files were uploaded.');
- 
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.sampleFile;
- 
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('/services/', function(err) {
-    if (err)
-      return res.status(500).send(err);
- 
-    res.send('File uploaded!');
-       });
-
-       // async.waterfall([
-       //      function (waterfallCallback){
-       //          services.user.deleteemployees(req.body, function (err, result) {
-       //          if (err) {
-       //              req.log.error({
-       //                  error: err
-       //              }, "Error while getting available users by mobiles");
-       //              return res.json(utils.errors["500"]);
-       //          }
-       //          waterfallCallback(null,result);
-       //          });
-       //      },
-       //      function (mydata, waterfallCallback){
-       //          return res.json(_.merge({
-       //              data: mydata
-       //          }, utils.errors["200"]));
-       //      }
-       //  ]);
-
-}
-
 
 /*
 Issue Management
@@ -1292,35 +1066,68 @@ function Trackinglist(req, res, next) {
 
 }
 
-
-
-
-
-
 exports.init = init;
 exports.passport = passport;
-exports.signin = signin;
-exports.registerpage = registerpage ;
-exports.loginpages = loginpages;
+
+
+
+
+/*BSS Web Portal*/
+
+exports.clientlogin = clientlogin ;
+
+
+
+/*BSS Web Portal*/
+exports.bsslogin = bsslogin;
+
+
+
+/*Add Employee*/
+
 exports.addemployee = addemployee ;
+exports.employeelist = employeelist ;
+exports.deleteemployee = deleteemployee ;
+
+
+
+
+/*Add User*/
+
 exports.addusers = addusers;
+exports.updateusers = updateusers ;
+exports.userlist = userlist ;
+exports.deleteuser = deleteuser ;
+
+
+
+
+/*Add Client*/
 exports.addclients = addclients ;
+exports.deleteclient = deleteclient ;
+exports.addclients1 = addclients1;
+exports.clientid = clientid ;
+exports.clientlist = clientlist ;
 exports.updateclients = updateclients ; 
 
-exports.updateusers = updateusers ;
-exports.clientlist = clientlist ;
-exports.employeelist = employeelist ;
-exports.userlist = userlist ;
-exports.bsslogin = bsslogin ;
-exports.clientlogin = clientlogin ;
-exports.securitytlogin = securitytlogin ;
-exports.userid = userid ;
-exports.clientid = clientid ;
-exports.employeeid = employeeid ;
-exports.deleteclient = deleteclient ;
-exports.deleteemployee = deleteemployee ;
-exports.deleteuser = deleteuser ;
-exports.uploads = uploads ;
+
+
+
+/*Add Configure*/
+
+exports.confignumber = confignumber;
+exports.getconfignumber = getconfignumber;
+
+
+/*Add training*/
+
+exports.training = training;
+exports.traininglessons = traininglessons;
+exports.trainingvideos = trainingvideos;
+exports.traininglist = traininglist;
+
+
+/*Add tracking*/
 
 exports.Tracking = Tracking;
 exports.Trackinglist = Trackinglist;
@@ -1328,39 +1135,17 @@ exports.Trackingperson = Trackingperson;
 
 
 
-
-exports.employeereqiured = employeereqiured ;
-
-
-
-
-exports.addclients1 = addclients1;
-
-exports.confignumber = confignumber;
-exports.getconfignumber = getconfignumber;
-
-/*
-set of training
-*/
-exports.training = training;
-exports.traininglessons = traininglessons;
-exports.trainingvideos = trainingvideos;
-exports.traininglist = traininglist;
-
-
-
-
-
-/*
-Issue Controll
-*/
+/*Issue Tracking*/
 exports.create_issue = create_issue;
 exports.updateissues = updateissues;
 exports.taken_by = taken_by;
-exports.list_issue = list_issue;
 exports.report = report;
 exports.issuedetails = issuedetails;
 exports.issuetrack =  issuetrack;
 
+/*issues Attachment*/
+exports.list_issue = list_issue;
 exports.list_my_issue =list_my_issue;
 exports.create_issue_attachment = create_issue_attachment;
+
+/*PointTracking*/

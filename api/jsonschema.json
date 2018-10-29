@@ -1,99 +1,5 @@
 {
-    "/authentication/signin": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "userId": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "userId"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "userId": "should have required property userId"
-                    },
-                    "properties": {
-                        "userId": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
-
-    "/authentication/employeereqiured": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                     "cliid": {
-                        "type": "string"
-                    },
-                     "no_am": {
-                        "type": "number"
-                    },
-                     "no_sup": {
-                        "type": "number"
-                    },
-                     "no_security": {
-                        "type": "number"
-                    },
-                     "pay_sup": {
-                        "type": "number"
-                    },
-                     "pay_am": {
-                        "type": "number"
-                    },
-                     "pay_security": {
-                        "type": "number"
-                    },
-                     "overtime_pay": {
-                        "type": "number"
-                    },
-                     "bsspay_am": {
-                        "type": "number"
-                    },
-                    "bsspay_security": {
-                        "type": "number"
-                    },
-                    "bsspay_sup": {
-                        "type": "number"
-                    },
-                    "bssovertime_pay": {
-                        "type": "number"
-                    },
-                    "shift_type": {
-                        "type": "string"
-                    },
-                    "shift_hours": {
-                        "type": "string"
-                    }
-
-                },
-        "additionalProperties": true,
-                "required": [
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "shift_type": "should have required property userId"
-                    },
-                    "properties": {
-                        "shift_type": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
+    
 
 
     "/authentication/bsslogin": {
@@ -201,31 +107,7 @@
         }
     },
 
-     "/authentication/upload": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "Files": {
-                        "type": "string"
-                    }                 
-                },
-        "additionalProperties": true,
-                "required": [
-                    "Files"      
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "Files": "should have required property Email_id"
-                    },
-                    "properties": {
-                        "Files": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
+    
 
      "/authentication/clientlogin": {
         "POST": {
@@ -258,62 +140,8 @@
         }
     },
 
-    "/authentication/securitytlogin": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "Email_id": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "Email_id",
-                    "password"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "Email_id": "should have required property Email_id",
-                        "password": "should have required property password"
-                    },
-                    "properties": {
-                        "Email_id": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
 
-     "/authentication/employeeid": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "empid": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "empid"    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "empid": "should have required property id"
-                    },
-                    "properties": {
-                        "empid": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
+ 
 
     "/authentication/deleteemployee": {
         "POST": {
@@ -396,32 +224,6 @@
 
 
 
-
-           "/authentication/userid": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "userid": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "userid"    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "userid": "should have required property id"
-                    },
-                    "properties": {
-                        "userid": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
 
     "/authentication/deleteuser": {
         "POST": {
@@ -811,143 +613,7 @@
     },
 
 
-     "/authentication/updateemplo": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "Email_id": {
-                        "type": "string"
-                    },
-                    "Password": {
-                        "type": "string"
-                    },
-                    "Designation": {
-                        "type": "string"
-                    },
-                    "Company": {
-                        "type": "string"
-                    },
-                    "Site_(Unit)": {
-                        "type": "string"
-                    },
-                    "Employee_No": {
-                        "type": "string"
-                    },
-                    "Rank": {
-                        "type": "string"
-                    },
-                    "Name": {
-                        "type": "string"
-                    },
-                    "Father_Name": {
-                        "type": "string"
-                    },
-                    "Date_Of_Birth": {
-                        "type": "string"
-                    },
-                    "Gender": {
-                        "type": "string"
-                    },
-                    "Marital_Status": {
-                        "type": "string"
-                    },
-                    "contact_details": {
-                        "type": "string"
-                    },
-                    "Educational_Qualification": {
-                        "type": "string"
-                    },
-                    "Nationality": {
-                        "type": "string"
-                    },
-                    "Permanent_Address": {
-                        "type": "string"
-                    },
-                    "Local_Address": {
-                        "type": "string"
-                    },
-                    "Contact_No": {
-                        "type": "string"
-                    },
-                    "Languages_Known": {
-                        "type": "string"
-                    },
-                    "Work_Experience": {
-                        "type": "string"
-                    },
-                    "EPF_No": {
-                        "type": "number"
-                    },
-                    "ESIC_No": {
-                        "type": "number"
-                    },
-                    "Aadhar_Card_No": {
-                        "type": "string"
-                    },
-                    "Signature_of_the_manager": {
-                        "type": "string"
-                    },
-                    "Signature_of_the_Applicant": {
-                        "type": "string"
-                    },
-                    "BSS_EPF_Number": {
-                        "type": "string"
-                    },
-                    "BSSPL_EPF_Number": {
-                        "type": "string"
-                    },
-                    "MMSPL_EPF_Number": {
-                        "type": "string"
-                    },
-                    "UAN_Number": {
-                        "type": "string"
-                    },
-                    "Date_Of_Joining": {
-                        "type": "string"
-                    },
-                    "Date_Of_Relieving": {
-                        "type": "string"
-                    },
-                    "Voter_ID": {
-                        "type": "string"
-                    },
-                    "Driving_Licence_Number": {
-                        "type": "string"
-                    },
-                    "PF_Elegible": {
-                        "type": "string"
-                    },
-                    "ESI_Elegible": {
-                        "type": "string"
-                    },
-                    "Professional_Tax": {
-                        "type": "string"
-                    },
-                    "Working_Status": {
-                        "type": "string"
-                    },
-                    "Emi": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": true,
-                "required": [
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "Email_id": "should have required property userId"
-                    },
-                    "properties": {
-                        "Email_id": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
+     
 
 
     "/authentication/addusers": {
@@ -1505,44 +1171,6 @@
     },
 
 
-
-   
-
-    
-    
-    
-   
-
-    "/authentication/loginpages": {
-        "POST": {
-                 "body": {
-                 "type": "object",
-                "properties": {
-                    "userId": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "userId"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "userId": "should have required property userId"
-                    },
-                    "properties": {
-                        "userId": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
-
     "/authentication/userlist": {
         "POST": {
                  "body": {
@@ -1623,133 +1251,7 @@
         }
     },
 
-
-
-    "/authentication/registerpage": {
-        "POST": {
-                 "body": {
-                 "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "mobile_number": {
-                        "type": "string"
-                    },
-                    "email_id": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "name"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "name": "should have required property userId"
-                    },
-                    "properties": {
-                        "name": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
-   
-    "/registration/registeruser1": {
-        "POST": {
-            "body": {
-                "type": "object",
-                "properties": {
-                    "mac": {
-                        "type": "string"
-                    },
-		    "primaryEmail": {
-                        "type": "string"
-                    },
-                    "swVersion": {
-                        "type": "string"
-                    },
-                    "firstName": {
-                        "type": "string"
-                    },
-                    "lastName": {
-                        "type": "string"
-                    },
-                    "middleName": {
-                        "type": "string"
-                    },
-                    "dob": {
-                        "type": "string"
-                    },
-                    "gender": {
-                        "type": "string"
-                    },
-                    "userTag": {
-                        "type": "string"
-                    },
-		    "statusText": {
-			"type": "string"
-	  	    },
-		    "email":{
-                    	"type": "array",
-                        "minItems": 0,
-                        "items": [{
-                        	"type": "string"
-                         }]
-                    }, 
-                    "password": {
-                        "type": "string"
-                    }
-                },
-		"additionalProperties": false,
-                "required": [
-                    "mac",
-                    "swVersion",
-                    "firstName",
-                    "lastName",
-                    "dob",
-                    "gender",
-                    "userTag",
-		            "statusText",
-                    "password"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "mac": "should have required property mac",
-                        "swVersion": "should have required property swVersion",
-                        "firstName": "should have required property firstName",
-                        "lastName": "should have required property lastName",
-                        "dob": "should have required property dob",
-                        "gender": "should have required property gender",
-                        "userTag": "should have required property userTag",
-		        "statusText": "should have required property statusText",
-                        "password": "should have required property password"
-                    },
-                    "properties": {
-                        "mac": "mac should be string and of pattern - TBD",
-			"primaryEmail": "primaryEmail should be string and of pattern - TBD",
-                        "swVersion": "swVersion should be string and of pattern - TBD",
-                        "firstName": "firstName should be string and of pattern - TBD",
-                        "middleName": "middleName should be string and of pattern - TBD",
-                        "lastName": "lastName should be string and of pattern - TBD",
-                        "dob": "dob should be string and of pattern - TBD",
-                        "gender": "gender should be string and of pattern - TBD",
-                        "userTag": "userTag should be string and of pattern - TBD",
-			"statusText": "statusText should be string and of pattern - TBD",
-			"password": "password should be string and of pattern - TBD",
-			"email": "password should be array and of pattern - TBD"
-                    }
-                }
-            }
-        }
-    },
+    
 
  "/authentication/employeeLogin": {
         "POST": {
@@ -1782,6 +1284,7 @@
             }
         }
     },
+    
     "/issue/create": {
         "POST": {
             "body": {
