@@ -220,6 +220,32 @@ var executor = db.getdaata.getdb();
         }) 
 };
 
+
+issues.listissuess = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+    executor.any('SELECT * FROM public."issue_master" ',[userInput.LoginKey])
+        .then(data => {
+            resultCallback(null,data);
+        })
+        .catch(error => {
+            resultCallback(error,null);
+        }) 
+};
+
+
+issues.listmyIssueAttachments = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+    executor.any('SELECT * FROM public."issue_attachments" ',[userInput.LoginKey])
+        .then(data => {
+            resultCallback(null,data);
+        })
+        .catch(error => {
+            resultCallback(error,null);
+        }) 
+};
+
+
+
 issues.listmyIssueAttachment = function (userInput, resultCallback) {
 var executor = db.getdaata.getdb();
     executor.any('SELECT * FROM public."issue_attachments" where issue_id in ( select id FROM public."issue_master" where "poster_id" = ($1) )',[""+userInput.user_id])

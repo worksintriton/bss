@@ -796,6 +796,48 @@ async.waterfall([
         ]);
 }
 
+
+function listissues(req, res, next) {
+
+
+async.waterfall([
+            function (waterfallCallback){
+                services.issues.listissuess(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, result);
+                console.log(result);
+                });
+            },
+            function (listIssues, waterfallCallback){
+                services.issues.listmyIssueAttachments(req.body, function (err, listIssueAttachment) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, listIssues, listIssueAttachment);
+                });
+            },
+            
+            function ( listIssues, listIssueAttachment, waterfallCallback){
+              
+                return res.json(_.merge({
+                    issue: listIssues,
+                    attachments: listIssueAttachment,
+                    message: "Done" 
+                }, utils.errors["200"]));
+                
+            }
+
+        ]);
+}
+
 function issuedetails(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
@@ -1066,6 +1108,53 @@ function Trackinglist(req, res, next) {
 
 }
 
+function PointTrackMap(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.pooint_tracking.PointTrackMaps(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function PointTrackMapSpot(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.pooint_tracking.PointTrackMapSpots(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 exports.init = init;
 exports.passport = passport;
 
@@ -1142,6 +1231,7 @@ exports.taken_by = taken_by;
 exports.report = report;
 exports.issuedetails = issuedetails;
 exports.issuetrack =  issuetrack;
+exports.listissues = listissues;
 
 /*issues Attachment*/
 exports.list_issue = list_issue;
@@ -1149,3 +1239,5 @@ exports.list_my_issue =list_my_issue;
 exports.create_issue_attachment = create_issue_attachment;
 
 /*PointTracking*/
+exports.PointTrackMap = PointTrackMap;
+exports.PointTrackMapSpot = PointTrackMapSpot;

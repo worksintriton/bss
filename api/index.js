@@ -117,9 +117,15 @@ addRoute("/issue/createAttachment", "POST", [middleware.create_issue_attachment]
 addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
 addRoute("/issue/listmyissues", "POST", [middleware_emp.validateEmployee, middleware.list_my_issue]);
 
+addRoute("/issue/listissues", "POST", [middleware.listissues]);
+
 /*
 PointTracking
 */
+
+addRoute("/authentication/PointTrackMap", "POST", [middleware.PointTrackMap]);
+
+addRoute("/authentication/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
 
 
 

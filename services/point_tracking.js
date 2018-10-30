@@ -5,15 +5,28 @@ var _ = require("lodash"),
         db = require("../db"),
         async = require("async");
 
-function training() {}
+function pooint_tracking() {}
 
 
-training.setoftraining = function (userInput, resultCallback) {
+pooint_tracking.PointTrackMaps = function (userInput, resultCallback) {
+
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.training("training_title","training_description")VALUES($1,$2)RETURNING *',
+  executor.one('INSERT INTO public."PointTrackMap"("mapspots_id","title","description","totaltime","totalmeters","startlat","startlon","endlat","endlon","isactive","createdby","createdtime","updatedby","updatedtime")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)RETURNING *',
                  [ 
+                 userInput.mapspots_id,
                  userInput.title,
-                 userInput.description
+                 userInput.description,
+                 userInput.totaltime,
+                 userInput.totalmeters,
+                 userInput.startlat,
+                 userInput.startlon,
+                 userInput.endlat,
+                 userInput.endlon,
+                 userInput.isactive,
+                 userInput.createdby,
+                 userInput.createdtime,
+                 userInput.updatedby,
+                 userInput.updatedtime,
                  ])
                  .then(data => {
                     resultCallback(null,data);
@@ -23,13 +36,28 @@ training.setoftraining = function (userInput, resultCallback) {
                 })
 };
 
-training.traininglessons = function (userInput, resultCallback) {
+
+pooint_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
+
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.traininglesson("title","descriptions","lesson_id")VALUES($1,$2,$3)RETURNING *',
+  executor.one('INSERT INTO public."PointTrackMapSpots"("position","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)RETURNING *',
                  [ 
+                 userInput.position,
                  userInput.title,
-                 userInput.descriptions,
-                 userInput.lesson_id
+                 userInput.description,
+                 userInput.lat,
+                 userInput.lon,
+                 userInput.accepteddistinmeter,
+                 userInput.isactive,
+                 userInput.createdby,
+                 userInput.createdtime,
+                 userInput.updatedby,
+                 userInput.updatedtime,
+                 userInput.marked_time,
+                 userInput.marked_lat,
+                 userInput.marked_lon,
+                 userInput.marked_by,
+                 userInput.is_marked
                  ])
                  .then(data => {
                     resultCallback(null,data);
@@ -39,57 +67,6 @@ training.traininglessons = function (userInput, resultCallback) {
                 })
 };
 
-training.trainingvideos = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.trainingvideos("title","descriptions","video_url","videos_id")VALUES($1,$2,$3,$4)RETURNING *',
-                 [ 
-                 userInput.title,
-                 userInput.descriptions,
-                 userInput.video_url,
-                 userInput.videos_id,
-                 ])
-                 .then(data => {
-                    resultCallback(null,data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,error );
-                })
-};
 
-training.traininglists = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."training" ',[userInput.emp_id])
-        .then(data => {
-            resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            
-        }) 
-};
 
-training.traininglessonlist = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."traininglesson" ',[userInput.emp_id])
-        .then(data => {
-            resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            
-        }) 
-};
-
-training.trainingvideoslist = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."trainingvideos" ',[userInput.emp_id])
-        .then(data => {
-            resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            
-        }) 
-};
-
-module.exports = training;
+module.exports = pooint_tracking;

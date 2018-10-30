@@ -613,6 +613,146 @@
     },
 
 
+    "/authentication/PointTrackMap": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "mapspots_id": {
+                        "type": "string"
+                    },
+                    "ukey": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "totaltime": {
+                        "type": "string"
+                    },
+                    "totalmeters": {
+                        "type": "string"
+                    },
+                    "startlat": {
+                        "type": "string"
+                    },
+                    "startlon": {
+                        "type": "string"
+                    },
+                    "endlat": {
+                        "type": "string"
+                    },
+                    "endlon": {
+                        "type": "string"
+                    },
+                    "isactive": {
+                        "type": "string"
+                    },
+                    "createdby": {
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "type": "string"
+                    },
+                    "updatedby": {
+                        "type": "string"
+                    },
+                    "updatedtime": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/authentication/PointTrackMapSpot": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "position": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "lat": {
+                        "type": "string"
+                    },
+                    "lon": {
+                        "type": "string"
+                    },
+                    "accepteddistinmeter": {
+                        "type": "string"
+                    },
+                    "isactive": {
+                        "type": "string"
+                    },
+                    "createdby": {
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "type": "string"
+                    },
+                    "updatedby": {
+                        "type": "string"
+                    },
+                    "updatedtime": {
+                        "type": "string"
+                    },
+                    "marked_time": {
+                        "type": "string"
+                    },
+                    "marked_lat": {
+                        "type": "string"
+                    },
+                    "marked_lon": {
+                        "type": "string"
+                    },
+                    "marked_by": {
+                        "type": "string"
+                    },
+                    "is_marked": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
      
 
 
@@ -1523,7 +1663,35 @@
         }
 
     },
+    
     "/issue/listmyissues": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "LoginKey": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "LoginKey"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "LoginKey": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "LoginKey": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/issue/listissues": {
         "POST": {
             "body": {
                  "type": "object",
