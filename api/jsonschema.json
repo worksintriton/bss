@@ -40,18 +40,18 @@
                  "type": "object",
                 "properties": {
                     "Red_alert": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "Fire_alert": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "Ambulance_alert": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "Police_alert": {
-                        "type": "number"
+                        "type": "string"
                     },
-                    "client_ID": {
+                    "temp": {
                         "type": "string"
                     }
                 },
@@ -61,7 +61,7 @@
                     "Fire_alert",
                     "Ambulance_alert",
                     "Police_alert",
-                    "client_ID"
+                    "temp"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -70,7 +70,7 @@
                         "Fire_alert": "should have required property Fire_alert",
                         "Ambulance_alert": "should have required property Ambulance_alert",
                         "Police_alert": "should have required property Police_alert",
-                      "client_ID":"should have required property client_ID"
+                      "temp":"should have required property client_ID"
 
                     },
                     "properties": {
@@ -1711,6 +1711,32 @@
                     },
                     "properties": {
                         "LoginKey": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/employee_id": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
                     }
                 }
             }

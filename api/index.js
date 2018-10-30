@@ -60,6 +60,7 @@ addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
+addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 
 
 
@@ -102,9 +103,10 @@ addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
 
 addRoute("/authentication/employeeLogin", "POST", [middleware_emp.signin]);
 addRoute("/authentication/updateEmpProfile", "POST", [middleware_emp.signin]);
-/*
-Issue Tracking
-*/
+
+/*Issue Tracking*/
+
+
 addRoute("/issue/create", "POST", [middleware_emp.validateEmployee, middleware.create_issue]);
 addRoute("/issue/updateissues", "POST", [middleware.updateissues]);
 addRoute("/issue/taken_by", "POST", [middleware.taken_by]);
@@ -116,15 +118,10 @@ addRoute("/issue/issuetrack", "POST", [middleware.issuetrack]);
 addRoute("/issue/createAttachment", "POST", [middleware.create_issue_attachment]);
 addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
 addRoute("/issue/listmyissues", "POST", [middleware_emp.validateEmployee, middleware.list_my_issue]);
-
 addRoute("/issue/listissues", "POST", [middleware.listissues]);
 
-/*
-PointTracking
-*/
-
+/*PointTracking*/
 addRoute("/authentication/PointTrackMap", "POST", [middleware.PointTrackMap]);
-
 addRoute("/authentication/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
 
 

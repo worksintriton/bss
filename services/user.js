@@ -39,9 +39,10 @@ user.createusers = function (userInput, resultCallback) {
 
 user.confignumbers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public.configurenumber("Red_alert", "Fire_alert", "Ambulance_alert","Police_alert","client_ID" )VALUES($1,$2,$3,$4,$5)RETURNING *',
-                 [userInput.Red_alert,userInput.Fire_alert,userInput.Ambulance_alert,userInput.Police_alert,userInput.client_ID])
+  //\''+userInput.appartment_ukey+'\
+
+                  executor.one('UPDATE public.configurenumber SET  "Red_alert"=$1, "Fire_alert"=$2, "Ambulance_alert"=$3, "Police_alert"=$4  WHERE  "temp" = $5 RETURNING *',
+          [userInput.Red_alert,userInput.Fire_alert,userInput.Ambulance_alert,userInput.Police_alert,userInput.temp])
                  .then(data => {
                     console.log("1");
               resultCallback(null,data);
@@ -353,11 +354,10 @@ user.employeeids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public.employeemanagement WHERE "empid"=($1) ' , [userInput.empid])
+    executor.any('SELECT * FROM public.employeedetails WHERE "id"=($1) ' , [userInput.employee_id])
         .then(data => {
-
+          console.log(data);
                  resultCallback(null,data );
-            
         })
         .catch(error => {
             resultCallback(error,null );

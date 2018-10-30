@@ -888,6 +888,26 @@ function issuetrack(req, res, next) {
         ]);
 }
 
+function employee_id(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.employeeids(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                else{
+                      return res.json(_.merge({
+                    data: result[0] 
+                }, utils.errors["200"]));
+                }
+                });
+            }
+        ]);
+}
+
 
 /////training blockss///////
 
@@ -1176,6 +1196,7 @@ exports.bsslogin = bsslogin;
 exports.addemployee = addemployee ;
 exports.employeelist = employeelist ;
 exports.deleteemployee = deleteemployee ;
+exports.employee_id = employee_id;
 
 
 
