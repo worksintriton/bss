@@ -799,7 +799,6 @@ async.waterfall([
 
 function listissues(req, res, next) {
 
-
 async.waterfall([
             function (waterfallCallback){
                 services.issues.listissuess(req.body, function (err, result) {
