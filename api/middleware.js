@@ -499,6 +499,125 @@ function deleteemployee(req, res, next) {
 
 }
 
+
+function addquestions(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addquestion(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function updatequestions(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatequestion(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function deletequestions(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletequestion(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function Question_id(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.Question_ids(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata[0]
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function Questionlist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.Questionlists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 /*
 Issue Management
 */
@@ -1261,3 +1380,11 @@ exports.create_issue_attachment = create_issue_attachment;
 /*PointTracking*/
 exports.PointTrackMap = PointTrackMap;
 exports.PointTrackMapSpot = PointTrackMapSpot;
+
+/*FAQ*/
+
+exports.addquestions = addquestions;
+exports. updatequestions = updatequestions; 
+exports.deletequestions = deletequestions;
+exports.Question_id = Question_id;
+exports.Questionlist = Questionlist;

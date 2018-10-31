@@ -124,6 +124,17 @@ addRoute("/issue/listissues", "POST", [middleware.listissues]);
 addRoute("/authentication/PointTrackMap", "POST", [middleware.PointTrackMap]);
 addRoute("/authentication/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
 
+/*Add FAQ*/
+
+addRoute("/authentication/addquestions", "POST", [middleware.addquestions])
+addRoute("/authentication/updatequestions", "POST", [middleware.updatequestions])
+addRoute("/authentication/deletequestions", "POST", [middleware.deletequestions])
+addRoute("/authentication/Question_id", "POST", [middleware.Question_id])
+
+
+addRoute("/authentication/Questionlist", "POST", [middleware.Questionlist])
+
+
 
 
 

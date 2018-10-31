@@ -367,6 +367,84 @@ user.employeeids = function (userInput, resultCallback) {
 
 };
 
+//add  FAQ//
+user.addquestion = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public."faq"( "questions", "answers")VALUES ($1,$2) RETURNING *',
+                 [userInput.questions,userInput.answers])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.updatequestion = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public."faq" SET  "questions"=$1, "answers"=$2   WHERE  "faq_id" = $3 RETURNING *',
+                 [userInput.questions,userInput.answers,userInput.faq_id])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.deletequestion = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."faq" WHERE "faq_id"=($1) ' , [userInput.faq_id])
+                      .then(data => {
+                 var data = "Deleted"
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.Question_ids = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT *  FROM public."faq" WHERE "faq_id"=($1) ' , [userInput.faq_id])
+                      .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.Questionlists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT *  FROM public."faq" ' , [userInput.Employee_id])
+                      .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
 user.employeeids1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
@@ -409,8 +487,7 @@ user.clientids1 = function (userInput, resultCallback) {
     executor.any('SELECT * FROM public."client_amount" WHERE "cliid"=($1) ' , [userInput.cliid])
         .then(data => {
 
-                 resultCallback(null,data );
-            
+                 resultCallback(null,data );  
         })
         .catch(error => {
             resultCallback(error,null );
@@ -426,8 +503,7 @@ user.userids = function (userInput, resultCallback) {
     executor.any('SELECT * FROM public.usermanage WHERE "user_id"=($1) ' , [userInput.userid])
         .then(data => {
 
-                 resultCallback(null,data );
-            
+                 resultCallback(null,data );    
         })
         .catch(error => {
             resultCallback(error,null );
@@ -451,8 +527,6 @@ user.deleteclients = function (userInput, resultCallback) {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
 };
 
 user.deleteusers = function (userInput, resultCallback) {

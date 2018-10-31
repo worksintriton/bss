@@ -107,7 +107,147 @@
         }
     },
 
-    
+    "/authentication/addquestions": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "questions": {
+                        "type": "string"
+                    },
+                    "answers": {
+                        "type": "string"
+                    }
+
+                },
+        "additionalProperties": false,
+                "required": [
+                    "questions"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                      "questions":"should have required property questions"
+                    },
+                    "properties": {
+                        "questions": "questions must be number"
+                    }
+                }
+            }
+        }
+    },
+
+     "/authentication/updatequestions": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "questions": {
+                        "type": "string"
+                    },
+                    "answers": {
+                        "type": "string"
+                    },
+                    "faq_id": {
+                        "type": "number"
+                    }
+
+                },
+        "additionalProperties": false,
+                "required": [
+                    "questions"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                      "questions":"should have required property questions"
+                    },
+                    "properties": {
+                        "questions": "questions must be number"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/deletequestions": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "faq_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "faq_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                      "faq_id":"should have required property questions"
+                    },
+                    "properties": {
+                        "faq_id": "questions must be number"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/Question_id": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "faq_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "faq_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                      "faq_id":"should have required property questions"
+                    },
+                    "properties": {
+                        "faq_id": "faq_id must be number"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/Questionlist": { 
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                      "Employee_id":"should have required property questions"
+                    },
+                    "properties": {
+                        "Employee_id": "questions must be number"
+                    }
+                }
+            }
+        }
+    },
+
 
      "/authentication/clientlogin": {
         "POST": {
