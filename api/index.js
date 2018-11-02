@@ -120,9 +120,25 @@ addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
 addRoute("/issue/listmyissues", "POST", [middleware_emp.validateEmployee, middleware.list_my_issue]);
 addRoute("/issue/listissues", "POST", [middleware.listissues]);
 
-/*PointTracking*/
-addRoute("/authentication/PointTrackMap", "POST", [middleware.PointTrackMap]);
-addRoute("/authentication/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
+/*PointTracking for Mobile*/
+addRoute("/mapTracking/PointTrackMap", "POST", [middleware.PointTrackMap]);
+// addRoute("/mapTracking/updatePointTrackMap", "POST", [middleware.updatePointTrackMap]);
+// addRoute("/mapTracking/DeletePointTrackMap", "POST", [middleware.DeletePointTrackMap]);
+
+
+
+
+
+
+
+
+
+
+
+
+addRoute("/mapTracking/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
+
+
 
 /*Add FAQ*/
 
@@ -130,18 +146,20 @@ addRoute("/authentication/addquestions", "POST", [middleware.addquestions])
 addRoute("/authentication/updatequestions", "POST", [middleware.updatequestions])
 addRoute("/authentication/deletequestions", "POST", [middleware.deletequestions])
 addRoute("/authentication/Question_id", "POST", [middleware.Question_id])
-
-
 addRoute("/authentication/Questionlist", "POST", [middleware.Questionlist])
 
+
+
+
+
+
 /*PointTracking For Web*/
-
-
 addRoute("/PointTracking/Addpoints", "POST", [middleware.Addpoints])
 addRoute("/PointTracking/pointsupdate", "POST", [middleware.pointsupdate])
 addRoute("/PointTracking/pointslist", "POST", [middleware.pointslist])
 addRoute("/PointTracking/deletepoints", "POST", [middleware.deletepoints])
 addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
+// addRoute("/PointTracking/employee_fetchpoints", "POST", [middleware.employee_fetchpoints])
 
 
 

@@ -1250,7 +1250,7 @@ function PointTrackMap(req, res, next) {
 
        async.waterfall([
             function (waterfallCallback){
-                services.pooint_tracking.PointTrackMaps(req.body, function (err, result) {
+                services.point_tracking.PointTrackMaps(req.body, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
@@ -1273,7 +1273,7 @@ function PointTrackMapSpot(req, res, next) {
 
        async.waterfall([
             function (waterfallCallback){
-                services.pooint_tracking.PointTrackMapSpots(req.body, function (err, result) {
+                services.point_tracking.PointTrackMapSpots(req.body, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err

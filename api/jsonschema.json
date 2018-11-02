@@ -753,7 +753,7 @@
     },
 
 
-    "/authentication/PointTrackMap": {
+    "/mapTracking/PointTrackMap": {
         "POST": {
             "body": {
                  "type": "object",
@@ -822,7 +822,7 @@
     },
 
 
-    "/authentication/PointTrackMapSpot": {
+    "/mapTracking/PointTrackMapSpot": {
         "POST": {
             "body": {
                  "type": "object",
@@ -1914,6 +1914,9 @@
             "body": {
                  "type": "object",
                 "properties": {
+                   "Emp_id": {
+                        "type": "string"
+                    },
                     "Employee_id": {
                         "type": "string"
                     },
@@ -2047,7 +2050,7 @@
         }
     },
 
-    
+
     "/PointTracking/fetchpoints": {
         "POST": {
             "body": {

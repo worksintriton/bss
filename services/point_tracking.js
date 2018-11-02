@@ -37,6 +37,40 @@ point_tracking.PointTrackMaps = function (userInput, resultCallback) {
 };
 
 
+
+
+point_tracking.PointTrackMaps = function (userInput, resultCallback) {
+
+  var executor = db.getdaata.getdb();
+
+   
+
+  executor.one('UPDATE public."PointTrackMap" SET title=?, description=?, totaltime=?, totalmeters=?, startlat=?, startlon=?, endlat=?, endlon=?, isactive=?, createdby=?, createdtime=?, updatedby=?, updatedtime=?, mapspots_id=? WHERE  ukey=?',
+                 [ 
+                 userInput.mapspots_id,
+                 userInput.title,
+                 userInput.description,
+                 userInput.totaltime,
+                 userInput.totalmeters,
+                 userInput.startlat,
+                 userInput.startlon,
+                 userInput.endlat,
+                 userInput.endlon,
+                 userInput.isactive,
+                 userInput.createdby,
+                 userInput.createdtime,
+                 userInput.updatedby,
+                 userInput.updatedtime,
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
 point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
@@ -71,8 +105,9 @@ point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
 point_tracking.Addpointsweb = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public."Maptrackpoint"("Employee_id","created_date","mapdescription","maptitle","updated_date","status")VALUES($1,$2,$3,$4,$5,$6)RETURNING *',
+  executor.one('INSERT INTO public."Maptrackpoint"("Emp_id","Employee_id","created_date","mapdescription","maptitle","updated_date","status")VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
                  [ 
+                 userInput.Emp_id,
                  userInput.Employee_id,
                  userInput.created_date,
                  userInput.mapdescription,
