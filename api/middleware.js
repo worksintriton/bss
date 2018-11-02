@@ -1412,6 +1412,55 @@ function fetchpoints(req, res, next) {
 
 
 
+function employee_fetchpoints(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.employee_fetchpointsmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updatePointTrackMap(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.updatePointTrackMapmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
 exports.init = init;
 exports.passport = passport;
 
@@ -1498,6 +1547,8 @@ exports.create_issue_attachment = create_issue_attachment;
 
 /*PointTracking*/
 exports.PointTrackMap = PointTrackMap;
+exports.updatePointTrackMap = updatePointTrackMap;
+
 exports.PointTrackMapSpot = PointTrackMapSpot;
 
 /*FAQ*/
@@ -1515,4 +1566,5 @@ exports.pointsupdate = pointsupdate;
 exports.pointslist = pointslist;
 exports.deletepoints = deletepoints;
 exports.fetchpoints = fetchpoints;
+exports.employee_fetchpoints = employee_fetchpoints;
 

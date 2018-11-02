@@ -11,9 +11,9 @@ function point_tracking() {}
 point_tracking.PointTrackMaps = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public."PointTrackMap"("mapspots_id","title","description","totaltime","totalmeters","startlat","startlon","endlat","endlon","isactive","createdby","createdtime","updatedby","updatedtime")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)RETURNING *',
+  executor.one('INSERT INTO public."PointTrackMap"("title","description","totaltime","totalmeters","startlat","startlon","endlat","endlon","isactive","createdby","createdtime","updatedby","updatedtime")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)RETURNING *',
                  [ 
-                 userInput.mapspots_id,
+                
                  userInput.title,
                  userInput.description,
                  userInput.totaltime,
@@ -39,15 +39,12 @@ point_tracking.PointTrackMaps = function (userInput, resultCallback) {
 
 
 
-point_tracking.PointTrackMaps = function (userInput, resultCallback) {
+point_tracking.updatePointTrackMapmobile = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-
-   
-
-  executor.one('UPDATE public."PointTrackMap" SET title=?, description=?, totaltime=?, totalmeters=?, startlat=?, startlon=?, endlat=?, endlon=?, isactive=?, createdby=?, createdtime=?, updatedby=?, updatedtime=?, mapspots_id=? WHERE  ukey=?',
+  executor.any('UPDATE public."PointTrackMap" SET title=($2), description=($3), totaltime=($4), totalmeters=($5), startlat=($6), startlon=($7), endlat=($8), endlon=($9), isactive=($10), createdby=($11), createdtime=($12), updatedby=($13), updatedtime=($14) WHERE  ukey=($1) RETURNING *',
                  [ 
-                 userInput.mapspots_id,
+                 userInput.ukey,
                  userInput.title,
                  userInput.description,
                  userInput.totaltime,
@@ -105,7 +102,7 @@ point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
 point_tracking.Addpointsweb = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public."Maptrackpoint"("Emp_id","Employee_id","created_date","mapdescription","maptitle","updated_date","status")VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
+  executor.one('INSERT INTO public."Maptrackpoint"("Emp_id","Employee_id","created_date","mapdescription","maptitle","updated_date","status","create_map")VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
                  [ 
                  userInput.Emp_id,
                  userInput.Employee_id,
@@ -113,7 +110,8 @@ point_tracking.Addpointsweb = function (userInput, resultCallback) {
                  userInput.mapdescription,
                  userInput.maptitle,
                  userInput.updated_date,
-                 userInput.status
+                 userInput.status,
+                 "create map"
                  ])
                  .then(data => {
                     resultCallback(null,data);
@@ -180,6 +178,21 @@ point_tracking.fetchpointsweb = function (userInput, resultCallback) {
   executor.any('select * from public."Maptrackpoint" where "mappoint_id"=($1)',
                  [
                  userInput.mappoint_id
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+point_tracking.employee_fetchpointsmobile = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('select * from public."Maptrackpoint" where "Emp_id"=($1)',
+                 [
+                 userInput.Emp_id
                  ])
                  .then(data => {
                     resultCallback(null,data);

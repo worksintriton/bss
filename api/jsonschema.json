@@ -758,9 +758,6 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "mapspots_id": {
-                        "type": "string"
-                    },
                     "ukey": {
                         "type": "string"
                     },
@@ -2071,6 +2068,104 @@
                     },
                     "properties": {
                         "mappoint_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+     "/PointTracking/employee_fetchpoints": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Emp_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Emp_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Emp_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "Emp_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+   "/mapTracking/updatePointTrackMap": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "mapspots_id": {
+                        "type": "string"
+                    },
+                    "ukey": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "totaltime": {
+                        "type": "string"
+                    },
+                    "totalmeters": {
+                        "type": "string"
+                    },
+                    "startlat": {
+                        "type": "string"
+                    },
+                    "startlon": {
+                        "type": "string"
+                    },
+                    "endlat": {
+                        "type": "string"
+                    },
+                    "endlon": {
+                        "type": "string"
+                    },
+                    "isactive": {
+                        "type": "string"
+                    },
+                    "createdby": {
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "type": "string"
+                    },
+                    "updatedby": {
+                        "type": "string"
+                    },
+                    "updatedtime": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
                     }
                 }
             }
