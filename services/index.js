@@ -7,7 +7,7 @@ var clientmanagement =  require ("./clientmanagement");
 var employee = require ("./employee");
 var issues = require ("./issues");
 var training = require ("./training");
-var pooint_tracking = require ("./point_tracking");
+var point_tracking = require ("./point_tracking");
 
 
 
@@ -19,7 +19,7 @@ exports.clientmanagement = clientmanagement;
 exports.employee = employee;
 exports.issues = issues;
 exports.training = training;
-exports.pooint_tracking = pooint_tracking;
+exports.point_tracking = point_tracking;
 
 
 

@@ -134,6 +134,21 @@ addRoute("/authentication/Question_id", "POST", [middleware.Question_id])
 
 addRoute("/authentication/Questionlist", "POST", [middleware.Questionlist])
 
+/*PointTracking For Web*/
+
+
+addRoute("/PointTracking/Addpoints", "POST", [middleware.Addpoints])
+addRoute("/PointTracking/pointsupdate", "POST", [middleware.pointsupdate])
+addRoute("/PointTracking/pointslist", "POST", [middleware.pointslist])
+addRoute("/PointTracking/deletepoints", "POST", [middleware.deletepoints])
+addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
+
+
+
+
+
+
+
 
 
 

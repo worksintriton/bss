@@ -1906,5 +1906,179 @@
                 }
             }
         }
-    } 
+    } ,
+    
+
+    "/PointTracking/Addpoints": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    },
+                    "created_date": {
+                        "type": "string"
+                    },
+                    "mapdescription": {
+                        "type": "string"
+                    },
+                    "maptitle": {
+                        "type": "string"
+                    },
+                    "updated_date": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Employee_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "Employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/PointTracking/pointsupdate": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    },
+                    "mappoint_id": {
+                        "type": "string"
+                    },
+                    "mapdescription": {
+                        "type": "string"
+                    },
+                    "maptitle": {
+                        "type": "string"
+                    },
+                    "updated_date": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Employee_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "Employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/PointTracking/pointslist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Employee_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "Employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/PointTracking/deletepoints": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "mappoint_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "mappoint_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "mappoint_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "mappoint_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    
+    "/PointTracking/fetchpoints": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "mappoint_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "mappoint_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "mappoint_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "mappoint_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
 }

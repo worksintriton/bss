@@ -1293,6 +1293,125 @@ function PointTrackMapSpot(req, res, next) {
 }
 
 
+function Addpoints(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.Addpointsweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function pointsupdate(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.pointsupdateweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function pointslist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.pointslistweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function deletepoints(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.deletepointsweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  "Deleted Succcessfully" 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function fetchpoints(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.fetchpointsweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
 exports.init = init;
 exports.passport = passport;
 
@@ -1388,3 +1507,12 @@ exports. updatequestions = updatequestions;
 exports.deletequestions = deletequestions;
 exports.Question_id = Question_id;
 exports.Questionlist = Questionlist;
+
+/*PointTracking For Web*/
+
+exports.Addpoints = Addpoints;
+exports.pointsupdate = pointsupdate;
+exports.pointslist = pointslist;
+exports.deletepoints = deletepoints;
+exports.fetchpoints = fetchpoints;
+
