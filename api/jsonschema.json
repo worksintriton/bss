@@ -2333,21 +2333,200 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "pointtrackmapid": {
+                    "PointTrackMaprefid": {
                         "type": "string"
                     }
                 },
         "additionalProperties": false,
                 "required": [
-                    "pointtrackmapid"  
+                    "PointTrackMaprefid"  
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "pointtrackmapid": "should have required property LoginKey"
+                        "PointTrackMaprefid": "should have required property LoginKey"
                     },
                     "properties": {
-                        "pointtrackmapid": "userId must be string"
+                        "PointTrackMaprefid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+     "/mapTracking/PointTrackMapRecords": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "PointTrackMaprefid": {
+                        "type": "string"
+                    },
+                    "PointTrackMap": {
+                        "type": "string"
+                    },
+                    "ukey": {
+                        "type": "string"
+                    },
+                    "mappoints": {
+                        "type": "string"
+                    },
+                    "isactive": {
+                        "type": "string"
+                    },
+                    "isstarted": {
+                        "type": "string"
+                    },
+                    "iscompleted": {
+                        "type": "string"
+                    },
+                    "starttime": {
+                        "type": "string"
+                    },
+                    "endtime": {
+                        "type": "string"
+                    },
+                    "createdby": {
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "type": "string"
+                    },
+                    "updatedby": {
+                        "type": "string"
+                    },
+                    "updatedtime": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "PointTrackMaprefid": "should have required property userId"
+                    },
+                    "properties": {
+                        "PointTrackMaprefid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+      "/mapTracking/updatePointTrackMapRecords": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+
+                    "PointTrackMaprefid": {
+                        "type": "string"
+                    },
+                    "PointTrackMap": {
+                        "type": "string"
+                    },
+                    "ukey": {
+                        "type": "string"
+                    },
+                    "mappoints": {
+                        "type": "string"
+                    },
+                    "isactive": {
+                        "type": "string"
+                    },
+                    "isstarted": {
+                        "type": "string"
+                    },
+                    "iscompleted": {
+                        "type": "string"
+                    },
+                    "starttime": {
+                        "type": "string"
+                    },
+                    "endtime": {
+                        "type": "string"
+                    },
+                    "createdby": {
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "type": "string"
+                    },
+                    "updatedby": {
+                        "type": "string"
+                    },
+                    "updatedtime": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "PointTrackMaprefid": "should have required property userId"
+                    },
+                    "properties": {
+                        "PointTrackMaprefid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+        "/mapTracking/DeletePointTrackMapRecords": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "PointTrackMaprefid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "PointTrackMaprefid"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "PointTrackMaprefid": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "PointTrackMaprefid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/mapTracking/PointTrackMapRecordslist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "PointTrackMaprefid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "PointTrackMaprefid"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "PointTrackMaprefid": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "PointTrackMaprefid": "userId must be string"
                     }
                 }
             }
@@ -2355,6 +2534,10 @@
     }
 
 
+
+
+
+    
 
 
 

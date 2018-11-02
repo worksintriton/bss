@@ -9,7 +9,6 @@ function point_tracking() {}
 
 
 point_tracking.PointTrackMaps = function (userInput, resultCallback) {
-
   var executor = db.getdaata.getdb();
   executor.one('INSERT INTO public."PointTrackMap"("title","description","totaltime","totalmeters","startlat","startlon","endlat","endlon","isactive","createdby","createdtime","updatedby","updatedtime")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)RETURNING *',
                  [ 
@@ -35,10 +34,6 @@ point_tracking.PointTrackMaps = function (userInput, resultCallback) {
                     resultCallback(null,error );
                 })
 };
-
-
-
-
 point_tracking.updatePointTrackMapmobile = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
@@ -83,6 +78,85 @@ point_tracking.DeletePointTrackMapmobile = function (userInput, resultCallback) 
 point_tracking.PointTrackMaplistmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   executor.any('select * from public."PointTrackMap" ',[userInput.ukey])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+
+// records //
+
+
+
+point_tracking.PointTrackMapRecordsmobile = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  executor.one('INSERT INTO public."PointTrackRecords"( "PointTrackMaprefid", "PointTrackMap", "ukey", "mappoints", "isactive", "isstarted", "iscompleted", "starttime", "endtime", "createdby", "createdtime", "updatedby", "updatedtime") VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING * ',             [ userInput.PointTrackMaprefid,
+                 userInput.PointTrackMap,
+                 userInput.ukey,
+                 userInput.mappoints,
+                 userInput.isactive,
+                 userInput.isstarted,
+                 userInput.iscompleted,
+                 userInput.starttime,
+                 userInput.endtime,
+                 userInput.createdby,
+                 userInput.createdtime,
+                 userInput.updatedby,
+                 userInput.updatedtime,
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+point_tracking.updatePointTrackMapRecordsmobile = function (userInput, resultCallback) {
+
+  var executor = db.getdaata.getdb();
+  executor.any('UPDATE public."PointTrackRecords" SET  "PointTrackMap"=($2), ukey=($3), mappoints=($4), isactive=($5), isstarted=($6), iscompleted=($7), starttime=($8), endtime=($9), createdby=($10), createdtime=($11), updatedby=($12), updatedtime=($13) WHERE "PointTrackMaprefid"= ($1) RETURNING *',
+                 [ 
+                 userInput.PointTrackMaprefid,
+                 userInput.PointTrackMap,
+                 userInput.ukey,
+                 userInput.mappoints,
+                 userInput.isactive,
+                 userInput.isstarted,
+                 userInput.iscompleted,
+                 userInput.starttime,
+                 userInput.endtime,
+                 userInput.createdby,
+                 userInput.createdtime,
+                 userInput.updatedby,
+                 userInput.updatedtime,
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+point_tracking.DeletePointTrackMapRecordsmobile = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('Delete from public."PointTrackRecords" where "PointTrackMaprefid"=($1)',[userInput.PointTrackMaprefid])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+point_tracking.PointTrackMapRecordslistmobile = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('select * from public."PointTrackRecords" ',[userInput.PointTrackRecords])
                  .then(data => {
                     resultCallback(null,data);
                  })
