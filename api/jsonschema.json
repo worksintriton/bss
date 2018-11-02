@@ -2170,7 +2170,190 @@
                 }
             }
         }
+    },
+
+
+      "/mapTracking/DeletePointTrackMap": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "ukey": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "ukey"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "ukey": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "ukey": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/mapTracking/PointTrackMaplist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "ukey": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "ukey"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "ukey": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "ukey": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/mapTracking/updatePointTrackMapSpot": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "pointtrackmapid": {
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "lat": {
+                        "type": "string"
+                    },
+                    "lon": {
+                        "type": "string"
+                    },
+                    "accepteddistinmeter": {
+                        "type": "string"
+                    },
+                    "isactive": {
+                        "type": "string"
+                    },
+                    "createdby": {
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "type": "string"
+                    },
+                    "updatedby": {
+                        "type": "string"
+                    },
+                    "updatedtime": {
+                        "type": "string"
+                    },
+                    "marked_time": {
+                        "type": "string"
+                    },
+                    "marked_lat": {
+                        "type": "string"
+                    },
+                    "marked_lon": {
+                        "type": "string"
+                    },
+                    "marked_by": {
+                        "type": "string"
+                    },
+                    "is_marked": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/mapTracking/DeletePointTrackMapSpot": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "pointtrackmapid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "pointtrackmapid"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "pointtrackmapid": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "pointtrackmapid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/mapTracking/PointTrackMapSpotlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "pointtrackmapid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "pointtrackmapid"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "pointtrackmapid": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "pointtrackmapid": "userId must be string"
+                    }
+                }
+            }
+        }
     }
+
 
 
 

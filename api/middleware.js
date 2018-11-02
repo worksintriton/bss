@@ -1460,6 +1460,134 @@ function updatePointTrackMap(req, res, next) {
 }
 
 
+function DeletePointTrackMap(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.DeletePointTrackMapmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function PointTrackMaplist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.PointTrackMaplistmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updatePointTrackMapSpot(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.updatePointTrackMapSpotmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function DeletePointTrackMapSpot(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.DeletePointTrackMapSpotmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function PointTrackMapSpotlist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.PointTrackMapSpotlistmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
 
 exports.init = init;
 exports.passport = passport;
@@ -1548,8 +1676,19 @@ exports.create_issue_attachment = create_issue_attachment;
 /*PointTracking*/
 exports.PointTrackMap = PointTrackMap;
 exports.updatePointTrackMap = updatePointTrackMap;
+exports.DeletePointTrackMap = DeletePointTrackMap;
+exports.PointTrackMaplist = PointTrackMaplist ;
+
+
+
+
+
 
 exports.PointTrackMapSpot = PointTrackMapSpot;
+exports.updatePointTrackMapSpot = updatePointTrackMapSpot;
+exports.DeletePointTrackMapSpot = DeletePointTrackMapSpot;
+exports.PointTrackMapSpotlist = PointTrackMapSpotlist;
+
 
 /*FAQ*/
 

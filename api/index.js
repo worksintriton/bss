@@ -123,20 +123,13 @@ addRoute("/issue/listissues", "POST", [middleware.listissues]);
 /*PointTracking for Mobile*/
 addRoute("/mapTracking/PointTrackMap", "POST", [middleware.PointTrackMap]);
 addRoute("/mapTracking/updatePointTrackMap", "POST", [middleware.updatePointTrackMap]);
- // addRoute("/mapTracking/DeletePointTrackMap", "POST", [middleware.DeletePointTrackMap]);
-
-
-
-
-
-
-
-
-
-
-
+addRoute("/mapTracking/DeletePointTrackMap", "POST", [middleware.DeletePointTrackMap]);
+addRoute("/mapTracking/PointTrackMaplist", "POST", [middleware.PointTrackMaplist]);
 
 addRoute("/mapTracking/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
+addRoute("/mapTracking/updatePointTrackMapSpot", "POST", [middleware.updatePointTrackMapSpot]);
+addRoute("/mapTracking/DeletePointTrackMapSpot", "POST", [middleware.DeletePointTrackMapSpot]);
+addRoute("/mapTracking/PointTrackMapSpotlist", "POST", [middleware.PointTrackMapSpotlist]);
 
 
 
@@ -159,7 +152,6 @@ addRoute("/PointTracking/pointsupdate", "POST", [middleware.pointsupdate])
 addRoute("/PointTracking/pointslist", "POST", [middleware.pointslist])
 addRoute("/PointTracking/deletepoints", "POST", [middleware.deletepoints])
 addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
-
 addRoute("/PointTracking/employee_fetchpoints", "POST", [middleware.employee_fetchpoints])
 
 
