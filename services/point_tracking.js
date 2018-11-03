@@ -35,11 +35,8 @@ point_tracking.PointTrackMaps = function (userInput, resultCallback) {
                 })
 };
 point_tracking.updatePointTrackMapmobile = function (userInput, resultCallback) {
-
   var executor = db.getdaata.getdb();
-
-
-  executor.any('UPDATE public."PointTrackMap" SET title=($2), description=($3), totaltime=($4), totalmeters=($5), startlat=($6), startlon=($7), endlat=($8), endlon=($9), isactive=($10), createdby=($11), createdtime=($12), updatedby=($13), updatedtime=($14) WHERE  ukey=($1) RETURNING *',
+  executor.any('UPDATE public."PointTrackMap" SET title=($2), description=($3), totaltime=($4), totalmeters=($5), startlat=($6), startlon=($7), endlat=($8), endlon=($9), isactive=($10), createdby=($11), createdtime=($12), updatedby=($13), updatedtime=($14), WHERE  ukey=($1) RETURNING *',
                  [ 
                  userInput.ukey,
                  userInput.title,
@@ -259,14 +256,14 @@ point_tracking.PointTrackMapSpotlistmobile = function (userInput, resultCallback
 point_tracking.Addpointsweb = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public."Maptrackpoint"("Emp_id","Employee_id","created_date","mapdescription","maptitle","updated_date","status","notification_title")VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
+  executor.one('INSERT INTO public."PointTrackMap"("Emp_id","Employee_Name","createdtime","description","title","updatedtime","status","notification_title")VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
                  [ 
                  userInput.Emp_id,
-                 userInput.Employee_id,
-                 userInput.created_date,
-                 userInput.mapdescription,
-                 userInput.maptitle,
-                 userInput.updated_date,
+                 userInput.Employee_Name,
+                 userInput.createdtime,
+                 userInput.description,
+                 userInput.title,
+                 userInput.updatedtime,
                  userInput.status,
                  "create map"
                  ])
@@ -282,13 +279,13 @@ point_tracking.Addpointsweb = function (userInput, resultCallback) {
 point_tracking.pointsupdateweb = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one(' update public."Maptrackpoint"  set   "Employee_id" = ($2) , "mapdescription"= ($3),"maptitle" = ($4),"updated_date" = ($5),"status" = ($6) where  "mappoint_id" = ($1) RETURNING *',
+  executor.any(' update public."PointTrackMap"  set   "Employee_Name" = ($2) , "description"= ($3),"title" = ($4),"updatedtime" = ($5),"status" = ($6) where  "ukey" = ($1) RETURNING *',
                  [ 
-                 userInput.mappoint_id,
-                 userInput.Employee_id,
-                 userInput.mapdescription,
-                 userInput.maptitle,
-                 userInput.updated_date,
+                 userInput.ukey,
+                 userInput.Employee_Name,
+                 userInput.description,
+                 userInput.title,
+                 userInput.updatedtime,
                  userInput.status
                  ])
                  .then(data => {
@@ -303,7 +300,7 @@ point_tracking.pointsupdateweb = function (userInput, resultCallback) {
 point_tracking.pointslistweb = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.any('select * from public."Maptrackpoint"',
+  executor.any('select * from public."PointTrackMap"',
                  [
                  userInput.Employee_id
                  ])
@@ -318,9 +315,9 @@ point_tracking.pointslistweb = function (userInput, resultCallback) {
 point_tracking.deletepointsweb = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.any('Delete FROM public."Maptrackpoint" WHERE "mappoint_id"=($1)',
+  executor.any('Delete FROM public."PointTrackMap" WHERE "ukey"=($1)',
                  [
-                 userInput.mappoint_id
+                 userInput.ukey
                  ])
                  .then(data => {
                     resultCallback(null,data);
