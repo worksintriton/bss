@@ -344,7 +344,7 @@ point_tracking.fetchpointsweb = function (userInput, resultCallback) {
 
 point_tracking.employee_fetchpointsmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('select * from public."Maptrackpoint" where "Emp_id"=($1)',
+  executor.any('select * from public."PointTrackMap" where "Emp_id"=($1)',
                  [
                  userInput.Emp_id
                  ])
@@ -446,6 +446,86 @@ point_tracking.PointTrackRecordsSpotlistmobile = function (userInput, resultCall
                     resultCallback(null,error );
                 })
 };
+
+
+
+point_tracking.addmapuseweb = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.one('INSERT INTO public."Mapusers"("Emp_id","Employee_name","Map_id","gender","contact_no","Email_id","Client_place","Address")VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
+                 [ 
+                 userInput.Emp_id,
+                 userInput.Employee_name,
+                 userInput.Map_id,
+                 userInput.gender,
+                 userInput.contact_no,
+                 userInput.Email_id,
+                 userInput.Client_place,
+                 userInput.Address
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+
+
+
+point_tracking.addmapuserlistweb = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('select * from public."Mapusers" WHERE "Map_id"=($1)',[userInput.Map_id])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+point_tracking.mapuserdeleteweb = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('Delete from public."Mapusers" WHERE "Emp_id"=($1) ',[userInput.Emp_id])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+point_tracking.fetchmapuserpointsweb1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('Select * from public."PointTrackMap" WHERE "Emp_id"=($1) ',[userInput.Emp_id])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+point_tracking.fetchmapuserpointsweb2 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('Select * from public."Mapusers" WHERE "Emp_id"=($1) ',[userInput.Emp_id])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+
+
+
+
 
 
 

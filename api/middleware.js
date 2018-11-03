@@ -1800,6 +1800,118 @@ function PointTrackRecordsSpotlist(req, res, next) {
 
 
 
+function addmapuser(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.addmapuseweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function addmapuserlist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.addmapuserlistweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function mapuserdelete(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.mapuserdeleteweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function fetchmapuserpoints(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.fetchmapuserpointsweb1(req.body, function (err, PointTrackMap) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                 services.point_tracking.fetchmapuserpointsweb2(req.body, function (err, Mapusers) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                  return res.json(_.merge({
+                    PointTrackMap:  PointTrackMap,
+                    Mapusers:Mapusers
+                }, utils.errors["200"]))
+                });
+            }
+        ]);
+}
+
+
+
+
+
+
+
+
 
 
 exports.init = init;
@@ -1887,6 +1999,8 @@ exports.list_my_issue =list_my_issue;
 exports.create_issue_attachment = create_issue_attachment;
 
 /*PointTracking*/
+
+    /*PointTrackMap*/
 exports.PointTrackMap = PointTrackMap;
 exports.updatePointTrackMap = updatePointTrackMap;
 exports.DeletePointTrackMap = DeletePointTrackMap;
@@ -1894,13 +2008,14 @@ exports.PointTrackMaplist = PointTrackMaplist ;
 
 
 
+    /*PointTrackMapSpots*/
 exports.PointTrackMapSpot = PointTrackMapSpot;
 exports.updatePointTrackMapSpot = updatePointTrackMapSpot;
 exports.DeletePointTrackMapSpot = DeletePointTrackMapSpot;
 exports.PointTrackMapSpotlist = PointTrackMapSpotlist;
 
 
-
+    /*PointTracRecords*/
 exports.PointTrackMapRecords = PointTrackMapRecords;
 exports.updatePointTrackMapRecords = updatePointTrackMapRecords;
 exports.DeletePointTrackMapRecords = DeletePointTrackMapRecords;
@@ -1908,13 +2023,19 @@ exports.PointTrackMapRecordslist = PointTrackMapRecordslist;
 
 
 
+    /*PointTracRecordsSpots*/
 exports.PointTrackRecordsSpot = PointTrackRecordsSpot ;
 exports.updatePointTrackRecordsSpot = updatePointTrackRecordsSpot;
 exports.DeletePointTrackRecordsSpot = DeletePointTrackRecordsSpot;
 exports. PointTrackRecordsSpotlist = PointTrackRecordsSpotlist;
 
 
+/* Mapuser */
 
+exports.addmapuser = addmapuser;
+exports.addmapuserlist = addmapuserlist;
+exports.mapuserdelete = mapuserdelete;
+exports.fetchmapuserpoints = fetchmapuserpoints;
 
 
 /*FAQ*/

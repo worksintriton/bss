@@ -176,6 +176,20 @@ addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
 
 
 
+/* Mapuser */
+
+addRoute("/mapTracking/addmapuser", "POST", [middleware.addmapuser])
+addRoute("/mapTracking/addmapuserlist", "POST", [middleware.addmapuserlist])
+addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete])
+
+
+
+
+
+
+
+addRoute("/mapTracking/fetchmapuserpoints", "POST", [middleware.fetchmapuserpoints])
+
 
 
 

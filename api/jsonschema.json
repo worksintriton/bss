@@ -2736,6 +2736,129 @@
                 }
             }
         }
+    },
+
+    "/mapTracking/addmapuser": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Emp_id": {
+                        "type": "string"
+                    },
+                    "Employee_name": {
+                        "type": "string"
+                    },
+                    "Map_id": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "Client_place": {
+                        "type": "string"
+                    },
+                    "Address": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Emp_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Emp_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+     "/mapTracking/addmapuserlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Map_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Map_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Map_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/mapTracking/mapuserdelete": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Emp_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Emp_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Emp_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/mapTracking/fetchmapuserpoints": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Emp_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Emp_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Emp_id": "userId must be string"
+                    }
+                }
+            }
+        }
     }
 
 
