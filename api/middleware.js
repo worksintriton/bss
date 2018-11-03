@@ -1885,10 +1885,10 @@ function fetchmapuserpoints(req, res, next) {
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
                 }
-                waterfallCallback(null,result);
+                waterfallCallback(null,PointTrackMap);
                 });
             },
-            function (mydata, waterfallCallback){
+            function (PointTrackMap, waterfallCallback){
                  services.point_tracking.fetchmapuserpointsweb2(req.body, function (err, Mapusers) {
                 if (err) {
                     req.log.error({
