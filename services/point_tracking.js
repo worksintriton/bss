@@ -329,9 +329,9 @@ point_tracking.deletepointsweb = function (userInput, resultCallback) {
 
 point_tracking.fetchpointsweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('select * from public."Maptrackpoint" where "mappoint_id"=($1)',
+  executor.any('select * from public."PointTrackMap" where "ukey"=($1)',
                  [
-                 userInput.mappoint_id
+                 userInput.ukey
                  ])
                  .then(data => {
                     resultCallback(null,data);

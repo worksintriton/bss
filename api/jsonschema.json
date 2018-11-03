@@ -2053,21 +2053,21 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "mappoint_id": {
+                    "ukey": {
                         "type": "string"
                     }
                 },
         "additionalProperties": false,
                 "required": [
-                    "mappoint_id"  
+                    "ukey"  
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "mappoint_id": "should have required property LoginKey"
+                        "ukey": "should have required property LoginKey"
                     },
                     "properties": {
-                        "mappoint_id": "userId must be string"
+                        "ukey": "userId must be string"
                     }
                 }
             }
