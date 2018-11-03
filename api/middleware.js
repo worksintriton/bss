@@ -1695,6 +1695,113 @@ function PointTrackMapRecordslist(req, res, next) {
 
 
 
+
+
+function PointTrackRecordsSpot(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.PointTrackRecordsSpotmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updatePointTrackRecordsSpot(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.updatePointTrackRecordsSpotmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function DeletePointTrackRecordsSpot(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.DeletePointTrackRecordsSpotmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function PointTrackRecordsSpotlist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.PointTrackRecordsSpotlistmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+
+
+
 exports.init = init;
 exports.passport = passport;
 
@@ -1798,6 +1905,13 @@ exports.PointTrackMapRecords = PointTrackMapRecords;
 exports.updatePointTrackMapRecords = updatePointTrackMapRecords;
 exports.DeletePointTrackMapRecords = DeletePointTrackMapRecords;
 exports.PointTrackMapRecordslist = PointTrackMapRecordslist;
+
+
+
+exports.PointTrackRecordsSpot = PointTrackRecordsSpot ;
+exports.updatePointTrackRecordsSpot = updatePointTrackRecordsSpot;
+exports.DeletePointTrackRecordsSpot = DeletePointTrackRecordsSpot;
+exports. PointTrackRecordsSpotlist = PointTrackRecordsSpotlist;
 
 
 

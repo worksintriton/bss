@@ -359,4 +359,97 @@ point_tracking.employee_fetchpointsmobile = function (userInput, resultCallback)
                 })
 };
 
+
+
+/*adshfjkhas*/
+
+
+point_tracking.PointTrackRecordsSpotmobile = function (userInput, resultCallback) {
+
+  var executor = db.getdaata.getdb();
+  executor.one('INSERT INTO public."pointtrackrecordsspots"("pointtrackmapid","position","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)RETURNING *',
+                 [ 
+                 userInput.pointtrackmapid,
+                 userInput.position,
+                 userInput.title,
+                 userInput.description,
+                 userInput.lat,
+                 userInput.lon,
+                 userInput.accepteddistinmeter,
+                 userInput.isactive,
+                 userInput.createdby,
+                 userInput.createdtime,
+                 userInput.updatedby,
+                 userInput.updatedtime,
+                 userInput.marked_time,
+                 userInput.marked_lat,
+                 userInput.marked_lon,
+                 userInput.marked_by,
+                 userInput.is_marked
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+point_tracking.updatePointTrackRecordsSpotmobile = function (userInput, resultCallback) {
+
+  var executor = db.getdaata.getdb();
+  executor.one(' UPDATE public."pointtrackrecordsspots" SET "position"=($2) , title=($3) , description=($4) , lat=($5) , lon=($6) , accepteddistinmeter=($7) , isactive=($8) , createdby=($9) , createdtime=($10) , updatedby=($11) , updatedtime=($12) , marked_time=($13) , marked_lat=($14) , marked_lon=($15) , marked_by=($16) , is_marked=($17)   WHERE pointtrackmapid=($1) RETURNING * ',
+                 [ 
+                 userInput.pointtrackmapid,
+                 userInput.position,
+                 userInput.title,
+                 userInput.description,
+                 userInput.lat,
+                 userInput.lon,
+                 userInput.accepteddistinmeter,
+                 userInput.isactive,
+                 userInput.createdby,
+                 userInput.createdtime,
+                 userInput.updatedby,
+                 userInput.updatedtime,
+                 userInput.marked_time,
+                 userInput.marked_lat,
+                 userInput.marked_lon,
+                 userInput.marked_by,
+                 userInput.is_marked
+                 ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+point_tracking.DeletePointTrackRecordsSpotmobile = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('Delete from public."pointtrackrecordsspots" where "pointtrackmapid"=($1)',[userInput.pointtrackmapid])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+point_tracking.PointTrackRecordsSpotlistmobile = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('select * from public."pointtrackrecordsspots" ',[userInput.pointtrackmapid])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+
 module.exports = point_tracking;

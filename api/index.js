@@ -121,23 +121,32 @@ addRoute("/issue/listmyissues", "POST", [middleware_emp.validateEmployee, middle
 addRoute("/issue/listissues", "POST", [middleware.listissues]);
 
 /*PointTracking for Mobile*/
+
+    /*PointTrackMap*/
 addRoute("/mapTracking/PointTrackMap", "POST", [middleware.PointTrackMap]);
 addRoute("/mapTracking/updatePointTrackMap", "POST", [middleware.updatePointTrackMap]);
 addRoute("/mapTracking/DeletePointTrackMap", "POST", [middleware.DeletePointTrackMap]);
 addRoute("/mapTracking/PointTrackMaplist", "POST", [middleware.PointTrackMaplist]);
 
+    /*PointTrackMapSpots*/
 addRoute("/mapTracking/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
 addRoute("/mapTracking/updatePointTrackMapSpot", "POST", [middleware.updatePointTrackMapSpot]);
 addRoute("/mapTracking/DeletePointTrackMapSpot", "POST", [middleware.DeletePointTrackMapSpot]);
 addRoute("/mapTracking/PointTrackMapSpotlist", "POST", [middleware.PointTrackMapSpotlist]);
 
-
+    /*PointTracRecords*/
 addRoute("/mapTracking/PointTrackMapRecords", "POST", [middleware.PointTrackMapRecords]);
 addRoute("/mapTracking/updatePointTrackMapRecords", "POST", [middleware.updatePointTrackMapRecords]);
 addRoute("/mapTracking/DeletePointTrackMapRecords", "POST", [middleware.DeletePointTrackMapRecords]);
-
-
 addRoute("/mapTracking/PointTrackMapRecordslist", "POST", [middleware.PointTrackMapRecordslist]);
+
+
+
+    /*PointTracRecordsSpots*/
+addRoute("/mapTracking/PointTrackRecordsSpot", "POST", [middleware.PointTrackRecordsSpot]);
+addRoute("/mapTracking/updatePointTrackRecordsSpot", "POST", [middleware.updatePointTrackRecordsSpot]);
+addRoute("/mapTracking/DeletePointTrackRecordsSpot", "POST", [middleware.DeletePointTrackRecordsSpot]);
+addRoute("/mapTracking/PointTrackRecordsSpotlist", "POST", [middleware.PointTrackRecordsSpotlist]);
 
 
 
