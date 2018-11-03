@@ -259,7 +259,7 @@ point_tracking.PointTrackMapSpotlistmobile = function (userInput, resultCallback
 point_tracking.Addpointsweb = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public."Maptrackpoint"("Emp_id","Employee_id","created_date","mapdescription","maptitle","updated_date","status","create_map")VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
+  executor.one('INSERT INTO public."Maptrackpoint"("Emp_id","Employee_id","created_date","mapdescription","maptitle","updated_date","status","notification_title")VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
                  [ 
                  userInput.Emp_id,
                  userInput.Employee_id,
