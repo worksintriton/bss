@@ -36,7 +36,7 @@ point_tracking.PointTrackMaps = function (userInput, resultCallback) {
 };
 point_tracking.updatePointTrackMapmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('UPDATE public."PointTrackMap" SET title=($2), description=($3), totaltime=($4), totalmeters=($5), startlat=($6), startlon=($7), endlat=($8), endlon=($9), isactive=($10), createdby=($11), createdtime=($12), updatedby=($13), updatedtime=($14), WHERE  ukey=($1) RETURNING *',
+  executor.any('UPDATE public."PointTrackMap" SET title=($2), description=($3), totaltime=($4), totalmeters=($5), startlat=($6), startlon=($7), endlat=($8), endlon=($9), isactive=($10), createdby=($11), createdtime=($12), updatedby=($13), updatedtime=($14) WHERE  ukey=($1) RETURNING *',
                  [ 
                  userInput.ukey,
                  userInput.title,
