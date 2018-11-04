@@ -143,8 +143,6 @@ addRoute("/mapTracking/updatePointTrackMapRecords", "POST", [middleware.updatePo
 addRoute("/mapTracking/DeletePointTrackMapRecords", "POST", [middleware.DeletePointTrackMapRecords]);
 addRoute("/mapTracking/PointTrackMapRecordslist", "POST", [middleware.PointTrackMapRecordslist]);
 
-
-
     /*PointTracRecordsSpots*/
 addRoute("/mapTracking/PointTrackRecordsSpot", "POST", [middleware.PointTrackRecordsSpot]);
 addRoute("/mapTracking/updatePointTrackRecordsSpot", "POST", [middleware.updatePointTrackRecordsSpot]);

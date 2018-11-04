@@ -153,7 +153,7 @@ point_tracking.DeletePointTrackMapRecordsmobile = function (userInput, resultCal
 
 point_tracking.PointTrackMapRecordslistmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('select * from public."PointTrackRecords" ',[userInput.PointTrackRecords])
+  executor.any('select * from public."PointTrackRecords" where "PointTrackMaprefid"=($1) ',[userInput.PointTrackMaprefid])
                  .then(data => {
                     resultCallback(null,data);
                  })
@@ -169,9 +169,9 @@ point_tracking.PointTrackMapRecordslistmobile = function (userInput, resultCallb
 point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public."PointTrackMapSpots"("position","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)RETURNING *',
+  executor.one('INSERT INTO public."PointTrackMapSpots"("pointtrackmapid","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)RETURNING *',
                  [ 
-                 userInput.position,
+                 userInput.pointtrackmapid,
                  userInput.title,
                  userInput.description,
                  userInput.lat,
@@ -242,7 +242,7 @@ point_tracking.DeletePointTrackMapSpotmobile = function (userInput, resultCallba
 
 point_tracking.PointTrackMapSpotlistmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('select * from public."PointTrackMapSpots" ',[userInput.pointtrackmapid])
+  executor.any('select * from public."PointTrackMapSpots" where "pointtrackmapid"=($1) ',[userInput.PointTrackMaprefid])
                  .then(data => {
                     resultCallback(null,data);
                  })

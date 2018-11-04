@@ -824,8 +824,8 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "position": {
-                        "type": "string"
+                    "pointtrackmapid": {
+                        "type": "number"
                     },
                     "title": {
                         "type": "string"
@@ -2113,7 +2113,7 @@
                         "type": "string"
                     },
                     "ukey": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "title": {
                         "type": "string"
