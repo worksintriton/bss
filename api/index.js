@@ -61,6 +61,8 @@ addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 
+addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
+
 
 
 /*Add User*/
@@ -176,9 +178,6 @@ addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
 addRoute("/mapTracking/addmapuser", "POST", [middleware.addmapuser])
 addRoute("/mapTracking/addmapuserlist", "POST", [middleware.addmapuserlist])
 addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete])
-
-
-
 
 
 

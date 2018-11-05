@@ -263,8 +263,45 @@ user.updateclient = function (userInput, resultCallback) {
 //updateemployees///
 user.updateemployees = function (userInput , resultCallback) {
   var executor = db.getdaata.getdb();
-      executor.one('UPDATE public.employeemanagement SET  "Password"=($2),"Designation"=($3),"Company"=($4),"Employee_No"=($5),"Rank"=($6),"Name"=($7),"Father_Name"=($8),"Date_Of_Birth"=($9),"Gender"=($10),"Marital_Status"=($11),"contact_details"=($12),"Educational_Qualification"=($13),"Nationality"=($14),"Permanent_Address"=($15),"Local_Address"=($16),"Contact_No"=($17),"Languages_Known"=($18),"Work_Experience"=($19),"EPF_No"=($20),"ESIC_No"=($21),"Aadhar_Card_No"=($22),"Signature_of_the_manager"=($23),"Signature_of_the_Applicant"=($24),"BSS_EPF_Number"=($25),"BSSPL_EPF_Number"=($26),"MMSPL_EPF_Number"=($27),"UAN_Number"=($28),"Date_Of_Joining"=($29),"Date_Of_Relieving"=($30),"Voter_ID"=($31),"Driving_Licence_Number"=($32),"PF_Elegible"=($33),"ESI_Elegible"=($34),"Professional_Tax"=($35),"Working_Status"=($36),"Emi"=($37) WHERE "Email_id" = ($1)RETURNING *',
-        [userInput.Email_id,userInput.Password,userInput.Designation,userInput.Company,userInput.Employee_No,userInput.Rank,userInput.Name,userInput.Father_Name,userInput.Date_Of_Birth,userInput.Gender,userInput.Marital_Status,userInput.contact_details,userInput.Educational_Qualification,userInput.Nationality,userInput.Permanent_Address,userInput.Local_Address,userInput.Contact_No,userInput.Languages_Known,userInput.Work_Experience,userInput.EPF_No,userInput.ESIC_No,userInput.Aadhar_Card_No,userInput.Signature_of_the_manager,userInput.Signature_of_the_Applicant,userInput.BSS_EPF_Number,userInput.BSSPL_EPF_Number,userInput.MMSPL_EPF_Number,userInput.UAN_Number,userInput.Date_Of_Joining,userInput.Date_Of_Relieving,userInput.Voter_ID,userInput.Driving_Licence_Number,userInput.PF_Elegible,userInput.ESI_Elegible,userInput.Professional_Tax,userInput.Working_Status,userInput.Emi])
+      executor.one('UPDATE public.employeedetails SET employee_type=($2), father_name=($3), gender=($4), material_status=($5), "Edq"=($6), nationality=($7), languages=($8), work_exp=($9), date_joining=($10), driving_licence=($11), epn_no=($12), epn_amount=($13), esic_no=($14), esic_amount=($15), epf_no=($16), epf_amount=($17), mmspl_no=($18), mmspl_amount=($19), uan_no=($20), uan_amount=($21), pf_elegible=($22), pf_amount=($23), esi_elegible=($24), esi_amount=($25), professional_tax=($26), professional_type=($27), professional_amount=($28), "Email_ID"=($29), "Mobile_No"=($30), "Name"=($31), "Date_of_birth"=($32), empid=($33), "Password"=($34),  aadhar_card=($35), voter_id=($36), "Address"=($37) WHERE  id=($1) RETURNING *',
+[                 userInput.id,
+                userInput.employee_type,
+                userInput.father_name,
+                userInput.gender,
+                userInput.material_status,
+                userInput.Edq,
+                 userInput.nationality,
+                 userInput.languages,
+                 userInput.work_exp,
+                 userInput.date_joining,
+                 userInput.driving_licence,
+                 userInput.epn_no,
+                 userInput.epn_amount,
+                 userInput.esic_no,
+                 userInput.esic_amount,
+                 userInput.epf_no,
+                 userInput.epf_amount,
+                 userInput.mmspl_no,
+                 userInput.mmspl_amount,
+                 userInput.uan_no,
+                 userInput.uan_amount,
+                 userInput.pf_elegible,
+                 userInput.pf_amount,
+                 userInput.esi_elegible,
+                 userInput.esi_amount,
+                 userInput.professional_tax,
+                 userInput.professional_type,
+                 userInput.professional_amount,
+                 userInput.Email_ID,
+                 userInput.Mobile_No,
+                 userInput.Name,
+                 userInput.Date_of_birth,
+                 userInput.employee_id,
+                 userInput.Password,
+                 userInput.aadhar_card,
+                 userInput.voter_id,
+                 userInput.Address,
+])
        .then(data => {
         console.log(data);
         resultCallback(null,data);

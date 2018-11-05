@@ -287,6 +287,30 @@ function updateusers(req, res, next) {
 
 }
 
+
+function updateemployee(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updateemployees(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 ///Configurenumber//////
 
 function confignumber(req, res, next) {
@@ -1951,7 +1975,7 @@ exports.bsslogin = bsslogin;
 
 
 /*Add Employee*/
-
+exports.updateemployee = updateemployee;
 exports.addemployee = addemployee ;
 exports.employeelist = employeelist ;
 exports.deleteemployee = deleteemployee ;
