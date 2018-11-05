@@ -55,7 +55,6 @@ addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
 /*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 
-
 /*Add Employee*/
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
@@ -66,17 +65,13 @@ addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 
 /*Add User*/
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
-
-
 addRoute("/authentication/userid", "POST", [middleware.userid]);
-
-
 addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
 addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 
-/*Add Client*/
 
+/*Add Client*/
 addRoute("/authentication/addclients", "POST", [middleware.addclients]);
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 addRoute("/authentication/addclients1", "POST", [middleware.addclients1]);
@@ -105,13 +100,10 @@ addRoute("/authentication/Trackinglist", "POST", [middleware.Trackinglist]);
 addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
 
 /*Employee Api's*/
-
 addRoute("/authentication/employeeLogin", "POST", [middleware_emp.signin]);
 addRoute("/authentication/updateEmpProfile", "POST", [middleware_emp.signin]);
 
 /*Issue Tracking*/
-
-
 addRoute("/issue/create", "POST", [middleware_emp.validateEmployee, middleware.create_issue]);
 addRoute("/issue/updateissues", "POST", [middleware.updateissues]);
 addRoute("/issue/taken_by", "POST", [middleware.taken_by]);

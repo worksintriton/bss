@@ -255,7 +255,7 @@ function userid(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                   message:"Updated Success"       
+                   data:mydata       
              }, utils.errors["200"]));
             }
         ]);
