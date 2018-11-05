@@ -1961,7 +1961,7 @@ exports.employee_id = employee_id;
 
 
 /*Add User*/
-
+exports.userid = userid;
 exports.addusers = addusers;
 exports.updateusers = updateusers ;
 exports.userlist = userlist ;
