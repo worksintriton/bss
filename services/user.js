@@ -258,6 +258,26 @@ user.updateclient = function (userInput, resultCallback) {
 
 
 
+user.deleteemployees = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.any('Delete FROM public."employeedetails" WHERE "id"=($1) ' , [userInput.empid])    
+
+      .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
+
 
 
 //updateemployees///

@@ -289,12 +289,12 @@
                  "type": "object",
                 "properties": {
                     "empid": {
-                        "type": "number"
+                        "type": "string"
                     }
                 },
-        "additionalProperties": false,
+        "additionalProperties": true,
                 "required": [
-                    "empid"    
+                    
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
