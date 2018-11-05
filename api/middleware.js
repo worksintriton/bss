@@ -243,6 +243,25 @@ function updateclients(req, res, next) {
 
 }
 
+
+function userid(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.userids(req.body, function (err, result) {
+                
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                   message:"Updated Success"       
+             }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 ///updateusers//////
 
 function updateusers(req, res, next) {

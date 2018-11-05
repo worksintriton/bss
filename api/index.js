@@ -67,6 +67,10 @@ addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 /*Add User*/
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
 
+
+addRoute("/authentication/userid", "POST", [middleware.userid]);
+
+
 addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
 addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);

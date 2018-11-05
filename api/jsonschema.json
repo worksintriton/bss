@@ -2199,6 +2199,35 @@
         }
     },
 
+    
+
+
+    "/authentication/userid": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "userid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "userid"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "userid": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "userid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
     "/mapTracking/PointTrackMaplist": {
         "POST": {
             "body": {
