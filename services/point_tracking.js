@@ -359,8 +359,6 @@ point_tracking.employee_fetchpointsmobile = function (userInput, resultCallback)
 
 
 /*adshfjkhas*/
-
-
 point_tracking.PointTrackRecordsSpotmobile = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
