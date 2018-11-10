@@ -2583,7 +2583,7 @@
                  "type": "object",
                 "properties": {
                     "pointtrackmapid": {
-                        "type": "string"
+                        "type": "number"
                     }
                 },
         "additionalProperties": false,
@@ -2596,7 +2596,7 @@
                         "pointtrackmapid": "should have required property LoginKey"
                     },
                     "properties": {
-                        "pointtrackmapid": "userId must be string"
+                        "pointtrackmapid": "userId must be number"
                     }
                 }
             }
