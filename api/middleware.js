@@ -1265,9 +1265,7 @@ function Trackingperson(req, res, next) {
 }
 
 
-
 function Trackinglist(req, res, next) {
-
        async.waterfall([
             function (waterfallCallback){
                 services.training.Trackinglists(req.body, function (err, result) {
