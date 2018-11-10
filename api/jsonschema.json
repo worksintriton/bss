@@ -3013,21 +3013,21 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "pointtrackmapid": {
-                        "type": "string"
+                    "PointTrackRecordsid": {
+                        "type": "number"
                     }
                 },
         "additionalProperties": false,
                 "required": [
-                    "pointtrackmapid"  
+                    "PointTrackRecordsid"  
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "pointtrackmapid": "should have required property LoginKey"
+                        "PointTrackRecordsid": "should have required property LoginKey"
                     },
                     "properties": {
-                        "pointtrackmapid": "userId must be string"
+                        "PointTrackRecordsid": "userId must be string"
                     }
                 }
             }
