@@ -998,7 +998,10 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "pointtrackmapid": {
+                    "position": {
+                        "type": "number"
+                    },
+                    "PointTrackMaprefid": {
                         "type": "number"
                     },
                     "title": {
@@ -1008,16 +1011,16 @@
                         "type": "string"
                     },
                     "lat": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "lon": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "accepteddistinmeter": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "isactive": {
-                        "type": "string"
+                        "type": "boolean"
                     },
                     "createdby": {
                         "type": "string"
@@ -1035,16 +1038,16 @@
                         "type": "string"
                     },
                     "marked_lat": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "marked_lon": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "marked_by": {
                         "type": "string"
                     },
                     "is_marked": {
-                        "type": "string"
+                        "type": "boolean"
                     }
                 },
         "additionalProperties": true,
@@ -2500,11 +2503,11 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "pointtrackmapid": {
-                        "type": "string"
-                    },
                     "position": {
-                        "type": "string"
+                        "type": "number"
+                    },
+                    "PointTrackMaprefid": {
+                        "type": "number"
                     },
                     "title": {
                         "type": "string"
@@ -2513,16 +2516,16 @@
                         "type": "string"
                     },
                     "lat": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "lon": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "accepteddistinmeter": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "isactive": {
-                        "type": "string"
+                        "type": "boolean"
                     },
                     "createdby": {
                         "type": "string"
@@ -2540,16 +2543,19 @@
                         "type": "string"
                     },
                     "marked_lat": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "marked_lon": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "marked_by": {
                         "type": "string"
                     },
                     "is_marked": {
-                        "type": "string"
+                        "type": "boolean"
+                    },
+                    "id": {
+                        "type": "number"
                     }
                 },
         "additionalProperties": true,
@@ -2557,12 +2563,12 @@
                    
                 ],
                 "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
+                    "PointTrackMaprefid": "should not have additional properties",
                     "required": {
-                        "Email_id": "should have required property userId"
+                        "PointTrackMaprefid": "should have required property userId"
                     },
                     "properties": {
-                        "Email_id": "userId must be string"
+                        "PointTrackMaprefid": "userId must be string"
                     }
                 }
             }

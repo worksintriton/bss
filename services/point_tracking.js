@@ -173,9 +173,10 @@ point_tracking.PointTrackMapRecordslistmobile = function (userInput, resultCallb
 point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public."PointTrackMapSpots"("pointtrackmapid","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)RETURNING *',
+  executor.one('INSERT INTO public."PointTrackMapSpots"("position","PointTrackMaprefid","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)RETURNING *',
                  [ 
-                 userInput.pointtrackmapid,
+                 userInput.position,
+                 userInput.PointTrackMaprefid,
                  userInput.title,
                  userInput.description,
                  userInput.lat,
@@ -204,9 +205,9 @@ point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
 point_tracking.updatePointTrackMapSpotmobile = function (userInput, resultCallback) {
 
   var executor = db.getdaata.getdb();
-  executor.one(' UPDATE public."PointTrackMapSpots" SET "position"=($2) , title=($3) , description=($4) , lat=($5) , lon=($6) , accepteddistinmeter=($7) , isactive=($8) , createdby=($9) , createdtime=($10) , updatedby=($11) , updatedtime=($12) , marked_time=($13) , marked_lat=($14) , marked_lon=($15) , marked_by=($16) , is_marked=($17)   WHERE pointtrackmapid=($1) RETURNING * ',
+  executor.one(' UPDATE public."PointTrackMapSpots" SET "position"=($2) , title=($3) , description=($4) , lat=($5) , lon=($6) , accepteddistinmeter=($7) , isactive=($8) , createdby=($9) , createdtime=($10) , updatedby=($11) , updatedtime=($12) , marked_time=($13) , marked_lat=($14) , marked_lon=($15) , marked_by=($16) , is_marked=($17) , "PointTrackMaprefid" = ($18)   WHERE id =($1) RETURNING * ',
                  [ 
-                 userInput.pointtrackmapid,
+                 userInput.id,
                  userInput.position,
                  userInput.title,
                  userInput.description,
@@ -222,7 +223,8 @@ point_tracking.updatePointTrackMapSpotmobile = function (userInput, resultCallba
                  userInput.marked_lat,
                  userInput.marked_lon,
                  userInput.marked_by,
-                 userInput.is_marked
+                 userInput.is_marked,
+                 userInput.PointTrackMaprefid
                  ])
                  .then(data => {
                     resultCallback(null,data);

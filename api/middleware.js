@@ -1501,13 +1501,11 @@ function fetchpoints(req, res, next) {
                 }, utils.errors["200"]));
             }
         ]);
-
 }
 
 
 
 function employee_fetchpoints(req, res, next) {
-
        async.waterfall([
             function (waterfallCallback){
                 services.point_tracking.employee_fetchpointsmobile(req.body, function (err, result) {
@@ -1526,7 +1524,6 @@ function employee_fetchpoints(req, res, next) {
                 }, utils.errors["200"]));
             }
         ]);
-
 }
 
 
