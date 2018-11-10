@@ -2801,7 +2801,6 @@
             }
         }
     },
-
      "/mapTracking/PointTrackMapRecordslist": {
         "POST": {
             "body": {
@@ -2835,12 +2834,11 @@
             "body": {
                  "type": "object",
                 "properties": {
-
-                   "pointtrackmapid": {
-                        "type": "string"
+                   "PointTrackRecordsid": {
+                        "type": "number"
                     },
                     "position": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "title": {
                         "type": "string"
@@ -2849,16 +2847,16 @@
                         "type": "string"
                     },
                     "lat": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "lon": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "accepteddistinmeter": {
                         "type": "string"
                     },
                     "isactive": {
-                        "type": "string"
+                        "type": "boolean"
                     },
                     "createdby": {
                         "type": "string"
@@ -2876,16 +2874,16 @@
                         "type": "string"
                     },
                     "marked_lat": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "marked_lon": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "marked_by": {
                         "type": "string"
                     },
                     "is_marked": {
-                        "type": "string"
+                        "type": "boolean"
                     }
                 },
         "additionalProperties": true,
@@ -2910,11 +2908,14 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "pointtrackmapid": {
-                        "type": "string"
+                       "id": {
+                        "type": "number"
+                     },
+                        "PointTrackRecordsid": {
+                        "type": "number"
                     },
                     "position": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "title": {
                         "type": "string"
@@ -2923,16 +2924,16 @@
                         "type": "string"
                     },
                     "lat": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "lon": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "accepteddistinmeter": {
                         "type": "string"
                     },
                     "isactive": {
-                        "type": "string"
+                        "type": "boolean"
                     },
                     "createdby": {
                         "type": "string"
@@ -2950,16 +2951,16 @@
                         "type": "string"
                     },
                     "marked_lat": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "marked_lon": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "marked_by": {
                         "type": "string"
                     },
                     "is_marked": {
-                        "type": "string"
+                        "type": "boolean"
                     }
                 },
         "additionalProperties": true,
@@ -2986,21 +2987,21 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "pointtrackmapid": {
+                    "id": {
                         "type": "string"
                     }
                 },
         "additionalProperties": false,
                 "required": [
-                    "pointtrackmapid"  
+                    "id"  
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "pointtrackmapid": "should have required property LoginKey"
+                        "id": "should have required property LoginKey"
                     },
                     "properties": {
-                        "pointtrackmapid": "userId must be string"
+                        "id": "userId must be string"
                     }
                 }
             }
