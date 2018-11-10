@@ -2788,7 +2788,7 @@
                  "type": "object",
                 "properties": {
                     "PointTrackMaprefid": {
-                        "type": "string"
+                        "type": "number"
                     }
                 },
         "additionalProperties": false,
@@ -2801,7 +2801,7 @@
                         "PointTrackMaprefid": "should have required property LoginKey"
                     },
                     "properties": {
-                        "PointTrackMaprefid": "userId must be string"
+                        "PointTrackMaprefid": "userId must be number"
                     }
                 }
             }
