@@ -2636,31 +2636,10 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "PointTrackMaprefid": {
+                    "title": {
                         "type": "string"
                     },
-                    "PointTrackMap": {
-                        "type": "string"
-                    },
-                    "ukey": {
-                        "type": "string"
-                    },
-                    "mappoints": {
-                        "type": "string"
-                    },
-                    "isactive": {
-                        "type": "string"
-                    },
-                    "isstarted": {
-                        "type": "string"
-                    },
-                    "iscompleted": {
-                        "type": "string"
-                    },
-                    "starttime": {
-                        "type": "string"
-                    },
-                    "endtime": {
+                    "description": {
                         "type": "string"
                     },
                     "createdby": {
@@ -2673,6 +2652,36 @@
                         "type": "string"
                     },
                     "updatedtime": {
+                        "type": "string"
+                    },
+                    "totaltime": {
+                        "type": "string"
+                    },
+                    "totalmeters": {
+                        "type": "string"
+                    },
+                    "PointTrackMaprefid": {
+                        "type": "number"
+                    },
+                    "startlat": {
+                        "type": "number"
+                    },
+                    "startlon": {
+                        "type": "number"
+                    },
+                    "endlat": {
+                        "type": "number"
+                    },
+                    "endlon": {
+                        "type": "number"
+                    },
+                    "isactive": {
+                        "type": "boolean"
+                    },
+                    "starttime": {
+                        "type": "string"
+                    },
+                    "endtime": {
                         "type": "string"
                     }
                 },
@@ -2698,32 +2707,13 @@
             "body": {
                  "type": "object",
                 "properties": {
-
-                    "PointTrackMaprefid": {
+                   "ukey": {
+                        "type": "number"
+                    },
+                    "title": {
                         "type": "string"
                     },
-                    "PointTrackMap": {
-                        "type": "string"
-                    },
-                    "ukey": {
-                        "type": "string"
-                    },
-                    "mappoints": {
-                        "type": "string"
-                    },
-                    "isactive": {
-                        "type": "string"
-                    },
-                    "isstarted": {
-                        "type": "string"
-                    },
-                    "iscompleted": {
-                        "type": "string"
-                    },
-                    "starttime": {
-                        "type": "string"
-                    },
-                    "endtime": {
+                    "description": {
                         "type": "string"
                     },
                     "createdby": {
@@ -2736,6 +2726,36 @@
                         "type": "string"
                     },
                     "updatedtime": {
+                        "type": "string"
+                    },
+                    "totaltime": {
+                        "type": "string"
+                    },
+                    "totalmeters": {
+                        "type": "string"
+                    },
+                    "PointTrackMaprefid": {
+                        "type": "number"
+                    },
+                    "startlat": {
+                        "type": "number"
+                    },
+                    "startlon": {
+                        "type": "number"
+                    },
+                    "endlat": {
+                        "type": "number"
+                    },
+                    "endlon": {
+                        "type": "number"
+                    },
+                    "isactive": {
+                        "type": "boolean"
+                    },
+                    "starttime": {
+                        "type": "string"
+                    },
+                    "endtime": {
                         "type": "string"
                     }
                 },

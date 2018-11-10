@@ -96,19 +96,24 @@ point_tracking.PointTrackMaplistmobile = function (userInput, resultCallback) {
 point_tracking.PointTrackMapRecordsmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
-  executor.one('INSERT INTO public."PointTrackRecords"( "PointTrackMaprefid", "PointTrackMap", "ukey", "mappoints", "isactive", "isstarted", "iscompleted", "starttime", "endtime", "createdby", "createdtime", "updatedby", "updatedtime") VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING * ',             [ userInput.PointTrackMaprefid,
-                 userInput.PointTrackMap,
-                 userInput.ukey,
-                 userInput.mappoints,
-                 userInput.isactive,
-                 userInput.isstarted,
-                 userInput.iscompleted,
-                 userInput.starttime,
-                 userInput.endtime,
+  executor.one('INSERT INTO public."PointTrackRecords"( "title", "description", "createdby", "createdtime", "updatedby", "updatedtime", "totaltime", "totalmeters", "PointTrackMaprefid", "startlat", "startlon", "endlat", "endlon", "isactive", "starttime", "endtime") VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING * ',   
+
+            [    userInput.title,
+                 userInput.description,
                  userInput.createdby,
                  userInput.createdtime,
                  userInput.updatedby,
                  userInput.updatedtime,
+                 userInput.totaltime,
+                 userInput.totalmeters,
+                 userInput.PointTrackMaprefid,
+                 userInput.startlat,
+                 userInput.startlon,
+                 userInput.endlat,
+                 userInput.endlon,  
+                 userInput.isactive,
+                 userInput.starttime,
+                 userInput.endtime,
                  ])
                  .then(data => {
                     resultCallback(null,data);
@@ -118,23 +123,26 @@ point_tracking.PointTrackMapRecordsmobile = function (userInput, resultCallback)
                 })
 };
 point_tracking.updatePointTrackMapRecordsmobile = function (userInput, resultCallback) {
-
   var executor = db.getdaata.getdb();
-  executor.any('UPDATE public."PointTrackRecords" SET  "PointTrackMap"=($2), ukey=($3), mappoints=($4), isactive=($5), isstarted=($6), iscompleted=($7), starttime=($8), endtime=($9), createdby=($10), createdtime=($11), updatedby=($12), updatedtime=($13) WHERE "PointTrackMaprefid"= ($1) RETURNING *',
+  executor.any('UPDATE public."PointTrackRecords" SET  "title"=($2), description=($3), totaltime=($4), totalmeters=($5), startlat=($6), startlon=($7), endlat=($8), endlon=($9), isactive=($10), createdby=($11), createdtime=($12), updatedby=($13), updatedtime=($14), "PointTrackMaprefid"=($15), starttime=($16), endtime=($17) WHERE "ukey"= ($1) RETURNING *',
                  [ 
-                 userInput.PointTrackMaprefid,
-                 userInput.PointTrackMap,
                  userInput.ukey,
-                 userInput.mappoints,
+                 userInput.title,
+                 userInput.description,
+                 userInput.totaltime,
+                 userInput.totalmeters,
+                 userInput.startlat,
+                 userInput.startlon,
+                 userInput.endlat,
+                 userInput.endlon,
                  userInput.isactive,
-                 userInput.isstarted,
-                 userInput.iscompleted,
-                 userInput.starttime,
-                 userInput.endtime,
                  userInput.createdby,
                  userInput.createdtime,
                  userInput.updatedby,
-                 userInput.updatedtime,
+                 userInput.updatedtime,  
+                 userInput.PointTrackMaprefid,
+                 userInput.starttime,
+                 userInput.endtime
                  ])
                  .then(data => {
                     resultCallback(null,data);
