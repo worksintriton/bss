@@ -237,7 +237,7 @@ point_tracking.updatePointTrackMapSpotmobile = function (userInput, resultCallba
 
 point_tracking.DeletePointTrackMapSpotmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('Delete from public."PointTrackMapSpots" where "pointtrackmapid"=($1)',[userInput.pointtrackmapid])
+  executor.any('Delete from public."PointTrackMapSpots" where "id"=($1)',[userInput.pointtrackmapid])
                  .then(data => {
                     resultCallback(null,data);
                  })
@@ -246,9 +246,10 @@ point_tracking.DeletePointTrackMapSpotmobile = function (userInput, resultCallba
                 })
 };
 
+
 point_tracking.PointTrackMapSpotlistmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('select * from public."PointTrackMapSpots" where "pointtrackmapid"=($1) ',[userInput.PointTrackMaprefid])
+  executor.any('select * from public."PointTrackMapSpots" where "PointTrackMaprefid"=($1) ',[userInput.PointTrackMaprefid])
                  .then(data => {
                     resultCallback(null,data);
                  })
