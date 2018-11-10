@@ -122,11 +122,12 @@ issues.reports = function (userInput, resultCallback) {
 issues.reportupdate = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
-  executor.one('UPDATE public.issue_master SET "status"= $2, "updated_at" = $3 WHERE "complaint_id" = $1 RETURNING *',
+  executor.one('UPDATE public.issue_master SET "status"= $2, "updated_at" = $3 , "taken_by" = $4 WHERE "complaint_id" = $1 RETURNING *',
                  [ 
                  userInput.complaint_id,
                  userInput.status,
-                 userInput.updated_at
+                 userInput.updated_at,
+                 userInput.taken_by
                  ])
                  .then(data => {
                     resultCallback(null,true, data);
