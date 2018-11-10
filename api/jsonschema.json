@@ -1963,7 +1963,7 @@
                         "id": "should have required property LoginKey"
                     },
                     "properties": {
-                        "id": "userId must be number"
+                        "id": "id must be number"
                     }
                 }
             }
