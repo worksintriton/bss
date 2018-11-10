@@ -2340,12 +2340,6 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "mapspots_id": {
-                        "type": "string"
-                    },
-                    "ukey": {
-                        "type": "number"
-                    },
                     "title": {
                         "type": "string"
                     },
@@ -2353,25 +2347,10 @@
                         "type": "string"
                     },
                     "totaltime": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "totalmeters": {
-                        "type": "string"
-                    },
-                    "startlat": {
-                        "type": "string"
-                    },
-                    "startlon": {
-                        "type": "string"
-                    },
-                    "endlat": {
-                        "type": "string"
-                    },
-                    "endlon": {
-                        "type": "string"
-                    },
-                    "isactive": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "createdby": {
                         "type": "string"
@@ -2380,10 +2359,40 @@
                         "type": "string"
                     },
                     "updatedby": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "updatedtime": {
                         "type": "string"
+                    },
+                    "ukey": {
+                        "type": "number"
+                    },
+                    "Emp_id": {
+                        "type": "string"
+                    },
+                    "Employee_Name": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "notification_title": {
+                        "type": "string"
+                    },
+                    "startlat": {
+                        "type": "number"
+                    },
+                    "startlon": {
+                        "type": "number"
+                    },
+                    "endlat": {
+                        "type": "number"
+                    },
+                    "endlon": {
+                        "type": "number"
+                    },
+                    "isactive": {
+                        "type": "boolean"
                     }
                 },
         "additionalProperties": true,
