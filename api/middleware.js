@@ -311,6 +311,34 @@ function updateemployee(req, res, next) {
 
 }
 
+
+function Changepassword(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.Changepasswords(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: "Password Updated" 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+
+
 ///Configurenumber//////
 
 function confignumber(req, res, next) {
@@ -997,6 +1025,31 @@ async.waterfall([
             }
 
         ]);
+}
+
+
+function issuecount(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.issues.issuecounts(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
 }
 
 function issuedetails(req, res, next) {
@@ -1891,6 +1944,8 @@ function addmapuserlist(req, res, next) {
 }
 
 
+
+
 function mapuserdelete(req, res, next) {
 
        async.waterfall([
@@ -1978,6 +2033,7 @@ exports.addemployee = addemployee ;
 exports.employeelist = employeelist ;
 exports.deleteemployee = deleteemployee ;
 exports.employee_id = employee_id;
+exports.Changepassword = Changepassword;
 
 
 
@@ -2033,6 +2089,7 @@ exports.report = report;
 exports.issuedetails = issuedetails;
 exports.issuetrack =  issuetrack;
 exports.listissues = listissues;
+exports.issuecount = issuecount;
 
 /*issues Attachment*/
 exports.list_issue = list_issue;

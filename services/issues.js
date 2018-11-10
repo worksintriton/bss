@@ -258,4 +258,18 @@ var executor = db.getdaata.getdb();
         }) 
 };
 
+issues.issuecounts = function (userInput , resultCallback) {
+  var executor = db.getdaata.getdb(); 
+       executor.any('SELECT count(*)  FROM public."issue_master" WHERE status = ($1)  UNION ALL SELECT count(*)  FROM public."issue_master" WHERE status = ($2)   UNION ALL SELECT count(*)  FROM public."issue_master" WHERE status = ($3)',['open','Inprogress','completed'])
+       .then(data => {
+        console.log(data)
+        resultCallback(null,data);
+        })
+        .catch(error => {
+          resultCallback(error,{} );
+          console.log('ERROR:', error);
+        });
+};
+
+
 module.exports = issues;

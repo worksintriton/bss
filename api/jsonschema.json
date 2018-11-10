@@ -1914,6 +1914,63 @@
         }
     },
 
+      "/issue/issuecount": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Employee_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "Employee_id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/authentication/Changepassword": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "Password": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
 
 
         "/issue/taken_by": {

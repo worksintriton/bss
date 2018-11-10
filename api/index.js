@@ -61,6 +61,8 @@ addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
+addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
+
 
 
 
@@ -111,6 +113,7 @@ addRoute("/issue/taken_by", "POST", [middleware.taken_by]);
 addRoute("/issue/report", "POST", [middleware.report]);
 addRoute("/issue/issuedetails", "POST", [middleware.issuedetails]);
 addRoute("/issue/issuetrack", "POST", [middleware.issuetrack]);
+addRoute("/issue/issuecount", "POST", [middleware.issuecount]);
 
 /*issues Attachment*/
 addRoute("/issue/createAttachment", "POST", [middleware.create_issue_attachment]);
