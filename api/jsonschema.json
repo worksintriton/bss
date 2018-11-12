@@ -629,9 +629,6 @@
                     "employee_type": {
                         "type": "string"
                     },
-                    "employee_id": {
-                        "type": "string"
-                    },
                     "Name": {
                         "type": "string"
                     },
@@ -873,9 +870,8 @@
                         "type": "string"
                     }
                 },
-        "additionalProperties": true,
+        "additionalProperties": false,
                 "required": [
-                   
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -883,43 +879,7 @@
                         "Email_ID": "should have required property userId"
                     },
                     "properties": {
-                        "Email_ID": "Email_ID must be string",
-                        "epn_amount": "epn_amount must be string",
-                        "Password": "Password must be string",
-                        "employee_type": "employee_type must be string",
-                        "employee_id": "employee_id must be string",
-                        "Name": "Name must be string",
-                        "father_name": "father_name must be string",
-                        "Date_of_birth": "Date_of_birth must be string",
-                        "gender": "gender must be string",
-                        "material_status": "material_status must be string",
-                        "Edq": "Edq must be string",
-                        "nationality": "nationality must be string",
-                        "Address": "Address must be string",
-                        "Mobile_No": "Mobile_No must be string",
-                        "languages": "languages must be string",
-                        "work_exp": "work_exp must be string",
-                        "aadhar_card": "aadhar_card must be string",
-                        "date_joining": "date_joining must be string",
-                        "voter_id": "voter_id must be string",
-                        "driving_licence": "driving_licence must be string",
-                        "epn_no": "epn_no must be string",
-                        "esic_no": "esic_no must be string",
-                        "esic_amount": "esic_amount must be string",
-                        "epf_no": "epf_no must be string",
-                        "epf_amount": "epf_amount must be string",
-                        "mmspl_no": "mmspl_no must be string",
-                        "mmspl_amount": "mmspl_amount must be string",
-                        "uan_no": "uan_no must be string",
-                        "uan_amount": "uan_amount must be string",
-                        "pf_elegible": "pf_elegible must be string",
-                        "pf_amount": "pf_amount must be string",
-                        "esi_elegible": "esi_elegible must be string",
-                        "esi_amount": "esi_amount must be string",
-                        "ESI_Elegible": "ESI_Elegible must be string",
-                        "professional_tax": "professional_tax must be string",
-                        "professional_type": "professional_type must be string",
-                        "professional_amount": "professional_amount must be string"
+                        "Email_ID": "Email_ID must be string"
                     }
                 }
             }

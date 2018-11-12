@@ -452,7 +452,7 @@ point_tracking.DeletePointTrackRecordsSpotmobile = function (userInput, resultCa
 
 point_tracking.PointTrackRecordsSpotlistmobile = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('select * from public."pointtrackrecordsspots" ',[userInput.PointTrackRecordsid])
+  executor.any('select * from public."pointtrackrecordsspots" where "PointTrackRecordsid" = ($1)',[userInput.PointTrackRecordsid])
                  .then(data => {
                     resultCallback(null,data);
                  })
