@@ -55,6 +55,8 @@ addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
 /*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 
+addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
+
 /*Add Employee*/
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
@@ -126,10 +128,12 @@ addRoute("/issue/listissues", "POST", [middleware.listissues]);
     /*fetch*/
  addRoute("/PointTracking/employee_fetchpoints", "POST", [middleware.employee_fetchpoints])
 
+
     /*PointTrackMap*/
 addRoute("/mapTracking/updatePointTrackMap", "POST", [middleware.updatePointTrackMap]);
 addRoute("/mapTracking/DeletePointTrackMap", "POST", [middleware.DeletePointTrackMap]);
 addRoute("/mapTracking/PointTrackMaplist", "POST", [middleware.PointTrackMaplist]);
+
 
     /*PointTrackMapSpots*/
 addRoute("/mapTracking/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
@@ -138,11 +142,13 @@ addRoute("/mapTracking/DeletePointTrackMapSpot", "POST", [middleware.DeletePoint
 addRoute("/mapTracking/PointTrackMapSpotlist", "POST", [middleware.PointTrackMapSpotlist]);
 addRoute("/mapTracking/FetchMapSpot", "POST", [middleware.FetchMapSpot]);
 
+
     /*PointTracRecords*/
 addRoute("/mapTracking/PointTrackMapRecords", "POST", [middleware.PointTrackMapRecords]);
 addRoute("/mapTracking/updatePointTrackMapRecords", "POST", [middleware.updatePointTrackMapRecords]);
 addRoute("/mapTracking/DeletePointTrackMapRecords", "POST", [middleware.DeletePointTrackMapRecords]);
 addRoute("/mapTracking/PointTrackMapRecordslist", "POST", [middleware.PointTrackMapRecordslist]);
+
 
     /*PointTracRecordsSpots*/
 addRoute("/mapTracking/PointTrackRecordsSpot", "POST", [middleware.PointTrackRecordsSpot]);
@@ -174,7 +180,6 @@ addRoute("/PointTracking/pointsupdate", "POST", [middleware.pointsupdate])
 addRoute("/PointTracking/pointslist", "POST", [middleware.pointslist])
 addRoute("/PointTracking/deletepoints", "POST", [middleware.deletepoints])
 addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
-
 
 
 /* Mapuser */

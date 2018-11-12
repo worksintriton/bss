@@ -34,6 +34,38 @@
     },
 
 
+     "/authentication/Clientlogin": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id",
+                    "password"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property Email_id",
+                        "password": "should have required property password"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
     "/authentication/confignumber": {
         "POST": {
             "body": {

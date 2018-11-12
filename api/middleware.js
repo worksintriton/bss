@@ -77,7 +77,7 @@ function bsslogin(req, res, next) {
 
 //////Clientlogin/////////
 
-function clientlogin(req, res, next) {
+function Clientlogin(req, res, next) {
 
        async.waterfall([
             function (waterfallCallback){
@@ -2073,7 +2073,7 @@ exports.passport = passport;
 
 /*BSS Web Portal*/
 
-exports.clientlogin = clientlogin ;
+exports.Clientlogin = Clientlogin ;
 
 
 
