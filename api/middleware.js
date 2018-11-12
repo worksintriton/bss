@@ -524,6 +524,11 @@ function deleteclient(req, res, next) {
 
 }
 
+
+
+
+
+
 function deleteuser(req, res, next) {
 
        async.waterfall([
@@ -1678,6 +1683,31 @@ function PointTrackMapSpotlist(req, res, next) {
 }
 
 
+function FetchMapSpot(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.FetchMapSpotmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 /*Record */
 
@@ -1889,6 +1919,31 @@ function PointTrackRecordsSpotlist(req, res, next) {
 }
 
 
+function FetchMapSpotrecord(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.point_tracking.FetchMapSpotrecordmobile(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 
 function addmapuser(req, res, next) {
@@ -2007,6 +2062,9 @@ function fetchmapuserpoints(req, res, next) {
 
 
 
+
+
+
 exports.init = init;
 exports.passport = passport;
 
@@ -2108,6 +2166,7 @@ exports.PointTrackMapSpot = PointTrackMapSpot;
 exports.updatePointTrackMapSpot = updatePointTrackMapSpot;
 exports.DeletePointTrackMapSpot = DeletePointTrackMapSpot;
 exports.PointTrackMapSpotlist = PointTrackMapSpotlist;
+exports.FetchMapSpot = FetchMapSpot;
 
 
     /*PointTracRecords*/
@@ -2123,6 +2182,7 @@ exports.PointTrackRecordsSpot = PointTrackRecordsSpot ;
 exports.updatePointTrackRecordsSpot = updatePointTrackRecordsSpot;
 exports.DeletePointTrackRecordsSpot = DeletePointTrackRecordsSpot;
 exports. PointTrackRecordsSpotlist = PointTrackRecordsSpotlist;
+exports.FetchMapSpotrecord = FetchMapSpotrecord;
 
 
 /* Mapuser */

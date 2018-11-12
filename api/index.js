@@ -136,6 +136,7 @@ addRoute("/mapTracking/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot
 addRoute("/mapTracking/updatePointTrackMapSpot", "POST", [middleware.updatePointTrackMapSpot]);
 addRoute("/mapTracking/DeletePointTrackMapSpot", "POST", [middleware.DeletePointTrackMapSpot]);
 addRoute("/mapTracking/PointTrackMapSpotlist", "POST", [middleware.PointTrackMapSpotlist]);
+addRoute("/mapTracking/FetchMapSpot", "POST", [middleware.FetchMapSpot]);
 
     /*PointTracRecords*/
 addRoute("/mapTracking/PointTrackMapRecords", "POST", [middleware.PointTrackMapRecords]);
@@ -148,6 +149,7 @@ addRoute("/mapTracking/PointTrackRecordsSpot", "POST", [middleware.PointTrackRec
 addRoute("/mapTracking/updatePointTrackRecordsSpot", "POST", [middleware.updatePointTrackRecordsSpot]);
 addRoute("/mapTracking/DeletePointTrackRecordsSpot", "POST", [middleware.DeletePointTrackRecordsSpot]);
 addRoute("/mapTracking/PointTrackRecordsSpotlist", "POST", [middleware.PointTrackRecordsSpotlist]);
+addRoute("/mapTracking/FetchMapSpotrecord", "POST", [middleware.FetchMapSpotrecord]);
 
 
 

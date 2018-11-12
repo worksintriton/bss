@@ -267,6 +267,18 @@ point_tracking.PointTrackMapSpotlistmobile = function (userInput, resultCallback
 };
 
 
+point_tracking.FetchMapSpotmobile = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('select * from public."PointTrackMapSpots" where "id"=($1) ',[userInput.id])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
 
 point_tracking.Addpointsweb = function (userInput, resultCallback) {
 
@@ -462,6 +474,20 @@ point_tracking.PointTrackRecordsSpotlistmobile = function (userInput, resultCall
 };
 
 
+point_tracking.FetchMapSpotrecordmobile = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('select * from public."pointtrackrecordsspots" where "id" = ($1)',[userInput.id])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+
+
 
 point_tracking.addmapuseweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
@@ -498,6 +524,9 @@ point_tracking.addmapuserlistweb = function (userInput, resultCallback) {
                     resultCallback(null,error );
                 })
 };
+
+
+
 
 
 point_tracking.mapuserdeleteweb = function (userInput, resultCallback) {
