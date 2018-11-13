@@ -302,7 +302,7 @@ user.deleteemployees = function (userInput, resultCallback) {
 //updateemployees///
 user.updateemployees = function (userInput , resultCallback) {
   var executor = db.getdaata.getdb();
-      executor.one('UPDATE public.employeedetails SET employee_type=($2), father_name=($3), gender=($4), material_status=($5), "Edq"=($6), nationality=($7), languages=($8), work_exp=($9), date_joining=($10), driving_licence=($11), epn_no=($12), epn_amount=($13), esic_no=($14), esic_amount=($15), epf_no=($16), epf_amount=($17), mmspl_no=($18), mmspl_amount=($19), uan_no=($20), uan_amount=($21), pf_elegible=($22), pf_amount=($23), esi_elegible=($24), esi_amount=($25), professional_tax=($26), professional_type=($27), professional_amount=($28), "Email_ID"=($29), "Mobile_No"=($30), "Name"=($31), "Date_of_birth"=($32), empid=($33), "Password"=($34),  aadhar_card=($35), voter_id=($36), "Address"=($37) WHERE  id=($1) RETURNING *',
+      executor.one('UPDATE public.employeedetails SET employee_type=($2), father_name=($3), gender=($4), material_status=($5), "Edq"=($6), nationality=($7), languages=($8), work_exp=($9), date_joining=($10), driving_licence=($11), epn_no=($12), epn_amount=($13), esic_no=($14), esic_amount=($15), epf_no=($16), epf_amount=($17), mmspl_no=($18), mmspl_amount=($19), uan_no=($20), uan_amount=($21), pf_elegible=($22), pf_amount=($23), esi_elegible=($24), esi_amount=($25), professional_tax=($26), professional_type=($27), professional_amount=($28), "Email_ID"=($29), "Mobile_No"=($30), "Name"=($31), "Date_of_birth"=($32),  "Password"=($33),  aadhar_card=($34), voter_id=($35), "Address"=($36) WHERE  id=($1) RETURNING *',
 [                 userInput.id,
                 userInput.employee_type,
                 userInput.father_name,
@@ -335,7 +335,6 @@ user.updateemployees = function (userInput , resultCallback) {
                  userInput.Mobile_No,
                  userInput.Name,
                  userInput.Date_of_birth,
-                 userInput.employee_id,
                  userInput.Password,
                  userInput.aadhar_card,
                  userInput.voter_id,

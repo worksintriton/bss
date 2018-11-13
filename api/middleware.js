@@ -53,7 +53,6 @@ function init() {
 //////bsslogin/////////
 
 function bsslogin(req, res, next) {
-
        async.waterfall([
             function (waterfallCallback){
                 services.loginpage.bsslogincheck(req.body, function (err, result) {

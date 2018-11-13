@@ -280,41 +280,6 @@
         }
     },
 
-
-     "/authentication/clientlogin": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "Email_id": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "Email_id",
-                    "password"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "Email_id": "should have required property Email_id",
-                        "password": "should have required property password"
-                    },
-                    "properties": {
-                        "Email_id": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
-
- 
-
     "/authentication/deleteemployee": {
         "POST": {
             "body": {
@@ -787,28 +752,10 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "Email_ID": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "number"
-                    },
-                    "Password": {
-                        "type": "string"
-                    },
                     "employee_type": {
                         "type": "string"
                     },
-                    "employee_id": {
-                        "type": "string"
-                    },
-                    "Name": {
-                        "type": "string"
-                    },
                     "father_name": {
-                        "type": "string"
-                    },
-                    "Date_of_birth": {
                         "type": "string"
                     },
                     "gender": {
@@ -823,25 +770,13 @@
                     "nationality": {
                         "type": "string"
                     },
-                    "Address": {
-                        "type": "string"
-                    },
-                    "Mobile_No": {
-                        "type": "string"
-                    },
                     "languages": {
                         "type": "string"
                     },
                     "work_exp": {
                         "type": "string"
                     },
-                    "aadhar_card": {
-                        "type": "string"
-                    },
                     "date_joining": {
-                        "type": "string"
-                    },
-                    "voter_id": {
                         "type": "string"
                     },
                     "driving_licence": {
@@ -889,9 +824,6 @@
                     "esi_amount": {
                         "type": "string"
                     },
-                    "ESI_Elegible": {
-                        "type": "string"
-                    },
                     "professional_tax": {
                         "type": "string"
                     },
@@ -899,6 +831,36 @@
                         "type": "string"
                     },
                     "professional_amount": {
+                        "type": "string"
+                    },
+                    "Email_ID": {
+                        "type": "string"
+                    },
+                    "Mobile_No": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Date_of_birth": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "number"
+                    },
+                    "aadhar_card": {
+                        "type": "string"
+                    },
+                    "voter_id": {
+                        "type": "string"
+                    },
+                    "Address": {
+                        "type": "string"
+                    },
+                    "attach": {
                         "type": "string"
                     }
                 },

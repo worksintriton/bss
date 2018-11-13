@@ -34,11 +34,7 @@ app.options('*', cors());
 
 
 /*Client WEB Portal*/
-addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
-
-
-
-
+addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
 
 
 
@@ -55,7 +51,6 @@ addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
 /*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 
-addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
 
 /*Add Employee*/
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
