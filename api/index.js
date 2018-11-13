@@ -182,9 +182,14 @@ addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
 addRoute("/mapTracking/addmapuser", "POST", [middleware.addmapuser])
 addRoute("/mapTracking/addmapuserlist", "POST", [middleware.addmapuserlist])
 addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete])
-
 addRoute("/mapTracking/fetchmapuserpoints", "POST", [middleware.fetchmapuserpoints])
 
+
+/* QR Code */
+
+addRoute("/authentication/addqr", "POST", [middleware.addqr])
+addRoute("/authentication/qrlist", "POST", [middleware.qrlist])
+addRoute("/authentication/deleteqr", "POST", [middleware.deleteqr])
 
 
 

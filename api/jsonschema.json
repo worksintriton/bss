@@ -608,10 +608,6 @@
         }
     },
  
- 
-
-
-
      "/authentication/addemployee": {
         "POST": {
             "body": {
@@ -1022,6 +1018,106 @@
     },
 
      
+
+
+      "/authentication/addqr": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Empolyee_id": {
+                        "type": "number"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Email_ID": {
+                        "type": "string"
+                    },
+                     "Mobile_No": {
+                        "type": "string"
+                    },
+                    "created": {
+                        "type": "string"
+                    },
+                    "qrdata": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/authentication/qrlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                    
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/authentication/deleteqr": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                    
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    
 
 
     "/authentication/addusers": {

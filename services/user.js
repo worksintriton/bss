@@ -623,6 +623,63 @@ user.deleteusers = function (userInput, resultCallback) {
 };
 
 
+user.addqrweb = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public."qrcode"( "Empolyee_id", "Name" , "Email_ID", "Mobile_No", "created", "qrdata"  )VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
+                 [userInput.Empolyee_id,
+                 userInput.Name,
+                 userInput.Email_ID,
+                 userInput.Mobile_No,
+                 userInput.created,
+                 userInput.qrdata])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.qrlistweb = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.qrcode' , [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );    
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.deleteqrweb = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public.qrcode WHERE "id"=($1) ' , [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
 
 
 module.exports = user;

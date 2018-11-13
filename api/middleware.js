@@ -2053,6 +2053,74 @@ function fetchmapuserpoints(req, res, next) {
 }
 
 
+function addqr(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addqrweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function qrlist(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.qrlistweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function deleteqr(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deleteqrweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 
 
@@ -2208,4 +2276,10 @@ exports.pointslist = pointslist;
 exports.deletepoints = deletepoints;
 exports.fetchpoints = fetchpoints;
 exports.employee_fetchpoints = employee_fetchpoints;
+
+
+/*QR Code*/
+exports.qrlist = qrlist;
+exports.addqr = addqr;
+exports.deleteqr = deleteqr;
 
