@@ -186,11 +186,15 @@ addRoute("/mapTracking/fetchmapuserpoints", "POST", [middleware.fetchmapuserpoin
 
 
 /* QR Code */
-
 addRoute("/authentication/addqr", "POST", [middleware.addqr])
 addRoute("/authentication/qrlist", "POST", [middleware.qrlist])
 addRoute("/authentication/deleteqr", "POST", [middleware.deleteqr])
 
+
+
+/* Attendance mark */
+
+addRoute("/Attendance/MarkAttendance", "POST", [middleware.MarkAttendance])
 
 
 

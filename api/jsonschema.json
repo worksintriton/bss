@@ -1074,7 +1074,6 @@
                 },
         "additionalProperties": true,
                 "required": [
-                   
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -1099,6 +1098,39 @@
                         "type": "number"
                     }
                     
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/Attendance/MarkAttendance": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "string"
+                    }
                 },
         "additionalProperties": true,
                 "required": [

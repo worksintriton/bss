@@ -8,6 +8,7 @@ var employee = require ("./employee");
 var issues = require ("./issues");
 var training = require ("./training");
 var point_tracking = require ("./point_tracking");
+var attendance = require ("./attendance");
 
 
 
@@ -20,6 +21,7 @@ exports.employee = employee;
 exports.issues = issues;
 exports.training = training;
 exports.point_tracking = point_tracking;
+exports.attendance = attendance;
 
 
 

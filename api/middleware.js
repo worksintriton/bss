@@ -2117,8 +2117,31 @@ function deleteqr(req, res, next) {
                 }, utils.errors["200"]));
             }
         ]);
+}
+
+
+function MarkAttendance(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.attendance.MarkAttendancemob(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
 
 }
+
 
 
 
@@ -2282,4 +2305,8 @@ exports.employee_fetchpoints = employee_fetchpoints;
 exports.qrlist = qrlist;
 exports.addqr = addqr;
 exports.deleteqr = deleteqr;
+
+
+/*Attendance*/
+exports.MarkAttendance = MarkAttendance;
 
