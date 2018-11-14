@@ -65,96 +65,20 @@ attendance.MarkAttendancemob = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
             }
-
-
 })
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                 
-
-
-
-
-
-
-
-
-
-
-
 };
 
 
 
-
-
-
-
-
-
-
-//updateuser///
-attendance.updateuser = function (userInput,resultCallback) {
-  var executor = db.getdaata.getdb();
-executor.one('UPDATE public.usermanage  SET  "Employee_ID"=($2),"Name"=($3),"Designation"=($4),"Level"=($5),"Phone_number"=($6),"Password"=($7),"Add_by"=($8) WHERE "Email_id" = ($1)RETURNING *',
-        [userInput.Email_id,userInput.Employee_ID,userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Password,userInput.Add_by])
-       .then(data => {
-        console.log(data);
-        resultCallback(null,data);
-        })
-        .catch(error => {
-          resultCallback(error,{} );
-          console.log('ERROR:', error);
-        });
-};
-
-
-attendance.clientids1 = function (userInput, resultCallback) {
+attendance.Weeklystatusweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public."client_amount" WHERE "cliid"=($1) ' , [userInput.cliid])
+    executor.any('SELECT * FROM public."attendance" WHERE  "date" >= $1  AND "date" < $2 ' , [userInput.start_date,userInput.end_date])
         .then(data => {
 
                  resultCallback(null,data );  
@@ -163,20 +87,14 @@ attendance.clientids1 = function (userInput, resultCallback) {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
 };
 
 
-
-
-attendance.qrlistweb = function (userInput, resultCallback) {
+attendance.Allstatusweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public.qrcode' , [userInput.id])
+    executor.any('SELECT * FROM public.attendance' , [userInput.id])
         .then(data => {
-
                  resultCallback(null,data );    
         })
         .catch(error => {
@@ -187,14 +105,14 @@ attendance.qrlistweb = function (userInput, resultCallback) {
 
 };
 
-attendance.deleteqrweb = function (userInput, resultCallback) {
+
+
+attendance.dailystatusweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('Delete FROM public.qrcode WHERE "id"=($1) ' , [userInput.id])
+    executor.any('SELECT * FROM public.attendance WHERE "date"= $1',[userInput.date])
         .then(data => {
-
-                 resultCallback(null,data );
+                 resultCallback(null,data );    
         })
         .catch(error => {
             resultCallback(error,null );
@@ -203,6 +121,19 @@ attendance.deleteqrweb = function (userInput, resultCallback) {
 
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

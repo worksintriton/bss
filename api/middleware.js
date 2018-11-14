@@ -121,7 +121,6 @@ function addemployee(req, res, next) {
                 }, utils.errors["200"]));
             }
         ]);
-
 }
 
 ///addusers////
@@ -2143,6 +2142,77 @@ function MarkAttendance(req, res, next) {
 }
 
 
+function dailystatus(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.attendance.dailystatusweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function Weeklystatus(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.attendance.Weeklystatusweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function Allstatus(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.attendance.Allstatusweb(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+
 
 
 
@@ -2309,4 +2379,8 @@ exports.deleteqr = deleteqr;
 
 /*Attendance*/
 exports.MarkAttendance = MarkAttendance;
+exports.Weeklystatus = Weeklystatus;
+exports.Allstatus = Allstatus;
+exports.dailystatus = dailystatus;
+
 

@@ -63,6 +63,11 @@
     },
 
 
+
+
+
+
+
     "/authentication/confignumber": {
         "POST": {
             "body": {
@@ -1149,7 +1154,90 @@
         }
     },
 
-    
+
+     "/Attendance/Weeklystatus": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "start_date": {
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "start_date": "should have required property userId"
+                    },
+                    "properties": {
+                        "start_date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/Attendance/Allstatus": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/Attendance/dailystatus": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "date": "should have required property userId"
+                    },
+                    "properties": {
+                        "date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
 
 
     "/authentication/addusers": {
