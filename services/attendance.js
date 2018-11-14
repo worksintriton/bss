@@ -11,19 +11,25 @@ function attendance() {}
 attendance.MarkAttendancemob = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
-      executor.any('SELECT * FROM public.attendance' , [userInput.id])
-        .then(data => {
 
+   executor.any('SELECT * FROM public."attendance"  where "employee_id"=$1 and "check"=$2  and "date"=$3  '  , [userInput.id,"Out",userInput.date])
+        .then(data => {
+            console.log(data);
+            if(data.length == 1 ){
+                 var data = "You are already Singed-Out";
+                 resultCallback(null,data );
+                   
+            }else{
+    executor.any('SELECT * FROM public.attendance where "employee_id"=$1 and "check"=$2  and "date"=$3 ' , [userInput.id,"In",userInput.date])
+        .then(data => {
             if(data.length < 1 ){
-              executor.one('INSERT INTO public."attendance"( "employee_id","name", "time_in", "time_out", "work_duration","overtime","late_by","status")VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
+              executor.one('INSERT INTO public."attendance"("employee_id","name","time_in","status","date","check")VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
                  [userInput.id,
                  userInput.Name,
                  userInput.time,
-                 "0",
-                 "00:00:00",
-                 "0",
-                 "0",
-                 "Present"
+                 "Present",
+                 userInput.date,
+                 "In"
                  ])
                .then(data => {
                  console.log(data);
@@ -34,12 +40,14 @@ attendance.MarkAttendancemob = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
             }else{
-                executor.one('UPDATE public."attendance" SET  "time_out"=$2   WHERE  "employee_id" = $1 RETURNING *',
+                executor.one('UPDATE public."attendance" SET  "time_out"= $2 , "check"=$4   WHERE  "employee_id" = $1  and "date"= $3  RETURNING *',
                 [userInput.id,
                  userInput.time,
+                 userInput.date,
+                 "Out"
                  ])
         .then(data => {
-               executor.one('UPDATE public.attendance  SET  "work_duration"= "time_out" - "time_in"  WHERE  "employee_id" = $1 RETURNING *',[userInput.id
+               executor.one('UPDATE public.attendance  SET  "work_duration"= "time_out" - "time_in" where "employee_id"=$1 and "check"=$2  and "date"=$3 RETURNING * ',[userInput.id,"Out",userInput.date
                  ])
                .then(data => {
 
@@ -56,6 +64,43 @@ attendance.MarkAttendancemob = function (userInput, resultCallback) {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
+            }
+
+
+})
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
 
 
 

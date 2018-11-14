@@ -1,7 +1,4 @@
 {
-    
-
-
     "/authentication/bsslogin": {
         "POST": {
             "body": {
@@ -1129,6 +1126,9 @@
                         "type": "string"
                     },
                     "time": {
+                        "type": "string"
+                    }, 
+                    "date": {
                         "type": "string"
                     }
                 },

@@ -27,14 +27,12 @@ function addRoute1(path, method, middlewares) {
 
 }
 
-
 app.use("*", [cors(),middleware.passport.initialize(), middleware.passport.session()]);
 app.options('*', cors());
 
-
-
 /*Client WEB Portal*/
 addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
+
 
 
 
@@ -102,6 +100,7 @@ addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
 /*Employee Api's*/
 addRoute("/authentication/employeeLogin", "POST", [middleware_emp.signin]);
 addRoute("/authentication/updateEmpProfile", "POST", [middleware_emp.signin]);
+
 
 /*Issue Tracking*/
 addRoute("/issue/create", "POST", [middleware_emp.validateEmployee, middleware.create_issue]);
