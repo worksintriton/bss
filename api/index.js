@@ -188,6 +188,7 @@ addRoute("/mapTracking/fetchmapuserpoints", "POST", [middleware.fetchmapuserpoin
 addRoute("/authentication/addqr", "POST", [middleware.addqr])
 addRoute("/authentication/qrlist", "POST", [middleware.qrlist])
 addRoute("/authentication/deleteqr", "POST", [middleware.deleteqr])
+addRoute("/authentication/deleteallqr", "POST", [middleware.deleteallqr])
 
 
 

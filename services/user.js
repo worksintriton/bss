@@ -647,7 +647,6 @@ user.addqrweb = function (userInput, resultCallback) {
 
 user.qrlistweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-
   //\''+userInput.appartment_ukey+'\' 
     executor.any('SELECT * FROM public.qrcode' , [userInput.id])
         .then(data => {
@@ -658,8 +657,6 @@ user.qrlistweb = function (userInput, resultCallback) {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
 };
 
 user.deleteqrweb = function (userInput, resultCallback) {
@@ -668,7 +665,6 @@ user.deleteqrweb = function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
     executor.any('Delete FROM public.qrcode WHERE "id"=($1) ' , [userInput.id])
         .then(data => {
-
                  resultCallback(null,data );
         })
         .catch(error => {
@@ -678,6 +674,22 @@ user.deleteqrweb = function (userInput, resultCallback) {
 
 
 };
+
+user.deleteallqrweb = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete  FROM public.qrcode' ,[])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
 
 
 
