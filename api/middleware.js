@@ -2231,6 +2231,61 @@ function Allstatus(req, res, next) {
 
 }
 
+function Forgotpasswordweb(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.Forgotpasswordwebs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function checkuser(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.checkusers(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                if (mydata.length == 0) {
+                    return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["403"]));
+                }else
+                {
+                    return res.json(_.merge({
+                    data:  mydata[0]  
+                }, utils.errors["200"]));
+                }
+            }
+        ]);
+
+}
+
+
+
 
 
 
@@ -2404,5 +2459,9 @@ exports.MarkAttendance = MarkAttendance;
 exports.Weeklystatus = Weeklystatus;
 exports.Allstatus = Allstatus;
 exports.dailystatus = dailystatus;
+
+/*forgot*/
+exports.Forgotpasswordweb = Forgotpasswordweb;
+exports.checkuser = checkuser;
 
 

@@ -44,5 +44,10 @@ module.exports = {
         message: "No Data Found",
         status: "Failure",
         code: 500
+    },
+    "403": {
+        message: "Invalid Account",
+        status: "Failure",
+        code: 500
     }
 };

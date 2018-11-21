@@ -692,6 +692,39 @@ user.deleteallqrweb = function (userInput, resultCallback) {
 
 };
 
+user.Forgotpasswordwebs = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select *  FROM public.qrcode' ,[])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
+user.checkusers = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT "Password" FROM public.usermanage WHERE "Email_id"=($1) ' , [userInput.Email_id])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
+
 
 
 

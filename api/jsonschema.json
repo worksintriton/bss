@@ -31,6 +31,35 @@
     },
 
 
+    "/authentication/checkuser": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Email_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
      "/authentication/Clientlogin": {
         "POST": {
             "body": {
@@ -1188,6 +1217,31 @@
         }
     },
 
+    "/authentication/Forgotpasswordweb": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Email_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
 
      "/Attendance/Weeklystatus": {
         "POST": {

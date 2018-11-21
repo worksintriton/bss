@@ -200,6 +200,9 @@ addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus])
 addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus])
 
 
+/* Forgotpassword */
+addRoute("/authentication/Forgotpasswordweb", "POST", [middleware.Forgotpasswordweb])
+addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
 
 
 
