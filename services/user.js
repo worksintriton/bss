@@ -626,13 +626,15 @@ user.deleteusers = function (userInput, resultCallback) {
 user.addqrweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public."qrcode"( "Empolyee_id", "Name" , "Email_ID", "Mobile_No", "created", "qrdata"  )VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
+                 executor.one('INSERT INTO public."qrcode"( "Empolyee_id", "Name" , "Email_ID", "Mobile_No", "created", "qrdata","client_ID","client_name")VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
                  [userInput.Empolyee_id,
                  userInput.Name,
                  userInput.Email_ID,
                  userInput.Mobile_No,
                  userInput.created,
-                 userInput.qrdata])
+                 userInput.qrdata,
+                 userInput.client_ID,
+                 userInput.client_name])
                       .then(data => {
                  console.log(data);
                  resultCallback(null,data );

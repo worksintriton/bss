@@ -1044,6 +1044,12 @@
                     },
                     "qrdata": {
                         "type": "string"
+                    },
+                    "client_ID": {
+                        "type": "number"
+                    },
+                    "client_name": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
