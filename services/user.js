@@ -21,8 +21,8 @@ user.createusers = function (userInput, resultCallback) {
                  resultCallback(null,string); 
                }else{
                  console.log("2");
-                 executor.one('INSERT INTO public.usermanage( "Employee_ID", "Name", "Designation","Level","Phone_number","Email_id", "Password", "Add_by" )VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
-                 [userInput.Employee_ID,userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Email_id,userInput.Password,userInput.Add_by ])
+                 executor.one('INSERT INTO public.usermanage( "Name", "Designation","Level","Phone_number","Email_id", "Password", "Add_by" )VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
+                 [userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Email_id,userInput.Password,userInput.Add_by ])
                  .then(data => {
                     console.log("1");
               resultCallback(null,data);
@@ -353,8 +353,8 @@ user.updateemployees = function (userInput , resultCallback) {
 //updateuser///
 user.updateuser = function (userInput,resultCallback) {
   var executor = db.getdaata.getdb();
-executor.one('UPDATE public.usermanage  SET  "Employee_ID"=($2),"Name"=($3),"Designation"=($4),"Level"=($5),"Phone_number"=($6),"Password"=($7),"Add_by"=($8) WHERE "Email_id" = ($1)RETURNING *',
-        [userInput.Email_id,userInput.Employee_ID,userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Password,userInput.Add_by])
+executor.one('UPDATE public.usermanage  SET "Name"=($2),"Designation"=($3),"Level"=($4),"Phone_number"=($5),"Password"=($6),"Add_by"=($7) WHERE "Email_id" = ($1)RETURNING *',
+        [userInput.Email_id,userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Password,userInput.Add_by])
        .then(data => {
         console.log(data);
         resultCallback(null,data);
