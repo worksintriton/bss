@@ -353,8 +353,8 @@ user.updateemployees = function (userInput , resultCallback) {
 //updateuser///
 user.updateuser = function (userInput,resultCallback) {
   var executor = db.getdaata.getdb();
-executor.one('UPDATE public.usermanage  SET "Name"=($2),"Designation"=($3),"Level"=($4),"Phone_number"=($5),"Password"=($6),"Add_by"=($7) WHERE "Email_id" = ($1)RETURNING *',
-        [userInput.Email_id,userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Password,userInput.Add_by])
+executor.one('UPDATE public.usermanage  SET "Name"=($2),"Designation"=($3),"Level"=($4),"Phone_number"=($5),"Password"=($6),"Add_by"=($7) ,"Email_id" = ($1) WHERE "user_id" = ($8)  RETURNING *',
+        [userInput.Email_id,userInput.Name,userInput.Designation,userInput.Level,userInput.Phone_number,userInput.Password,userInput.Add_by,userInput.user_id])
        .then(data => {
         console.log(data);
         resultCallback(null,data);

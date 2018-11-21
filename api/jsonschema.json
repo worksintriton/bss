@@ -1339,6 +1339,9 @@
                     },
                     "Add_by": {
                         "type": "string"
+                    },
+                    "user_id":{
+                         "type": "number"
                     }
                 },
         "additionalProperties": true,
