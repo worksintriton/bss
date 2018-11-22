@@ -541,7 +541,7 @@ user.clientids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public."client_Management" WHERE "cliid"=($1) ' , [userInput.cliid])
+    executor.any('SELECT * FROM public."client_Management" WHERE "id"=($1) ' , [userInput.cliid])
         .then(data => {
           console.log(data);
 
@@ -626,7 +626,7 @@ user.deleteusers = function (userInput, resultCallback) {
 user.addqrweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public."qrcode"( "Empolyee_id", "Name" , "Email_ID", "Mobile_No", "created", "qrdata","client_ID","client_name")VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
+                 executor.one('INSERT INTO public."qrcode"( "Empolyee_id", "Name" , "Email_ID", "Mobile_No", "created", "qrdata","client_ID","client_place","date")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *',
                  [userInput.Empolyee_id,
                  userInput.Name,
                  userInput.Email_ID,
@@ -634,7 +634,8 @@ user.addqrweb = function (userInput, resultCallback) {
                  userInput.created,
                  userInput.qrdata,
                  userInput.client_ID,
-                 userInput.client_name])
+                 userInput.client_place,
+                 userInput.date])
                       .then(data => {
                  console.log(data);
                  resultCallback(null,data );
@@ -703,8 +704,6 @@ user.Forgotpasswordwebs = function (userInput, resultCallback) {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
 };
 
 
@@ -713,6 +712,24 @@ user.checkusers = function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
     executor.any('SELECT "Password" FROM public.usermanage WHERE "Email_id"=($1) ' , [userInput.Email_id])
         .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
+user.Updateemployee_ids = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+              executor.one('UPDATE public."faq" SET  "employee_id"=$1    WHERE  "id" = $2 RETURNING *',
+                 [userInput.id,userInput.employee_id])
+                      .then(data => {
+                 console.log(data);
                  resultCallback(null,data );
         })
         .catch(error => {

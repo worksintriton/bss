@@ -123,6 +123,43 @@ attendance.dailystatusweb = function (userInput, resultCallback) {
 };
 
 
+attendance.assigningemployees = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.assignemployee WHERE "employee_id"= $1 and "date"=$2 ',[userInput.employee_id,userInput.date])
+        .then(data => {
+
+            if(data.length == 1){
+                var data = "already assigned";
+                 resultCallback(null,data ); 
+            }else{
+    executor.one('INSERT INTO public."assignemployee"("client_id","client_name","employee_id","employee_name","date")VALUES ($1,$2,$3,$4,$5) RETURNING *',
+                 [userInput.client_id,
+                 userInput.client_name,
+                 userInput.employee_id,
+                  userInput.employee_name,
+                 userInput.date
+                 ])
+               .then(data => {
+                 console.log(data);
+                   var data = "assigned successfully";
+                 resultCallback(null,data );
+        })             
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+            }
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
 
 
 

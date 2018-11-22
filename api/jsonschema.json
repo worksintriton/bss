@@ -60,6 +60,47 @@
     },
 
 
+    "/authentication/assigningemployee": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "client_id": {
+                        "type": "number"
+                    },
+                    "client_name": {
+                        "type": "string"
+                    },
+                    "employee_id": {
+                        "type": "number"
+                    },
+                    "employee_name": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
      "/authentication/Clientlogin": {
         "POST": {
             "body": {
@@ -344,7 +385,7 @@
                  "type": "object",
                 "properties": {
                     "cliid": {
-                        "type": "string"
+                        "type": "number"
                     }
                 },
         "additionalProperties": false,
@@ -1077,7 +1118,10 @@
                     "client_ID": {
                         "type": "number"
                     },
-                    "client_name": {
+                    "client_place": {
+                        "type": "string"
+                    },
+                    "date": {
                         "type": "string"
                     }
                 },
@@ -3374,5 +3418,35 @@
                 }
             }
         }
+    },
+
+    "/authentication/Updateemployee_id": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
     }
+
+    
 }

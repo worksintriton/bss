@@ -57,6 +57,7 @@ addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
 addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
+addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee_id]);
 
 
 
@@ -203,6 +204,11 @@ addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus])
 /* Forgotpassword */
 addRoute("/authentication/Forgotpasswordweb", "POST", [middleware.Forgotpasswordweb])
 addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
+
+
+/*assigningemployee*/
+
+addRoute("/authentication/assigningemployee", "POST", [middleware.assigningemployee])
 
 
 
