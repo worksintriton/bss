@@ -203,27 +203,11 @@ addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus])
 
 /* Forgotpassword */
 addRoute("/authentication/Forgotpasswordweb", "POST", [middleware.Forgotpasswordweb])
-addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
+// addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
 
 
 /*assigningemployee*/
-
-addRoute("/authentication/assigningemployee", "POST", [middleware.assigningemployee])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// addRoute("/authentication/chekassign", "POST", [middleware.chekassign])
 
 app.use(router);
 

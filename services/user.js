@@ -160,7 +160,7 @@ user.AddemployeeC = function (userInput, resultCallback) {
 user.createclient = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public."client_Management" WHERE "E_mail_ID"= $1 ',[userInput.E_mail_ID])
+    executor.any('SELECT * FROM public."client_Management" WHERE "User_name"= $1 ',[userInput.User_name])
         .then(data => {
 
                  if(data.length == 1 )//eruthuchuna
