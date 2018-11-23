@@ -172,7 +172,7 @@ function addclients(req, res, next) {
                 });
             },
              function (mydata, waterfallCallback){  
-                services.user.createclient1(mydata.cliid , function (err, result) {
+                services.user.createclient1(mydata.id , function (err, result) {
                 if (err) {
                     return res.json(_.merge({
                     error_is: err 
@@ -190,7 +190,7 @@ function addclients(req, res, next) {
                  "message": "Client Details add Successfully",
                  "status": "Success"
                 },
-                cliid:mydata.cliid
+                cliid:mydata.id
                 }, utils.errors["200"]));
             }
         ]);
