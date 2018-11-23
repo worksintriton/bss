@@ -262,8 +262,38 @@ user.updateclient = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
    
-                executor.one('UPDATE public."client_Management" SET  "User_name"=$2, "Password"=$3, "No_of_Sites"=$4, "Client_Name"=$5, "Address"=$6, "Contact_Name"=$7, "Contact_Number"=$8, "E_mail_ID"=$9, "Designations"=$10, "Deployment"=$11, "Hrs_pattern"=$12, "RATES"=$13, "Value"=$14, "Allowance"=$15, "Total_Allowances"=$16, "Wages"=$17, "Total_Wages"=$18, "Add_Values"=$19, "MARGIN"=$20, "Contract_Start_Dates"=$21, "Roc_date_Froms"=$22, "ROC_to"=$23, "Accts_Info"=$24, "Invoice_cycle"=$25, "Credit_Period"=$26, "Aging_Analysis"=$27, "Created_date"=$28, "Updated_date"=$29, "Updated_by"=$30 WHERE  "cliid" = $1 RETURNING *',
-                 [userInput.cliid,userInput.User_name,userInput.Password,userInput.No_of_Sites,userInput.Client_Name,userInput.Address,userInput.Contact_Name,userInput.Contact_Number,userInput.E_mail_ID,userInput.Designations,userInput.Deployment,userInput.Hrs_pattern,userInput.RATES,userInput.Value,userInput.Allowance,userInput.Total_Allowances,userInput.Wages,userInput.Total_Wages,userInput.Add_Values,userInput.MARGIN,userInput.Contract_Start_Dates,userInput.Roc_date_Froms,userInput.ROC_to,userInput.Accts_Info,userInput.Invoice_cycle,userInput.Credit_Period,userInput.Aging_Analysis,userInput.Created_date,userInput.Updated_date,userInput.Updated_by])
+                executor.one('UPDATE public."client_Management" SET  "Accts_Info"=$2, "Add_Values"=$3, "Address"=$4, "Aging_Analysis"=$5, "Allowance"=$6, "Client_Name"=$7, "Contact_Name"=$8, "Contact_Number"=$9, "Contract_Start_Dates"=$10, "Created_date"=$11, "Credit_Period"=$12, "Deployment"=$13, "Designations"=$14, "E_mail_ID"=$15, "Hrs_pattern"=$16, "Invoice_cycle"=$17, "Login_in"=$18, "MARGIN"=$19, "No_of_Sites"=$20, "Password"=$21, "RATES"=$22, "ROC_to"=$23, "Roc_date_Froms"=$24, "Total_Allowances"=$25, "Total_Wages"=$26, "Updated_by"=$27, "Updated_date"=$28, "User_name"=$29, "Value"=$30 , "Wages"=$31, "client_id"=$32  WHERE  "id" = $1 RETURNING *',
+                 [userInput.id,
+                 userInput.Accts_Info,
+                 userInput.Add_Values,
+                 userInput.Address,
+                 userInput.Aging_Analysis,
+                 userInput.Allowance,
+                 userInput.Client_Name,
+                 userInput.Contact_Number,
+                 userInput.Contract_Start_Dates,
+                 userInput.Created_date,
+                 userInput.Credit_Period,
+                 userInput.Deployment,
+                 userInput.Designations,
+                 userInput.E_mail_ID,
+                 userInput.Hrs_pattern,
+                 userInput.Invoice_cycle,
+                 userInput.Login_in,
+                 userInput.MARGIN,
+                 userInput.No_of_Sites,
+                 userInput.Password,
+                 userInput.RATES,
+                 userInput.ROC_to,
+                 userInput.Roc_date_Froms,
+                 userInput.Total_Allowances,
+                 userInput.Total_Wages,
+                 userInput.Updated_by,
+                 userInput.Updated_date,
+                 userInput.User_name,
+                 userInput.Value,
+                 userInput.Wages,
+                 userInput.client_id])
                  .then(data => {
               resultCallback(null,data);
                  })      

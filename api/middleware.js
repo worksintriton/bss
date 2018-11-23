@@ -482,10 +482,23 @@ function clientid(req, res, next) {
                 });
             },
             function (mydata, waterfallCallback){
+                 services.user.clientids1(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,mydata,result);
+                });
+            },
+                function (mydata,result, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata
+                    Client_details: mydata,
+                    Client_payment: result
                 }, utils.errors["200"]));
             }
+
         ]);
 
 }

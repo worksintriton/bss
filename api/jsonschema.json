@@ -1725,22 +1725,22 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "cliid": {
-                        "type": "number"
-                    },
-                    "User_name": {
+                    "Accts_Info": {
                         "type": "string"
                     },
-                    "Password": {
-                        "type": "string"
-                    },
-                    "No_of_Sites": {
-                        "type": "string"
-                    },
-                    "Client_Name": {
+                    "Add_Values": {
                         "type": "string"
                     },
                     "Address": {
+                        "type": "string"
+                    },
+                    "Aging_Analysis": {
+                        "type": "string"
+                    },
+                    "Allowance": {
+                        "type": "string"
+                    },
+                    "Client_Name": {
                         "type": "string"
                     },
                     "Contact_Name": {
@@ -1749,71 +1749,77 @@
                     "Contact_Number": {
                         "type": "string"
                     },
-                    "E_mail_ID": {
-                        "type": "string"
-                    },
-                    "Designations": {
-                        "type": "string"
-                    },
-                    "Deployment": {
-                        "type": "string"
-                    },
-                    "Hrs_pattern": {
-                        "type": "string"
-                    },
-                    "RATES": {
-                        "type": "string"
-                    },
-                    "Value": {
-                        "type": "string"
-                    },
-                    "Allowance": {
-                        "type": "string"
-                    },
-                    "Total_Allowances": {
-                        "type": "string"
-                    },
-                    "Wages": {
-                        "type": "string"
-                    },
-                    "Total_Wages": {
-                        "type": "string"
-                    },
-                    "Add_Values": {
-                        "type": "string"
-                    },
-                    "MARGIN": {
-                        "type": "string"
-                    },
                     "Contract_Start_Dates": {
-                        "type": "string"
-                    },
-                     "Roc_date_Froms": {
-                        "type": "string"
-                    },
-                    "ROC_to": {
-                        "type": "string"
-                    },
-                    "Accts_Info": {
-                        "type": "string"
-                    },
-                    "Invoice_cycle": {
-                        "type": "string"
-                    },
-                    "Credit_Period": {
-                        "type": "string"
-                    },
-                    "Aging_Analysis": {
                         "type": "string"
                     },
                     "Created_date": {
                         "type": "string"
                     },
-                    "Updated_date": {
+                    "Credit_Period": {
+                        "type": "string"
+                    },
+                    "Deployment": {
+                        "type": "string"
+                    },
+                    "Designations": {
+                        "type": "string"
+                    },
+                    "E_mail_ID": {
+                        "type": "string"
+                    },
+                    "Hrs_pattern": {
+                        "type": "string"
+                    },
+                    "Invoice_cycle": {
+                        "type": "string"
+                    },
+                    "Login_in": {
+                        "type": "string"
+                    },
+                    "MARGIN": {
+                        "type": "string"
+                    },
+                    "No_of_Sites": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    },
+                    "RATES": {
+                        "type": "string"
+                    },
+                     "ROC_to": {
+                        "type": "string"
+                    },
+                    "Roc_date_Froms": {
+                        "type": "string"
+                    },
+                    "Total_Allowances": {
+                        "type": "string"
+                    },
+                    "Total_Wages": {
                         "type": "string"
                     },
                     "Updated_by": {
                         "type": "string"
+                    },
+                    "Updated_date": {
+                        "type": "string"
+                    },
+                    "User_name": {
+                        "type": "string"
+                    },
+                    "Value": {
+                        "type": "string"
+                    },
+                    "Wages": {
+                        "type": "string"
+                    },
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "number"
                     }
                 },
         "additionalProperties": true,
