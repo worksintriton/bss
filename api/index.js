@@ -204,6 +204,8 @@ addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus])
 /* Forgotpassword */
 addRoute("/authentication/Forgotpasswordweb", "POST", [middleware.Forgotpasswordweb])
 addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
+addRoute("/authentication/addassigns", "POST", [middleware.addassigns])
+
 
 
 /*assigningemployee*/

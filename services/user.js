@@ -752,12 +752,20 @@ user.checkusers = function (userInput, resultCallback) {
 
 };
 
-
-user.Updateemployee_ids = function (userInput, resultCallback) {
+user.addassign = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-              executor.one('UPDATE public."faq" SET  "employee_id"=$1    WHERE  "id" = $2 RETURNING *',
-                 [userInput.id,userInput.employee_id])
+                 executor.one('INSERT INTO public."assignemployee"( "Empolyee_id", "Name" , "Email_ID", "Mobile_No", "created", "qrdata","client_ID","client_place","date","id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *',
+                 [userInput.Empolyee_id,
+                 userInput.Name,
+                 userInput.Email_ID,
+                 userInput.Mobile_No,
+                 userInput.created,
+                 userInput.qrdata,
+                 userInput.client_ID,
+                 userInput.client_place,
+                 userInput.date,
+                 userInput.id])
                       .then(data => {
                  console.log(data);
                  resultCallback(null,data );
@@ -769,7 +777,6 @@ user.Updateemployee_ids = function (userInput, resultCallback) {
 
 
 };
-
 
 
 
