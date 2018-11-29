@@ -2338,26 +2338,7 @@ function Updateemployee_id(req, res, next) {
         ]);
 }
 
-function addassigns(req, res, next) {
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.addassign(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data:  mydata 
-                }, utils.errors["200"]));
-            }
-        ]);
-}
+
 
 
 
@@ -2528,7 +2509,6 @@ exports.qrlist = qrlist;
 exports.addqr = addqr;
 exports.deleteqr = deleteqr;
 exports.deleteallqr = deleteallqr;
-exports.addassigns = addassigns;
 
 
 /*Attendance*/
