@@ -60,6 +60,38 @@
     },
 
 
+     "/authentication/updateqr": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "empid": {
+                        "type": "number"
+                    },
+                    "qrcode": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "empid"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "empid": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "empid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
     "/authentication/assigningemployee": {
         "POST": {
             "body": {

@@ -56,6 +56,21 @@ user.confignumbers = function (userInput, resultCallback) {
 };
 
 
+user.updateqrs = function (userInput,resultCallback) {
+  var executor = db.getdaata.getdb();
+executor.one('UPDATE public.employeedetails  SET "qrcode"=($2)  WHERE "id" = ($1)  RETURNING *',
+        [userInput.empid,userInput.qrcode])
+       .then(data => {
+        console.log(data);
+        resultCallback(null,data);
+        })
+        .catch(error => {
+          resultCallback(error,{} );
+          console.log('ERROR:', error);
+        });
+};
+
+
 
 
 

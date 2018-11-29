@@ -61,6 +61,12 @@ addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee
 
 
 
+addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
+
+
+
+
+
 
 /*Add User*/
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
