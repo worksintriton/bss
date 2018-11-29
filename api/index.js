@@ -78,6 +78,17 @@ addRoute("/authentication/employeereqiured", "POST", [middleware.employeereqiure
 
 addRoute("/authentication/updateemplo", "POST", [middleware.updateemplo]);
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
+
+
+addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
+
+
+
+
+
+
+
+
 addRoute("/authentication/addemployee1", "POST", [middleware.addemployee1]);
 addRoute("/authentication/addemployee2", "POST", [middleware.addemployee2]);
 addRoute("/authentication/addemployee3", "POST", [middleware.addemployee3]);
@@ -111,10 +122,6 @@ addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
 
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
-
-
-
-
 
 
 

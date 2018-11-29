@@ -272,6 +272,34 @@ function addemployee(req, res, next) {
 
 }
 
+
+///Qrcode//////
+function updateqr(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.createemployee3(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: {
+        "message": "Employee Details add Successfully",
+        "status": "Success"
+    }  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 ///addemployee1////
 
 function addemployee1(req, res, next) {

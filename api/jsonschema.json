@@ -376,6 +376,35 @@
     },
  
 
+ "/authentication/updateqr": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "empid": {
+                        "type": "number"
+                    },
+                    "qrcode": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "userid"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "userid": "should have required property id"
+                    },
+                    "properties": {
+                        "userid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
 
 
      "/authentication/addemployee": {
