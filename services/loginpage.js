@@ -12,7 +12,7 @@ function login_page() {}
 login_page.bsslogincheck = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.usermanagement WHERE "Email_id"=($1) and "Password"=($2)',[userInput.Email_id,userInput.password])
+   executor.any('SELECT * FROM public.usermanage WHERE "Email_id"=($1) and "Password"=($2)',[userInput.Email_id,userInput.password])
         .then(data => {
           console.log(data.length);
           if(data.length == 0 ){
@@ -31,7 +31,7 @@ login_page.bsslogincheck = function (userInput, resultCallback) {
 login_page.clientlogincheck = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.clientmanagment WHERE "email_id"=($1) and "Password"=($2)',[userInput.Email_id,userInput.password])
+   executor.any('SELECT * FROM public."client_Management" WHERE "Login_in"=($1) and "Password"=($2)',[userInput.Email_id,userInput.password])
         .then(data => {
           console.log(data.length);
           if(data.length == 0 ){
@@ -39,7 +39,7 @@ login_page.clientlogincheck = function (userInput, resultCallback) {
             resultCallback(null,string);
           }else{
             resultCallback(null,data );
-          }  
+          }
         })
         .catch(error => {
             resultCallback(error,null );

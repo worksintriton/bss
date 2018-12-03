@@ -4,6 +4,7 @@ var express = require("express"),
     utils = require("../utils"),
     jsonschema = require("./jsonschema"),
     middleware = require("./middleware"),
+    middleware_emp = require("./middleware_emp"),
     cors = require("cors");
     const fileUpload = require('express-fileupload');
 
@@ -26,58 +27,38 @@ function addRoute1(path, method, middlewares) {
 
 }
 
-
 app.use("*", [cors(),middleware.passport.initialize(), middleware.passport.session()]);
 app.options('*', cors());
 
-
-
-addRoute("/authentication/signin", "POST", [middleware.signin]);
-addRoute("/authentication/registerpage", "POST", [middleware.registerpage]);
-addRoute("/authentication/loginpages", "POST", [middleware.loginpages]);
+/*Client WEB Portal*/
+addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+/*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 
-addRoute("/authentication/clientlogin", "POST", [middleware.clientlogin]);
 
-addRoute("/authentication/securitytlogin", "POST", [middleware.securitytlogin]);
-
-addRoute("/authentication/employeeid", "POST", [middleware.employeeid]);
-
-addRoute("/authentication/userid", "POST", [middleware.userid]);
-addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
-
-
-
-
-
-
-
-
-
-
-addRoute("/authentication/employeereqiured", "POST", [middleware.employeereqiured]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-addRoute("/authentication/updateemplo", "POST", [middleware.updateemplo]);
+/*Add Employee*/
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
+addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
+addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
+addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
+addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
+addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
+addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee_id]);
+
 
 
 addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
@@ -87,33 +68,17 @@ addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 
 
 
-
-
-addRoute("/authentication/addemployee1", "POST", [middleware.addemployee1]);
-addRoute("/authentication/addemployee2", "POST", [middleware.addemployee2]);
-addRoute("/authentication/addemployee3", "POST", [middleware.addemployee3]);
-addRoute("/authentication/addemployee4", "POST", [middleware.addemployee4]);
-addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
+/*Add User*/
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
+addRoute("/authentication/userid", "POST", [middleware.userid]);
 addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
 addRoute("/authentication/userlist", "POST", [middleware.userlist]);
-addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
-addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
-addRoute1("/authentication/upload", "POST", [middleware.uploads]);
-addRoute1("/authentication/upload", "POST", [middleware.uploads]);
 
 
-
-
-
-
-
-
-
-
-
+/*Add Client*/
 addRoute("/authentication/addclients", "POST", [middleware.addclients]);
+addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 addRoute("/authentication/addclients1", "POST", [middleware.addclients1]);
 addRoute("/authentication/clientid", "POST", [middleware.clientid]);
 addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
@@ -121,33 +86,126 @@ addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
 
 
-addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
+
+/*Add Configure*/
+addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
+addRoute("/authentication/getconfignumber", "POST", [middleware.getconfignumber]);
+
+
+/*Add training*/
+addRoute("/authentication/training", "POST", [middleware.training]);
+addRoute("/authentication/traininglessons", "POST", [middleware.traininglessons]);
+addRoute("/authentication/trainingvideos", "POST", [middleware.trainingvideos]);
+addRoute("/authentication/traininglist", "POST", [middleware.traininglist]);
+
+
+/*Add tracking*/
+addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
+addRoute("/authentication/Trackinglist", "POST", [middleware.Trackinglist]);
+addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
+
+/*Employee Api's*/
+addRoute("/authentication/employeeLogin", "POST", [middleware_emp.signin]);
+addRoute("/authentication/updateEmpProfile", "POST", [middleware_emp.signin]);
+
+
+/*Issue Tracking*/
+addRoute("/issue/create", "POST", [middleware_emp.validateEmployee, middleware.create_issue]);
+addRoute("/issue/updateissues", "POST", [middleware.updateissues]);
+addRoute("/issue/taken_by", "POST", [middleware.taken_by]);
+addRoute("/issue/report", "POST", [middleware.report]);
+addRoute("/issue/issuedetails", "POST", [middleware.issuedetails]);
+addRoute("/issue/issuetrack", "POST", [middleware.issuetrack]);
+addRoute("/issue/issuecount", "POST", [middleware.issuecount]);
+
+/*issues Attachment*/
+addRoute("/issue/createAttachment", "POST", [middleware.create_issue_attachment]);
+addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
+addRoute("/issue/listmyissues", "POST", [middleware_emp.validateEmployee, middleware.list_my_issue]);
+addRoute("/issue/listissues", "POST", [middleware.listissues]);
+
+/*PointTracking for Mobile*/
+
+    /*fetch*/
+ addRoute("/PointTracking/employee_fetchpoints", "POST", [middleware.employee_fetchpoints])
+
+
+/*PointTrackMap*/
+addRoute("/mapTracking/updatePointTrackMap", "POST", [middleware.updatePointTrackMap]);
+addRoute("/mapTracking/DeletePointTrackMap", "POST", [middleware.DeletePointTrackMap]);
+addRoute("/mapTracking/PointTrackMaplist", "POST", [middleware.PointTrackMaplist]);
+
+
+/*PointTrackMapSpots*/
+addRoute("/mapTracking/PointTrackMapSpot", "POST", [middleware.PointTrackMapSpot]);
+addRoute("/mapTracking/updatePointTrackMapSpot", "POST", [middleware.updatePointTrackMapSpot]);
+addRoute("/mapTracking/DeletePointTrackMapSpot", "POST", [middleware.DeletePointTrackMapSpot]);
+addRoute("/mapTracking/PointTrackMapSpotlist", "POST", [middleware.PointTrackMapSpotlist]);
+addRoute("/mapTracking/FetchMapSpot", "POST", [middleware.FetchMapSpot]);
+
+
+/*PointTracRecords*/
+addRoute("/mapTracking/PointTrackMapRecords", "POST", [middleware.PointTrackMapRecords]);
+addRoute("/mapTracking/updatePointTrackMapRecords", "POST", [middleware.updatePointTrackMapRecords]);
+addRoute("/mapTracking/DeletePointTrackMapRecords", "POST", [middleware.DeletePointTrackMapRecords]);
+addRoute("/mapTracking/PointTrackMapRecordslist", "POST", [middleware.PointTrackMapRecordslist]);
+
+
+/*PointTracRecordsSpots*/
+addRoute("/mapTracking/PointTrackRecordsSpot", "POST", [middleware.PointTrackRecordsSpot]);
+addRoute("/mapTracking/updatePointTrackRecordsSpot", "POST", [middleware.updatePointTrackRecordsSpot]);
+addRoute("/mapTracking/DeletePointTrackRecordsSpot", "POST", [middleware.DeletePointTrackRecordsSpot]);
+addRoute("/mapTracking/PointTrackRecordsSpotlist", "POST", [middleware.PointTrackRecordsSpotlist]);
+addRoute("/mapTracking/FetchMapSpotrecord", "POST", [middleware.FetchMapSpotrecord]);
+
+/*Add FAQ*/
+
+addRoute("/authentication/addquestions", "POST", [middleware.addquestions])
+addRoute("/authentication/updatequestions", "POST", [middleware.updatequestions])
+addRoute("/authentication/deletequestions", "POST", [middleware.deletequestions])
+addRoute("/authentication/Question_id", "POST", [middleware.Question_id])
+addRoute("/authentication/Questionlist", "POST", [middleware.Questionlist])
+
+
+/*PointTracking For Web*/
+addRoute("/PointTracking/Addpoints", "POST", [middleware.Addpoints])
+addRoute("/PointTracking/pointsupdate", "POST", [middleware.pointsupdate])
+addRoute("/PointTracking/pointslist", "POST", [middleware.pointslist])
+addRoute("/PointTracking/deletepoints", "POST", [middleware.deletepoints])
+addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
+
+
+/* Mapuser */
+
+addRoute("/mapTracking/addmapuser", "POST", [middleware.addmapuser])
+addRoute("/mapTracking/addmapuserlist", "POST", [middleware.addmapuserlist])
+addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete])
+addRoute("/mapTracking/fetchmapuserpoints", "POST", [middleware.fetchmapuserpoints])
+
+
+/* QR Code */
+addRoute("/authentication/addqr", "POST", [middleware.addqr])
+addRoute("/authentication/qrlist", "POST", [middleware.qrlist])
+addRoute("/authentication/deleteqr", "POST", [middleware.deleteqr])
+addRoute("/authentication/deleteallqr", "POST", [middleware.deleteallqr])
 
 
 
+/* Attendance mark */
+
+addRoute("/Attendance/MarkAttendance", "POST", [middleware.MarkAttendance])
+addRoute("/Attendance/dailystatus", "POST", [middleware.dailystatus])
+addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus])
+addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus])
 
 
+/* Forgotpassword */
+addRoute("/authentication/Forgotpasswordweb", "POST", [middleware.Forgotpasswordweb])
+addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
 
 
-// addRoute("/authentication/test", "POST", [middleware.test]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*assigningemployee*/
+// addRoute("/authentication/chekassign", "POST", [middleware.chekassign])
 
 app.use(router);
 
