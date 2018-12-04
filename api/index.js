@@ -33,19 +33,6 @@ app.options('*', cors());
 /*Client WEB Portal*/
 addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 
@@ -192,7 +179,6 @@ addRoute("/authentication/deleteallqr", "POST", [middleware.deleteallqr])
 
 
 /* Attendance mark */
-
 addRoute("/Attendance/MarkAttendance", "POST", [middleware.MarkAttendance])
 addRoute("/Attendance/dailystatus", "POST", [middleware.dailystatus])
 addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus])
