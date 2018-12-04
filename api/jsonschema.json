@@ -790,31 +790,31 @@
                         "type": "string"
                     },
                     "epf_amount": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "mmspl_no": {
                         "type": "string"
                     },
                     "mmspl_amount": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "uan_no": {
                         "type": "string"
                     },
                     "uan_amount": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "pf_elegible": {
                         "type": "string"
                     },
                     "pf_amount": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "esi_elegible": {
                         "type": "string"
                     },
                     "esi_amount": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "ESI_Elegible": {
                         "type": "string"
@@ -826,7 +826,7 @@
                         "type": "string"
                     },
                     "professional_amount": {
-                        "type": "number"
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
