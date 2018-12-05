@@ -190,8 +190,15 @@ addRoute("/authentication/Forgotpasswordweb", "POST", [middleware.Forgotpassword
 addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
 
 
+
+
 /*assigningemployee*/
-// addRoute("/authentication/chekassign", "POST", [middleware.chekassign])
+addRoute("/authentication/addassign", "POST", [middleware.addassign])
+addRoute("/authentication/listassign", "POST", [middleware.listassign])
+addRoute("/authentication/deleteassign", "POST", [middleware.deleteassign])
+
+
+
 
 app.use(router);
 

@@ -2361,6 +2361,32 @@
         }
     },
 
+    "/authentication/deleteassign": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "assign_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "assign_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "assign_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "assign_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
      "/issue/createAttachment": {
         "POST": {
             "body": {
@@ -3480,6 +3506,68 @@
                     },
                     "properties": {
                         "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/addassign": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "client_id": {
+                        "type": "number"
+                    },
+                    "employee_id": {
+                        "type": "number"
+                    },
+                     "date": {
+                        "type": "string"
+                    },
+                    "Employee_name": {
+                        "type": "string"
+                    },
+                     "Client_Name": {
+                        "type": "string"
+                    }
+
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "client_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "client_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+    "/authentication/listassign": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "client_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "client_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "client_id": "userId must be string"
                     }
                 }
             }
