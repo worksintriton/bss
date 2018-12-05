@@ -637,7 +637,7 @@ user.deleteclients = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('Delete FROM public."client_Management" WHERE "cliid"=($1) ' , [userInput.cliid])
+    executor.any('Delete FROM public."client_Management" WHERE "id"=($1) ' , [userInput.cliid])
         .then(data => {
 
                  resultCallback(null,data );
