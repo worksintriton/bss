@@ -45,14 +45,7 @@ addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
 addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
 addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee_id]);
-
-
-
 addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
-
-
-
-
 
 
 /*Add User*/
@@ -70,8 +63,6 @@ addRoute("/authentication/addclients1", "POST", [middleware.addclients1]);
 addRoute("/authentication/clientid", "POST", [middleware.clientid]);
 addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
-
-
 
 
 /*Add Configure*/
@@ -114,7 +105,7 @@ addRoute("/issue/listissues", "POST", [middleware.listissues]);
 /*PointTracking for Mobile*/
 
     /*fetch*/
- addRoute("/PointTracking/employee_fetchpoints", "POST", [middleware.employee_fetchpoints])
+addRoute("/PointTracking/employee_fetchpoints", "POST", [middleware.employee_fetchpoints])
 
 
 /*PointTrackMap*/
@@ -146,7 +137,6 @@ addRoute("/mapTracking/PointTrackRecordsSpotlist", "POST", [middleware.PointTrac
 addRoute("/mapTracking/FetchMapSpotrecord", "POST", [middleware.FetchMapSpotrecord]);
 
 /*Add FAQ*/
-
 addRoute("/authentication/addquestions", "POST", [middleware.addquestions])
 addRoute("/authentication/updatequestions", "POST", [middleware.updatequestions])
 addRoute("/authentication/deletequestions", "POST", [middleware.deletequestions])

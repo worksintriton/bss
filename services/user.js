@@ -666,8 +666,6 @@ user.deleteusers = function (userInput, resultCallback) {
 
 
 };
-
-
 user.addqrweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -689,8 +687,6 @@ user.addqrweb = function (userInput, resultCallback) {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
 };
 
 user.qrlistweb = function (userInput, resultCallback) {
