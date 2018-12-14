@@ -844,6 +844,59 @@ user.deleteassigns = function (userInput, resultCallback) {
 
 
 
+///sms///
+
+user.addsmss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public."sms"("sms","updatetime")VALUES ($1,$2) RETURNING *',
+                 [userInput.sms,
+                 userInput.updatedtime
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.listsmss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.sms ' , [])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.deletesmss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."sms" WHERE "id"=($1) ' , [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+
 
 
 module.exports = user;

@@ -2437,6 +2437,77 @@ function listassign(req, res, next) {
 }
 
 
+///sms/////
+
+
+function addsms(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addsmss(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+function listsms(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listsmss(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function deletesms(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletesmss(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 
 
@@ -2625,6 +2696,13 @@ exports.assigningemployee = assigningemployee;
 exports.addassign = addassign;
 exports.listassign = listassign;
 exports.deleteassign = deleteassign;
+
+
+/*sms*/
+exports.addsms = addsms;
+exports.listsms = listsms;
+exports.deletesms = deletesms;
+
 
 
 

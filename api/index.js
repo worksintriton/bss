@@ -188,6 +188,11 @@ addRoute("/authentication/listassign", "POST", [middleware.listassign])
 addRoute("/authentication/deleteassign", "POST", [middleware.deleteassign])
 
 
+/*assigningemployee*/
+addRoute("/authentication/addsms", "POST", [middleware.addsms])
+addRoute("/authentication/listsms", "POST", [middleware.listsms])
+addRoute("/authentication/deletesms", "POST", [middleware.deletesms])
+
 
 
 app.use(router);

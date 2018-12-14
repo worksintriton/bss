@@ -3572,6 +3572,95 @@
                 }
             }
         }
+    },
+
+
+     "/authentication/addsms": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "sms": {
+                        "type": "string"
+                    },
+                    "updatedtime": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "sms"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "sms": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "sms": "id must be number"
+                    }
+                }
+            }
+        }
+    },
+
+     "/authentication/listsms": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "Password": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "id": "id must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/authentication/deletesms": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "Password": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "id": "id must be number"
+                    }
+                }
+            }
+        }
     }
 
     
