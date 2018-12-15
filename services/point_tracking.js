@@ -491,7 +491,7 @@ point_tracking.FetchMapSpotrecordmobile = function (userInput, resultCallback) {
 
 point_tracking.addmapuseweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public."Mapusers"("Emp_id","Employee_Name","Map_id","gender","contact_no","Email_id","Address","title")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)RETURNING *',
+  executor.one('INSERT INTO public."Mapusers"("Emp_id","Employee_name","Map_id","gender","contact_no","Email_id","Client_place","Address","title")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)RETURNING *',
                  [ 
                  userInput.Emp_id,
                  userInput.Employee_name,
@@ -564,14 +564,14 @@ point_tracking.fetchmapuserpointsweb2 = function (userInput, resultCallback) {
                     resultCallback(null,error );
                 })
 
-    // var executor = db.getdaata.getdb();
-    // executor.any('Select * from public."PointTrackMap" WHERE ukey in (Select CAST ("Map_id"  AS INTEGER) from public."Mapusers" WHERE "Emp_id"=($1)) ',[userInput.Emp_id])
-    //              .then(data => {
-    //                 resultCallback(null,data);
-    //              })
-    //              .catch(error => {
-    //                 resultCallback(null,error );
-    //             })
+  //   var executor = db.getdaata.getdb();
+  // executor.any('Select * from public."PointTrackMap" WHERE ukey in (Select CAST ("Map_id"  AS INTEGER) from public."Mapusers" WHERE "Emp_id"=($1)) ',[userInput.Emp_id])
+  //                .then(data => {
+  //                   resultCallback(null,data);
+  //                })
+  //                .catch(error => {
+  //                   resultCallback(null,error );
+  //               })
 };
 
 
