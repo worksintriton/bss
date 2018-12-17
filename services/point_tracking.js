@@ -557,23 +557,22 @@ point_tracking.fetchmapuserpointsweb1 = function (userInput, resultCallback) {
 
 
 point_tracking.fetchmapuserpointsweb2 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor.any('Select * from public."Mapusers" WHERE "Emp_id"=($1) ',[userInput.Emp_id])
-                 .then(data => {
-                    resultCallback(null,data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,error );
-                })
-
-  //   var executor = db.getdaata.getdb();
-  // executor.any('Select * from public."PointTrackMap" WHERE ukey in (Select CAST ("Map_id"  AS INTEGER) from public."Mapusers" WHERE "Emp_id"=($1)) ',[userInput.Emp_id])
+  // var executor = db.getdaata.getdb();
+  // executor.any('Select * from public."Mapusers" WHERE "Emp_id"=($1) ',[userInput.Emp_id])
   //                .then(data => {
   //                   resultCallback(null,data);
   //                })
   //                .catch(error => {
   //                   resultCallback(null,error );
   //               })
+    var executor = db.getdaata.getdb();
+  executor.any('Select * from public."PointTrackMap" WHERE ukey in (Select CAST ("Map_id"  AS INTEGER) from public."Mapusers" WHERE "Emp_id"=($1)) ',[userInput.Emp_id])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
 };
 
 
