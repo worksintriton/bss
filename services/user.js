@@ -500,8 +500,8 @@ user.employeeids = function (userInput, resultCallback) {
 user.addquestion = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public."faq"( "questions", "answers")VALUES ($1,$2) RETURNING *',
-                 [userInput.questions,userInput.answers])
+                 executor.one('INSERT INTO public."faq"( "questions", "answers","date")VALUES ($1,$2,$3) RETURNING *',
+                 [userInput.questions,userInput.answers,userInput.date])
                       .then(data => {
                  console.log(data);
                  resultCallback(null,data );

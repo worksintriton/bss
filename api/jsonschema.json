@@ -316,6 +316,9 @@
                     },
                     "answers": {
                         "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
                     }
 
                 },
