@@ -249,6 +249,9 @@
                     },
                     "temp": {
                         "type": "string"
+                    },
+                    "bsscontrol": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": false,
