@@ -41,8 +41,8 @@ user.confignumbers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\
 
-                  executor.one('UPDATE public.configurenumber SET  "Red_alert"=$1, "Fire_alert"=$2, "Ambulance_alert"=$3, "Police_alert"=$4  WHERE  "temp" = $5 RETURNING *',
-          [userInput.Red_alert,userInput.Fire_alert,userInput.Ambulance_alert,userInput.Police_alert,userInput.temp])
+                  executor.one('UPDATE public.configurenumber SET  "Red_alert"=$1, "Fire_alert"=$2, "Ambulance_alert"=$3, "Police_alert"=$4 ,"bsscontrol"=$6 WHERE  "temp" = $5 RETURNING *',
+          [userInput.Red_alert,userInput.Fire_alert,userInput.Ambulance_alert,userInput.Police_alert,userInput.temp,userInput.bsscontrol])
                  .then(data => {
                     console.log("1");
               resultCallback(null,data);
@@ -58,7 +58,7 @@ user.confignumbers = function (userInput, resultCallback) {
 
 user.updateqrs = function (userInput,resultCallback) {
   var executor = db.getdaata.getdb();
-executor.one('UPDATE public.employeedetails  SET "qrcode"=($2)  WHERE "id" = ($1)  RETURNING *',
+executor.one('UPDATE public.employeedetails  SET "qrcode"=($2)  WHERE "Empid" = ($1)  RETURNING *',
         [userInput.empid,userInput.qrcode])
        .then(data => {
         console.log(data);
@@ -115,10 +115,10 @@ user.AddemployeeC = function (userInput, resultCallback) {
                  if(data.length == 1 )//eruthuchuna
                  {
                   var string = {message:"This Mobile No already exits!",status:"falied"} ;
-                 resultCallback(null,string);
+                  resultCallback(null,string);
                }else{
                  console.log("2");
-                 executor.one('INSERT INTO public.employeedetails( "Email_ID", "Password", "employee_type", "Name", "father_name", "Date_of_birth","gender","material_status","Edq","nationality","Address","Mobile_No","languages","work_exp","aadhar_card","date_joining","voter_id","driving_licence","attach","epn_no","epn_amount","esic_no","esic_amount","epf_no","epf_amount","mmspl_no","mmspl_amount","uan_no","uan_amount","pf_elegible","pf_amount","esi_elegible","esi_amount","professional_tax","professional_type","professional_amount" )VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,27,$28,$29,$30,$31,$32,$33,$34,$35,$36)RETURNING *',
+                 executor.one('INSERT INTO public.employeedetails("Email_ID", "Password", "employee_type", "Name", "father_name", "Date_of_birth","gender","material_status","Edq","nationality","Address","Mobile_No","languages","work_exp","aadhar_card","date_joining","voter_id","driving_licence","attach","workstatus","resigned","qrcode")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)RETURNING *',
                  [userInput.Email_ID,
                  userInput.Password,
                  userInput.employee_type,
@@ -138,29 +138,33 @@ user.AddemployeeC = function (userInput, resultCallback) {
                  userInput.voter_id,
                  userInput.driving_licence,
                  userInput.attach,
-                 userInput.epn_no,
-                 userInput.epn_amount,
-                 userInput.esic_no,
-                 userInput.esic_amount,
-                 userInput.epf_no,
-                 userInput.epf_amount,
-                 userInput.mmspl_no,
-                 userInput.mmspl_amount,
-                 userInput.uan_no,
-                 userInput.uan_amount,
-                 userInput.pf_elegible,
-                 userInput.pf_amount,
-                 userInput.esi_elegible,
-                 userInput.esi_amount,
-                 userInput.professional_tax,
-                 userInput.professional_type,
-                 userInput.professional_amount
+                 userInput.workstatus,
+                 userInput.resigned,
+                 userInput.qrcode
                  ])
                  .then(data => {
-                    console.log("1");
               resultCallback(null,data);
                  })
               }          
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+user.updateempid = function (userInput,mydata, resultCallback) {
+  console.log(userInput);
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                executor.one('UPDATE public."employeedetails" SET  "Empid"=$1   WHERE  "id" = $2 RETURNING *',
+                 [mydata+userInput.id,userInput.id])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
         })
         .catch(error => {
             resultCallback(error,null );
@@ -435,7 +439,7 @@ user.employeelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.employeedetails')
+   executor.any('SELECT * FROM public.employeedetails ORDER BY "Name" ASC')
         .then(data => {
 
                  resultCallback(null,data );
@@ -448,6 +452,11 @@ user.employeelists = function (userInput, resultCallback) {
 
 
 };
+
+
+
+
+
 
 //userList//
 user.userlists = function (userInput, resultCallback) {
@@ -519,6 +528,23 @@ user.updatequestion = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+
+user.updateresign = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public."employeedetails" SET  "resigned"=$1   WHERE  "Empid" = $2 RETURNING *',
+                 [userInput.resigned,userInput.Empid])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
 
 user.deletequestion = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();

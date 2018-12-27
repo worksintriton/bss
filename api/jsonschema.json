@@ -66,7 +66,7 @@
                  "type": "object",
                 "properties": {
                     "empid": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "qrcode": {
                         "type": "string"
@@ -85,6 +85,66 @@
                     },
                     "properties": {
                         "empid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/authentication/resigned": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Empid": {
+                        "type": "string"
+                    },
+                    "resigned": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Empid"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Empid": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "Empid": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/resignedlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Empid": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Empid"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Empid": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "Empid": "userId must be string"
                     }
                 }
             }
@@ -774,58 +834,13 @@
                     "attach": {
                         "type": "string"
                     },
-                    "epn_no": {
+                    "resigned": {
                         "type": "string"
                     },
-                    "epn_amount": {
+                    "workstatus": {
                         "type": "string"
                     },
-                    "esic_no": {
-                        "type": "string"
-                    },
-                    "esic_amount": {
-                        "type": "string"
-                    },
-                    "epf_no": {
-                        "type": "string"
-                    },
-                    "epf_amount": {
-                        "type": "string"
-                    },
-                    "mmspl_no": {
-                        "type": "string"
-                    },
-                    "mmspl_amount": {
-                        "type": "string"
-                    },
-                    "uan_no": {
-                        "type": "string"
-                    },
-                    "uan_amount": {
-                        "type": "string"
-                    },
-                    "pf_elegible": {
-                        "type": "string"
-                    },
-                    "pf_amount": {
-                        "type": "string"
-                    },
-                    "esi_elegible": {
-                        "type": "string"
-                    },
-                    "esi_amount": {
-                        "type": "string"
-                    },
-                    "ESI_Elegible": {
-                        "type": "string"
-                    },
-                    "professional_tax": {
-                        "type": "string"
-                    },
-                    "professional_type": {
-                        "type": "string"
-                    },
-                    "professional_amount": {
+                    "qrcode": {
                         "type": "string"
                     }
                 },

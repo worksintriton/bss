@@ -195,6 +195,13 @@ addRoute("/authentication/deletesms", "POST", [middleware.deletesms])
 
 
 
+/*resigned*/
+addRoute("/authentication/resigned", "POST", [middleware.resigned])
+// addRoute("/authentication/resignedlist", "POST", [middleware.resignedlist])
+
+
+
+
 app.use(router);
 
 exports.init = middleware.init;

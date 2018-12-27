@@ -119,8 +119,25 @@ function addemployee(req, res, next) {
                 });
             },
             function (mydata, waterfallCallback){
+            if(mydata.status === "falied"){
+               return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }else{
+              services.user.updateempid(mydata,req.body.idtype, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            }
+            },
+             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data:  mydata  
+                    data: mydata 
                 }, utils.errors["200"]));
             }
         ]);
@@ -460,6 +477,32 @@ function employeelist(req, res, next) {
         ]);
 
 }
+
+
+function resigned(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updateresign(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 function userlist(req, res, next) {
 
@@ -2702,6 +2745,9 @@ exports.deleteassign = deleteassign;
 exports.addsms = addsms;
 exports.listsms = listsms;
 exports.deletesms = deletesms;
+
+/*resied*/
+exports.resigned = resigned;
 
 
 
