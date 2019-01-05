@@ -2551,6 +2551,73 @@ function deletesms(req, res, next) {
 }
 
 
+function newcomplaints(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.issues.createIssue1(req.body, function (err,is_inserted, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,is_inserted, result);
+                });
+            },
+
+            function (is_inserted, result, waterfallCallback){
+                if(is_inserted == true){
+
+            services.issues.createIssuehistory(result,function (err,result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }else{
+                     return res.json(_.merge({
+                    issue: result,
+                    message: "Created Succcessfully" 
+                }, utils.errors["200"]));
+                }
+               
+                });
+                }
+            }
+        ]);
+
+}
+
+function complaintlist(req, res, next) {
+
+async.waterfall([
+            function (waterfallCallback){
+                services.issues.listissuess1(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, result);
+                console.log(result);
+                });
+            },
+            function ( listIssues,  waterfallCallback){
+              
+                return res.json(_.merge({
+                    issue: listIssues,
+                    message: "Done" 
+                }, utils.errors["200"]));
+                
+            }
+
+        ]);
+}
+
+
+
 
 
 
@@ -2748,6 +2815,11 @@ exports.deletesms = deletesms;
 
 /*resied*/
 exports.resigned = resigned;
+
+
+/*Client module*/
+exports.newcomplaints = newcomplaints;
+exports.complaintlist = complaintlist;
 
 
 

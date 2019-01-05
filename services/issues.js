@@ -31,6 +31,28 @@ issues.createIssue = function (userInput, resultCallback) {
 };
 
 
+issues.createIssue1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.one('INSERT INTO public.issue_master("complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on" )VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
+                 [ 
+                 userInput.complaint_from,
+                 userInput.LoginKey,
+                 userInput.complaint_type,
+                 userInput.title,
+                 userInput.description,
+                 userInput.status,
+                 userInput.posted_on
+                 ])
+                 .then(data => {
+                    resultCallback(null,true, data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,false, error );
+                })
+
+
+};
+
 issues.createIssuehistory = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   executor.one('INSERT INTO public.issues_history("complaint_id", "complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on","updated_at","moved_by","moved_to","taken_by")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)RETURNING *',
@@ -244,6 +266,20 @@ var executor = db.getdaata.getdb();
             resultCallback(error,null);
         }) 
 };
+
+
+issues.listissuess1 = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+    executor.any('SELECT * FROM public."issue_master" where "poster_id" = ($1)',[userInput.LoginKey])
+        .then(data => {
+            resultCallback(null,data);
+        })
+        .catch(error => {
+            resultCallback(error,null);
+        }) 
+};
+
+
 
 
 

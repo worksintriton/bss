@@ -30,8 +30,7 @@ function addRoute1(path, method, middlewares) {
 app.use("*", [cors(),middleware.passport.initialize(), middleware.passport.session()]);
 app.options('*', cors());
 
-/*Client WEB Portal*/
-addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
+
 
 /*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
@@ -153,7 +152,6 @@ addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints])
 
 
 /* Mapuser */
-
 addRoute("/mapTracking/addmapuser", "POST", [middleware.addmapuser])
 addRoute("/mapTracking/addmapuserlist", "POST", [middleware.addmapuserlist])
 addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete])
@@ -165,7 +163,6 @@ addRoute("/authentication/addqr", "POST", [middleware.addqr])
 addRoute("/authentication/qrlist", "POST", [middleware.qrlist])
 addRoute("/authentication/deleteqr", "POST", [middleware.deleteqr])
 addRoute("/authentication/deleteallqr", "POST", [middleware.deleteallqr])
-
 
 
 /* Attendance mark */
@@ -198,6 +195,22 @@ addRoute("/authentication/deletesms", "POST", [middleware.deletesms])
 /*resigned*/
 addRoute("/authentication/resigned", "POST", [middleware.resigned])
 // addRoute("/authentication/resignedlist", "POST", [middleware.resignedlist])
+
+
+
+
+
+/*Client WEB Portal*/
+addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
+
+
+/*Create complaints */
+addRoute("/complaints/newcomplaints", "POST", [middleware.newcomplaints]);
+addRoute("/complaints/complaintlist", "POST", [middleware.complaintlist]);
+
+
+
+
 
 
 

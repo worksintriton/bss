@@ -3653,8 +3653,6 @@
             }
         }
     },
-
-
      "/authentication/deletesms": {
         "POST": {
             "body": {
@@ -3682,7 +3680,91 @@
                 }
             }
         }
+    },    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "/complaints/newcomplaints": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "LoginKey": {
+                        "type": "string"
+                    },
+                    "complaint_from": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "posted_on": {
+                        "type": "string"
+                    },
+                    "complaint_type":{
+
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "LoginKey"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "LoginKey": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "LoginKey": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+         "/complaints/complaintlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "LoginKey": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "LoginKey"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "LoginKey": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "LoginKey": "userId must be string"
+                    }
+                }
+            }
+        }
     }
 
-    
+
 }
