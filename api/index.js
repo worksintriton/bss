@@ -158,21 +158,21 @@ addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete])
 addRoute("/mapTracking/fetchmapuserpoints", "POST", [middleware.fetchmapuserpoints])
 
 
-/* QR Code */
+/*QR Code */
 addRoute("/authentication/addqr", "POST", [middleware.addqr])
 addRoute("/authentication/qrlist", "POST", [middleware.qrlist])
 addRoute("/authentication/deleteqr", "POST", [middleware.deleteqr])
 addRoute("/authentication/deleteallqr", "POST", [middleware.deleteallqr])
 
 
-/* Attendance mark */
+/*Attendance mark */
 addRoute("/Attendance/MarkAttendance", "POST", [middleware.MarkAttendance])
 addRoute("/Attendance/dailystatus", "POST", [middleware.dailystatus])
 addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus])
 addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus])
 
 
-/* Forgotpassword */
+/*Forgotpassword */
 addRoute("/authentication/Forgotpasswordweb", "POST", [middleware.Forgotpasswordweb])
 addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
 
@@ -198,15 +198,16 @@ addRoute("/authentication/resigned", "POST", [middleware.resigned])
 
 
 
-
-
 /*Client WEB Portal*/
 addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
+
+
 
 
 /*Create complaints */
 addRoute("/complaints/newcomplaints", "POST", [middleware.newcomplaints]);
 addRoute("/complaints/complaintlist", "POST", [middleware.complaintlist]);
+addRoute("/complaints/updateStatus", "POST", [middleware.updateStatus]);
 
 
 

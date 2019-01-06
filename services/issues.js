@@ -141,6 +141,24 @@ issues.reports = function (userInput, resultCallback) {
 
 };
 
+
+issues.updateissuecomplaint = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  
+  executor.one('UPDATE public.issue_master SET "status"= $2 WHERE "complaint_id" = $1 RETURNING *',
+                 [ 
+                 userInput.complaint_id,
+                 userInput.status
+                 ])
+                 .then(data => {
+                    resultCallback(null,true, data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,false, error );
+                })
+};
+
+
 issues.reportupdate = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 

@@ -3764,6 +3764,34 @@
                 }
             }
         }
+    } ,
+    "/complaints/updateStatus": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "complaint_id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "complaint_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "complaint_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "complaint_id": "userId must be string"
+                    }
+                }
+            }
+        }
     }
 
 

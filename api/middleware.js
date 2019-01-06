@@ -2590,7 +2590,6 @@ function newcomplaints(req, res, next) {
 }
 
 function complaintlist(req, res, next) {
-
 async.waterfall([
             function (waterfallCallback){
                 services.issues.listissuess1(req.body, function (err, result) {
@@ -2615,6 +2614,35 @@ async.waterfall([
 
         ]);
 }
+
+
+function updateStatus(req, res, next) {
+
+async.waterfall([
+            function (waterfallCallback){
+                services.issues.updateissuecomplaint(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, result);
+                console.log(result);
+                });
+            },
+            function ( listIssues,  waterfallCallback){
+              
+                return res.json(_.merge({
+                    issue: listIssues,
+                    message: "Done" 
+                }, utils.errors["200"]));
+                
+            }
+
+        ]);
+}
+
 
 
 
@@ -2820,6 +2848,7 @@ exports.resigned = resigned;
 /*Client module*/
 exports.newcomplaints = newcomplaints;
 exports.complaintlist = complaintlist;
+exports.updateStatus = updateStatus;
 
 
 
