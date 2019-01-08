@@ -26,8 +26,6 @@ issues.createIssue = function (userInput, resultCallback) {
                  .catch(error => {
                     resultCallback(null,false, error );
                 })
-
-
 };
 
 

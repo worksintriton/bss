@@ -212,6 +212,12 @@ addRoute("/complaints/updateStatus", "POST", [middleware.updateStatus]);
 
 
 
+// addRoute("/complaints/reopen", "POST", [middleware.reopen]);
+
+
+
+
+
 
 
 

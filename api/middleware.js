@@ -95,7 +95,7 @@ function Clientlogin(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data: mydata 
+                    data: mydata[0]
                 }, utils.errors["200"]));
             }
         ]);
