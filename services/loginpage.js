@@ -35,10 +35,9 @@ login_page.clientlogincheck = function (userInput, resultCallback) {
         .then(data => {
           console.log(data.length);
           if(data.length == 0 ){
-            var string = ["Invalid Account"];
-            resultCallback(null,string);
+            resultCallback(null,{},false);
           }else{
-            resultCallback(null,data );
+            resultCallback(null,data,true);
           }
         })
         .catch(error => {

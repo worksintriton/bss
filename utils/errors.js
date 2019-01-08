@@ -38,16 +38,16 @@ module.exports = {
     "401": {
         message: "Account already Exists",
         status: "Failure",
-        code: 500
+        code: 401
     },
     "402": {
         message: "No Data Found",
         status: "Failure",
-        code: 500
+        code: 402
     },
     "403": {
         message: "Invalid Account",
         status: "Failure",
-        code: 500
+        code: 403
     }
 };

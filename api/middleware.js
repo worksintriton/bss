@@ -83,20 +83,31 @@ function Clientlogin(req, res, next) {
 
        async.waterfall([
             function (waterfallCallback){
-                services.loginpage.clientlogincheck(req.body, function (err, result) {
+                services.loginpage.clientlogincheck(req.body, function (err, result, status) {
                 if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
+                    console.log(err)
                     return res.json(utils.errors["500"]);
                 }
-                waterfallCallback(null,result);
+                waterfallCallback(null,result,status);
                 });
             },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata[0]
+            function (mydata,status, waterfallCallback){
+                console.log(mydata);
+                 console.log(status);
+
+                if(status == true){
+                         return res.json(_.merge({
+                    data: mydata 
                 }, utils.errors["200"]));
+
+                }else{
+
+                 return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["401a"]));
+
+                }
+           
             }
         ]);
 }
