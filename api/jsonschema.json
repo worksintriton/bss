@@ -778,229 +778,10 @@
         }
     },
  
-     "/authentication/addemployee": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "Email_ID": {
-                        "type": "string"
-                    },
-                    "Password": {
-                        "type": "string"
-                    },
-                    "employee_type": {
-                        "type": "string"
-                    },
-                    "Name": {
-                        "type": "string"
-                    },
-                    "father_name": {
-                        "type": "string"
-                    },
-                    "Date_of_birth": {
-                        "type": "string"
-                    },
-                    "gender": {
-                        "type": "string"
-                    },
-                    "material_status": {
-                        "type": "string"
-                    },
-                    "Edq": {
-                        "type": "string"
-                    },
-                    "nationality": {
-                        "type": "string"
-                    },
-                    "Address": {
-                        "type": "string"
-                    },
-                    "Mobile_No": {
-                        "type": "string"
-                    },
-                    "languages": {
-                        "type": "string"
-                    },
-                    "work_exp": {
-                        "type": "string"
-                    },
-                    "aadhar_card": {
-                        "type": "string"
-                    },
-                    "date_joining": {
-                        "type": "string"
-                    },
-                    "voter_id": {
-                        "type": "string"
-                    },
-                    "driving_licence": {
-                        "type": "string"
-                    },
-                    "attach": {
-                        "type": "string"
-                    },
-                    "resigned": {
-                        "type": "string"
-                    },
-                    "workstatus": {
-                        "type": "string"
-                    },
-                    "qrcode": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": true,
-                "required": [
-                   
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "Email_id": "should have required property userId"
-                    },
-                    "properties": {
-                        "Email_id": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
+     
 
 
-     "/authentication/updateemployee": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "employee_type": {
-                        "type": "string"
-                    },
-                    "father_name": {
-                        "type": "string"
-                    },
-                    "gender": {
-                        "type": "string"
-                    },
-                    "material_status": {
-                        "type": "string"
-                    },
-                    "Edq": {
-                        "type": "string"
-                    },
-                    "nationality": {
-                        "type": "string"
-                    },
-                    "languages": {
-                        "type": "string"
-                    },
-                    "work_exp": {
-                        "type": "string"
-                    },
-                    "date_joining": {
-                        "type": "string"
-                    },
-                    "driving_licence": {
-                        "type": "string"
-                    },
-                    "epn_no": {
-                        "type": "string"
-                    },
-                    "epn_amount": {
-                        "type": "string"
-                    },
-                    "esic_no": {
-                        "type": "string"
-                    },
-                    "esic_amount": {
-                        "type": "string"
-                    },
-                    "epf_no": {
-                        "type": "string"
-                    },
-                    "epf_amount": {
-                        "type": "string"
-                    },
-                    "mmspl_no": {
-                        "type": "string"
-                    },
-                    "mmspl_amount": {
-                        "type": "string"
-                    },
-                    "uan_no": {
-                        "type": "string"
-                    },
-                    "uan_amount": {
-                        "type": "string"
-                    },
-                    "pf_elegible": {
-                        "type": "string"
-                    },
-                    "pf_amount": {
-                        "type": "string"
-                    },
-                    "esi_elegible": {
-                        "type": "string"
-                    },
-                    "esi_amount": {
-                        "type": "string"
-                    },
-                    "professional_tax": {
-                        "type": "string"
-                    },
-                    "professional_type": {
-                        "type": "string"
-                    },
-                    "professional_amount": {
-                        "type": "string"
-                    },
-                    "Email_ID": {
-                        "type": "string"
-                    },
-                    "Mobile_No": {
-                        "type": "string"
-                    },
-                    "Name": {
-                        "type": "string"
-                    },
-                    "Date_of_birth": {
-                        "type": "string"
-                    },
-                    "Password": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "number"
-                    },
-                    "aadhar_card": {
-                        "type": "string"
-                    },
-                    "voter_id": {
-                        "type": "string"
-                    },
-                    "Address": {
-                        "type": "string"
-                    },
-                    "attach": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "Email_ID": "should have required property userId"
-                    },
-                    "properties": {
-                        "Email_ID": "Email_ID must be string"
-                    }
-                }
-            }
-        }
-    },
-
+     
 
     "/mapTracking/PointTrackMap": {
         "POST": {
@@ -3816,6 +3597,680 @@
                     },
                     "properties": {
                         "complaint_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+    "/authentication/addemployee": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_type": {
+                        "type": "string"
+                    },
+                    "father_name": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "material_status": {
+                        "type": "string"
+                    },
+                    "Edq": {
+                        "type": "string"
+                    },
+                    "nationality": {
+                        "type": "string"
+                    },
+                    "languages": {
+                        "type": "string"
+                    },
+                    "date_joining": {
+                        "type": "string"
+                    },
+                    "driving_licence": {
+                        "type": "string"
+                    },
+                    "Email_ID": {
+                        "type": "string"
+                    },
+                    "Mobile_No": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Date_of_birth": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    },
+                    "aadhar_card": {
+                        "type": "string"
+                    },
+                    "voter_id": {
+                        "type": "string"
+                    },
+                    
+                    "Address": {
+                        "type": "string"
+                    },
+                    "attach": {
+                        "type": "string"
+                    },
+                    "qrcode": {
+                        "type": "string"
+                    },
+                    "workstatus": {
+                        "type": "string"
+                    },
+                    "resigned": {
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "type": "string"
+                    },
+                    "contact": {
+                        "type": "string"
+                    },
+                    "ifsc": {
+                        "type": "string"
+                    },
+                    "a_c": {
+                        "type": "string"
+                    },
+                    "bankname": {
+                        "type": "string"
+                    },
+                    "account": {
+                        "type": "string"
+                    },
+                    "prom_in": {
+                        "type": "string"
+                    },
+                    "pan": {
+                        "type": "string"
+                    },
+                    "weight": {
+                        "type": "string"
+                    },
+                    "height": {
+                        "type": "string"
+                    },
+                    "mother_tongue": {
+                        "type": "string"
+                    },
+                    "permentaddress": {
+                        "type": "string"
+                    },
+                    "idtype": {
+                        "type": "string"
+                    },
+                    "fname1": {
+                        "type": "string"
+                    },
+                    "fsex1": {
+                        "type": "string"
+                    },
+                    "frelationship1": {
+                        "type": "string"
+                    },
+                    "fdateofbirth1": {
+                        "type": "string"
+                    },
+                    "fage1": {
+                        "type": "string"
+                    },
+                    "foccupation1": {
+                        "type": "string"
+                    },
+                    "faadharcard1": {
+                        "type": "string"
+                    },
+                    "fname2": {
+                        "type": "string"
+                    },
+                    "fsex2": {
+                        "type": "string"
+                    },
+                    "frelationship2": {
+                        "type": "string"
+                    },
+                    "fdateofbirth2": {
+                        "type": "string"
+                    },
+                    "fage2": {
+                        "type": "string"
+                    },
+                    "foccupation2": {
+                        "type": "string"
+                    },
+                    "faadharcard2": {
+                        "type": "string"
+                    },
+                    "fname3": {
+                        "type": "string"
+                    },
+                    "fsex3": {
+                        "type": "string"
+                    },
+                    "frelationship3": {
+                        "type": "string"
+                    },
+                    "fdateofbirth3": {
+                        "type": "string"
+                    },
+                    "fage3": {
+                        "type": "string"
+                    },
+                    "foccupation3": {
+                        "type": "string"
+                    },
+                    "faadharcard3": {
+                        "type": "string"
+                    },
+                    "fname4": {
+                        "type": "string"
+                    },
+                    "fsex4": {
+                        "type": "string"
+                    },
+                    "frelationship4": {
+                        "type": "string"
+                    },
+                    "fdateofbirth4": {
+                        "type": "string"
+                    },
+                    "fage4": {
+                        "type": "string"
+                    },
+                    "foccupation4": {
+                        "type": "string"
+                    },
+                    "faadharcard4": {
+                        "type": "string"
+                    },
+                    "fname5": {
+                        "type": "string"
+                    },
+                    "fsex5": {
+                        "type": "string"
+                    },
+                    "frelationship5": {
+                        "type": "string"
+                    },
+                    "fdateofbirth5": {
+                        "type": "string"
+                    },
+                    "fage5": {
+                        "type": "string"
+                    },
+                    "foccupation5": {
+                        "type": "string"
+                    },
+                    "faadharcard5": {
+                        "type": "string"
+                    },
+                    "nname1": {
+                        "type": "string"
+                    },
+                    "nsex1": {
+                        "type": "string"
+                    },
+                    "nrelationship1": {
+                        "type": "string"
+                    },
+                    "ndateofbirth1": {
+                        "type": "string"
+                    },
+                    "nage1": {
+                        "type": "string"
+                    },
+                    "noccupation1": {
+                        "type": "string"
+                    },
+                    "naadharcard1": {
+                        "type": "string"
+                    },
+                    "nname2": {
+                        "type": "string"
+                    },
+                    "nsex2": {
+                        "type": "string"
+                    },
+                    "nrelationship2": {
+                        "type": "string"
+                    },
+                    "ndateofbirth2": {
+                        "type": "string"
+                    },
+                    "nage2": {
+                        "type": "string"
+                    },
+                    "noccupation2": {
+                        "type": "string"
+                    },
+                    "naadharcard2": {
+                        "type": "string"
+                    },
+                    "nname3": {
+                        "type": "string"
+                    },
+                    "nsex3": {
+                        "type": "string"
+                    },
+                    "nrelationship3": {
+                        "type": "string"
+                    },
+                    "ndateofbirth3": {
+                        "type": "string"
+                    },
+                    "nage3": {
+                        "type": "string"
+                    },
+                    "noccupation3": {
+                        "type": "string"
+                    },
+                    "naadharcard3": {
+                        "type": "string"
+                    },
+                    "nname4": {
+                        "type": "string"
+                    },
+                    "nsex4": {
+                        "type": "string"
+                    },
+                    "nrelationship4": {
+                        "type": "string"
+                    },
+                    "ndateofbirth4": {
+                        "type": "string"
+                    },
+                    "nage4": {
+                        "type": "string"
+                    },
+                    "noccupation4": {
+                        "type": "string"
+                    },
+                    "naadharcard4": {
+                        "type": "string"
+                    },
+                    "nname5": {
+                        "type": "string"
+                    },
+                    "nsex5": {
+                        "type": "string"
+                    },
+                    "nrelationship5": {
+                        "type": "string"
+                    },
+                    "ndateofbirth5": {
+                        "type": "string"
+                    },
+                    "nage5": {
+                        "type": "string"
+                    },
+                    "noccupation5": {
+                        "type": "string"
+                    },
+                    "naadharcard5": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/authentication/updateemployee": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "employee_type": {
+                        "type": "string"
+                    },
+                    "father_name": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "material_status": {
+                        "type": "string"
+                    },
+                    "Edq": {
+                        "type": "string"
+                    },
+                    "nationality": {
+                        "type": "string"
+                    },
+                    "languages": {
+                        "type": "string"
+                    },
+                    "date_joining": {
+                        "type": "string"
+                    },
+                    "driving_licence": {
+                        "type": "string"
+                    },
+                    "Email_ID": {
+                        "type": "string"
+                    },
+                    "Mobile_No": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Date_of_birth": {
+                        "type": "string"
+                    },
+                    "Password": {
+                        "type": "string"
+                    },
+                    "aadhar_card": {
+                        "type": "string"
+                    },
+                    "voter_id": {
+                        "type": "string"
+                    },
+                    
+                    "Address": {
+                        "type": "string"
+                    },
+                    "attach": {
+                        "type": "string"
+                    },
+                    "qrcode": {
+                        "type": "string"
+                    },
+                    "workstatus": {
+                        "type": "string"
+                    },
+                    "resigned": {
+                        "type": "string"
+                    },
+                    "createdtime": {
+                        "type": "string"
+                    },
+                    "contact": {
+                        "type": "string"
+                    },
+                    "ifsc": {
+                        "type": "string"
+                    },
+                    "a_c": {
+                        "type": "string"
+                    },
+                    "bankname": {
+                        "type": "string"
+                    },
+                    "account": {
+                        "type": "string"
+                    },
+                    "prom_in": {
+                        "type": "string"
+                    },
+                    "pan": {
+                        "type": "string"
+                    },
+                    "weight": {
+                        "type": "string"
+                    },
+                    "height": {
+                        "type": "string"
+                    },
+                    "mother_tongue": {
+                        "type": "string"
+                    },
+                    "permentaddress": {
+                        "type": "string"
+                    },
+                    "idtype": {
+                        "type": "string"
+                    },
+                    "fname1": {
+                        "type": "string"
+                    },
+                    "fsex1": {
+                        "type": "string"
+                    },
+                    "frelationship1": {
+                        "type": "string"
+                    },
+                    "fdateofbirth1": {
+                        "type": "string"
+                    },
+                    "fage1": {
+                        "type": "string"
+                    },
+                    "foccupation1": {
+                        "type": "string"
+                    },
+                    "faadharcard1": {
+                        "type": "string"
+                    },
+                    "fname2": {
+                        "type": "string"
+                    },
+                    "fsex2": {
+                        "type": "string"
+                    },
+                    "frelationship2": {
+                        "type": "string"
+                    },
+                    "fdateofbirth2": {
+                        "type": "string"
+                    },
+                    "fage2": {
+                        "type": "string"
+                    },
+                    "foccupation2": {
+                        "type": "string"
+                    },
+                    "faadharcard2": {
+                        "type": "string"
+                    },
+                    "fname3": {
+                        "type": "string"
+                    },
+                    "fsex3": {
+                        "type": "string"
+                    },
+                    "frelationship3": {
+                        "type": "string"
+                    },
+                    "fdateofbirth3": {
+                        "type": "string"
+                    },
+                    "fage3": {
+                        "type": "string"
+                    },
+                    "foccupation3": {
+                        "type": "string"
+                    },
+                    "faadharcard3": {
+                        "type": "string"
+                    },
+                    "fname4": {
+                        "type": "string"
+                    },
+                    "fsex4": {
+                        "type": "string"
+                    },
+                    "frelationship4": {
+                        "type": "string"
+                    },
+                    "fdateofbirth4": {
+                        "type": "string"
+                    },
+                    "fage4": {
+                        "type": "string"
+                    },
+                    "foccupation4": {
+                        "type": "string"
+                    },
+                    "faadharcard4": {
+                        "type": "string"
+                    },
+                    "fname5": {
+                        "type": "string"
+                    },
+                    "fsex5": {
+                        "type": "string"
+                    },
+                    "frelationship5": {
+                        "type": "string"
+                    },
+                    "fdateofbirth5": {
+                        "type": "string"
+                    },
+                    "fage5": {
+                        "type": "string"
+                    },
+                    "foccupation5": {
+                        "type": "string"
+                    },
+                    "faadharcard5": {
+                        "type": "string"
+                    },
+                    "nname1": {
+                        "type": "string"
+                    },
+                    "nsex1": {
+                        "type": "string"
+                    },
+                    "nrelationship1": {
+                        "type": "string"
+                    },
+                    "ndateofbirth1": {
+                        "type": "string"
+                    },
+                    "nage1": {
+                        "type": "string"
+                    },
+                    "noccupation1": {
+                        "type": "string"
+                    },
+                    "naadharcard1": {
+                        "type": "string"
+                    },
+                    "nname2": {
+                        "type": "string"
+                    },
+                    "nsex2": {
+                        "type": "string"
+                    },
+                    "nrelationship2": {
+                        "type": "string"
+                    },
+                    "ndateofbirth2": {
+                        "type": "string"
+                    },
+                    "nage2": {
+                        "type": "string"
+                    },
+                    "noccupation2": {
+                        "type": "string"
+                    },
+                    "naadharcard2": {
+                        "type": "string"
+                    },
+                    "nname3": {
+                        "type": "string"
+                    },
+                    "nsex3": {
+                        "type": "string"
+                    },
+                    "nrelationship3": {
+                        "type": "string"
+                    },
+                    "ndateofbirth3": {
+                        "type": "string"
+                    },
+                    "nage3": {
+                        "type": "string"
+                    },
+                    "noccupation3": {
+                        "type": "string"
+                    },
+                    "naadharcard3": {
+                        "type": "string"
+                    },
+                    "nname4": {
+                        "type": "string"
+                    },
+                    "nsex4": {
+                        "type": "string"
+                    },
+                    "nrelationship4": {
+                        "type": "string"
+                    },
+                    "ndateofbirth4": {
+                        "type": "string"
+                    },
+                    "nage4": {
+                        "type": "string"
+                    },
+                    "noccupation4": {
+                        "type": "string"
+                    },
+                    "naadharcard4": {
+                        "type": "string"
+                    },
+                    "nname5": {
+                        "type": "string"
+                    },
+                    "nsex5": {
+                        "type": "string"
+                    },
+                    "nrelationship5": {
+                        "type": "string"
+                    },
+                    "ndateofbirth5": {
+                        "type": "string"
+                    },
+                    "nage5": {
+                        "type": "string"
+                    },
+                    "noccupation5": {
+                        "type": "string"
+                    },
+                    "naadharcard5": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Email_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Email_id": "userId must be string"
                     }
                 }
             }
