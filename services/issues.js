@@ -212,6 +212,26 @@ var executor = db.getdaata.getdb();
 };
 
 
+issues.clearissues = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+    executor.any('Delete  FROM public."issue_master" where "complaint_id"=$1',[userInput.complaint_id])
+        .then(data => {
+    executor.any('Delete  FROM public."issues_history" where  "complaint_id"=$1 ',[userInput.complaint_id])
+        .then(data => {
+            resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+        }) 
+
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            
+        }) 
+};
+
+
 issues.issuedetail = function (userInput, resultCallback) {
 var executor = db.getdaata.getdb();
     executor.any('SELECT * FROM public."issue_master" where "complaint_id"=$1',[userInput.complaint_id])

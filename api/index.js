@@ -210,9 +210,9 @@ addRoute("/complaints/complaintlist", "POST", [middleware.complaintlist]);
 addRoute("/complaints/updateStatus", "POST", [middleware.updateStatus]);
 
 
+addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 
 
-// addRoute("/complaints/reopen", "POST", [middleware.reopen]);
 
 
 

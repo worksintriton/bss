@@ -2656,6 +2656,34 @@ async.waterfall([
 
 
 
+function clearissue(req, res, next) {
+
+async.waterfall([
+            function (waterfallCallback){
+                services.issues.clearissues(req.body, function (err, result) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null, result);
+                console.log(result);
+                });
+            },
+            function ( listIssues,  waterfallCallback){
+              
+                return res.json(_.merge({
+                    issue: listIssues,
+                    message: "Done" 
+                }, utils.errors["200"]));
+                
+            }
+
+        ]);
+}
+
+
 
 
 
@@ -2860,6 +2888,7 @@ exports.resigned = resigned;
 exports.newcomplaints = newcomplaints;
 exports.complaintlist = complaintlist;
 exports.updateStatus = updateStatus;
+exports.clearissue = clearissue;
 
 
 
