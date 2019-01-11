@@ -1,0 +1,289 @@
+{
+  "companyProfile" :[
+        {
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/1_COMPANY_PROFILE/vision.png",
+            "plans": [
+                    {
+                        "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/1_COMPANY_PROFILE/vision/vision.jpg"
+                        
+                    }
+            ]
+        },{
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/1_COMPANY_PROFILE/ongoing.png",
+            "plans": [
+                    {
+                        "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/1_COMPANY_PROFILE/ongoing/ongoing.jpg"
+                    }
+            ]
+        },{
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/1_COMPANY_PROFILE/completed.png",
+            "plans": [
+                    {
+                        "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/1_COMPANY_PROFILE/completed/completed.png"
+                    }
+            ]
+        }
+       
+
+    ], 
+"elevation": [
+            
+            "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/2_PROJEC_NAME/1.jpg",
+            "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/2_PROJEC_NAME/2.jpg",
+            "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/2_PROJEC_NAME/3.jpg"
+    ],
+    "googleMapIcons": [
+        { 
+            "link": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/3_LOCATION/1.jpg", 
+            "maplink":"https://goo.gl/maps/eExGfuHFpSL2",
+            "Lat" : "https://www.google.co.in/maps/dir/Propmall,+Gandhi+Road,+Adyar,+Chennai,+Tamil+Nadu/ECR+14+Casa+grande/@12.9279394,80.1787831,12z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x3a52678efb799e89:0x298261db93936286!2m2!1d80.2575517!2d13.0071061!1m5!1m1!1s0x3a525b4b01902551:0x8c242402438c8f34!2m2!1d80.2380672!2d12.8480068",
+            "Lon" : 0
+        },
+        { 
+            "link": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/3_LOCATION/googlemappng.png", 
+            "maplink":"https://www.google.co.in/maps/dir/Adroit+Artistica,+S.+No.:+439%2F4,A1+%26+A2,+Old+Mahabalipuram+Rd,+Sholinganallur,+Chennai,+Tamil+Nadu+600119/Propmall,+Gandhi+Road,+Adyar,+Chennai,+Tamil+Nadu/@12.950808,80.1724878,12z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x3a525d125bd6cf8b:0x3b7454a0f10dee9c!2m2!1d80.2281091!2d12.8972254!1m5!1m1!1s0x3a52678efb799e89:0x298261db93936286!2m2!1d80.2575517!2d13.0071061!3e3",
+            "Lat" : "",
+"Lon" : 1,
+"sLat" : 12.996960,
+"sLon" : 80.255980,
+"dLat" : 12.8972254,
+"dLon" : 80.22810909999998,
+"sText":"Propmall",
+"dText":"Adroit Artistica"
+        }
+      ],
+
+    "approval": [
+        {
+            "type": "http://tritontutebox.com/propmall/common/rera.png",
+            "plans": [
+                    {
+                        "imagepath": "http://tritontutebox.com/propmall/common/rera.png",
+                        "BUA":"http://www.tnrera.in/reg_projects_tamilnadu.php",
+                        "Facing":"link"  
+                    }
+            ]
+        },
+        {
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/4_APPROVALS/cmda.png",
+            "plans": [
+                    {
+                        "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/4_APPROVALS/cmda/cmda.png",
+                        "BUA":"http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/4_APPROVALS/cmda/cmda.pdf",
+                        "Facing":"link"
+                        
+                    }
+            ]
+        },
+        {
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/4_APPROVALS/completed_not.jpg",
+            "plans": [
+                    
+            ]
+        }
+       
+    ], 
+    
+    "bankers": [
+             "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/5_BANKING PARTNERS/bankers.jpg"
+            
+    ],
+    "status" :[
+        {
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/6_STATUS/project-status.png",
+            "plans": [
+                    {
+                    "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/6_STATUS/project-status/status-1.jpg"
+                    },
+                    {
+                    "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/6_STATUS/project-status/status-2.jpg"
+                    },
+                    { 
+                    "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/6_STATUS/project-status/status-3.jpg"
+                    },
+                    { 
+                    "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/6_STATUS/project-status/status-4.jpg"
+                    }                  
+                    
+            ]
+        }
+       
+
+    ],
+
+    
+    "floorPlan_explore" :[
+         
+        {
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan.png",
+            "plans": [
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/10th-floor-plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/11th-floor-plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/12th-floor-plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/2nd-floor-plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/3rd-floor-plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/4th-7th-floor-plans.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/Artistica-Fifteenth-Floor-Plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/Artistica-Fourteenth-Floor-Plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/Artistica-Sixteenth-Floor-Plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/Artistica-Thirteenth-Floor-Plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/Eighth-floor-plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/First_floor_plan.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/plan-siteplan/Ninth-floor-plan.jpg"
+                    }
+            ]
+        },
+        {
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/3BHK.png",
+            "plans": [
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/3BHK/1444.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/3BHK/1453.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/3BHK/1552.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/3BHK/1605.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/3BHK/1658.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/3BHK/1846.jpg"
+                    }
+                    
+            ]
+        },
+        {
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK.jpg",
+            "plans": [
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK/4026 1st floor.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK/4026.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK/4352.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK/4610 1st floor.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK/4610.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK/4767 1st floor.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK/4767.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/7_MASTER_PLAN/4BHK/4bhk43521stfloor.jpg"
+                    }
+                    
+            ]
+        }
+    ],
+    "amenities": [
+        "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/8_AMENITIES/1.jpg",
+        "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/8_AMENITIES/2.jpg",
+        "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/8_AMENITIES/3.jpg",
+        "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/8_AMENITIES/4.jpg",
+        "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/8_AMENITIES/5.jpg"
+    ],  
+    "specification": [
+        "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/9_SPECIFICATION/spec-1.jpg" 
+    ],
+    "factSheet": [
+        "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/10_FACTSHEET/factsheet-1.jpg"
+    ],    
+    "floorPlan_explore_prize" :[
+    	{
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/3bhk.png",
+            "plans": [
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/3bhk/1444.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/3bhk/1453.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/3bhk/1552.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/3bhk/1605.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/3bhk/1658.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/3bhk/1846.jpg"
+                    }
+                    
+            ]
+        },
+        {
+            "type": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/4bhk.jpg",
+            "plans": [
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/4bhk/4026.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/4bhk/4352.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/4bhk/4610.jpg"
+                    },
+                    {
+                         "imagepath": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/11_COST_SHEET/4bhk/4767.jpg"
+                    }
+                    
+            ]
+        }
+    ],
+
+    "faq": [
+            "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/12_FAQ/faq.jpg"
+    ],
+    "videoUrl": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/13_WHY_BUY/videoplayback.mp4",
+    "broucher":"http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/14_BROUCHURE/Artistica_E_Bro.pdf",
+    "walkthroughUrl": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/Project-data/15_WALKTHROUGH/videoplayback.mp4",
+    "builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/artistica-new.png",
+    "builderLogo": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/artistica-new.png",
+    "skypeid": "m.vishnulee",
+    "background": "http://eyeballmedia.in/propmall/background.jpg",
+    "booking": "http://eyeballmedia.in/propmall/booking.pdf",
+    "complete": "",
+    "price": [
+    ]
+  
+}
