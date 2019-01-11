@@ -179,7 +179,6 @@ point_tracking.PointTrackMapRecordslistmobile = function (userInput, resultCallb
 
 
 point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
-
   var executor = db.getdaata.getdb();
   executor.one('INSERT INTO public."PointTrackMapSpots"("position","PointTrackMaprefid","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)RETURNING *',
                  [ 

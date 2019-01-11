@@ -95,6 +95,22 @@ addRoute("/issue/issuedetails", "POST", [middleware.issuedetails]);
 addRoute("/issue/issuetrack", "POST", [middleware.issuetrack]);
 addRoute("/issue/issuecount", "POST", [middleware.issuecount]);
 
+
+
+/*Feedback Tracking*/
+addRoute("/feebdack/createfeedback", "POST", [middleware.createfeedback]);
+addRoute("/feebdack/feedbacklist", "POST", [middleware.feedbacklist]);
+addRoute("/feebdack/listmyfeedback", "POST", [middleware.listmyfeedback]);
+addRoute("/feebdack/fetchfeedback", "POST", [middleware.fetchfeedback]);
+
+
+
+
+
+
+
+
+
 /*issues Attachment*/
 addRoute("/issue/createAttachment", "POST", [middleware.create_issue_attachment]);
 addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
@@ -208,8 +224,6 @@ addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
 addRoute("/complaints/newcomplaints", "POST", [middleware.newcomplaints]);
 addRoute("/complaints/complaintlist", "POST", [middleware.complaintlist]);
 addRoute("/complaints/updateStatus", "POST", [middleware.updateStatus]);
-
-
 addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 
 

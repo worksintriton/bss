@@ -974,11 +974,13 @@ function report(req, res, next) {
 
 
 function create_issue_attachment(req, res, next) {
-
+      console.log("data in");
        async.waterfall([
             function (waterfallCallback){
+                 console.log("test1");
                  if (!req.files)
                     return res.status(404).json(utils.errors["404"]);
+                  console.log("test2"); 
                
                       let sampleFile = req.files.pic;
                       let basepath = "www/pics/issues/";
@@ -987,6 +989,7 @@ function create_issue_attachment(req, res, next) {
                       let filename = timestamp+ext;
                         console.log(filename)
                       sampleFile.mv(basepath+filename, function(err) {
+                         console.log("test3");
                         if (err)
                         return res.json(_.merge({
                             issue: err,
@@ -994,12 +997,13 @@ function create_issue_attachment(req, res, next) {
                         }, utils.errors["400"]));
                      
                        waterfallCallback(null, basepath, filename, req.query['issue_id']);
+                        console.log("test4");
                       });
 
             },
 
             function (basepath, filename, issue_id, waterfallCallback){
-
+             console.log("test5");
                  services.issues.createIssueAttachment(basepath, filename, issue_id, function (err,is_inserted, result) {
                 if (err) {
                     console.log({
@@ -1007,7 +1011,7 @@ function create_issue_attachment(req, res, next) {
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
                 }
-
+                   console.log("test6");
                 return res.json(_.merge({
                     issue: result,
                     message: "file uploaded" 
@@ -2684,6 +2688,128 @@ async.waterfall([
 }
 
 
+function createfeedback(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.createfeedbacks(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function feedbacklist(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.feedbacklists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function listmyfeedback(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listmyfeedbacks(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function fetchfeedback(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchfeedbacks(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function upload(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                if (Object.keys(req.files).length == 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let sampleFile = req.files.sampleFile;
+
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+    res.send('File uploaded!');
+  });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 
 
@@ -2883,6 +3009,12 @@ exports.deletesms = deletesms;
 /*resied*/
 exports.resigned = resigned;
 
+
+/*feedback*/
+exports.createfeedback = createfeedback;
+exports.feedbacklist = feedbacklist;
+exports.listmyfeedback = listmyfeedback;
+exports.fetchfeedback = fetchfeedback;
 
 /*Client module*/
 exports.newcomplaints = newcomplaints;

@@ -224,12 +224,6 @@
         }
     },
 
-
-
-
-
-
-
     "/authentication/confignumber": {
         "POST": {
             "body": {
@@ -2212,7 +2206,7 @@
                 }
             }
         }
-    } ,
+    },
     
 
     "/PointTracking/Addpoints": {
@@ -4297,6 +4291,157 @@
                     },
                     "properties": {
                         "complaint_id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/feebdack/createfeedback": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "rating": {
+                        "type": "string"
+                    },
+                    "posted_on": {
+                        "type": "string"
+                    },
+                    "posted_by": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "company_name": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "title"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "title": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/feebdack/feedbacklist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "posted_by": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "posted_by"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "posted_by": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "posted_by": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/feebdack/listmyfeedback": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "posted_by": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "posted_by"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "posted_by": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "posted_by": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+    "/feebdack/fetchfeedback": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+         "/image/upload": {
+        "POST": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        
+                    },
+                    "properties": {
+
                     }
                 }
             }
