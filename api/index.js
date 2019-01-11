@@ -104,13 +104,6 @@ addRoute("/feebdack/listmyfeedback", "POST", [middleware.listmyfeedback]);
 addRoute("/feebdack/fetchfeedback", "POST", [middleware.fetchfeedback]);
 
 
-
-
-
-
-
-
-
 /*issues Attachment*/
 addRoute("/issue/createAttachment", "POST", [middleware.create_issue_attachment]);
 addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
@@ -226,7 +219,9 @@ addRoute("/complaints/complaintlist", "POST", [middleware.complaintlist]);
 addRoute("/complaints/updateStatus", "POST", [middleware.updateStatus]);
 addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 
+/*File Upload*/
 
+addRoute("/upload/file", "POST", [middleware.uploadingfile]);
 
 
 

@@ -13,6 +13,8 @@ var fs = require("fs"),
 var base64ToImage = require('base64-to-image');
 var uniqid = require('uniqid');
 var path = require('path')
+var fileUpload = require('express-fileupload');
+  var moment = require('moment');
 //var FORGOT_PASSWORD_HTML = fs.readFileSync("www/resetpassword.html", "utf8");
 /*
 To Maintain Local Session
@@ -73,8 +75,6 @@ function bsslogin(req, res, next) {
         ]);
 
 }
-
-
 
 
 //////Clientlogin/////////
@@ -2781,28 +2781,36 @@ function fetchfeedback(req, res, next) {
 }
 
 
-
-function upload(req, res, next) {
+function uploadingfile(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
-                if (Object.keys(req.files).length == 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
+                  if (Object.keys(req.files).length == 0) {
+                    return res.status(400).send('No files were uploaded.');
+                  }
 
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.sampleFile;
+                  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+                  let sampleFile = req.files.filetoupload;
 
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
-    if (err)
-      return res.status(500).send(err);
-
-    res.send('File uploaded!');
-  });
+                  console.log(sampleFile);
+                  // Use the mv() method to place the file somewhere on your server
+                  var time_details = moment().format('YYYYMMDDHHmmss');
+                  var path = 'www/pics/'+time_details+"_"+sampleFile.name; 
+                  var lpath = '/pics/'+time_details+"_"+sampleFile.name; 
+                  sampleFile.mv(path, function(err) {
+                    if (err)
+                      return res.status(500).send(err);
+                    var result = {
+                        path: lpath,
+                        uploadstatus: true
+                    }
+                    waterfallCallback(null,result);
+                  });
+                
+               
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
-                    data:  mydata  
+                    data: mydata 
                 }, utils.errors["200"]));
             }
         ]);
@@ -3023,6 +3031,5 @@ exports.updateStatus = updateStatus;
 exports.clearissue = clearissue;
 
 
-
-
-
+/*file upload*/
+exports.uploadingfile = uploadingfile;

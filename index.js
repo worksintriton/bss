@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.use("/", express.static(path.join(__dirname, "../www")));
+app.use("/", express.static(path.join(__dirname, "www")));
 //app.use(utils.logger.attachLogger());
 app.use(api.router);
 /*app.use(function (error, req, res, next) {
