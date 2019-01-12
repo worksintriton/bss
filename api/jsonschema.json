@@ -4418,7 +4418,38 @@
                     },
                     "nomierelation5": {
                         "type": "string"
+                    },
+                    "language1": {
+                        "type": "string"
+                    },
+                    "language2": {
+                        "type": "string"
+                    },
+                    "language3": {
+                        "type": "string"
+                    },
+                    "language4": {
+                        "type": "string"
+                    },
+                    "language5": {
+                        "type": "string"
+                    },
+                    "lanstate1": {
+                        "type": "string"
+                    },
+                    "lanstate2": {
+                        "type": "string"
+                    },
+                    "lanstate3": {
+                        "type": "string"
+                    },
+                    "lanstate4": {
+                        "type": "string"
+                    },
+                    "lanstate5": {
+                        "type": "string"
                     }
+
                 },
         "additionalProperties": true,
                 "required": [
