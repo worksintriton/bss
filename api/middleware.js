@@ -155,6 +155,34 @@ function addemployee(req, res, next) {
 }
 
 
+
+
+
+function updateemployee1(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updateemployee1s(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+
+
 function updateqr(req, res, next) {
 
        async.waterfall([
@@ -2781,6 +2809,100 @@ function fetchfeedback(req, res, next) {
 }
 
 
+function createattach(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.createattachs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function listattach(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listattachs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function mylistattach(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.mylistattachs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function fetchattach(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchattachs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
 function uploadingfile(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
@@ -2863,6 +2985,7 @@ exports.employee_id = employee_id;
 exports.Changepassword = Changepassword;
 exports.Updateemployee_id = Updateemployee_id;
 exports.updateqr = updateqr;
+exports.updateemployee1 = updateemployee1;
 
 
 
@@ -3023,6 +3146,16 @@ exports.createfeedback = createfeedback;
 exports.feedbacklist = feedbacklist;
 exports.listmyfeedback = listmyfeedback;
 exports.fetchfeedback = fetchfeedback;
+
+
+
+/*attachment*/
+exports.createattach = createattach;
+exports.listattach = listattach;
+exports.mylistattach = mylistattach;
+exports.fetchattach = fetchattach;
+
+
 
 /*Client module*/
 exports.newcomplaints = newcomplaints;

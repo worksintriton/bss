@@ -44,7 +44,9 @@ addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
 addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
 addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee_id]);
+
 addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
+addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]);
 
 
 /*Add User*/
@@ -102,6 +104,14 @@ addRoute("/feebdack/createfeedback", "POST", [middleware.createfeedback]);
 addRoute("/feebdack/feedbacklist", "POST", [middleware.feedbacklist]);
 addRoute("/feebdack/listmyfeedback", "POST", [middleware.listmyfeedback]);
 addRoute("/feebdack/fetchfeedback", "POST", [middleware.fetchfeedback]);
+
+
+/*Attachment Tracking*/
+addRoute("/attachment/createattach", "POST", [middleware.createattach]);
+addRoute("/attachment/listattach", "POST", [middleware.listattach]);
+addRoute("/attachment/mylistattach", "POST", [middleware.mylistattach]);
+addRoute("/attachment/fetchattach", "POST", [middleware.fetchattach]);
+
 
 
 /*issues Attachment*/
@@ -187,7 +197,6 @@ addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
 
 
 
-
 /*assigningemployee*/
 addRoute("/authentication/addassign", "POST", [middleware.addassign])
 addRoute("/authentication/listassign", "POST", [middleware.listassign])
@@ -220,7 +229,6 @@ addRoute("/complaints/updateStatus", "POST", [middleware.updateStatus]);
 addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 
 /*File Upload*/
-
 addRoute("/upload/file", "POST", [middleware.uploadingfile]);
 
 

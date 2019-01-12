@@ -4252,6 +4252,9 @@
                     },
                     "naadharcard5": {
                         "type": "string"
+                    },
+                    "age": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -4297,6 +4300,141 @@
         }
     },
 
+    "/authentication/updateemployee1": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Emp_id": {
+                        "type": "string"
+                    },
+                    "personmark": {
+                        "type": "string"
+                    },
+                    "nameorg": {
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": "string"
+                    },
+                    "servicef": {
+                        "type": "string"
+                    },
+                    "servicet": {
+                        "type": "string"
+                    },
+                    "lastsalary": {
+                        "type": "string"
+                    },
+                    "reasonlev": {
+                        "type": "string"
+                    },
+                    "nomiename1": {
+                        "type": "string"
+                    },
+                    "nomieaddress1": {
+                        "type": "string"
+                    },
+                    "nomiedate1": {
+                        "type": "string"
+                    },
+                    "nomiefund1": {
+                        "type": "string"
+                    },
+                    "nomiemirror1": {
+                        "type": "string"
+                    },
+                    "nomiename2": {
+                        "type": "string"
+                    },
+                    "nomieaddress2": {
+                        "type": "string"
+                    },
+                    "nomiedate2": {
+                        "type": "string"
+                    },
+                    "nomiefund2": {
+                        "type": "string"
+                    },
+                    "nomiemirror2": {
+                        "type": "string"
+                    },
+                    "nomiename3": {
+                        "type": "string"
+                    },
+                    "nomieaddress3": {
+                        "type": "string"
+                    },
+                    "nomiedate3": {
+                        "type": "string"
+                    },
+                    "nomiefund3": {
+                        "type": "string"
+                    },
+                    "nomiemirror3": {
+                        "type": "string"
+                    },
+                    "nomiename4": {
+                        "type": "string"
+                    },
+                    "nomieaddress4": {
+                        "type": "string"
+                    },
+                    "nomiedate4": {
+                        "type": "string"
+                    },
+                    "nomiefund4": {
+                        "type": "string"
+                    },
+                    "nomiemirror4": {
+                        "type": "string"
+                    },
+                    "nomiename5": {
+                        "type": "string"
+                    },
+                    "nomieaddress5": {
+                        "type": "string"
+                    },
+                    "nomiedate5": {
+                        "type": "string"
+                    },
+                    "nomiefund5": {
+                        "type": "string"
+                    },
+                    "nomiemirror5": {
+                        "type": "string"
+                    },
+                    "nomierelation1": {
+                        "type": "string"
+                    },
+                    "nomierelation2": {
+                        "type": "string"
+                    },
+                    "nomierelation3": {
+                        "type": "string"
+                    },
+                    "nomierelation4": {
+                        "type": "string"
+                    },
+                    "nomierelation5": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Emp_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "Emp_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
 
 
     "/feebdack/createfeedback": {
@@ -4398,6 +4536,118 @@
     },
 
     "/feebdack/fetchfeedback": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+    "/attachment/createattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Emp_id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Emp_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "Emp_id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/attachment/listattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Emp_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Emp_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Emp_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "Emp_id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/attachment/mylistattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Emp_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Emp_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Emp_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "Emp_id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+    "/attachment/fetchattach": {
         "POST": {
             "body": {
                  "type": "object",

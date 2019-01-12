@@ -11,7 +11,9 @@ var db = require("./db"),
     expressSession = require("express-session"),
     fs = require('fs'),
     stripWhitespace = require('strip-whitespace'),
-    https = require('https');
+    https = require('https'),
+    middleware = require("./api/middleware"),
+    cors = require("cors");
 
 var app = express();
 
@@ -22,6 +24,8 @@ var urlencodedParser = bodyParser.urlencoded({extended: true, limit: 1024 * 1024
 app.use(jsonParser);
 app.use(urlencodedParser);
 
+app.use("*", [cors(),middleware.passport.initialize(), middleware.passport.session()]);
+app.options('*', cors());
 
 app.use(cookieParser());
 app.use(expressSession({

@@ -1,0 +1,559 @@
+{
+"builderslist": [
+	{
+	"id": 1,
+	"builder": "TVS",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/tvs/tvs-logo.png",
+	"projects": [
+					{
+						"id": 1,
+						"builderid": 1,
+						"builder_project_title": "litegouse",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/tvs/tvs-logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/datauploads/tvs/LightHouse/logo.png",
+						"data_url": "propmall/API/LightHouse.json"
+					},
+					{
+						"id": 8,
+						"builderid": 1,
+						"builder_project_title": "litegouse",
+						"builderHeaderLogo": "http://eyeballmedia.in/propmall/tvs%20logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/datauploads/tvs/Flourish/logo.png",
+						"data_url": "propmall/API/Flourish.json"
+					},
+					{
+						"id": 9,
+						"builderid": 1,
+						"builder_project_title": "Green Acers",
+						"builderHeaderLogo": "http://eyeballmedia.in/propmall/tvs%20logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/datauploads/tvs/Green Acres/logo.png",
+						"data_url": "propmall/API/GreenAcres.json"
+					},
+					{
+						"id": 31,
+						"builderid": 1,
+						"builder_project_title": "Green Acers VIlla",
+						"builderHeaderLogo": "http://eyeballmedia.in/propmall/tvs%20logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/datauploads/tvs/Green_Acres_Villa/logo GA.png",
+						"data_url": "propmall/API/Green_Acres_Villa.json"
+					}
+	]
+},
+{
+	"id": 7,
+	"builder": "Adroit",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/artistica/Logo.png",
+	"projects": [
+					{
+						"id": 10,
+						"builderid": 7,
+						"builder_project_title": "artistica",
+						"builderHeaderLogo": "http://www.adroiturban.com/wp-content/uploads/2016/05/Logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/artistica-new.png",
+						"data_url": "propmall/API/artistica.json"
+					},
+					{
+						"id": 11,
+						"builderid": 7,
+						"builder_project_title": "district s",
+						"builderHeaderLogo": "http://www.adroiturban.com/wp-content/uploads/2016/05/Logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/datauploads/artistica/district_s/district-s-new.png",
+						"data_url": "propmall/API/district_s.json"
+					}
+	]
+},
+{
+	"id": 2,
+	"builder": "CASA GRAND",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/logo.png",
+	"projects": [
+					{
+						"id": 2,
+						"builderid": 2,
+						"builder_project_title": "ECR 14",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/ECR14/ecr14.png",
+						"data_url": "propmall/API/ECR14.json"
+					},
+					{
+						"id": 22,
+						"builderid": 2,
+						"builder_project_title": "SMARTTOWN",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/Smarttown/smarttown.png",
+						"data_url": "propmall/API/Smarttown.json"
+					},
+					{
+						"id": 23,
+						"builderid": 2,
+						"builder_project_title": "SUPREMUS",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/SUPERMUS/supermuns.png",
+						"data_url": "propmall/API/SUPERMUS.json"
+					},
+
+					{
+						"id":25,
+						"builderid": 2,
+						"builder_project_title": "Arena",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/arena/logo.jpg",
+						"data_url": "propmall/API/arena.json"
+					},
+					{
+						"id":26,
+						"builderid": 2,
+						"builder_project_title": "uptown",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/uptown/logo.png",
+						"data_url": "propmall/API/uptown.json"
+					}
+	]
+},
+{
+	"id": 3,
+	"builder": "dra",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/dra/dra.png",
+	"projects": [
+					{
+						"id": 5,
+						"builderid": 3,
+						"builder_project_title": "ECR 14",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/dra/dra.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/dra/90degrees/90degrees.png",
+						"data_url": "propmall/API/90degrees.json"
+					}
+	]
+},
+{
+	"id": 4,
+	"builder": "ramaniyam",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/ramaniyam/logo.png",
+	"projects": [
+					{
+						"id": 6,
+						"builderid": 4,
+						"builder_project_title": "ECR 14",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/ramaniyam/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/ramaniyam/magnum/magnum.png",
+						"data_url": "propmall/API/magnum.json"
+					}
+	]
+},
+{
+	"id": 5,
+	"builder": "sis",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/sis/SIS-New-Logo.png",
+	"projects": [
+					{
+						"id": 7,
+						"builderid": 5,
+						"builder_project_title": "ECR 14",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/sis/SIS-New-Logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/sis/queenstown/queenstown.png",
+						"data_url": "propmall/API/queenstown.json"
+					},{
+						"id": 7,
+						"builderid": 5,
+						"builder_project_title": "ECR 14",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/sis/SIS-New-Logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/sis/acropole/Name-Logo-Acropole.png",
+						"data_url": "propmall/API/acropole.json"
+					}
+	]
+},
+{
+	"id": 8,
+	"builder": "brigade",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/brigade/brigade-logo_horizontal-2048px.png",
+	"projects": [
+					{
+						"id":12,
+						"builderid": 8,
+						"builder_project_title": "xanadu",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/brigade/brigade-logo_horizontal-2048px.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/brigade/xanadu/xanadu.png",
+						"data_url": "propmall/API/xanadu.json"
+					}
+	]
+},
+{
+	"id": 9,
+	"builder": "Mahindra",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/mahindra/logo.png",
+	"projects": [
+					{
+						"id":13,
+						"builderid": 9,
+						"builder_project_title": "Aqualilly",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/mahindra/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/mahindra/Aqualilly/aqualilly.png",
+						"data_url": "propmall/API/Aqualilly.json"
+					}
+	]
+},
+{
+	"id": 10,
+	"builder": "Plaza",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/plaza/logo.png",
+	"projects": [
+					{
+						"id":14,
+						"builderid": 10,
+						"builder_project_title": "bountyacre",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/plaza/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/plaza/bountyacre/logo.png",
+						"data_url": "propmall/API/bountyacre.json"
+					},
+					{
+						"id":15,
+						"builderid": 10,
+						"builder_project_title": "eliteacres",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/plaza/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/plaza/eliteacres/logo.png",
+						"data_url": "propmall/API/eliteacres.json"
+					}
+	]
+},
+{
+	"id": 11,
+	"builder": "Tata",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/tata/logo_tvh.png",
+	"projects": [
+					{
+						"id":16,
+						"builderid": 11,
+						"builder_project_title": "santorini",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/tata/logo_tvh.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/tata/santorini/santorini.png",
+						"data_url": "propmall/API/santorini.json"
+					}
+	]
+},
+{
+	"id": 12,
+	"builder": "Arun Excello",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/arunexcello/arun excello logo.jpg",
+	"projects": [
+					{
+						"id":17,
+						"builderid": 12,
+						"builder_project_title": "temple_green",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/arunexcello/arun excello logo.jpg",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/arunexcello/temple green/temple green.png",
+						"data_url": "propmall/API/temple_green.json"
+					},
+					{
+						"id":18,
+						"builderid": 12,
+						"builder_project_title": "temple_green",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/arunexcello/arun excello logo.jpg",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/arunexcello/ziva/ziva.png",
+						"data_url": "propmall/API/ziva.json"
+					}
+	]
+},
+{
+	"id": 13,
+	"builder": "Arun Excello",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/doshi/doshi.png",
+	"projects": [
+					{
+						"id":19,
+						"builderid": 13,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/doshi/doshi.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/doshi/risington/logo-org-new2702.png",
+						"data_url": "propmall/API/risington.json"
+					}
+	]
+},
+{
+	"id": 14,
+	"builder": "prince",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/prince/logo (1).png",
+	"projects": [
+					{
+						"id":20,
+						"builderid": 14,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/prince/logo (1).png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/prince/highland/highland.png",
+						"data_url": "propmall/API/highland.json"
+					},
+					{
+						"id":20,
+						"builderid": 14,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/prince/logo (1).png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/prince/courtyard/logo.png",
+						"data_url": "propmall/API/courtyard.json"
+					}
+	]
+},
+{
+	"id": 30,
+	"builder": "dugar",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/dugar/logo.png",
+	"projects": [
+					{
+						"id":21,
+						"builderid": 30,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/dugar/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/dugar/glo/logo.png",
+						"data_url": "propmall/API/glo.json"
+					}
+	]
+},
+{
+	"id": 31,
+	"builder": "dugar",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/lnt/logo.jpg",
+	"projects": [
+					{
+						"id":27,
+						"builderid": 31,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/lnt/logo.jpg",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/lnt/eden park/logo.png",
+						"data_url": "propmall/API/eden_park.json"
+					}
+	]
+},
+{
+	"id": 18,
+	"builder": "eagle eye",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/kgyes/logo.png",
+	"projects": [
+					{
+						"id":21,
+						"builderid": 18,
+						"builder_project_title": "pari",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/kgyes/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/kgyes/logo.png",
+						"data_url": "propmall/API/pari.json"
+					},
+					{
+						"id":27,
+						"builderid": 18,
+						"builder_project_title": "7th_avenue",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/kgyes/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/kgyes/7th avenue/7thlogo.png",
+						"data_url": "propmall/API/7th_avenue.json"
+					}
+	]
+},
+{
+	"id": 20,
+	"builder": "eagle eye",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/urban_tree/logo.png",
+	"projects": [
+					{
+						"id":28,
+						"builderid": 20,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/urban_tree/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/urban_tree/Superb/superb.png",
+						"data_url": "propmall/API/Superb.json"
+					},
+					{
+						"id":29,
+						"builderid": 20,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/urban_tree/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/urban_tree/oxygen/logo - oxgeon.png",
+						"data_url": "propmall/API/oxygen.json"
+					},
+					{
+						"id":30,
+						"builderid": 20,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/urban_tree/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/urban_tree/fantastic/logo.png",
+						"data_url": "propmall/API/fantastic.json"
+					}
+	]
+},
+{
+	"id": 20,
+	"builder": "eagle eye",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/logo/luxury.png",
+	"projects": [
+					{
+						"id": 10,
+						"builderid": 7,
+						"builder_project_title": "artistica",
+						"builderHeaderLogo": "http://www.adroiturban.com/wp-content/uploads/2016/05/Logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/datauploads/artistica/artistica/artistica-new.png",
+						"data_url": "propmall/API/artistica.json"
+					}
+					,
+					{
+						"id":24,
+						"builderid": 16,
+						"builder_project_title": "OLYMPUS",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/OLYMPUS/casa olypus logo.jpg",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/OLYMPUS/casa olypus logo.jpg",
+						"data_url": "propmall/API/OLYMPUS.json"
+					},
+					{
+						"id": 31,
+						"builderid": 1,
+						"builder_project_title": "Green Acers VIlla",
+						"builderHeaderLogo": "http://eyeballmedia.in/propmall/tvs%20logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/datauploads/tvs/Green_Acres_Villa/logo GA.png",
+						"data_url": "propmall/API/Green_Acres_Villa.json"
+					},
+					{
+						"id": 2,
+						"builderid": 2,
+						"builder_project_title": "ECR 14",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/casagrand/ECR14/ecr14.png",
+						"data_url": "propmall/API/ECR14.json"
+					},
+					{
+						"id":20,
+						"builderid": 14,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/prince/logo (1).png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/prince/courtyard/logo.png",
+						"data_url": "propmall/API/courtyard.json"
+					},
+{
+						"id": 2,
+						"builderid": 2,
+						"builder_project_title": "quadrant",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/uploads/TVH/Logo/image/logo.png",
+    					        "builderLogo": "http://tritontutebox.com/propmall/uploads/TVH/Quadrant/image/logo.png",
+						"data_url": "propmall/API/quadrant.json"
+					}
+
+	]
+},
+
+
+
+{
+	"id": 26,
+	"builder": "eagle eye",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/logo/rto.png",
+	"projects": [
+		{
+						"id":21,
+						"builderid": 30,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/dugar/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/dugar/glo/logo.png",
+						"data_url": "propmall/API/glo.json"
+					},
+					{
+						"id": 7,
+						"builderid": 5,
+						"builder_project_title": "ECR 14",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/sis/SIS-New-Logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/sis/queenstown/queenstown.png",
+						"data_url": "propmall/API/queenstown.json"
+					},
+					{
+						"id":17,
+						"builderid": 12,
+						"builder_project_title": "temple_green",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/arunexcello/arun excello logo.jpg",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/arunexcello/temple green/temple green.png",
+						"data_url": "propmall/API/temple_green.json"
+					},
+					{
+						"id":20,
+						"builderid": 14,
+						"builder_project_title": "Doshi",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/prince/logo (1).png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/prince/highland/highland.png",
+						"data_url": "propmall/API/highland.json"
+					},
+					{
+						"id":13,
+						"builderid": 9,
+						"builder_project_title": "Aqualilly",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/mahindra/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/mahindra/Aqualilly/aqualilly.png",
+						"data_url": "propmall/API/Aqualilly.json"
+					},
+					{
+						"id":25,
+						"builderid": 2,
+						"builder_project_title": "Arena",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/casagrand/arena/logo.jpg",
+						"data_url": "propmall/API/arena.json"
+					},
+					{
+						"id": 6,
+						"builderid": 4,
+						"builder_project_title": "ECR 14",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/ramaniyam/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/ramaniyam/magnum/magnum.png",
+						"data_url": "propmall/API/magnum.json"
+					},
+					{
+						"id":14,
+						"builderid": 10,
+						"builder_project_title": "bountyacre",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/plaza/logo.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/plaza/bountyacre/logo.png",
+						"data_url": "propmall/API/bountyacre.json"
+					},
+					{
+						"id":16,
+						"builderid": 11,
+						"builder_project_title": "santorini",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/tata/logo_tvh.png",
+   					 	"builderLogo": "http://tritontutebox.com/propmall/datauploads/tata/santorini/santorini.png",
+						"data_url": "propmall/API/santorini.json"
+					}
+	]
+},
+{
+	"id": 27,
+	"builder": "tulive",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/tulive/tulive-logo (1).jpg",
+	"projects": [
+					{
+						"id": 10,
+						"builderid": 7,
+						"builder_project_title": "dakshin",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/datauploads/tulive/tulive-logo (1).jpg",
+    					        "builderLogo": "http://tritontutebox.com/propmall/datauploads/tulive/dakshin/dakshin-logo.png",
+						"data_url": "propmall/API/dakshin.json"
+					}
+					
+	]
+}
+,
+{
+	"id": 28,
+	"builder": "TVH",
+	"builderHeaderLogo": "http://tritontutebox.com/propmall/uploads/TVH/Logo/image/logo.png",
+	"projects": [
+					{
+						"id": 1,
+						"builderid": 1,
+						"builder_project_title": "quadrant",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/uploads/TVH/Logo/image/logo.png",
+    					        "builderLogo": "http://tritontutebox.com/propmall/uploads/TVH/Quadrant/image/logo.png",
+						"data_url": "propmall/API/quadrant.json"
+					},
+					{
+						"id": 2,
+						"builderid": 1,
+						"builder_project_title": "ouranya bay",
+						"builderHeaderLogo": "http://tritontutebox.com/propmall/uploads/TVH/Logo/image/logo.png",
+    					"builderLogo": "http://tritontutebox.com/propmall/uploads/TVH/Ouranya bay/image/logo.png",
+						"data_url": "propmall/API/ouranya_bay.json"
+					}
+	]
+}
+
+]
+}
