@@ -44,7 +44,6 @@ addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
 addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
 addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
 addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee_id]);
-
 addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]);
 
@@ -57,13 +56,7 @@ addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 
 
-/*Add Client*/
-addRoute("/authentication/addclients", "POST", [middleware.addclients]);
-addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
-addRoute("/authentication/addclients1", "POST", [middleware.addclients1]);
-addRoute("/authentication/clientid", "POST", [middleware.clientid]);
-addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
-addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
+
 
 
 /*Add Configure*/
@@ -220,6 +213,13 @@ addRoute("/authentication/resigned", "POST", [middleware.resigned])
 addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
 
 
+/*Create Client site */
+addRoute("/client/newclientsite", "POST", [middleware.newclientsite]);
+addRoute("/client/sitelist", "POST", [middleware.sitelist]);
+addRoute("/client/updateclientsite", "POST", [middleware.updateclientsite]);
+addRoute("/client/deletclientsite", "POST", [middleware.deletclientsite]);
+addRoute("/client/sitestatus", "POST", [middleware.sitestatus]);
+addRoute("/client/fetchsite", "POST", [middleware.fetchsite]);
 
 
 /*Create complaints */
@@ -230,6 +230,36 @@ addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 
 /*File Upload*/
 addRoute("/upload/file", "POST", [middleware.uploadingfile]);
+
+
+
+/*payment process*/
+addRoute("/payment/payadd", "POST", [middleware.payadd]);
+addRoute("/payment/paylist", "POST", [middleware.paylist]);
+addRoute("/payment/paydelete", "POST", [middleware.paydelete]);
+addRoute("/payment/payupdate", "POST", [middleware.payupdate]);
+addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
+
+
+/*requirment process*/
+addRoute("/requirement/reqadd", "POST", [middleware.reqadd]);
+addRoute("/requirement/reqlist", "POST", [middleware.reqlist]);
+addRoute("/requirement/reqdelete", "POST", [middleware.reqdelete]);
+
+
+/*Add Client*/
+addRoute("/authentication/addclients", "POST", [middleware.addclients]);
+addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
+
+
+
+addRoute("/authentication/clientid", "POST", [middleware.clientid]);
+
+
+
+
+addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
+addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
 
 
