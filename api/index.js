@@ -234,7 +234,7 @@ addRoute("/upload/file", "POST", [middleware.uploadingfile]);
 
 
 /*payment process*/
-addRoute("/payment/payadd", "POST", [middleware.payadd]);
+// addRoute("/payment/payadd", "POST", [middleware.payadd]);
 addRoute("/payment/paylist", "POST", [middleware.paylist]);
 addRoute("/payment/paydelete", "POST", [middleware.paydelete]);
 addRoute("/payment/payupdate", "POST", [middleware.payupdate]);
@@ -260,6 +260,23 @@ addRoute("/authentication/clientid", "POST", [middleware.clientid]);
 
 addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
+
+
+
+/*payment process*/
+// addRoute("/payment/payadd", "POST", [middleware.payadd]);
+addRoute("/payment/paylist", "POST", [middleware.paylist]);
+addRoute("/payment/paydelete", "POST", [middleware.paydelete]);
+addRoute("/payment/payupdate", "POST", [middleware.payupdate]);
+addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
+
+
+/*uniforms process*/
+addRoute("/uniform/uniformadd", "POST", [middleware.uniformadd]);
+addRoute("/uniform/uniformlist", "POST", [middleware.uniformlist]);
+addRoute("/uniform/uniformdelete", "POST", [middleware.uniformdelete]);
+addRoute("/uniform/uniformupdate", "POST", [middleware.uniformupdate]);
+addRoute("/uniform/uniformfetch", "POST", [middleware.uniformfetch]);
 
 
 

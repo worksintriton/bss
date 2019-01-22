@@ -1398,27 +1398,28 @@ user.fetchsites = function (userInput, resultCallback) {
 user.payadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public.payment(client_id, employee_type, basic, da, additional_hours, others, subtotala, leave, subtotalb, pf, esi, gratuity, bouns, subtotalc, total, weekly_off, agency_charges, subtotal, rounded_off)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING *',
-                 [
+                 executor.one('INSERT INTO public.payment(client_id, employee_type, basic, da, additional_hours, others, subtotala, leave, subtotalb, pf, esi, gratuity, bouns, subtotalc, total, weekly_off, agency_charges, subtotal, rounded_off,ref_id)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,$20) RETURNING *',
+[
 userInput.client_id,
 userInput.employee_type,
-userInput.basic,
-userInput.da,
-userInput.additional_hours,
-userInput.others,
-userInput.subtotala,
-userInput.leave,
-userInput.subtotalb,
-userInput.pf,
-userInput.esi,
-userInput.gratuity,
-userInput.bouns,
-userInput.subtotalc,
-userInput.total,
-userInput.weekly_off,
-userInput.agency_charges,
-userInput.subtotal,
-userInput.rounded_off
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+userInput.amount,
+userInput.id
                  ])
                       .then(data => {
                  console.log(data);
@@ -1559,12 +1560,14 @@ user.requirement_details = function (userInput, resultCallback) {
 user.reqadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
- executor.one('INSERT INTO public.requirement(client_id, employee_type, amount, hrs )VALUES ( $1, $2, $3, $4) RETURNING *',
+ executor.one('INSERT INTO public.requirement(client_id, employee_type, amount, hrs,no_of_employee,total_amount )VALUES ( $1, $2, $3, $4,$5,$6) RETURNING *',
                  [
 userInput.client_id,
 userInput.employee_type,
 userInput.amount,
-userInput.hrs
+userInput.hrs,
+userInput.no_of_employee,
+userInput.total_amount
                  ])
                       .then(data => {
                  console.log(data);
@@ -1602,6 +1605,17 @@ user.reqdeletes = function (userInput, resultCallback) {
         .then(data => {
 
                  resultCallback(null,data );
+
+       executor.any('delete FROM public."payment" WHERE "ref_id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
             
         })
         .catch(error => {
@@ -1609,6 +1623,107 @@ user.reqdeletes = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+
+
+
+////uniform/////
+
+
+user.uniformadds = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public.uniform(employee_id, item, au, rate, remarks)VALUES ( $1, $2, $3, $4, $5) RETURNING *',
+[
+userInput.employee_id,
+userInput.item,
+userInput.au,
+userInput.rate,
+userInput.remarks
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.uniformupdates = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.uniform SET  client_id=$2, employee_type=$3, basic=$4, da=$5, additional_hours=$6, others=$7, subtotala=$8, leave=$9, subtotalb=$10, pf=$11, esi=$12, gratuity=$13, bouns=$14, subtotalc=$15, total=$16, weekly_off=$17, agency_charges=$18, subtotal=$19, rounded_off=$20 WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.employee_id,
+userInput.item,
+userInput.au,
+userInput.rate,
+userInput.remarks
+
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.uniformfetchs = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."uniform" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.uniformdeletes = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."uniform" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.uniformlists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."uniform" WHERE "employee_id"=($1)', [userInput.employee_id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
 
 
 

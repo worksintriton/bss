@@ -3071,28 +3071,28 @@ function fetchsite(req, res, next) {
 //////
 
 
-function payadd(req, res, next) {
+// function payadd(req, res, next) {
 
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.payadds(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata
-                }, utils.errors["200"]));
-            }
-        ]);
+//        async.waterfall([
+//             function (waterfallCallback){
+//                 services.user.payadds(req.body, function (err, result) {
+//                 if (err) {
+//                     req.log.error({
+//                         error: err
+//                     }, "Error while getting available users by mobiles");
+//                     return res.json(utils.errors["500"]);
+//                 }
+//                 waterfallCallback(null,result);
+//                 });
+//             },
+//             function (mydata, waterfallCallback){
+//                 return res.json(_.merge({
+//                     data: mydata
+//                 }, utils.errors["200"]));
+//             }
+//         ]);
 
-}
+// }
 
 
 function paylist(req, res, next) {
@@ -3204,6 +3204,17 @@ function reqadd(req, res, next) {
                 }
                 waterfallCallback(null,result);
                 });
+            }, 
+            function (result , waterfallCallback){
+                services.user.payadds(result, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
@@ -3213,6 +3224,8 @@ function reqadd(req, res, next) {
         ]);
 
 }
+
+
 
 
 function reqlist(req, res, next) {
@@ -3261,6 +3274,131 @@ function reqdelete(req, res, next) {
         ]);
 
 }
+
+
+
+
+
+
+
+function uniformadd(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.uniformadds(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function uniformlist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.uniformlists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function uniformdelete(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.uniformdeletes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function uniformupdate(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.uniformupdates(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function uniformfetch(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.uniformfetchs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 
 
 
@@ -3496,11 +3634,20 @@ exports.clearissue = clearissue;
 
 
 /*payment process*/
-exports.payadd = payadd;
+// exports.payadd = payadd;
 exports.paylist = paylist;
 exports.paydelete = paydelete;
 exports.payupdate = payupdate;
 exports.payfetch = payfetch;
+
+
+/*Uniform process*/
+exports.uniformadd = uniformadd;
+exports.uniformlist = uniformlist;
+exports.uniformdelete = uniformdelete;
+exports.uniformupdate = uniformupdate;
+exports.uniformfetch = uniformfetch;
+
 
 
 /*requirement process*/

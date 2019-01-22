@@ -5214,6 +5214,12 @@
                     },
                     "hrs": {
                         "type": "string"
+                    },
+                    "no_of_employee": {
+                        "type": "number"
+                    },
+                    "total_amount": {
+                        "type": "number"
                     }
                 },
         "additionalProperties": true,
@@ -5279,6 +5285,166 @@
                     "required": {
                         "id": "should have required property id"
                         
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/uniform/uniformadd": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    },
+                    "item": {
+                        "type": "string"
+                    },
+                    "au": {
+                        "type": "string"
+                    },
+                    "rate": {
+                        "type": "number"
+                    },
+                    "remarks": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/uniform/uniformupdate": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    },
+                    "item": {
+                        "type": "string"
+                    },
+                    "au": {
+                        "type": "string"
+                    },
+                    "rate": {
+                        "type": "number"
+                    },
+                    "remarks": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/uniform/uniformlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/uniform/uniformfetch": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/uniform/uniformdelete": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
                     },
                     "properties": {
                         "id": "userId must be string"
