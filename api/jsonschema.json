@@ -1558,57 +1558,6 @@
                     },
                     "billing_address": {
                         "type": "string"
-                    },
-                    "contact_design1": {
-                        "type": "string"
-                    },
-                    "contact_person1": {
-                        "type": "string"
-                    },
-                    "contact_number1": {
-                        "type": "string"
-                    },
-                    "contact_email1": {
-                        "type": "string"
-                    },
-                    "contact_design2": {
-                        "type": "string"
-                    },
-                    "contact_person2": {
-                        "type": "string"
-                    },
-                    "contact_number2": {
-                        "type": "string"
-                    },
-                    "contact_email2": {
-                        "type": "string"
-                    },
-                    "contact_design3": {
-                        "type": "string"
-                    },
-                    "contact_person3": {
-                        "type": "string"
-                    },
-                    "contact_number3": {
-                        "type": "string"
-                    },
-                    "contact_email3": {
-                        "type": "string"
-                    },
-                    "contact_start": {
-                        "type": "string"
-                    },
-                    "contact_end": {
-                        "type": "string"
-                    },
-                     "contract_type": {
-                        "type": "string"
-                    },
-                    "last_rate_revision_date": {
-                        "type": "string"
-                    },
-                    "invoice_cycle": {
-                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -4665,6 +4614,149 @@
         }
     },
 
+
+
+    "/attachment/deleteattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+
+    "/client/addclientattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "client_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "client_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "client_id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/client/listclientattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "client_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "client_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "client_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "client_id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/client/mylistclientattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "client_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "client_id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "client_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "client_id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+    "/client/fetchclientattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
          "/image/upload": {
         "POST": {
             "body": {
@@ -4761,6 +4853,21 @@
                         "type": "string"
                     }, 
                     "status": {
+                        "type": "string"
+                    }, 
+                    "contract_start": {
+                        "type": "string"
+                    }, 
+                    "contract_end": {
+                        "type": "string"
+                    }, 
+                    "contract_type": {
+                        "type": "string"
+                    }, 
+                    "last_rate_revision_date": {
+                        "type": "string"
+                    }, 
+                    "invoice_cycle": {
                         "type": "string"
                     }
                 },
@@ -5314,6 +5421,9 @@
                     },
                     "remarks": {
                         "type": "string"
+                    },
+                    "total_amount": {
+                        "type": "number"
                     }
                 },
         "additionalProperties": true,
@@ -5356,6 +5466,9 @@
                     },
                     "id": {
                         "type": "number"
+                    },
+                    "status": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -5452,7 +5565,185 @@
                 }
             }
         }
+    },
+
+
+        "/uniform/deliverd": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+        "/uniform/undeliverd": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/uniform/additems": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "rates": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "items": "should have required property userId"
+                    },
+                    "properties": {
+                        "items": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/uniform/updateitems": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                     "items": {
+                        "type": "string"
+                    },
+                     "rates": {
+                        "type": "string"
+                    }
+
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/uniform/itemslists": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/uniform/fetchitems": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
     }
+
+   
+
+
+
+
 
 
 

@@ -48,6 +48,10 @@ addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]);
 
 
+
+
+
+
 /*Add User*/
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
 addRoute("/authentication/userid", "POST", [middleware.userid]);
@@ -105,6 +109,12 @@ addRoute("/attachment/listattach", "POST", [middleware.listattach]);
 addRoute("/attachment/mylistattach", "POST", [middleware.mylistattach]);
 addRoute("/attachment/fetchattach", "POST", [middleware.fetchattach]);
 
+addRoute("/attachment/deleteattach", "POST", [middleware.deleteattach]);
+
+
+// addRoute("/attachment/fetchattach", "POST", [middleware.fetchattach]);
+
+
 
 
 /*issues Attachment*/
@@ -117,7 +127,6 @@ addRoute("/issue/listissues", "POST", [middleware.listissues]);
 
     /*fetch*/
 addRoute("/PointTracking/employee_fetchpoints", "POST", [middleware.employee_fetchpoints])
-
 
 /*PointTrackMap*/
 addRoute("/mapTracking/updatePointTrackMap", "POST", [middleware.updatePointTrackMap]);
@@ -262,6 +271,13 @@ addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
 
+/*Client Attachment*/
+addRoute("/client/addclientattach", "POST", [middleware.addclientattach]);
+addRoute("/client/listclientattach", "POST", [middleware.listclientattach]);
+addRoute("/client/mylistclientattach", "POST", [middleware.mylistclientattach]);
+addRoute("/client/fetchclientattach", "POST", [middleware.fetchclientattach]);
+
+
 
 /*payment process*/
 // addRoute("/payment/payadd", "POST", [middleware.payadd]);
@@ -272,13 +288,22 @@ addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
 
 
 /*uniforms process*/
+addRoute("/uniform/deliverd", "POST", [middleware.deliverd]);
+addRoute("/uniform/undeliverd", "POST", [middleware.undeliverd]);
 addRoute("/uniform/uniformadd", "POST", [middleware.uniformadd]);
 addRoute("/uniform/uniformlist", "POST", [middleware.uniformlist]);
 addRoute("/uniform/uniformdelete", "POST", [middleware.uniformdelete]);
 addRoute("/uniform/uniformupdate", "POST", [middleware.uniformupdate]);
 addRoute("/uniform/uniformfetch", "POST", [middleware.uniformfetch]);
 
+/*Master Table Detials*/
 
+/*Master Uniform item adding*/
+addRoute("/uniform/additems", "POST", [middleware.additems]);
+addRoute("/uniform/itemslists", "POST", [middleware.itemslists]);
+addRoute("/uniform/itemsdeletes", "POST", [middleware.itemsdeletes]);
+addRoute("/uniform/updateitems", "POST", [middleware.updateitems]);
+addRoute("/uniform/fetchitems", "POST", [middleware.fetchitems]);
 
 
 
