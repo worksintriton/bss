@@ -108,7 +108,6 @@ addRoute("/attachment/createattach", "POST", [middleware.createattach]);
 addRoute("/attachment/listattach", "POST", [middleware.listattach]);
 addRoute("/attachment/mylistattach", "POST", [middleware.mylistattach]);
 addRoute("/attachment/fetchattach", "POST", [middleware.fetchattach]);
-
 addRoute("/attachment/deleteattach", "POST", [middleware.deleteattach]);
 
 
@@ -276,6 +275,7 @@ addRoute("/client/addclientattach", "POST", [middleware.addclientattach]);
 addRoute("/client/listclientattach", "POST", [middleware.listclientattach]);
 addRoute("/client/mylistclientattach", "POST", [middleware.mylistclientattach]);
 addRoute("/client/fetchclientattach", "POST", [middleware.fetchclientattach]);
+addRoute("/client/deleteclientattach", "POST", [middleware.deleteclientattach])
 
 
 
@@ -296,8 +296,10 @@ addRoute("/uniform/uniformdelete", "POST", [middleware.uniformdelete]);
 addRoute("/uniform/uniformupdate", "POST", [middleware.uniformupdate]);
 addRoute("/uniform/uniformfetch", "POST", [middleware.uniformfetch]);
 
-/*Master Table Detials*/
 
+
+
+/*Master Table Details*/
 /*Master Uniform item adding*/
 addRoute("/uniform/additems", "POST", [middleware.additems]);
 addRoute("/uniform/itemslists", "POST", [middleware.itemslists]);
@@ -305,6 +307,14 @@ addRoute("/uniform/itemsdeletes", "POST", [middleware.itemsdeletes]);
 addRoute("/uniform/updateitems", "POST", [middleware.updateitems]);
 addRoute("/uniform/fetchitems", "POST", [middleware.fetchitems]);
 
+
+/*Master employee type adding*/
+
+addRoute("/employee/addemptype", "POST", [middleware.addemptype]);
+addRoute("/employee/emptypelist", "POST", [middleware.emptypelist]);
+addRoute("/employee/emptypedelete", "POST", [middleware.emptypedelete]);
+addRoute("/employee/updateemptype", "POST", [middleware.updateemptype]);
+addRoute("/employee/fetchemptype", "POST", [middleware.fetchemptype]);
 
 
 

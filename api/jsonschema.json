@@ -4650,7 +4650,7 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "client_id": {
+                    "site_id": {
                         "type": "string"
                     },
                     "title": {
@@ -4662,15 +4662,15 @@
                 },
         "additionalProperties": false,
                 "required": [
-                    "client_id"  
+                    "site_id"  
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "client_id": "should have required property LoginKey"
+                        "site_id": "should have required property LoginKey"
                     },
                     "properties": {
-                        "client_id": "userId must be number"
+                        "site_id": "userId must be number"
                     }
                 }
             }
@@ -4683,21 +4683,21 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "client_id": {
+                    "site_id": {
                         "type": "string"
                     }
                 },
         "additionalProperties": false,
                 "required": [
-                    "client_id"  
+                    "site_id"  
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "client_id": "should have required property LoginKey"
+                        "site_id": "should have required property LoginKey"
                     },
                     "properties": {
-                        "client_id": "userId must be number"
+                        "site_id": "userId must be number"
                     }
                 }
             }
@@ -4710,21 +4710,21 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "client_id": {
+                    "site_id": {
                         "type": "string"
                     }
                 },
         "additionalProperties": false,
                 "required": [
-                    "client_id"  
+                    "site_id"  
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "client_id": "should have required property LoginKey"
+                        "site_id": "should have required property LoginKey"
                     },
                     "properties": {
-                        "client_id": "userId must be number"
+                        "site_id": "userId must be number"
                     }
                 }
             }
@@ -4732,6 +4732,32 @@
     },
 
     "/client/fetchclientattach": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "id": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
+        "/client/deleteclientattach": {
         "POST": {
             "body": {
                  "type": "object",
@@ -5230,7 +5256,7 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "client_id": {
+                    "site_id": {
                         "type": "string"
                     }
                 },
@@ -5241,10 +5267,10 @@
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "client_id": "should have required property userId"
+                        "site_id": "should have required property userId"
                     },
                     "properties": {
-                        "client_id": "userId must be string"
+                        "site_id": "userId must be string"
                     }
                 }
             }
@@ -5310,7 +5336,7 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "client_id": {
+                    "site_id": {
                         "type": "string"
                     },
                     "employee_type": {
@@ -5331,16 +5357,16 @@
                 },
         "additionalProperties": true,
                 "required": [
-                    "client_id"
+                    "site_id"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "client_id": "should have required property client_id"
+                        "site_id": "should have required property client_id"
                         
                     },
                     "properties": {
-                        "client_id": "userId must be string"
+                        "site_id": "userId must be string"
                     }
                 }
             }
@@ -5352,22 +5378,22 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "client_id": {
+                    "site_id": {
                         "type": "string"
                     }
                 },
         "additionalProperties": true,
                 "required": [
-                    "client_id"
+                    "site_id"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "client_id": "should have required property client_id"
+                        "site_id": "should have required property client_id"
                         
                     },
                     "properties": {
-                        "client_id": "userId must be string"
+                        "site_id": "userId must be string"
                     }
                 }
             }
@@ -5714,6 +5740,143 @@
     },
 
     "/uniform/fetchitems": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+        "/employee/addemptype": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_type": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "addemptype": "should have required property userId"
+                    },
+                    "properties": {
+                        "addemptype": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/employee/updateemptype": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                     "addemptype": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/employee/emptypelist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/employee/fetchemptype": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/employee/emptypedelete": {
         "POST": {
             "body": {
                  "type": "object",

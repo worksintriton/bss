@@ -2982,6 +2982,27 @@ function fetchclientattach(req, res, next) {
 
 }
 
+function deleteclientattach(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletclientattachs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
 
 
 function uploadingfile(req, res, next) {
@@ -3694,6 +3715,124 @@ function fetchitems(req, res, next) {
 
 
 
+function addemptype(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addemptypes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function emptypelist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.emptypelists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function emptypedelete(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.emptypedeletes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updateemptype(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updateemptypes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function fetchemptype(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchemptypes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 
 
@@ -3920,6 +4059,7 @@ exports.addclientattach = addclientattach;
 exports.listclientattach = listclientattach;
 exports.mylistclientattach = mylistclientattach;
 exports.fetchclientattach = fetchclientattach;
+exports.deleteclientattach = deleteclientattach;
 
 /*Client site*/
 exports.newclientsite = newclientsite;
@@ -3960,6 +4100,15 @@ exports.itemslists = itemslists;
 exports.itemsdeletes = itemsdeletes;
 exports.updateitems = updateitems;
 exports.fetchitems = fetchitems;
+
+
+/*employee types*/
+exports.addemptype = addemptype;
+exports.emptypelist = emptypelist;
+exports.emptypedelete = emptypedelete;
+exports.updateemptype = updateemptype;
+exports.fetchemptype = fetchemptype;
+
 
 
 

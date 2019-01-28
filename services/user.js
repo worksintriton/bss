@@ -1249,8 +1249,8 @@ user.fetchattachs = function (userInput, resultCallback) {
 user.addclientattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('INSERT INTO public."client_attachment" ("client_id",title,path) VALUES ($1,$2,$3) RETURNING *',[
-    userInput.client_id,
+   executor.any('INSERT INTO public."client_attachment" ("site_id",title,path) VALUES ($1,$2,$3) RETURNING *',[
+    userInput.site_id,
     userInput.title,
     userInput.path
     ])
@@ -1288,7 +1288,7 @@ user.mylistclientattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."client_attachment" WHERE "client_id"=($1)', [userInput.client_id])
+    executor.any('select * FROM public."client_attachment" WHERE "site_id"=($1)', [userInput.site_id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1316,6 +1316,26 @@ user.fetchclientattachs = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+
+user.deletclientattachs = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('delete  FROM public."client_attachment" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
 
 
 
@@ -1464,9 +1484,9 @@ user.fetchsites = function (userInput, resultCallback) {
 user.payadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public.payment(client_id, employee_type, basic, da, additional_hours, others, subtotala, leave, subtotalb, pf, esi, gratuity, bouns, subtotalc, total, weekly_off, agency_charges, subtotal, rounded_off,ref_id)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,$20) RETURNING *',
+                 executor.one('INSERT INTO public.payment(site_id, employee_type, basic, da, additional_hours, others, subtotala, leave, subtotalb, pf, esi, gratuity, bouns, subtotalc, total, weekly_off, agency_charges, subtotal, rounded_off,ref_id)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,$20) RETURNING *',
 [
-userInput.client_id,
+userInput.site_id,
 userInput.employee_type,
 0,
 0,
@@ -1572,7 +1592,7 @@ user.paydeletes = function (userInput, resultCallback) {
 user.paylists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payment" WHERE "client_id"=($1)', [userInput.client_id])
+    executor.any('select * FROM public."payment" WHERE "site_id"=($1)', [userInput.site_id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1589,7 +1609,7 @@ user.paylists = function (userInput, resultCallback) {
 user.payment_details = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payment" WHERE "client_id"=($1)', [userInput.id])
+    executor.any('select * FROM public."payment" WHERE "site_id"=($1)', [userInput.id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1626,9 +1646,9 @@ user.requirement_details = function (userInput, resultCallback) {
 user.reqadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
- executor.one('INSERT INTO public.requirement(client_id, employee_type, amount, hrs,no_of_employee,total_amount )VALUES ( $1, $2, $3, $4,$5,$6) RETURNING *',
+ executor.one('INSERT INTO public.requirement(site_id, employee_type, amount, hrs,no_of_employee,total_amount )VALUES ( $1, $2, $3, $4,$5,$6) RETURNING *',
                  [
-userInput.client_id,
+userInput.site_id,
 userInput.employee_type,
 userInput.amount,
 userInput.hrs,
@@ -1651,7 +1671,7 @@ userInput.total_amount
 user.reqlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."requirement" WHERE "client_id"=($1)', [userInput.client_id])
+    executor.any('select * FROM public."requirement" WHERE "site_id"=($1)', [userInput.site_id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1947,6 +1967,94 @@ user.itemslist = function (userInput, resultCallback) {
 
 
 
+///Employee adding////
+
+user.addemptypes = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public.employee_type(employee_type)VALUES ($1) RETURNING *',
+[
+userInput.employee_type
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.updateemptypes = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.employee_type SET  employee_type=$2   WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.employee_type
+
+
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchemptypes = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.emptypedeletes = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.emptypelists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."employee_type"', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 
