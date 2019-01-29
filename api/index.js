@@ -253,19 +253,15 @@ addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
 addRoute("/requirement/reqadd", "POST", [middleware.reqadd]);
 addRoute("/requirement/reqlist", "POST", [middleware.reqlist]);
 addRoute("/requirement/reqdelete", "POST", [middleware.reqdelete]);
+addRoute("/requirement/reqfetch", "POST", [middleware.reqfetch]);
+addRoute("/requirement/requpdate", "POST", [middleware.requpdate]);
+
 
 
 /*Add Client*/
 addRoute("/authentication/addclients", "POST", [middleware.addclients]);
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
-
-
-
 addRoute("/authentication/clientid", "POST", [middleware.clientid]);
-
-
-
-
 addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
@@ -285,6 +281,8 @@ addRoute("/payment/paylist", "POST", [middleware.paylist]);
 addRoute("/payment/paydelete", "POST", [middleware.paydelete]);
 addRoute("/payment/payupdate", "POST", [middleware.payupdate]);
 addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
+
+
 
 
 /*uniforms process*/

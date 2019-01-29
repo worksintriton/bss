@@ -558,7 +558,7 @@ function clientid(req, res, next) {
                 });
             },
              function (client_detail,site_details, waterfallCallback){
-                 services.user.payment_details(req.body, function (err, payment_details) {
+                 services.user.payment_details(site_details, function (err, payment_details) {
                 if (err) {
                     req.log.error({
                         error: err
@@ -579,18 +579,84 @@ function clientid(req, res, next) {
                 waterfallCallback(null,client_detail,site_details,payment_details,requirement_details);
                 });
             },
-                function (client_detail,site_details,payment_details,requirement_details, waterfallCallback){
+            function (client_detail,site_details,payment_details,requirement_details, waterfallCallback){
+                 services.user.listclientattachs(req.body, function (err, listclientattachs) {
+                if (err) {
+                    console.log(err)
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,client_detail,site_details,payment_details,requirement_details,listclientattachs);
+                });
+            },
+            function (client_detail,site_details,payment_details,requirement_details,listclientattachs, waterfallCallback){
+                console.log(site_details)
+               let site_detail = [];
+                site_details.forEach(function(belement) {
+                     let site_details = {
+                        site_details:belement
+                        };
+                site_detail.push(site_details);
+             
+                   let payment_detail = [];
+                payment_details.forEach(function(pelement) {
+                    if(belement.id == pelement.site_id){
+                    site_detail.payment_detail.push(pelement);
+                }
+               });
+                  let requirement_detail = [];
+                requirement_details.forEach(function(relement) {
+                    if(belement.id == relement.site_id){
+                    site_detail.requirement_detail.push(relement);
+                }
+               });
+                  let listclientattach = [];
+                listclientattachs.forEach(function(delement) {
+                    if(belement.id == delement.site_id){
+                    site_detail.listclientattach.push(delement);
+                }
+               });
+            });
+                
+
+                 waterfallCallback(null,client_detail,site_detail, waterfallCallback);
+},
+              function (client_detail,site_detail, waterfallCallback){
                 return res.json(_.merge({
                     client_detail: client_detail,
-                    site_details: site_details,
-                    payment_details:payment_details,
-                    requirement_details:requirement_details
+                    site_detail: site_detail,
                 }, utils.errors["200"]));
             }
 
         ]);
 
+
+
+
+
 }
+
+
+   // let floorPlan_explore_prize = [];
+   //              floorPlan_explore_prize_catag.forEach(function(belement) {
+   //                  let floorPlan_explore_prize_catag = {
+   //                      type:belement.image
+   //                      };
+   //                  floorPlan_explore_prize_catag.plans = [];
+   //                  floorPlan_explore_prize_image.forEach(function(pelement) {
+   //                      if(belement.price_id == pelement.price_id){
+
+   //                          let project = {};
+   //                          project.imagepath = pelement.image;
+   //                          floorPlan_explore_prize_catag.plans.push(project);
+   //                      }
+   //                  });
+   //                  floorPlan_explore_prize.push(floorPlan_explore_prize_catag);
+   //              });
+   //               waterfallCallback(null, builderHeaderLogo,builderLogo,elevation,factSheet,specification,videoUrl,amenities,background,booking,broucher,completes,faq,bankers,price,statu,googleMapIcons,approval,floorPlan_explore,floorPlan_explore_prize,companyprofilecatag,companyprofileimage,walkthroughUrl);
+   //          },
 
 
 
@@ -3397,6 +3463,67 @@ function reqdelete(req, res, next) {
 
 
 
+function reqfetch(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.reqfetchs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function requpdate(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.requpdates(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (result , waterfallCallback){
+                services.user.payementupdate(result, function (err, payresult) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
 
 
 
@@ -3835,6 +3962,42 @@ function fetchemptype(req, res, next) {
 
 
 
+// function updateamount(req, res, next) {
+
+//        async.waterfall([
+//             function (waterfallCallback){
+//                 services.user.updateamounts(req.body, function (err, result) {
+//                 if (err) {
+//                     req.log.error({
+//                         error: err
+//                     }, "Error while getting available users by mobiles");
+//                     return res.json(utils.errors["500"]);
+//                 }
+//                 waterfallCallback(null,result);
+//                 });
+//             },function (result,waterfallCallback){
+//                 services.user.updateamountss(req.body, function (err, result) {
+//                 if (err) {
+//                     req.log.error({
+//                         error: err
+//                     }, "Error while getting available users by mobiles");
+//                     return res.json(utils.errors["500"]);
+//                 }
+//                 waterfallCallback(null,result);
+//                 });
+//             },
+//             function (mydata, waterfallCallback){
+//                 return res.json(_.merge({
+//                     data: mydata
+//                 }, utils.errors["200"]));
+//             }
+//         ]);
+
+// }
+
+
+
+
 
 
 
@@ -4116,6 +4279,9 @@ exports.fetchemptype = fetchemptype;
 exports.reqadd = reqadd;
 exports.reqlist = reqlist;
 exports.reqdelete = reqdelete;
+exports.reqfetch = reqfetch;
+exports.requpdate = requpdate;
+
 
 
 

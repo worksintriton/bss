@@ -1271,7 +1271,7 @@ user.listclientattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."client_attachment"', [userInput.posted_by])
+    executor.any('select * FROM public."client_attachment"', [userInput.id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1484,7 +1484,7 @@ user.fetchsites = function (userInput, resultCallback) {
 user.payadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public.payment(site_id, employee_type, basic, da, additional_hours, others, subtotala, leave, subtotalb, pf, esi, gratuity, bouns, subtotalc, total, weekly_off, agency_charges, subtotal, rounded_off,ref_id)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,$20) RETURNING *',
+                 executor.one('INSERT INTO public.payment(site_id, employee_type, basic, da, additional_hours, others, subtotala, leave, subtotalb, pf, esi, gratuity, bouns, subtotalc, total, weekly_off, agency_charges, subtotal, rounded_off,id)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,$20) RETURNING *',
 [
 userInput.site_id,
 userInput.employee_type,
@@ -1557,6 +1557,49 @@ userInput.rounded_off
 };
 
 
+
+user.updateamounts = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.payment SET  rounded_off=$2 WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.amount
+
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.updateamounts = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.payment SET  rounded_off=$2 WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.amount
+
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
 user.payfetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -1607,9 +1650,10 @@ user.paylists = function (userInput, resultCallback) {
 
 
 user.payment_details = function (userInput, resultCallback) {
+  console.log(userInput)
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payment" WHERE "site_id"=($1)', [userInput.id])
+    executor.any('select * FROM public."payment"  ', [userInput.id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1627,7 +1671,7 @@ user.payment_details = function (userInput, resultCallback) {
 user.requirement_details = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."requirement" WHERE "client_id"=($1)', [userInput.id])
+    executor.any('select * FROM public."requirement" ', [userInput.id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1692,7 +1736,7 @@ user.reqdeletes = function (userInput, resultCallback) {
 
                  resultCallback(null,data );
 
-       executor.any('delete FROM public."payment" WHERE "ref_id"=($1)', [userInput.id])
+       executor.any('delete FROM public."payment" WHERE "id"=($1)', [userInput.id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1703,6 +1747,83 @@ user.reqdeletes = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
             
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.reqfetchs = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."requirement" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.requpdates = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+ executor.one('UPDATE public.requirement SET "site_id" = $2, "employee_type"=$3, "amount"=$4, "hrs"=$5,"no_of_employee"=$6,"total_amount"=$7 WHERE id=$1 RETURNING *',
+[
+userInput.id,                 
+userInput.site_id,
+userInput.employee_type,
+userInput.amount,
+userInput.hrs,
+userInput.no_of_employee,
+userInput.total_amount
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.payementupdate = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.payment SET  site_id=$2, employee_type=$3, basic=$4, da=$5, additional_hours=$6, others=$7, subtotala=$8, leave=$9, subtotalb=$10, pf=$11, esi=$12, gratuity=$13, bouns=$14, subtotalc=$15, total=$16, weekly_off=$17, agency_charges=$18, subtotal=$19, rounded_off=$20 WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.site_id,
+userInput.employee_type,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+userInput.amount
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
         })
         .catch(error => {
             resultCallback(error,null );

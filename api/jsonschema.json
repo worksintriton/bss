@@ -5251,6 +5251,8 @@
     },
 
 
+
+
     "/payment/paylist": {
         "POST": {
             "body": {
@@ -5373,6 +5375,52 @@
         }
     },
 
+
+             "/requirement/requpdate": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "string"
+                    },
+                    "employee_type": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "hrs": {
+                        "type": "string"
+                    },
+                    "no_of_employee": {
+                        "type": "number"
+                    },
+                    "total_amount": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "site_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "site_id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "site_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
          "/requirement/reqlist": {
         "POST": {
             "body": {
@@ -5401,6 +5449,34 @@
     },
 
          "/requirement/reqdelete": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property id"
+                        
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+             "/requirement/reqfetch": {
         "POST": {
             "body": {
                  "type": "object",
