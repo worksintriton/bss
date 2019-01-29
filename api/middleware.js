@@ -592,37 +592,56 @@ function clientid(req, res, next) {
                 });
             },
             function (client_detail,site_details,payment_details,requirement_details,listclientattachs, waterfallCallback){
-                console.log(site_details)
-               let site_detail = [];
-                site_details.forEach(function(belement) {
-                     let site_details = {
-                        site_details:belement
-                        };
-                site_detail.push(site_details);
-             
-                   let payment_detail = [];
-                payment_details.forEach(function(pelement) {
-                    if(belement.id == pelement.site_id){
-                    site_detail.payment_detail.push(pelement);
-                }
-               });
-                  let requirement_detail = [];
-                requirement_details.forEach(function(relement) {
-                    if(belement.id == relement.site_id){
-                    site_detail.requirement_detail.push(relement);
-                }
-               });
-                  let listclientattach = [];
-                listclientattachs.forEach(function(delement) {
-                    if(belement.id == delement.site_id){
-                    site_detail.listclientattach.push(delement);
-                }
-               });
-            });
-                
+                 
 
-                 waterfallCallback(null,client_detail,site_detail, waterfallCallback);
-},
+                console.log(site_details,payment_details,requirement_details)
+
+                let site = [];
+                site_details.forEach(function(belement){
+                       let site_detail =[];
+                       site_detail = belement;   
+                       site.push(site_detail)
+
+                       site_detail.payment = []
+                       payment_details.forEach(function(pelement) {
+                        if(belement.id == pelement.site_id){
+
+                              site_detail.payment.push(pelement)
+                        }
+                        });
+
+                         site_detail.requirement = []
+                       requirement_details.forEach(function(relement) {
+                        if(belement.id == relement.site_id){
+                              site_detail.requirement.push(relement)
+                        }
+                        });
+
+                        site_detail.documents = []
+                       listclientattachs.forEach(function(delement) {
+                        if(belement.id == delement.site_id){
+                              site_detail.documents.push(delement)
+                        }
+                        });
+                       
+                });
+
+
+                // let site = [];
+                // site_details.forEach(function(belement) {
+                //     let floorPlan_explore_prize_catag = {
+                //         site_det:belement
+                //         };
+                //     site_details.payment = [];
+                //     payment_details.forEach(function(pelement) {
+                //         if(belement.id == pelement.site_id){
+                //             site_details.payment.push(pelement);
+                //         }
+                //     });
+                //     site.push(site_details);
+                // });
+                 waterfallCallback(null, client_detail,site);
+            },
               function (client_detail,site_detail, waterfallCallback){
                 return res.json(_.merge({
                     client_detail: client_detail,
