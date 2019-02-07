@@ -746,6 +746,33 @@
     },
 
 
+        "/authentication/deleteTrackinglist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Employee_id": "should have required property id"
+                    },
+                    "properties": {
+                        "Employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
     "/authentication/Trackinglist": {
         "POST": {
             "body": {
@@ -1389,148 +1416,6 @@
             }
         }
     },
-
-
-     "/authentication/addclients1": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "cliid": {
-                        "type": "string"
-                    },
-                    "No_am": {
-                        "type": "number"
-                    },
-                    "No_as": {
-                        "type": "number"
-                    },
-                    "No_s": {
-                        "type": "number"
-                    },
-                    "shift_type": {
-                        "type": "string"
-                    },
-                    "hour_type": {
-                        "type": "string"
-                    },
-                    "salary_am": {
-                        "type": "number"
-                    },
-                    "am_bss": {
-                        "type": "number"
-                    },
-                    "am_employee": {
-                        "type": "number"
-                    },
-                    "am_30days": {
-                        "type": "number"
-                    },
-                    "am_31days": {
-                        "type": "number"
-                    },
-                    "am_28days": {
-                        "type": "number"
-                    },
-                    "am_29days": {
-                        "type": "number"
-                    },
-                    "am_ot_bss": {
-                        "type": "number"
-                    },
-                    "am_ot_employee": {
-                        "type": "number"
-                    },
-                    "salary_as": {
-                        "type": "number"
-                    },
-                    "as_bss": {
-                        "type": "number"
-                    },
-                    "as_employee": {
-                        "type": "number"
-                    },
-                    "as_30days": {
-                        "type": "number"
-                    },
-                    "as_31days": {
-                        "type": "number"
-                    },
-                     "as_28days": {
-                        "type": "number"
-                    },
-                    "as_29days": {
-                        "type": "number"
-                    },
-                    "over_time_as": {
-                        "type": "number"
-                    },
-                    "as_ot_bss": {
-                        "type": "number"
-                    },
-                    "as_ot_employee": {
-                        "type": "number"
-                    },
-                    "salary_s": {
-                        "type": "number"
-                    },
-                    "s_bss": {
-                        "type": "number"
-                    },
-                    "s_employee": {
-                        "type": "number"
-                    },
-                    "s_30days": {
-                        "type": "number"
-                    },
-                    "s_31days": {
-                        "type": "number"
-                    },
-                    "s_28days": {
-                        "type": "number"
-                    },
-                    "s_29days": {
-                        "type": "number"
-                    },
-                    "over_time_s": {
-                        "type": "number"
-                    },
-                    "s_ot_bss": {
-                        "type": "number"
-                    },
-                    "s_ot_employee": {
-                        "type": "number"
-                    },
-                    "total_amount": {
-                        "type": "number"
-                    },
-                    "am_tot": {
-                        "type": "number"
-                    },
-                    "as_tot": {
-                        "type": "number"
-                    },
-                    "s_tot": {
-                        "type": "number"
-                    }
-                },
-        "additionalProperties": true,
-                "required": [
-
-        ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "Sl_No": "should have required property userId"
-                    },
-                    "properties": {
-                        "Sl_No": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
 
 
     "/authentication/updateclients": {
@@ -5976,8 +5861,1382 @@
                 }
             }
         }
+    },
+
+
+
+
+
+
+     "/finanace/addfinanace": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "descriptions": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "total_amount": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property userId"
+                    },
+                    "properties": {
+                        "title": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/finanace/updatefinanace": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                      "title": {
+                        "type": "string"
+                    },
+                    "descriptions": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "total_amount": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/finanace/finanacelist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/finanace/fetchfinanace": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/finanace/finanacedelete": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    }
+,
+     "/quality/addquality": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "string"
+                    },
+                    "unit_name": {
+                        "type": "string"
+                    },
+                    "unit_in_charge": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "unit_strength": {
+                        "type": "string"
+                    },
+                    "roll_call": {
+                        "type": "string"
+                    },
+                    "uniform_deficiency": {
+                        "type": "string"
+                    },
+                    "no_of_duty": {
+                        "type": "string"
+                    },
+                    "availability": {
+                        "type": "string"
+                    },
+                    "kl_duty_post": {
+                        "type": "string"
+                    },
+                    "kl_fire_emergency": {
+                        "type": "string"
+                    },
+                    "details_of_bsspl": {
+                        "type": "string"
+                    },
+                    "regularity_of_ops": {
+                        "type": "string"
+                    },
+                    "regularity_of_night": {
+                        "type": "string"
+                    },
+                    "last_training_details": {
+                        "type": "string"
+                    },
+                    "Weak_arears": {
+                        "type": "string"
+                    },
+                    "quality_remarks": {
+                        "type": "string"
+                    },
+                    "client_remarks": {
+                        "type": "string"
+                    },
+                    "client_name": {
+                        "type": "string"
+                    },
+                    "client_contact": {
+                        "type": "string"
+                    },
+                    "mail_id": {
+                        "type": "string"
+                    },
+                    "Remarks_by_cod": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "date": "should have required property userId"
+                    },
+                    "properties": {
+                        "date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/quality/updatequality": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "string"
+                    },
+                    "unit_name": {
+                        "type": "string"
+                    },
+                    "unit_in_charge": {
+                        "type": "string"
+                    },
+                    "contact_no": {
+                        "type": "string"
+                    },
+                    "unit_strength": {
+                        "type": "string"
+                    },
+                    "roll_call": {
+                        "type": "string"
+                    },
+                    "uniform_deficiency": {
+                        "type": "string"
+                    },
+                    "no_of_duty": {
+                        "type": "string"
+                    },
+                    "availability": {
+                        "type": "string"
+                    },
+                    "kl_duty_post": {
+                        "type": "string"
+                    },
+                    "kl_fire_emergency": {
+                        "type": "string"
+                    },
+                    "details_of_bsspl": {
+                        "type": "string"
+                    },
+                    "regularity_of_ops": {
+                        "type": "string"
+                    },
+                    "regularity_of_night": {
+                        "type": "string"
+                    },
+                    "last_training_details": {
+                        "type": "string"
+                    },
+                    "Weak_arears": {
+                        "type": "string"
+                    },
+                    "quality_remarks": {
+                        "type": "string"
+                    },
+                    "client_remarks": {
+                        "type": "string"
+                    },
+                    "client_name": {
+                        "type": "string"
+                    },
+                    "client_contact": {
+                        "type": "string"
+                    },
+                    "mail_id": {
+                        "type": "string"
+                    },
+                    "Remarks_by_cod": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/quality/listquality": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+
+    "/quality/fetchquality": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/quality/deletequality": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    }
+,
+
+
+
+      "/quality/addqualitytable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "am": {
+                        "type": "string"
+                    },
+                    "ao": {
+                        "type": "string"
+                    },
+                    "so": {
+                        "type": "string"
+                    },
+                    "aso": {
+                        "type": "string"
+                    },
+                    "sg": {
+                        "type": "string"
+                    },
+                    "lsg": {
+                        "type": "string"
+                    },
+                    "fg": {
+                        "type": "string"
+                    },
+                    "gm": {
+                        "type": "string"
+                    },
+                    "total": {
+                        "type": "string"
+                    },
+                    "quality_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "date": "should have required property userId"
+                    },
+                    "properties": {
+                        "date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/quality/updatequalitytable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                   "type": {
+                        "type": "string"
+                    },
+                    "am": {
+                        "type": "string"
+                    },
+                    "ao": {
+                        "type": "string"
+                    },
+                    "so": {
+                        "type": "string"
+                    },
+                    "aso": {
+                        "type": "string"
+                    },
+                    "sg": {
+                        "type": "string"
+                    },
+                    "lsg": {
+                        "type": "string"
+                    },
+                    "fg": {
+                        "type": "string"
+                    },
+                    "gm": {
+                        "type": "string"
+                    },
+                    "total": {
+                        "type": "string"
+                    },
+                    "quality_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/quality/listqualitytable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "quality_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "quality_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "quality_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+
+    "/quality/fetchqualitytable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/quality/deletequalitytable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    }
+,
+
+
+          "/training/addtrainingreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "unit": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "trainer": {
+                        "type": "string"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "time_duration_form": {
+                        "type": "string"
+                    },
+                    "time_duration_to": {
+                        "type": "string"
+                    },
+                    "uname": {
+                        "type": "string"
+                    },
+                    "usign": {
+                        "type": "string"
+                    },
+                    "tname": {
+                        "type": "string"
+                    },
+                    "tsign": {
+                        "type": "string"
+                    },
+                    "asoname": {
+                        "type": "string"
+                    },
+                    "asosign": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "unit": "should have required property userId"
+                    },
+                    "properties": {
+                        "unit": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/training/updatetrainingreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                      "unit": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "trainer": {
+                        "type": "string"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "time_duration_form": {
+                        "type": "string"
+                    },
+                    "time_duration_to": {
+                        "type": "string"
+                    },
+                    "uname": {
+                        "type": "string"
+                    },
+                    "usign": {
+                        "type": "string"
+                    },
+                    "tname": {
+                        "type": "string"
+                    },
+                    "tsign": {
+                        "type": "string"
+                    },
+                    "asoname": {
+                        "type": "string"
+                    },
+                    "asosign": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/training/listtrainingreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "quality_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "quality_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+
+    "/training/fetchtrainingreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/training/deletetrainingreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
     }
 
+,
+
+
+  "/training/addtrainingreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "bss_no": {
+                        "type": "string"
+                    },
+                    "rank": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "signature": {
+                        "type": "string"
+                    },
+                    "remarks_by_trainer": {
+                        "type": "string"
+                    },
+                    "report_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "bss_no": "should have required property userId"
+                    },
+                    "properties": {
+                        "bss_no": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/training/updatetrainingreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                      "bss_no": {
+                        "type": "string"
+                    },
+                    "rank": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "signature": {
+                        "type": "string"
+                    },
+                    "remarks_by_trainer": {
+                        "type": "string"
+                    },
+                    "report_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/training/listtrainingreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "report_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "quality_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "quality_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+
+    "/training/fetchtrainingreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/training/deletetrainingreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    }
+,
+
+  "/night_check/addnightreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string"
+                    },
+                    "checking_officer": {
+                        "type": "string"
+                    },
+                    "site_name": {
+                        "type": "string"
+                    },
+                    "visit_tiem_from": {
+                        "type": "string"
+                    },
+                    "visit_time_to": {
+                        "type": "string"
+                    },
+                    "shift_rank": {
+                        "type": "string"
+                    },
+                    "shift_auth": {
+                        "type": "string"
+                    },
+                    "shift_present": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "date": "should have required property userId"
+                    },
+                    "properties": {
+                        "date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/night_check/updatenightreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                      "date": {
+                        "type": "string"
+                    },
+                    "checking_officer": {
+                        "type": "string"
+                    },
+                    "site_name": {
+                        "type": "string"
+                    },
+                    "visit_tiem_from": {
+                        "type": "string"
+                    },
+                    "visit_time_to": {
+                        "type": "string"
+                    },
+                    "shift_rank": {
+                        "type": "string"
+                    },
+                    "shift_auth": {
+                        "type": "string"
+                    },
+                    "shift_present": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/night_check/listnightreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+
+    "/night_check/fetchnightreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/night_check/deletenightreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    }
+
+,
+  "/night_check/addnightreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "bss_no": {
+                        "type": "string"
+                    },
+                    "rank": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "post": {
+                        "type": "string"
+                    },
+                    "observation": {
+                        "type": "string"
+                    },
+                    "sign": {
+                        "type": "string"
+                    },
+                    "night_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "bss_no": "should have required property userId"
+                    },
+                    "properties": {
+                        "bss_no": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/night_check/updatenightreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                     "bss_no": {
+                        "type": "string"
+                    },
+                    "rank": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "post": {
+                        "type": "string"
+                    },
+                    "observation": {
+                        "type": "string"
+                    },
+                    "sign": {
+                        "type": "string"
+                    },
+                    "night_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/night_check/listnightreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "night_id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+
+    "/night_check/fetchnightreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/night_check/deletenightreporttable": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    }
    
 
 

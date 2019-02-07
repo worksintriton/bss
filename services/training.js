@@ -144,6 +144,18 @@ var executor = db.getdaata.getdb();
         }) 
 };
 
+training.deleteTrackinglists = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+    executor.any('Delete FROM public."employee_track" where "Employee_id"=($1) ',[userInput.Employee_id])
+        .then(data => {
+            resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            
+        }) 
+};
+
 training.Trackinglists = function (userInput, resultCallback) {
 var executor = db.getdaata.getdb();
     executor.any('SELECT * FROM public."employee_track" ',[userInput.client_ID])

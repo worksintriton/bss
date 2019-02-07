@@ -1533,6 +1533,29 @@ function Trackingperson(req, res, next) {
 
 }
 
+function deleteTrackinglist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.training.deleteTrackinglists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 
 function Trackinglist(req, res, next) {
        async.waterfall([
@@ -3981,38 +4004,841 @@ function fetchemptype(req, res, next) {
 
 
 
-// function updateamount(req, res, next) {
+function addfinanace(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addfinanaces(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
 
-//        async.waterfall([
-//             function (waterfallCallback){
-//                 services.user.updateamounts(req.body, function (err, result) {
-//                 if (err) {
-//                     req.log.error({
-//                         error: err
-//                     }, "Error while getting available users by mobiles");
-//                     return res.json(utils.errors["500"]);
-//                 }
-//                 waterfallCallback(null,result);
-//                 });
-//             },function (result,waterfallCallback){
-//                 services.user.updateamountss(req.body, function (err, result) {
-//                 if (err) {
-//                     req.log.error({
-//                         error: err
-//                     }, "Error while getting available users by mobiles");
-//                     return res.json(utils.errors["500"]);
-//                 }
-//                 waterfallCallback(null,result);
-//                 });
-//             },
-//             function (mydata, waterfallCallback){
-//                 return res.json(_.merge({
-//                     data: mydata
-//                 }, utils.errors["200"]));
-//             }
-//         ]);
+}
 
-// }
+
+function finanacelist(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.finanacelists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function finanacedelete(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.finanacedeletes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updatefinanace(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatefinanaces(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function fetchfinanace(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchfinanaces(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+
+
+
+function addquality(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addqualitys(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function listquality(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listqualitys(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function deletequality(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletequalitys(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updatequality(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatequalitys(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function fetchquality(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchqualitys(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function addqualitytable(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addqualitytables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function listqualitytable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listqualitytables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function deletequalitytable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletequalitytables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updatequalitytable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatequalitytables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function fetchqualitytable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchqualitytables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+
+function addtrainingreport(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addtrainingreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function listtrainingreport(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listtrainingreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function deletetrainingreport(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletetrainingreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updatetrainingreport(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatetrainingreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function fetchtrainingreport(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchtrainingreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+
+function addtrainingreporttable(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addtrainingreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function listtrainingreporttable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listtrainingreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function deletetrainingreporttable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletetrainingreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function updatetrainingreporttable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatetrainingreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function fetchtrainingreporttable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchtrainingreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function addnightreport(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addnightreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function listnightreport(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listnightreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function fetchnightreport(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchnightreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function deletenightreport(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletenightreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function updatenightreport(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatenightreports(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function addnightreporttable(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addnightreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function listnightreporttable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listnightreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function fetchnightreporttable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchnightreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function deletenightreporttable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletenightreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function updatenightreporttable(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatenightreporttables(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 
 
 
@@ -4111,6 +4937,7 @@ exports.traininglist = traininglist;
 exports.Tracking = Tracking;
 exports.Trackinglist = Trackinglist;
 exports.Trackingperson = Trackingperson;
+exports.deleteTrackinglist = deleteTrackinglist;
 
 
 
@@ -4301,6 +5128,63 @@ exports.reqdelete = reqdelete;
 exports.reqfetch = reqfetch;
 exports.requpdate = requpdate;
 
+
+/*Finance process*/
+exports.addfinanace = addfinanace;
+exports.finanacelist = finanacelist;
+exports.updatefinanace = updatefinanace;
+exports.finanacedelete = finanacedelete;
+exports.fetchfinanace = fetchfinanace;
+
+
+/*Quality check process*/
+exports.addquality = addquality;
+exports.listquality = listquality;
+exports.fetchquality = fetchquality;
+exports.deletequality = deletequality;
+exports.updatequality = updatequality;
+
+
+/*Training report process*/
+exports.addtrainingreport = addtrainingreport;
+exports.listtrainingreport = listtrainingreport;
+exports.fetchtrainingreport = fetchtrainingreport;
+exports.deletetrainingreport = deletetrainingreport;
+exports.updatetrainingreport = updatetrainingreport;
+
+
+/*Training table process*/
+exports.addtrainingreporttable = addtrainingreporttable;
+exports.listtrainingreporttable = listtrainingreporttable;
+exports.fetchtrainingreporttable = fetchtrainingreporttable;
+exports.deletetrainingreporttable = deletetrainingreporttable;
+exports.updatetrainingreporttable = updatetrainingreporttable;
+
+
+
+/*night Check report process*/
+exports.addnightreport = addnightreport;
+exports.listnightreport = listnightreport;
+exports.fetchnightreport = fetchnightreport;
+exports.deletenightreport = deletenightreport;
+exports.updatenightreport = updatenightreport;
+
+
+/*night check table process*/
+exports.addnightreporttable = addnightreporttable;
+exports.listnightreporttable = listnightreporttable;
+exports.fetchnightreporttable = fetchnightreporttable;
+exports.deletenightreporttable = deletenightreporttable;
+exports.updatenightreporttable = updatenightreporttable;
+
+
+
+/*Quality table check process*/
+exports.addqualitytable = addqualitytable;
+exports.listqualitytable = listqualitytable;
+exports.fetchqualitytable = fetchqualitytable;
+exports.deletequalitytable = deletequalitytable;
+exports.updatequalitytable = updatequalitytable;
 
 
 

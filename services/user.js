@@ -2179,6 +2179,738 @@ user.emptypelists = function (userInput, resultCallback) {
 
 
 
+///Employee adding////
+
+user.addfinanaces = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.fianance_management (title,descriptions,date,type,total_amount)VALUES ($1,$2,$3,$4,$5) RETURNING *',
+[
+userInput.title,
+userInput.descriptions,
+userInput.date,
+userInput.type,
+userInput.total_amount
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.updatefinanaces = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.fianance_management SET  title=$2,descriptions=$3,date=$4,type=$5,total_amount=$6   WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.title,
+userInput.descriptions,
+userInput.date,
+userInput.type,
+userInput.total_amount
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchfinanaces = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."fianance_management" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.finanacedeletes = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."fianance_management" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+              executor.any('Delete FROM public."finanace_documents" WHERE "finance_id"=($1)', [userInput.id])
+               .then(data => {
+                 resultCallback(null,data ); 
+        })   
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.finanacelists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."fianance_management"', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+///Quality checking////
+
+user.addqualitys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.qualitycheck (date,time,unit_name,unit_in_charge,contact_no,unit_strength,roll_call,uniform_deficiency,no_of_duty,availability,kl_duty_post,kl_fire_emergency,details_of_bsspl,regularity_of_ops,regularity_of_night,last_training_details,Weak_arears,quality_remarks,client_remarks,client_name,client_contact,mail_id,Remarks_by_cod)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23) RETURNING *',
+[
+userInput.date,
+userInput.time,
+userInput.unit_name,
+userInput.unit_in_charge,
+userInput.contact_no,
+userInput.unit_strength,
+userInput.roll_call,
+userInput.uniform_deficiency,
+userInput.no_of_duty,
+userInput.availability,
+userInput.kl_duty_post,
+userInput.kl_fire_emergency,
+userInput.details_of_bsspl,
+userInput.regularity_of_ops,
+userInput.regularity_of_night,
+userInput.last_training_details,
+userInput.Weak_arears,
+userInput.quality_remarks,
+userInput.client_remarks,
+userInput.client_name,
+userInput.client_contact,
+userInput.mail_id,
+userInput.Remarks_by_cod
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.updatequalitys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.qualitycheck SET  date = $2,time = $3,unit_name= $4,unit_in_charge= $5,contact_no= $6,unit_strength= $7,roll_call= $8,uniform_deficiency= $9,no_of_duty= $10,availability= $11,kl_duty_post= $12,kl_fire_emergency= $13,details_of_bsspl= $14,regularity_of_ops= $15,regularity_of_night= $16,last_training_details= $17,Weak_arears= $18,quality_remarks= $19,client_remarks= $20,client_name= $21,client_contact= $22,mail_id= $23,Remarks_by_cod= $24   WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.date,
+userInput.time,
+userInput.unit_name,
+userInput.unit_in_charge,
+userInput.contact_no,
+userInput.unit_strength,
+userInput.roll_call,
+userInput.uniform_deficiency,
+userInput.no_of_duty,
+userInput.availability,
+userInput.kl_duty_post,
+userInput.kl_fire_emergency,
+userInput.details_of_bsspl,
+userInput.regularity_of_ops,
+userInput.regularity_of_night,
+userInput.last_training_details,
+userInput.Weak_arears,
+userInput.quality_remarks,
+userInput.client_remarks,
+userInput.client_name,
+userInput.client_contact,
+userInput.mail_id,
+userInput.Remarks_by_cod
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchqualitys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.deletequalitys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+            resultCallback(null,data );   
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.listqualitys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."qualitycheck"', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+///Quality table checking////
+
+user.addqualitytables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.qualitychecklist (type,am,ao,so,aso,sg,lsg,fg,gm,total,quality_id)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *',
+[
+userInput.type,
+userInput.am,
+userInput.ao,
+userInput.so,
+userInput.aso,
+userInput.sg,
+userInput.lsg,
+userInput.fg,
+userInput.gm,
+userInput.total,
+userInput.quality_id
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.updatequalitytables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.qualitychecklist SET  type = $2,am = $3,ao= $4,so= $5,aso= $6,sg= $7,lsg= $8,fg= $9,gm= $10,total= $11,quality_id = $12   WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.type,
+userInput.am,
+userInput.ao,
+userInput.so,
+userInput.aso,
+userInput.sg,
+userInput.lsg,
+userInput.fg,
+userInput.gm,
+userInput.total,
+userInput.quality_id
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchqualitytables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."qualitychecklist" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.deletequalitytables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."qualitychecklist" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+            resultCallback(null,data );   
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.listqualitytables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."qualitychecklist" WHERE "quality_id"=($1)', [userInput.quality_id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+///Training Report////
+
+user.addtrainingreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.training_report (unit,date,trainer,subject,time_duration_form,time_duration_to,uname,usign,tname,tsign,asoname,asosign)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *',
+[
+userInput.unit,
+userInput.date,
+userInput.trainer,
+userInput.subject,
+userInput.time_duration_form,
+userInput.time_duration_to,
+userInput.uname,
+userInput.usign,
+userInput.tname,
+userInput.tsign,
+userInput.asoname,
+userInput.asosign
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.updatetrainingreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.training_report SET  unit = $2,date = $3,trainer= $4,subject= $5,time_duration_form= $6,time_duration_to= $7,uname= $8,usign= $9,tname= $10,tsign= $11,asoname = $12, asosign=$13  WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.unit,
+userInput.date,
+userInput.trainer,
+userInput.subject,
+userInput.time_duration_form,
+userInput.time_duration_to,
+userInput.uname,
+userInput.usign,
+userInput.tname,
+userInput.tsign,
+userInput.asoname,
+userInput.asosign
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchtrainingreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."training_report" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.deletetrainingreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."training_report" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+            resultCallback(null,data );   
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.listtrainingreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."training_report"', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+///Training table////
+user.addtrainingreporttables = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('INSERT INTO public.training_report_table (bss_no,rank,name,signature,remarks_by_trainer,report_id)VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
+[
+userInput.bss_no,
+userInput.rank,
+userInput.name,
+userInput.signature,
+userInput.remarks_by_trainer,
+userInput.report_id
+])
+  .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.updatetrainingreporttables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.training_report_table SET  bss_no = $2,rank = $3,name= $4,signature= $5,remarks_by_trainer= $6,report_id= $7  WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.bss_no,
+userInput.rank,
+userInput.name,
+userInput.signature,
+userInput.remarks_by_trainer,
+userInput.report_id
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchtrainingreporttables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."training_report_table" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.deletetrainingreporttables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."training_report_table" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+            resultCallback(null,data );   
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.listtrainingreporttables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."training_report_table" WHERE "report_id"=($1)', [userInput.report_id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+///night  check report////
+user.addnightreports = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('INSERT INTO public.night_check (date,checking_officer,site_name,visit_tiem_from,visit_time_to,shift_rank,shift_auth,shift_present)VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *',
+[
+userInput.date,
+userInput.checking_officer,
+userInput.site_name,
+userInput.visit_tiem_from,
+userInput.visit_time_to,
+userInput.shift_rank,
+userInput.shift_auth,
+userInput.shift_present
+])
+  .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.updatenightreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.night_check SET  date = $2,checking_officer = $3,site_name= $4,visit_tiem_from= $5,visit_time_to= $6,shift_rank= $7,shift_auth= $8,shift_present= $9  WHERE id=$1 RETURNING *',
+[
+userInput.id,
+userInput.date,
+userInput.checking_officer,
+userInput.site_name,
+userInput.visit_tiem_from,
+userInput.visit_time_to,
+userInput.shift_rank,
+userInput.shift_auth,
+userInput.shift_present
+ ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchnightreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."night_check" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.deletenightreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."night_check" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+            resultCallback(null,data );   
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.listnightreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."night_check"', [userInput.report_id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+///night table////
+user.addnightreporttables = function (userInput, resultCallback) {
+var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('INSERT INTO public.night_check_table (bss_no,rank,name,post,observation,sign,night_id)VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+[
+userInput.bss_no,
+userInput.rank,
+userInput.name,
+userInput.post,
+userInput.observation,
+userInput.sign,
+userInput.night_id
+
+])
+  .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.updatenightreporttables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.night_check_table SET  bss_no = $2,rank = $3,name= $4,post= $5,observation= $6,sign= $7,night_id=$8  WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.bss_no,
+userInput.rank,
+userInput.name,
+userInput.post,
+userInput.observation,
+userInput.sign,
+userInput.night_id
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchnightreporttables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."night_check_table" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.deletenightreporttables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."night_check_table" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+            resultCallback(null,data );   
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.listnightreporttables = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."night_check_table" WHERE "night_id"=($1)', [userInput.night_id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
 
 
 

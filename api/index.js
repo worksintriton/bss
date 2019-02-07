@@ -78,6 +78,7 @@ addRoute("/authentication/traininglist", "POST", [middleware.traininglist]);
 /*Add tracking*/
 addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
 addRoute("/authentication/Trackinglist", "POST", [middleware.Trackinglist]);
+addRoute("/authentication/deleteTrackinglist", "POST", [middleware.deleteTrackinglist]);
 addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
 
 /*Employee Api's*/
@@ -275,12 +276,73 @@ addRoute("/client/deleteclientattach", "POST", [middleware.deleteclientattach])
 
 
 
+/*Quality check*/
+addRoute("/quality/addquality", "POST", [middleware.addquality]);
+addRoute("/quality/listquality", "POST", [middleware.listquality]);
+addRoute("/quality/fetchquality", "POST", [middleware.fetchquality]);
+addRoute("/quality/deletequality", "POST", [middleware.deletequality]);
+addRoute("/quality/updatequality", "POST", [middleware.updatequality]);
+
+
+/*Quality check table*/
+addRoute("/quality/addqualitytable", "POST", [middleware.addqualitytable]);
+addRoute("/quality/listqualitytable", "POST", [middleware.listqualitytable]);
+addRoute("/quality/fetchqualitytable", "POST", [middleware.fetchqualitytable]);
+addRoute("/quality/deletequalitytable", "POST", [middleware.deletequalitytable]);
+addRoute("/quality/updatequalitytable", "POST", [middleware.updatequalitytable]);
+
+
+
+/*Training Report*/
+addRoute("/training/addtrainingreport", "POST", [middleware.addtrainingreport]);
+addRoute("/training/listtrainingreport", "POST", [middleware.listtrainingreport]);
+addRoute("/training/fetchtrainingreport", "POST", [middleware.fetchtrainingreport]);
+addRoute("/training/deletetrainingreport", "POST", [middleware.deletetrainingreport]);
+addRoute("/training/updatetrainingreport", "POST", [middleware.updatetrainingreport]);
+
+
+/*Training table Report*/
+addRoute("/training/addtrainingreporttable", "POST", [middleware.addtrainingreporttable]);
+addRoute("/training/listtrainingreporttable", "POST", [middleware.listtrainingreporttable]);
+addRoute("/training/fetchtrainingreporttable", "POST", [middleware.fetchtrainingreporttable]);
+addRoute("/training/deletetrainingreporttable", "POST", [middleware.deletetrainingreporttable]);
+addRoute("/training/updatetrainingreporttable", "POST", [middleware.updatetrainingreporttable]);
+
+
+
+
+
+/*night check Report*/
+addRoute("/night_check/addnightreport", "POST", [middleware.addnightreport]);
+addRoute("/night_check/listnightreport", "POST", [middleware.listnightreport]);
+addRoute("/night_check/fetchnightreport", "POST", [middleware.fetchnightreport]);
+addRoute("/night_check/deletenightreport", "POST", [middleware.deletenightreport]);
+addRoute("/night_check/updatenightreport", "POST", [middleware.updatenightreport]);
+
+
+/*night check table Report*/
+addRoute("/night_check/addnightreporttable", "POST", [middleware.addnightreporttable]);
+addRoute("/night_check/listnightreporttable", "POST", [middleware.listnightreporttable]);
+addRoute("/night_check/fetchnightreporttable", "POST", [middleware.fetchnightreporttable]);
+addRoute("/night_check/deletenightreporttable", "POST", [middleware.deletenightreporttable]);
+addRoute("/night_check/updatenightreporttable", "POST", [middleware.updatenightreporttable]);
+
+
+
 /*payment process*/
 // addRoute("/payment/payadd", "POST", [middleware.payadd]);
 addRoute("/payment/paylist", "POST", [middleware.paylist]);
 addRoute("/payment/paydelete", "POST", [middleware.paydelete]);
 addRoute("/payment/payupdate", "POST", [middleware.payupdate]);
 addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
+
+
+
+
+
+
+
+
 
 
 
@@ -307,12 +369,20 @@ addRoute("/uniform/fetchitems", "POST", [middleware.fetchitems]);
 
 
 /*Master employee type adding*/
-
 addRoute("/employee/addemptype", "POST", [middleware.addemptype]);
 addRoute("/employee/emptypelist", "POST", [middleware.emptypelist]);
 addRoute("/employee/emptypedelete", "POST", [middleware.emptypedelete]);
 addRoute("/employee/updateemptype", "POST", [middleware.updateemptype]);
 addRoute("/employee/fetchemptype", "POST", [middleware.fetchemptype]);
+
+
+/*Finanace process*/
+/*Finanace management*/
+addRoute("/finanace/addfinanace", "POST", [middleware.addfinanace]);
+addRoute("/finanace/finanacelist", "POST", [middleware.finanacelist]);
+addRoute("/finanace/finanacedelete", "POST", [middleware.finanacedelete]);
+addRoute("/finanace/updatefinanace", "POST", [middleware.updatefinanace]);
+addRoute("/finanace/fetchfinanace", "POST", [middleware.fetchfinanace]);
 
 
 
