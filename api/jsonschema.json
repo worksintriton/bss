@@ -495,7 +495,35 @@
                 }
             }
         }
-    },   
+    },
+
+
+
+           "/authentication/fetchclient": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property id"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },  
 
     "/authentication/deleteclient": {
         "POST": {
@@ -4765,21 +4793,6 @@
                     }, 
                     "status": {
                         "type": "string"
-                    }, 
-                    "contract_start": {
-                        "type": "string"
-                    }, 
-                    "contract_end": {
-                        "type": "string"
-                    }, 
-                    "contract_type": {
-                        "type": "string"
-                    }, 
-                    "last_rate_revision_date": {
-                        "type": "string"
-                    }, 
-                    "invoice_cycle": {
-                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -4928,6 +4941,9 @@
                     }, 
                     "id": {
                         "type": "number"
+                    }, 
+                    "status": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -4974,12 +4990,217 @@
     },
 
 
+
+
+
+     "/client/newclientcontract": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "string"
+                    },
+                    "contract_start_date": {
+                        "type": "string"
+                    },
+                    "contract_end_date": {
+                        "type": "string"
+                    }, 
+                    "contract_type": {
+                        "type": "string"
+                    }, 
+                    "last_revision_date": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "invoice_cycle": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "site_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "site_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/client/contractlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "site_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "site_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    
+         "/client/fetchcontract": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/client/contractestatus": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+         "/client/updateclientcontract": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    
+                    "id": {
+                        "type": "number"
+                    }, 
+                     "site_id": {
+                        "type": "string"
+                    },
+                    "contract_start_date": {
+                        "type": "string"
+                    },
+                    "contract_end_date": {
+                        "type": "string"
+                    }, 
+                    "contract_type": {
+                        "type": "string"
+                    }, 
+                    "last_revision_date": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "invoice_cycle": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "site_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "site_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/client/deletclientcontract": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
      "/payment/payadd": {
         "POST": {
             "body": {
                  "type": "object",
                 "properties": {
-                    "client_id": {
+                    "site_id": {
                         "type": "string"
                     },
                     "employee_type": {
@@ -5060,7 +5281,7 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "client_id": {
+                    "site_id": {
                         "type": "string"
                     },
                     "employee_type": {
@@ -5125,10 +5346,10 @@
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "client_id": "should have required property userId"
+                        "site_id": "should have required property userId"
                     },
                     "properties": {
-                        "client_id": "userId must be string"
+                        "site_id": "userId must be string"
                     }
                 }
             }
@@ -5215,6 +5436,251 @@
             }
         }
     },
+
+
+
+    "/payment/employee_payadd": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "string"
+                    },
+                    "employee_type": {
+                        "type": "string"
+                    },
+                    "basic": {
+                        "type": "number"
+                    },
+                    "da": {
+                        "type": "number"
+                    },
+                    "additional_hours": {
+                        "type": "number"
+                    },
+                    "others": {
+                        "type": "number"
+                    },
+                    "subtotala": {
+                        "type": "number"
+                    },
+                    "leave": {
+                        "type": "number"
+                    },
+                    "subtotalb": {
+                        "type": "number"
+                    },
+                    "pf": {
+                        "type": "number"
+                    },
+                    "gratuity": {
+                        "type": "number"
+                    },
+                    "esi": {
+                        "type": "number"
+                    },
+                    "bouns": {
+                        "type": "number"
+                    },
+                    "subtotalc": {
+                        "type": "number"
+                    },
+                    "total": {
+                        "type": "number"
+                    },
+                    "weekly_off": {
+                        "type": "number"
+                    },
+                    "agency_charges": {
+                        "type": "number"
+                    },
+                    "subtotal": {
+                        "type": "number"
+                    },
+                    "rounded_off": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "site_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "site_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/payment/employee_payupdate": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "spayupdatetring"
+                    },
+                    "employee_type": {
+                        "type": "string"
+                    },
+                    "basic": {
+                        "type": "number"
+                    },
+                    "da": {
+                        "type": "number"
+                    },
+                    "additional_hours": {
+                        "type": "number"
+                    },
+                    "others": {
+                        "type": "number"
+                    },
+                    "subtotala": {
+                        "type": "number"
+                    },
+                    "leave": {
+                        "type": "number"
+                    },
+                    "subtotalb": {
+                        "type": "number"
+                    },
+                    "pf": {
+                        "type": "number"
+                    },
+                    "esi": {
+                        "type": "number"
+                    },
+                    "bouns": {
+                        "type": "number"
+                    },
+                    "subtotalc": {
+                        "type": "number"
+                    },
+                    "total": {
+                        "type": "number"
+                    },
+                    "weekly_off": {
+                        "type": "number"
+                    },
+                    "agency_charges": {
+                        "type": "number"
+                    },
+                    "subtotal": {
+                        "type": "number"
+                    },
+                    "rounded_off": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "site_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "site_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+
+    "/payment/employee_paylist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "site_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "site_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/payment/employee_payfetch": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/payment/employee_paydelete": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
 
 
 

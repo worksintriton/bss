@@ -230,6 +230,13 @@ addRoute("/client/deletclientsite", "POST", [middleware.deletclientsite]);
 addRoute("/client/sitestatus", "POST", [middleware.sitestatus]);
 addRoute("/client/fetchsite", "POST", [middleware.fetchsite]);
 
+/*Create site Contract */
+addRoute("/client/newclientcontract", "POST", [middleware.newclientcontract]);
+addRoute("/client/contractlist", "POST", [middleware.contractlist]);
+addRoute("/client/updateclientcontract", "POST", [middleware.updateclientcontract]);
+addRoute("/client/deletclientcontract", "POST", [middleware.deletclientcontract]);
+addRoute("/client/contractestatus", "POST", [middleware.contractestatus]);
+addRoute("/client/fetchcontract", "POST", [middleware.fetchcontract]);
 
 /*Create complaints */
 addRoute("/complaints/newcomplaints", "POST", [middleware.newcomplaints]);
@@ -250,6 +257,14 @@ addRoute("/payment/payupdate", "POST", [middleware.payupdate]);
 addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
 
 
+/*employee payment process*/
+// addRoute("/payment/employee_payadd", "POST", [middleware.employee_payadd]);
+addRoute("/payment/employee_paylist", "POST", [middleware.employee_paylist]);
+addRoute("/payment/employee_paydelete", "POST", [middleware.employee_paydelete]);
+addRoute("/payment/employee_payupdate", "POST", [middleware.employee_payupdate]);
+addRoute("/paymentemployee_/payfetch", "POST", [middleware.employee_payfetch]);
+
+
 /*requirment process*/
 addRoute("/requirement/reqadd", "POST", [middleware.reqadd]);
 addRoute("/requirement/reqlist", "POST", [middleware.reqlist]);
@@ -263,6 +278,7 @@ addRoute("/requirement/requpdate", "POST", [middleware.requpdate]);
 addRoute("/authentication/addclients", "POST", [middleware.addclients]);
 addRoute("/authentication/deleteclient", "POST", [middleware.deleteclient]);
 addRoute("/authentication/clientid", "POST", [middleware.clientid]);
+addRoute("/authentication/fetchclient", "POST", [middleware.fetchclient]);
 addRoute("/authentication/clientlist", "POST", [middleware.clientlist]);
 addRoute("/authentication/updateclients", "POST", [middleware.updateclients]);
 
@@ -290,7 +306,6 @@ addRoute("/quality/listqualitytable", "POST", [middleware.listqualitytable]);
 addRoute("/quality/fetchqualitytable", "POST", [middleware.fetchqualitytable]);
 addRoute("/quality/deletequalitytable", "POST", [middleware.deletequalitytable]);
 addRoute("/quality/updatequalitytable", "POST", [middleware.updatequalitytable]);
-
 
 
 /*Training Report*/
