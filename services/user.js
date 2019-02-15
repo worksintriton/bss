@@ -1542,7 +1542,7 @@ user.contractlists = function (userInput, resultCallback) {
 user.updateclientcontracts = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                  executor.one('UPDATE public."contract_page" SET  "site_id"=$2, "contract_start_date"=$3,"contract_end_date"=$4,"contract_type"=$5,"last_revision_date"=$6,"status"=$7,"invoice_cycle"="$8" WHERE  "id" = $1 RETURNING *',
+                  executor.one('UPDATE public."contract_page" SET  "site_id"=$2, "contract_start_date"=$3,"contract_end_date"=$4,"contract_type"=$5,"last_revision_date"=$6,"status"=$7,"invoice_cycle"=$8 WHERE  "id" = $1 RETURNING *',
                  [
 userInput.id,
 userInput.site_id,
