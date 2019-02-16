@@ -90,6 +90,23 @@ attendance.Weeklystatusweb = function (userInput, resultCallback) {
 };
 
 
+
+attendance.Weeklyreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public."employeedetails" WHERE  "date_joining" >= $1  AND "date_joining" < $2 ' , [userInput.start_date,userInput.end_date])
+        .then(data => {
+
+                 resultCallback(null,data );  
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
 attendance.Allstatusweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -111,6 +128,22 @@ attendance.dailystatusweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
     executor.any('SELECT * FROM public.attendance WHERE "date"= $1',[userInput.date])
+        .then(data => {
+                 resultCallback(null,data );    
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
+attendance.dailyreports = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.employeedetails WHERE "date_joining"= $1',[userInput.date])
         .then(data => {
                  resultCallback(null,data );    
         })

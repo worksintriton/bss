@@ -1170,6 +1170,63 @@
         }
     },
 
+
+        "/employee/dailyreport": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "date": "should have required property userId"
+                    },
+                    "properties": {
+                        "date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+         "/employee/Weeklyreort": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "start_date": {
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "start_date": "should have required property userId"
+                    },
+                    "properties": {
+                        "start_date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
      "/Attendance/Weeklystatus": {
         "POST": {
             "body": {

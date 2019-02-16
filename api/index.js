@@ -193,6 +193,12 @@ addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus])
 addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus])
 
 
+/*Employee Type report */
+
+addRoute("/employee/dailyreport", "POST", [middleware.dailyreport])
+addRoute("/employee/Weeklyreort", "POST", [middleware.Weeklyreort])
+
+
 /*Forgotpassword */
 addRoute("/authentication/Forgotpasswordweb", "POST", [middleware.Forgotpasswordweb])
 addRoute("/authentication/checkuser", "POST", [middleware.checkuser])
