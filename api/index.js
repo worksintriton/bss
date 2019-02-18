@@ -48,10 +48,6 @@ addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]);
 
 
-
-
-
-
 /*Add User*/
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
 addRoute("/authentication/userid", "POST", [middleware.userid]);
@@ -59,14 +55,9 @@ addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
 addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 
-
-
-
-
 /*Add Configure*/
 addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
 addRoute("/authentication/getconfignumber", "POST", [middleware.getconfignumber]);
-
 
 /*Add training*/
 addRoute("/authentication/training", "POST", [middleware.training]);
@@ -74,17 +65,27 @@ addRoute("/authentication/traininglessons", "POST", [middleware.traininglessons]
 addRoute("/authentication/trainingvideos", "POST", [middleware.trainingvideos]);
 addRoute("/authentication/traininglist", "POST", [middleware.traininglist]);
 
-
 /*Add tracking*/
 addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
 addRoute("/authentication/Trackinglist", "POST", [middleware.Trackinglist]);
 addRoute("/authentication/deleteTrackinglist", "POST", [middleware.deleteTrackinglist]);
 addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
 
+
+/*t*/
+addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
+
+
+
+
+
+
+
+
+
 /*Employee Api's*/
 addRoute("/authentication/employeeLogin", "POST", [middleware_emp.signin]);
 addRoute("/authentication/updateEmpProfile", "POST", [middleware_emp.signin]);
-
 
 /*Issue Tracking*/
 addRoute("/issue/create", "POST", [middleware_emp.validateEmployee, middleware.create_issue]);
@@ -95,14 +96,11 @@ addRoute("/issue/issuedetails", "POST", [middleware.issuedetails]);
 addRoute("/issue/issuetrack", "POST", [middleware.issuetrack]);
 addRoute("/issue/issuecount", "POST", [middleware.issuecount]);
 
-
-
 /*Feedback Tracking*/
 addRoute("/feebdack/createfeedback", "POST", [middleware.createfeedback]);
 addRoute("/feebdack/feedbacklist", "POST", [middleware.feedbacklist]);
 addRoute("/feebdack/listmyfeedback", "POST", [middleware.listmyfeedback]);
 addRoute("/feebdack/fetchfeedback", "POST", [middleware.fetchfeedback]);
-
 
 /*Attachment Tracking*/
 addRoute("/attachment/createattach", "POST", [middleware.createattach]);
@@ -126,7 +124,7 @@ addRoute("/issue/listissues", "POST", [middleware.listissues]);
 /*PointTracking for Mobile*/
 
     /*fetch*/
-addRoute("/PointTracking/employee_fetchpoints", "POST", [middleware.employee_fetchpoints])
+addRoute("/PointTracking/ss", "POST", [middleware.employee_fetchpoints])
 
 /*PointTrackMap*/
 addRoute("/mapTracking/updatePointTrackMap", "POST", [middleware.updatePointTrackMap]);
@@ -252,6 +250,13 @@ addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 
 /*File Upload*/
 addRoute("/upload/file", "POST", [middleware.uploadingfile]);
+
+
+addRoute("/employee_tracking/fetchemployees", "GET", [middleware.fetchemployees]);
+addRoute("/employee_tracking/fetchTrackinglist", "POST", [middleware.fetchTrackinglist]);
+addRoute("/employee_tracking/fetchtrackdate", "POST", [middleware.fetchtrackdate]);
+addRoute("/employee_tracking/fetchtracksingledate", "POST", [middleware.fetchtracksingledate]);
+
 
 
 

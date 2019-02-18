@@ -114,6 +114,40 @@ training.Trackings = function (userInput, resultCallback) {
 };
 
 
+training.fetchtrackdates = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public."employee_track" WHERE  updated_at::date >= $1  AND updated_at::date <= $2 And "Employee_id"=$3' , [userInput.start_date,userInput.end_date,userInput.Employee_id])
+        .then(data => {
+
+                 resultCallback(null,data );  
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+training.fetchtracksingledates = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public."employee_track" WHERE  updated_at::date = $1 ' , [userInput.date])
+        .then(data => {
+
+                 resultCallback(null,data );  
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
 training.Trackingsupdate = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   executor.one('update public.employee_track set "Lat"= ($2),"Long"= ($3),"updated_at"= ($4),"Name"= ($5) where  "Employee_id" = ($1) RETURNING *',

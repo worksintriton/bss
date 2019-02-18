@@ -383,6 +383,34 @@ point_tracking.employee_fetchpointsmobile = function (userInput, resultCallback)
 };
 
 
+point_tracking.fetchemployeess = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('select * from public."employeedetails" where id in (select cast("Employee_id" as integer)from public."employee_track")',
+                 [ ])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+point_tracking.fetchTrackinglists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  executor.any('select * from public."employee_track" where "Employee_id"=($1)',
+                 [userInput.Employee_id])
+                 .then(data => {
+                    resultCallback(null,data);
+                 })
+                 .catch(error => {
+                    resultCallback(null,error );
+                })
+};
+
+
+
+
 
 /*adshfjkhas*/
 point_tracking.PointTrackRecordsSpotmobile = function (userInput, resultCallback) {

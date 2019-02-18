@@ -773,6 +773,26 @@
         }
     },
 
+        "/employee_tracking/fetchemployees": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                },
+        "additionalProperties": false,
+                "required": [
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
+
 
         "/authentication/deleteTrackinglist": {
         "POST": {
@@ -794,6 +814,92 @@
                     },
                     "properties": {
                         "Employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/employee_tracking/fetchTrackinglist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "Employee_id"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "Employee_id": "should have required property id"
+                    },
+                    "properties": {
+                        "Employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/employee_tracking/fetchtrackdate": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "Employee_id": {
+                        "type": "string"
+                    },
+                    "start_date": {
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "start_date"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "start_date": "should have required property id"
+                    },
+                    "properties": {
+                        "start_date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/employee_tracking/fetchtracksingledate": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "date"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "date": "should have required property id"
+                    },
+                    "properties": {
+                        "date": "userId must be string"
                     }
                 }
             }

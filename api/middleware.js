@@ -1487,29 +1487,6 @@ function Tracking(req, res, next) {
 
        async.waterfall([
         function (waterfallCallback){
-                services.training.Trackingpersons(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (result, waterfallCallback){
-                if(result.length >0){
-                    services.training.Trackingsupdate(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-                }
-                else{
                     services.training.Trackings(req.body, function (err, result) {
                 if (err) {
                     req.log.error({
@@ -1518,9 +1495,54 @@ function Tracking(req, res, next) {
                     return res.json(utils.errors["500"]);
                 }
                 waterfallCallback(null,result);
-                });
+                }); 
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function fetchtrackdate(req, res, next) {
+
+       async.waterfall([
+        function (waterfallCallback){
+                    services.training.fetchtrackdates(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
                 }
-                
+                waterfallCallback(null,result);
+                }); 
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+function fetchtracksingledate(req, res, next) {
+
+       async.waterfall([
+        function (waterfallCallback){
+                    services.training.fetchtracksingledates(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                }); 
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
@@ -1598,6 +1620,49 @@ function Trackinglist(req, res, next) {
             }
         ]);
 
+}
+
+
+function fetchemployees(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.fetchemployeess(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+function fetchTrackinglist(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.point_tracking.fetchTrackinglists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
 }
 
 function PointTrackMap(req, res, next) {
@@ -5518,6 +5583,10 @@ exports.fetchnightreporttable = fetchnightreporttable;
 exports.deletenightreporttable = deletenightreporttable;
 exports.updatenightreporttable = updatenightreporttable;
 
+exports.fetchemployees = fetchemployees;
+exports.fetchTrackinglist = fetchTrackinglist;
+exports.fetchtrackdate = fetchtrackdate;
+exports.fetchtracksingledate = fetchtracksingledate;
 
 
 /*Quality table check process*/
