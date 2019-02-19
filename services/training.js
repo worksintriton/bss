@@ -112,16 +112,13 @@ training.Trackings = function (userInput, resultCallback) {
                     resultCallback(null,error );
                 })
 };
-
-
 training.fetchtrackdates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
     executor.any('SELECT * FROM public."employee_track" WHERE  updated_at::date >= $1  AND updated_at::date <= $2 And "Employee_id"=$3' , [userInput.start_date,userInput.end_date,userInput.Employee_id])
         .then(data => {
-
-                 resultCallback(null,data );  
+       resultCallback(null,data );  
         })
         .catch(error => {
             resultCallback(error,null );

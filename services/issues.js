@@ -10,7 +10,7 @@ function issues() {}
 
 issues.createIssue = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.issue_master("complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on" )VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
+  executor.one('INSERT INTO public.issue_master("complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on","photo1","photo2","photo3","photo4" )VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)RETURNING *',
                  [ 
                  userInput.complaint_from,
                  userInput.user_id,
@@ -18,7 +18,11 @@ issues.createIssue = function (userInput, resultCallback) {
                  userInput.title,
                  userInput.description,
                  userInput.status,
-                 userInput.posted_on
+                 userInput.posted_on,
+                 userInput.photo1,
+                 userInput.photo2,
+                 userInput.photo3,
+                 userInput.photo4
                  ])
                  .then(data => {
                     resultCallback(null,true, data);
@@ -53,7 +57,7 @@ issues.createIssue1 = function (userInput, resultCallback) {
 
 issues.createIssuehistory = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.issues_history("complaint_id", "complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on","updated_at","moved_by","moved_to","taken_by")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)RETURNING *',
+  executor.one('INSERT INTO public.issues_history("complaint_id", "complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on","updated_at","moved_by","moved_to","taken_by","photo1","photo2","photo3","photo4")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)RETURNING *',
                  [
                  userInput.complaint_id, 
                  userInput.complaint_from,
@@ -66,7 +70,11 @@ issues.createIssuehistory = function (userInput, resultCallback) {
                  userInput.updated_at,
                  userInput.moved_by,
                  userInput.moved_to,
-                 userInput.taken_by
+                 userInput.taken_by,
+                 userInput.photo1,
+                 userInput.photo2,
+                 userInput.photo3,
+                 userInput.photo4
                  ])
                  .then(data => {
                     resultCallback(null,data);
@@ -120,14 +128,18 @@ issues.taken_bys = function (userInput, resultCallback) {
 
 issues.reports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.issues_history("complaint_id", "title", "description", "status","updated_at","taken_by")VALUES($1,$2,$3,$4,$5,$6)RETURNING *',
+  executor.one('INSERT INTO public.issues_history("complaint_id", "title", "description", "status","updated_at","taken_by","photo1","photo2","photo3","photo4")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)RETURNING *',
                  [
                  userInput.complaint_id, 
                  userInput.title,
                  userInput.description,
                  userInput.status,
                  userInput.updated_at,
-                 userInput.taken_by
+                 userInput.taken_by,
+                 userInput.photo1,
+                 userInput.photo2,
+                 userInput.photo3,
+                 userInput.photo4,
                  ])
                  .then(data => {
                     resultCallback(null,true, data);

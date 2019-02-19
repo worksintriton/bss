@@ -1792,7 +1792,18 @@
                         "type": "string"
                     },
                     "complaint_type":{
-
+                        "type": "string"
+                    },
+                    "photo1":{
+                        "type": "string"
+                    },
+                    "photo2":{
+                        "type": "string"
+                    },
+                    "photo3":{
+                        "type": "string"
+                    },
+                    "photo4":{
                         "type": "string"
                     }
                 },
@@ -1874,6 +1885,18 @@
                         "type": "string"
                     },
                     "status": {
+                        "type": "string"
+                    },
+                    "photo1": {
+                        "type": "string"
+                    },
+                    "photo2": {
+                        "type": "string"
+                    },
+                    "photo3": {
+                        "type": "string"
+                    },
+                    "photo4": {
                         "type": "string"
                     }
                 },
