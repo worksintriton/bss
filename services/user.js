@@ -196,6 +196,71 @@ user.getsconfignumbers = function (userInput, resultCallback) {
         })
 };
 
+user.selectclient = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.client_management',[])
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+                       
+        
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.selectsite = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.clientsite',[])
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+                       
+        
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.selectusers = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.usermanage',[])
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+                       
+        
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.selectcontract = function (date, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('select * from public.contract_page where contract_end_date = ($1) ',[date])
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+                       
+        
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+
+
 
 user.AddemployeeC = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
@@ -556,6 +621,27 @@ user.updateemployees = function (userInput , resultCallback) {
         });
 };
 
+
+
+//updateemployees///
+user.updateemployees = function (userInput , resultCallback) {
+  var executor = db.getdaata.getdb();
+      executor.one('UPDATE public.employeedetails SET photo = ($2)  WHERE  id=($1) RETURNING *',
+[               userInput.id,
+                userInput.photo
+])
+       .then(data => {
+        console.log(data);
+        resultCallback(null,data);
+        })
+        .catch(error => {
+          resultCallback(error,{} );
+          console.log('ERROR:', error);
+        });
+};
+
+
+
 //updateuser///
 user.updateuser = function (userInput,resultCallback) {
   var executor = db.getdaata.getdb();
@@ -686,8 +772,22 @@ user.employeeids = function (userInput, resultCallback) {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
+};
 
 
+user.employeeidss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT "id","Name","Date_of_birth","Email_ID","Address","Mobile_No","employee_type" FROM public.employeedetails WHERE "id"=($1) ' , [userInput.employee_id])
+        .then(data => {
+          console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
 };
 
 //add  FAQ//
@@ -711,8 +811,8 @@ user.addquestion = function (userInput, resultCallback) {
 user.updatequestion = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                  executor.one('UPDATE public."faq" SET  "questions"=$1, "answers"=$2   WHERE  "faq_id" = $3 RETURNING *',
-                 [userInput.questions,userInput.answers,userInput.faq_id])
+                  executor.one('UPDATE public."faq" SET  "questions"=$1, "answers"=$2 ,"date"=$4   WHERE  "faq_id" = $3 RETURNING *',
+                 [userInput.questions,userInput.answers,userInput.faq_id,userInput.date])
                       .then(data => {
                  console.log(data);
                  resultCallback(null,data );
@@ -1237,6 +1337,22 @@ user.mylistattachs = function (userInput, resultCallback) {
 
                  resultCallback(null,data );
             
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.mylistattachss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select "path" FROM public."attachment" WHERE "Emp_id"=($1) And "title" = ($2)', [userInput.employee_id,"photo"])
+        .then(data => {
+
+                 resultCallback(null,data);
         })
         .catch(error => {
             resultCallback(error,null );
@@ -3139,6 +3255,20 @@ user.listnightreports = function (userInput, resultCallback) {
 };
 
 
+user.updateprofilephotos = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Update  public."attachment" SET  "title" = $2 where "Emp_id"= $1  RETURNING *', [userInput.id,userInput.photo])
+        .then(data => {
+                 resultCallback(null,data);
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
 ///night table////
 user.addnightreporttables = function (userInput, resultCallback) {
 var executor = db.getdaata.getdb();
@@ -3152,7 +3282,6 @@ userInput.post,
 userInput.observation,
 userInput.sign,
 userInput.night_id
-
 ])
   .then(data => {
                  console.log(data);
@@ -3163,6 +3292,9 @@ userInput.night_id
             console.log('ERROR:', error);
         })
 };
+
+
+
 
 user.updatenightreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
@@ -3205,6 +3337,74 @@ user.fetchnightreporttables = function (userInput, resultCallback) {
 };
 
 
+
+
+
+
+
+
+
+
+
+
+
+user.addnotificationss = function (userInput,date, resultCallback) {
+var executor = db.getdaata.getdb();
+
+    executor.any('select * FROM public."notifications" WHERE "contract_id"=($1) and "date"=($2) ', [""+userInput.contract_id,""+date])
+        .then(data => {
+          console.log(data.length)
+          if(data.length > 0){
+                 resultCallback(null,data);
+          }else{
+ //\''+userInput.appartment_ukey+'\' 
+executor.one('INSERT INTO public.notifications (client_id,client_name,site_id,site_name,contract_start_date,contract_end_date,invoice_cycle,contract_type,user_id,status,contract_id,date)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *',
+[
+userInput.client_id,
+userInput.client_name,
+userInput.site_id,
+userInput.site_name,
+userInput.contract_start_date,
+userInput.contract_end_date,
+userInput.invoice_cycle,
+userInput.contract_type,
+userInput.user_id,
+userInput.status,
+userInput.contract_id,
+date
+
+])
+  .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+          }
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+
+
+
+
+
+
+
+
+};
+
+
+
+
+
 user.deletenightreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -3224,9 +3424,7 @@ user.listnightreporttables = function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
     executor.any('select * FROM public."night_check_table" WHERE "night_id"=($1)', [userInput.night_id])
         .then(data => {
-
                  resultCallback(null,data );
-            
         })
         .catch(error => {
             resultCallback(error,null );
@@ -3234,6 +3432,52 @@ user.listnightreporttables = function (userInput, resultCallback) {
         })
 };
 
+
+
+
+user.notificationcounts = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select count(*) FROM public."notifications" WHERE "user_id"=($1) And "status"=($2) ', [userInput.user_id,'New'])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+user.listofnotifications = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."notifications" WHERE "user_id"=($1)', [userInput.user_id])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.updatenotifications = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Update  public."notifications" SET "id"=$1 , "status"=$2  WHERE "id"=($1)', [userInput.id,'Readed'])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 

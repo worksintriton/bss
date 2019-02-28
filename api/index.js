@@ -48,6 +48,12 @@ addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]);
 
 
+addRoute("/authentication/fetchemployee_id", "POST", [middleware.fetchemployee_id]);
+addRoute("/authentication/updateprofilephoto", "POST", [middleware.updateprofilephoto]);
+
+
+
+
 /*Add User*/
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
 addRoute("/authentication/userid", "POST", [middleware.userid]);
@@ -361,6 +367,16 @@ addRoute("/payment/paylist", "POST", [middleware.paylist]);
 addRoute("/payment/paydelete", "POST", [middleware.paydelete]);
 addRoute("/payment/payupdate", "POST", [middleware.payupdate]);
 addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
+
+
+
+
+
+addRoute("/notification/addnotification", "POST", [middleware.addnotification]);
+addRoute("/notification/notificationcount", "POST", [middleware.notificationcount]);
+addRoute("/notification/updatenotification", "POST", [middleware.updatenotification]);
+addRoute("/notification/listofnotification", "POST", [middleware.listofnotification]);
+
 
 
 

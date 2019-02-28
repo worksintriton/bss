@@ -59,6 +59,153 @@
         }
     },
 
+        "/notification/addnotification": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "description"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "description": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "description": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/notification/notificationcount": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "user_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "user_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "user_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/notification/listofnotification": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "user_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "user_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "user_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },  
+
+      "/notification/updatenotification": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+        "/authentication/updateprofilephoto": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "photo": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
 
      "/authentication/updateqr": {
         "POST": {
@@ -346,6 +493,9 @@
                     },
                     "faq_id": {
                         "type": "number"
+                    },
+                    "date": {
+                        "type": "string"
                     }
 
                 },
@@ -2141,6 +2291,33 @@
     },
 
     "/authentication/employee_id": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+        "/authentication/fetchemployee_id": {
         "POST": {
             "body": {
                  "type": "object",

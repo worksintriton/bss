@@ -15,6 +15,7 @@ var uniqid = require('uniqid');
 var path = require('path')
 var fileUpload = require('express-fileupload');
   var moment = require('moment');
+  var dateFormat = require('dateformat');
 //var FORGOT_PASSWORD_HTML = fs.readFileSync("www/resetpassword.html", "utf8");
 /*
 To Maintain Local Session
@@ -1357,6 +1358,43 @@ function employee_id(req, res, next) {
                 }
                 });
             }
+        ]);
+}
+
+
+
+
+
+function fetchemployee_id(req, res, next) {
+          async.waterfall([
+            function (waterfallCallback){
+                services.user.employeeidss(req.body, function (err, employee_details) {
+                if (err) {
+                    console.log({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,employee_details);
+                });
+            },
+            function (employee_details, waterfallCallback){
+                services.user.mylistattachss(req.body, function (err, attachments) {
+                if (err) {
+                    console.log(err);
+                }
+                waterfallCallback(null,employee_details,attachments);
+                });
+            },
+            
+            function (employee_details, attachments,waterfallCallback){
+                return res.json(_.merge({
+                    employee_details: employee_details,
+                    Photo:attachments[0].path,
+                    message: "Done"
+                }, utils.errors["200"]));
+                }
+
         ]);
 }
 
@@ -5030,6 +5068,29 @@ function listnightreport(req, res, next) {
 
 }
 
+function updateprofilephoto(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updateprofilephotos(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 
 function fetchnightreport(req, res, next) {
 
@@ -5221,13 +5282,212 @@ function updatenightreporttable(req, res, next) {
 }
 
 
+function addnotification(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.selectclient(req.body, function (err, client_detail) {
+                if (err) {
+                    console.log(err);
+                }
+                waterfallCallback(null,client_detail);
+                });
+            },
+            function (client_detail, waterfallCallback){
+              services.user.selectsite(req.body, function (err, site_detail) {
+                if (err) {
+              console.log(err);
+                }
+                waterfallCallback(null,client_detail,site_detail);
+                });
+            },
+             function (client_detail,site_detail, waterfallCallback){
+
+              // var date = dateFormat(new Date(), "yyyy-mm-dd");
+                 var date = '2019-10-23';
 
 
+              services.user.selectcontract(date, function (err, contract_detail) {
+                if (err) {
+                  console.log(err);
+                }
+                waterfallCallback(null,client_detail,site_detail,contract_detail);
+                });
+            },
+             function (client_detail,site_detail,contract_detail, waterfallCallback){
+              services.user.selectusers(req.body, function (err, user_details) {
+                if (err) {
+             console.log(err);
+                }
+                waterfallCallback(null,client_detail,site_detail,contract_detail,user_details);
+                });
+            },
+            function (client_detail,site_detail,contract_detail,user_details, waterfallCallback){
+                let site_info = [];
+                console.log(contract_detail)
+                contract_detail.forEach(function(belement) {
+                    site_detail.forEach(function(pelement) {
+                        if(belement.site_id == pelement.id){
+                            let project = {
+                                 'site_id': pelement.id,
+                                 'site_name':pelement.title,
+                                 'client_id':pelement.client_id,
+                                 'contract_id':belement.id,
+                                 'contract_start_date': belement.contract_start_date,
+                                 'contract_end_date':belement.contract_end_date,
+                                 'last_revision':belement.last_revision_date,
+                                 'invoice_cycle':belement.invoice_cycle,
+                                 'contract_type':belement.contract_type
+                            };
+                            
+                            site_info.push(project);
+                        }
+                    });
+                });
+             waterfallCallback(null,client_detail,site_info,contract_detail,user_details);
+             },  
+             function (client_detail,site_info,contract_detail,user_details, waterfallCallback){
+
+                console.log(site_info)
+
+                let client_detailss = [];
+                site_info.forEach(function(belement) {
+                    client_detail.forEach(function(pelement) {
+                        if(belement.client_id == pelement.id){
+                            let project = {
+                                 'client_id':pelement.id,
+                                 'client_name':pelement.company_name,
+                                 'site_id': belement.site_id,
+                                 'site_name':belement.site_name,
+                                 'contract_id':belement.contract_id,
+                                 'contract_start_date': belement.contract_start_date,
+                                 'contract_end_date':belement.contract_end_date,
+                                 'last_revision':belement.last_revision_date,
+                                 'invoice_cycle':belement.invoice_cycle,
+                                 'contract_type':belement.contract_type
+                            };
+                            
+                            client_detailss.push(project);
+                        }
+                    });
+                });
+             waterfallCallback(null,client_detailss,user_details);
+             },
+            function (client_detailss,user_details, waterfallCallback){
+      
+                let notification_details = [];
+                client_detailss.forEach(function(belement) {
+                    user_details.forEach(function(pelement) {
+                    
+                            let project = {
+                                 'user_id':pelement.user_id,
+                                 'status':'New',
+                                 'client_id':belement.client_id,
+                                 'client_name':belement.client_name,
+                                 'site_id': belement.site_id,
+                                 'site_name':belement.site_name,
+                                 'contract_start_date': belement.contract_start_date,
+                                 'contract_end_date':belement.contract_end_date,
+                                 'last_revision':belement.last_revision_date,
+                                 'invoice_cycle':belement.invoice_cycle,
+                                 'contract_type':belement.contract_type,
+                                 'contract_id':belement.contract_id
+                            };
+                            notification_details.push(project);
+                    });
+                });
+             waterfallCallback(null,notification_details);
+            },
+            function (notification_details, waterfallCallback){
+
+              var date = dateFormat(new Date(), "yyyy-mm-dd");
+
+                for(var i = 0;i < notification_details.length;i++){
+                     services.user.addnotificationss(notification_details[i],date, function (err, contract_detail) {
+                if (err) {
+                  console.log(err);
+                }
+                }); 
+                }
+                   return res.json(_.merge({
+                    data: notification_details
+                }, utils.errors["200"]));
+
+            }
+
+        ]);
+
+}
+
+function notificationcount(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.notificationcounts(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
 
 
+function updatenotification(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.updatenotifications(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
 
 
+function listofnotification(req, res, next) {
 
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.listofnotifications(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
 
 
 
@@ -5595,6 +5855,13 @@ exports.listqualitytable = listqualitytable;
 exports.fetchqualitytable = fetchqualitytable;
 exports.deletequalitytable = deletequalitytable;
 exports.updatequalitytable = updatequalitytable;
+
+exports.fetchemployee_id = fetchemployee_id;
+exports.updateprofilephoto = updateprofilephoto;
+exports.addnotification = addnotification;
+exports.updatenotification = updatenotification;
+exports.notificationcount = notificationcount
+exports.listofnotification = listofnotification;
 
 
 
