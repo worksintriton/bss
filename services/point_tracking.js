@@ -398,7 +398,7 @@ point_tracking.fetchemployeess = function (userInput, resultCallback) {
 
 point_tracking.fetchTrackinglists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-  executor.any('select * from public."employee_track" where "Employee_id"=($1)',
+  executor.any('select * from public."employee_track" where "Employee_id"=($1) ORDER BY "updated_at" ASC',
                  [userInput.Employee_id])
                  .then(data => {
                     resultCallback(null,data);
