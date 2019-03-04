@@ -59,6 +59,384 @@
         }
     },
 
+
+        "/assigningemployee/assignlists": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+    "/assigningemployee/assignemployeeadd": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    },
+                    "employee_name": {
+                        "type": "string"
+                    },
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "client_name": {
+                        "type": "string"
+                    },
+                    "hrs": {
+                        "type": "string"
+                    },
+                    "site_id": {
+                        "type": "string"
+                    },
+                    "site_name": {
+                        "type": "string"
+                    },
+                    "contract_id": {
+                        "type": "string"
+                    },
+                    "startdate": {
+                        "type": "string"
+                    },
+                    "todate": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "employee_type": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/Attendance/Attendancecheck": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    },
+                    "employee_name": {
+                        "type": "string"
+                    },
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "client_name": {
+                        "type": "string"
+                    },
+                    "site_id": {
+                        "type": "string"
+                    },
+                    "site_name": {
+                        "type": "string"
+                    },
+                    "contract_id": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "employee_type": {
+                        "type": "string"
+                    },
+                    "hrs": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "time_in": {
+                        "type": "string"
+                    },
+                    "time_out": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+     
+        "/Attendance/fetchdetails": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    },
+                    "start_date": {
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/assigningemployee/clientfetchlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "site_id": {
+                        "type": "string"
+                    },
+                    "start_date": {
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "site_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "site_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "site_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/assigningemployee/employeetfetchlist": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "start_date": {
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "start_date"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "start_date": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "start_date": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+           "/emi/emiadd": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+           "/emi/emidetails": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    },
+                    "emi_id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "number"
+                    },
+                    "description": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "number"
+                    },
+                    "amount": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    
+
+    "/employeecheck/checkemployee": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_type": {
+                        "type": "string"
+                    },
+                    "start_date": {
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_type"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_type": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "employee_type": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+    
+
         "/notification/addnotification": {
         "POST": {
             "body": {

@@ -5490,6 +5490,295 @@ function listofnotification(req, res, next) {
 }
 
 
+function assignemployeeadd(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.user.assignemployeeadds(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+
+
+
+
+function Attendancecheck(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.attendancechecks(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (result,waterfallCallback){
+                if(result.length == 1){
+                services.user.fetchpaymentdetails(req.body, function (err, fetchpaymentdetails) {
+                if (err) {
+                    console.log(err)
+                }
+                waterfallCallback(null,fetchpaymentdetails);
+                });
+                }
+                else{
+                return res.json(_.merge({
+                    data:  "Your Not Assigneted to This Site"  
+                }, utils.errors["200"]));
+                }
+            },
+            function (fetchpaymentdetails,waterfallCallback){
+                fetchpaymentdetails.forEach(function(belement) {
+                        if(belement.employee_type == req.body.employee_type){
+                             waterfallCallback(null,belement);
+                        }
+                });
+            },
+            function (paymentstructure,waterfallCallback){
+                var now = new Date();
+                var days =  new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+                let payment = [];
+                let p = {
+                    "employee_id": req.body.employee_id,
+                    "employee_name": req.body.employee_name,
+                    "client_id": req.body.client_id,
+                    "client_name": req.body.client_name,
+                    "employee_type":req.body.employee_type,
+                    "hrs":req.body.hrs,
+                    "site_id": req.body.site_id,
+                    "site_name": req.body.site_name,
+                    "contract_id": req.body.contract_id,
+                    "date": req.body.date,
+                    "status": req.body.status,
+                    "basic":paymentstructure.ebasic/days,
+                    "da":paymentstructure.eda/days,
+                    "addhours":paymentstructure.eda/days,
+                    "other":paymentstructure.eothers/days,
+                    "leave":paymentstructure.eleave/days,
+                    "bouns":paymentstructure.ebasic/days,
+                    "weekly":paymentstructure.eweekly_off/days,
+                    "gross":paymentstructure.ebasic/days,
+                    "epf":paymentstructure.ebasic/days,
+                    "esi":paymentstructure.ebasic/days,
+                    "net":paymentstructure.erounded_off/days,
+                    "timein":req.body.time_in,
+                    "timeout":req.body.time_out,
+                    "duration": req.body.duration,
+                }
+                payment.push(p)
+                waterfallCallback(null,payment)
+            },
+            function (payment,waterfallCallback){
+                services.user.insertdata(payment, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function fetchdetails(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchdetailss(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function emiadd(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.emiadds(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+
+function emidetails(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.emidetailss(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function checkemployee(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.checkemployees(req.body, function (err, assignemployeelist) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,assignemployeelist);
+                });
+            }, 
+            function (assignemployeelist,waterfallCallback){
+                services.user.selectemployee(req.body, function (err, employee_list) {
+                if (err) {
+                    console.log(err)
+                }
+                waterfallCallback(null,assignemployeelist,employee_list);
+                });
+            },
+            function (assignemployeelist,employee_list, waterfallCallback){
+                  if(assignemployeelist.length == 0){
+                    waterfallCallback(null,employee_list);
+                  }else{
+                  let employee_lists = [];
+                    employee_list.forEach(function(belement) {
+                    console.log("in");
+                    assignemployeelist.forEach(function(pelement) {
+                        console.log("out")
+                        if(!belement.employee_id == pelement.employee_id ){
+                               let project = {
+                                 'employee_id':pelement.user_id,
+                                 'employee_name':'New',
+                                 'employee_type':belement.client_id,
+                                 'date_of_joining':belement.client_name,
+                                 'mobile': belement.site_id,
+                                 'email_id':belement.site_name
+                            };
+                            employee_lists.push(project);
+                        }
+                    });
+                });
+                waterfallCallback(null,employee_lists);
+                  }
+
+
+
+            },
+            function (employee_lists, waterfallCallback){
+                return res.json(_.merge({
+                    data:  employee_lists  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function clientfetchlist(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.user.clientfetchlists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+
+
+function employeetfetchlist(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+
+                services.user.employeetfetchlists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
 
 
 
@@ -5497,6 +5786,29 @@ function listofnotification(req, res, next) {
 
 
 
+
+
+
+function assignlists(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.assignlistss(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+}
 
 
 
@@ -5862,6 +6174,16 @@ exports.addnotification = addnotification;
 exports.updatenotification = updatenotification;
 exports.notificationcount = notificationcount
 exports.listofnotification = listofnotification;
+
+exports.assignemployeeadd = assignemployeeadd;
+exports.Attendancecheck = Attendancecheck;
+exports.fetchdetails = fetchdetails;
+exports.emiadd = emiadd;
+exports.emidetails = emidetails;
+exports.checkemployee = checkemployee;
+exports.clientfetchlist = clientfetchlist;
+exports.employeetfetchlist = employeetfetchlist;
+exports.assignlists = assignlists;
 
 
 

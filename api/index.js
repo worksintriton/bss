@@ -48,6 +48,7 @@ addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]);
 
 
+
 addRoute("/authentication/fetchemployee_id", "POST", [middleware.fetchemployee_id]);
 addRoute("/authentication/updateprofilephoto", "POST", [middleware.updateprofilephoto]);
 
@@ -80,6 +81,49 @@ addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
 
 /*t*/
 addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
+
+
+addRoute("/assigningemployee/assignemployeeadd", "POST", [middleware.assignemployeeadd]);
+addRoute("/assigningemployee/assignlists", "POST", [middleware.assignlists]);
+addRoute("/Attendance/Attendancecheck", "POST", [middleware.Attendancecheck]);
+
+
+addRoute("/Attendance/fetchdetails", "POST", [middleware.fetchdetails]);
+
+
+
+
+addRoute("/assigningemployee/clientfetchlist", "POST", [middleware.clientfetchlist]);
+
+
+addRoute("/assigningemployee/employeetfetchlist", "POST", [middleware.employeetfetchlist]);
+
+
+
+
+
+
+
+
+
+addRoute("/emi/emiadd", "POST", [middleware.emiadd]);
+addRoute("/emi/emidetails", "POST", [middleware.emidetails]);
+
+
+
+
+addRoute("/employeecheck/checkemployee", "POST", [middleware.checkemployee]);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -370,22 +414,10 @@ addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
 
 
 
-
-
 addRoute("/notification/addnotification", "POST", [middleware.addnotification]);
 addRoute("/notification/notificationcount", "POST", [middleware.notificationcount]);
 addRoute("/notification/updatenotification", "POST", [middleware.updatenotification]);
 addRoute("/notification/listofnotification", "POST", [middleware.listofnotification]);
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -397,6 +429,7 @@ addRoute("/uniform/uniformlist", "POST", [middleware.uniformlist]);
 addRoute("/uniform/uniformdelete", "POST", [middleware.uniformdelete]);
 addRoute("/uniform/uniformupdate", "POST", [middleware.uniformupdate]);
 addRoute("/uniform/uniformfetch", "POST", [middleware.uniformfetch]);
+
 
 
 

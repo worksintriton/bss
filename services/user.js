@@ -2756,8 +2756,6 @@ userInput.Remarks_by_cod
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
 };
 
 user.updatequalitys = function (userInput, resultCallback) {
@@ -3480,10 +3478,220 @@ user.updatenotifications = function (userInput, resultCallback) {
 };
 
 
+user.assignemployeeadds = function (userInput, resultCallback) {
+console.log(userInput)
+var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.any('INSERT INTO public.assignemployee  (date,employee_id,employee_name,client_id,client_name,site_id,site_name,contract_id,employee_type,hrs)  SELECT  x,$4,$5,$6,$7,$8,$9,$10,$11,$12 FROM generate_series(($2)::date, ($3)::date,($1)::interval) a(x) RETURNING *' ,
+[
+'1 days',
+userInput.startdate,
+userInput.todate,
++userInput.employee_id,
+userInput.employee_name,
++userInput.client_id,
+userInput.client_name,
++userInput.site_id,
+userInput.site_name,
++userInput.contract_id,
+userInput.employee_type,
+userInput.hrs
+])
+  .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.attendancechecks = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.assignemployee WHERE "employee_id"=($1) and "contract_id"=($2) and "date"=($3) ' , [userInput.employee_id,userInput.contract_id,userInput.date+" 00:00:00-07"])
+        .then(data => {
+                 resultCallback(null,data );
+                 console.log(data)
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 
 
+
+user.fetchpaymentdetails = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payment" WHERE "site_id"=($1)', [userInput.contract_id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null);
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.paymentstructure = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.insertdata = function (userInput, resultCallback) {
+  console.log(userInput)
+var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+executor.any('INSERT INTO public.attendancemark(employee_id, employee_name, client_id, client_name, employee_type, hrs, site_id, site_name, contract_id, date, status, basic, da, addhours, other, leave, bouns, weekly, gross, epf, esi, net, timein, timeout, duration) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING *' ,
+[
+userInput[0].employee_id,
+userInput[0].employee_name,
+userInput[0].client_id,
+userInput[0].client_name,
+userInput[0].employee_type,
+userInput[0].hrs,
+userInput[0].site_id,
+userInput[0].site_name,
+userInput[0].contract_id,
+userInput[0].date,
+userInput[0].status,
+userInput[0].basic,
+userInput[0].da,
+userInput[0].addhours,
+userInput[0].other,
+userInput[0].leave,
+userInput[0].bouns,
+userInput[0].weekly,
+userInput[0].gross,
+userInput[0].epf,
+userInput[0].esi,
+userInput[0].net,
+userInput[0].timein,
+userInput[0].timeout,
+userInput[0].duration
+
+])
+  .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.fetchdetailss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."attendancemark" WHERE "employee_id"=($1) and date >= ($2) and date <= ($3) ', [userInput.employee_id,userInput.start_date,userInput.end_date])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.checkemployees = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * from public."employeedetails" where id in (select cast("employee_id" as integer)from public."assignemployee" where "employee_type"= $1 and "date">= $2 and "date"<= $3)',
+     [userInput.employee_id,userInput.start_date,userInput.end_date])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.selectemployee = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."employeedetails" WHERE "employee_type"=($1)', [userInput.employee_type])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.clientfetchlists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+
+    executor.any('select * from public."employeedetails" where id in (select cast("employee_id" as integer)from public."assignemployee" where "site_id"=$1 and "date">=$2 and "date"<= $3) ', [userInput.site_id,userInput.start_date,userInput.end_date])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.employeetfetchlists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+
+    executor.any('select * from public."attendancemark"  where  "date">=$1 and "date"<= $2) ', [userInput.start_date,userInput.end_date])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.assignlistss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+
+    executor.any('select * from public."assignemployee" ', [])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 
