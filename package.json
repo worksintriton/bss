@@ -53,7 +53,8 @@
     "strip-whitespace": "^1.0.7",
     "superagent": "^3.8.3",
     "uniqid": "^5.0.3",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "xlsx": "^0.14.1"
   },
   "devDependencies": {
     "claudia": "^5.1.0",

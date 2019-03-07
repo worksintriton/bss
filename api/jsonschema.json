@@ -5413,6 +5413,32 @@
     },
 
 
+        "/advance/advcancebulk":{
+        "POST": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        
+                    },
+                    "properties": {
+
+                    }
+                }
+            }
+        }
+    },
+
+
      "/client/newclientsite": {
         "POST": {
             "body": {
@@ -8720,6 +8746,9 @@
                     },
                     "amount": {
                         "type": "number"
+                    },
+                    "dpaytype": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,

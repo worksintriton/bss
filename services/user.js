@@ -3812,6 +3812,43 @@ userInput.loan_number
 };
 
 
+
+user.advanceaddss = function (userInput,date,amount, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public.advance(employee_id,employee_name,bank,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *',
+[
+userInput.Employee_ID,
+userInput.Employee_Name,
+userInput.Bank,
+amount,
+0,
+userInput.Installment,
+0,
+'-',
+userInput.PayType,
+date,
+0,
+0,
+'NO',
+userInput.Advance_Type,
+userInput.Company_Name,
+userInput.site,
+"Pending",
+userInput.Loan_Number
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
 user.advancefetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -3921,11 +3958,12 @@ userInput.id
 user.updateoneinstalments = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                  executor.one('UPDATE public.advance SET  ddate=$2, pamount=$3  WHERE id=$1 RETURNING *',
+                  executor.one('UPDATE public.advance SET  ddate=$2, pamount=$3 , dpaytype=$4  WHERE id=$1 RETURNING *',
                  [
 userInput.id,
 userInput.date,
-userInput.amount
+userInput.amount,
+userInput.dpaytype
                  ])
                       .then(data => {
                  console.log(data);

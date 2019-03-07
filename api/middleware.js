@@ -16,6 +16,8 @@ var path = require('path')
 var fileUpload = require('express-fileupload');
   var moment = require('moment');
   var dateFormat = require('dateformat');
+  var XLSX = require('xlsx')
+
 //var FORGOT_PASSWORD_HTML = fs.readFileSync("www/resetpassword.html", "utf8");
 /*
 To Maintain Local Session
@@ -3294,7 +3296,7 @@ function uploadingfile(req, res, next) {
                   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
                   let sampleFile = req.files.filetoupload;
 
-                  console.log(sampleFile);
+            
                   // Use the mv() method to place the file somewhere on your server
                   var time_details = moment().format('YYYYMMDDHHmmss');
                   var path = 'www/pics/'+time_details+"_"+sampleFile.name; 
@@ -3319,6 +3321,90 @@ function uploadingfile(req, res, next) {
         ]);
 
 }
+
+
+
+function advcancebulk(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                  if (Object.keys(req.files).length == 0) {
+                    return res.status(400).send('No files were uploaded.');
+                  }
+                  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+                  let sampleFile = req.files.filetoupload;
+                  
+                  // Use the mv() method to place the file somewhere on your server
+                  var time_details = moment().format('YYYYMMDDHHmmss');
+                  var path = 'www/pics/'+time_details+"_"+sampleFile.name; 
+                  sampleFile.mv(path, function(err) {
+                    if (err)
+                      return res.status(500).send(err);
+                    var result = {
+                        path: path,
+                        uploadstatus: true
+                    }
+                    waterfallCallback(null,result);
+                  });
+            },
+            function (mydata, waterfallCallback){
+                var XLSX = require('xlsx');
+                var workbook = XLSX.readFile(mydata.path);
+                var sheet_name_list = workbook.SheetNames;
+                var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+                let site_info = [];
+                lists.forEach(function(belement) {
+                for(var i = 1; i <= belement.Installment; i++){
+                var futureMonth = moment('2019-05-07').add( i , 'months').calendar();
+                var date = dateFormat(futureMonth, "yyyy-mm-dd");
+                var amount = belement.Amount / belement.Installment;
+                console.log(date,amount)
+                services.user.advanceaddss(belement,date,amount, function (err, result) {
+                if (err) {
+                   console.log(err)
+                }
+                });
+                }
+
+
+
+
+
+
+                //             let project = {
+                //                  'advance_type': belement.Advance_Type,
+                //                  'bank':belement.Bank,
+                //                  'company_name':belement.Company_Name,
+                //                  'daddi':belement.Add,
+                //                  'damount': belement.Amount,
+                //                  'ddate':'2019-05-07',
+                //                  'dfullcash':belement.FullCash,
+                //                  'dnaration':'No',
+                //                  'dpaytype':belement.PayType,
+                //                  'employee_id': belement.Employee_ID,
+                //                  'employee_name':belement.Employee_Name,
+                //                  'loan_number':belement.Loan_Number,
+                //                  'pamount':belement.PendingAmount,
+                //                  'pbalanceamount':belement.BalanceAmount,
+                //                  'pinstalment': belement.Installment,
+                //                  'ppendinginstalment':belement.PendingInstallment
+                //             };
+                // site_info.push(project);
+
+                 });
+
+
+                // console.log(site_info);
+                // console.log(site_info[0].pinstalment);
+            
+               
+            }
+        ]);
+
+}
+
+
+
+
 
 
 function newclientsite(req, res, next) {
@@ -6444,6 +6530,7 @@ exports.deleteadvance = deleteadvance;
 exports.updateadvance = updateadvance;
 exports.fetchadvance =fetchadvance;
 exports.updateoneinstalment = updateoneinstalment;
+exports.advcancebulk = advcancebulk;
 
 
 

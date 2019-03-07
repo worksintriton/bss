@@ -492,6 +492,12 @@ addRoute("/finanace/fetchfinanace", "POST", [middleware.fetchfinanace]);
 
 
 
+/*Bulk Uploading*/
+addRoute("/advance/advcancebulk", "POST", [middleware.advcancebulk]);
+
+
+
+
 
 
 app.use(router);
