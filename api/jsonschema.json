@@ -322,84 +322,6 @@
 
 
 
-           "/emi/emiadd": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "employee_id": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "amount": {
-                        "type": "number"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "employee_id"
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "employee_id": "should have required property Email_id"
-                       
-                    },
-                    "properties": {
-                        "employee_id": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
-
-           "/emi/emidetails": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "employee_id": {
-                        "type": "string"
-                    },
-                    "emi_id": {
-                        "type": "string"
-                    },
-                    "title": {
-                        "type": "number"
-                    },
-                    "description": {
-                        "type": "number"
-                    },
-                    "date": {
-                        "type": "number"
-                    },
-                    "amount": {
-                        "type": "number"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "employee_id"
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "employee_id": "should have required property Email_id"
-                       
-                    },
-                    "properties": {
-                        "employee_id": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
     
 
     "/employeecheck/checkemployee": {
@@ -435,6 +357,9 @@
             }
         }
     },
+
+
+ 
     
 
         "/notification/addnotification": {
@@ -6934,6 +6859,124 @@
     },
 
 
+        "/company/addcompany": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "company_name": {
+                        "type": "string"
+                    },
+                     "area": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property userId"
+                    },
+                    "properties": {
+                        "company_name": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/company/updatecompany": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                     "company_name": {
+                        "type": "string"
+                    },
+                     "area": {
+                        "type": "string"
+                    }
+
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/company/companylists": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/company/fetchcompany": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
         "/employee/addemptype": {
         "POST": {
             "body": {
@@ -8443,7 +8486,343 @@
                 }
             }
         }
+    },
+
+     "/advance/advanceadd": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "number"
+                    },
+                    "employee_name": {
+                        "type": "string"
+                    },
+                    "bank": {
+                        "type": "string"
+                    },
+                    "pamount": {
+                        "type": "number"
+                    },
+                    "pbalanceamount": {
+                        "type": "number"
+                    },
+                    "pinstalment": {
+                        "type": "number"
+                    },
+                    "ppendinginstalment": {
+                        "type": "number"
+                    },
+                    "dfullcash": {
+                        "type": "string"
+                    },
+                    "dpaytype": {
+                        "type": "string"
+                    },
+                    "ddate": {
+                        "type": "string"
+                    },
+                    "damount": {
+                        "type": "number"
+                    },
+                    "daddi": {
+                        "type": "string"
+                    },
+                    "dnaration": {
+                        "type": "string"
+                    },
+                    "advance_type": {
+                        "type": "string"
+                    },
+                    "company_name": {
+                        "type": "string"
+                    },
+                    "site": {
+                        "type": "string"
+                    },
+                    "loan_number": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "employee_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+     "/advance/advancefetch": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "number"
+                    },
+                    "advance_type": {
+                        "type": "string"
+                    },
+                    "company_name": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "employee_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/advance/fetchloan_number": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+   
+
+    "/advance/deleteinstalment": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+        "/advance/deleteadvance": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+        "/advance/fetchadvance": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/advance/updateoneinstalment": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+     "/advance/updateadvance": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "number"
+                    },
+                    "employee_name": {
+                        "type": "string"
+                    },
+                    "bank": {
+                        "type": "string"
+                    },
+                    "pamount": {
+                        "type": "number"
+                    },
+                    "pbalanceamount": {
+                        "type": "number"
+                    },
+                    "pinstalment": {
+                        "type": "number"
+                    },
+                    "ppendinginstalment": {
+                        "type": "number"
+                    },
+                    "dfullcash": {
+                        "type": "string"
+                    },
+                    "dpaytype": {
+                        "type": "string"
+                    },
+                    "ddate": {
+                        "type": "string"
+                    },
+                    "damount": {
+                        "type": "number"
+                    },
+                    "daddi": {
+                        "type": "string"
+                    },
+                    "dnaration": {
+                        "type": "string"
+                    },
+                    "advance_type": {
+                        "type": "string"
+                    },
+                    "company_name": {
+                        "type": "string"
+                    },
+                    "site": {
+                        "type": "string"
+                    },
+                    "loan_number": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "employee_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
     }
+
+
+
+
+   
    
 
 

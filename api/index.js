@@ -85,7 +85,13 @@ addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
 
 addRoute("/assigningemployee/assignemployeeadd", "POST", [middleware.assignemployeeadd]);
 addRoute("/assigningemployee/assignlists", "POST", [middleware.assignlists]);
+
+
+
+
 addRoute("/Attendance/Attendancecheck", "POST", [middleware.Attendancecheck]);
+
+
 
 
 addRoute("/Attendance/fetchdetails", "POST", [middleware.fetchdetails]);
@@ -101,18 +107,32 @@ addRoute("/assigningemployee/employeetfetchlist", "POST", [middleware.employeetf
 
 
 
-
-
-
-
-
-addRoute("/emi/emiadd", "POST", [middleware.emiadd]);
-addRoute("/emi/emidetails", "POST", [middleware.emidetails]);
-
-
-
-
 addRoute("/employeecheck/checkemployee", "POST", [middleware.checkemployee]);
+
+
+
+addRoute("/advance/advanceadd", "POST", [middleware.advanceadd]);
+addRoute("/advance/advancefetch", "POST", [middleware.advancefetch]);
+
+
+addRoute("/advance/fetchloan_number", "POST", [middleware.fetchloan_number]);
+
+
+
+addRoute("/advance/deleteinstalment", "POST", [middleware.deleteinstalment]);
+
+
+addRoute("/advance/deleteadvance", "POST", [middleware.deleteadvance]);
+
+
+addRoute("/advance/fetchadvance", "POST", [middleware.fetchadvance]);
+
+
+
+addRoute("/advance/updateadvance", "POST", [middleware.updateadvance]);
+
+
+addRoute("/advance/updateoneinstalment", "POST", [middleware.updateoneinstalment]);
 
 
 
@@ -441,6 +461,16 @@ addRoute("/uniform/itemslists", "POST", [middleware.itemslists]);
 addRoute("/uniform/itemsdeletes", "POST", [middleware.itemsdeletes]);
 addRoute("/uniform/updateitems", "POST", [middleware.updateitems]);
 addRoute("/uniform/fetchitems", "POST", [middleware.fetchitems]);
+
+
+/*Master Company Name adding*/
+addRoute("/company/addcompany", "POST", [middleware.addcompany]);
+addRoute("/company/companylists", "POST", [middleware.companylists]);
+addRoute("/company/updatecompany", "POST", [middleware.updatecompany]);
+addRoute("/company/fetchcompany", "POST", [middleware.fetchcompany]);
+
+
+
 
 
 /*Master employee type adding*/

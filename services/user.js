@@ -41,7 +41,7 @@ user.confignumbers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\
 
-                  executor.one('UPDATE public.configurenumber SET  "Red_alert"=$1, "Fire_alert"=$2, "Ambulance_alert"=$3, "Police_alert"=$4 ,"bsscontrol"=$6 WHERE  "temp" = $5 RETURNING *',
+          executor.one('UPDATE public.configurenumber SET  "Red_alert"=$1, "Fire_alert"=$2, "Ambulance_alert"=$3, "Police_alert"=$4 ,"bsscontrol"=$6 WHERE  "temp" = $5 RETURNING *',
           [userInput.Red_alert,userInput.Fire_alert,userInput.Ambulance_alert,userInput.Police_alert,userInput.temp,userInput.bsscontrol])
                  .then(data => {
                     console.log("1");
@@ -624,21 +624,21 @@ user.updateemployees = function (userInput , resultCallback) {
 
 
 //updateemployees///
-user.updateemployees = function (userInput , resultCallback) {
-  var executor = db.getdaata.getdb();
-      executor.one('UPDATE public.employeedetails SET photo = ($2)  WHERE  id=($1) RETURNING *',
-[               userInput.id,
-                userInput.photo
-])
-       .then(data => {
-        console.log(data);
-        resultCallback(null,data);
-        })
-        .catch(error => {
-          resultCallback(error,{} );
-          console.log('ERROR:', error);
-        });
-};
+// user.updateemployees = function (userInput , resultCallback) {
+//   var executor = db.getdaata.getdb();
+//       executor.one('UPDATE public.employeedetails SET photo = ($2)  WHERE  id=($1) RETURNING *',
+// [               userInput.id,
+//                 userInput.photo
+// ])
+//        .then(data => {
+//         console.log(data);
+//         resultCallback(null,data);
+//         })
+//         .catch(error => {
+//           resultCallback(error,{} );
+//           console.log('ERROR:', error);
+//         });
+// };
 
 
 
@@ -3693,6 +3693,249 @@ user.assignlistss = function (userInput, resultCallback) {
         })
 };
 
+//Add company/////
+
+
+user.addcompanys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public.company(company_name,area)VALUES ( $1, $2) RETURNING *',
+[
+userInput.items,
+userInput.rates
+
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+user.updatecompanys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.company SET  company_name=$2, area=$3  WHERE id=$1 RETURNING *',
+                 [
+                 userInput.id,
+userInput.items,
+userInput.rates
+
+
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchcompanys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."company" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+user.companylistss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."company"', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+///add advance/////
+
+
+user.advanceadds = function (userInput,date,amount, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                 executor.one('INSERT INTO public.advance(employee_id,employee_name,bank,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *',
+[
+userInput.employee_id,
+userInput.employee_name,
+userInput.bank,
+amount,
+userInput.pbalanceamount,
+userInput.pinstalment,
+userInput.ppendinginstalment,
+userInput.dfullcash,
+userInput.dpaytype,
+date,
+userInput.damount,
+userInput.daddi,
+userInput.dnaration,
+userInput.advance_type,
+userInput.company_name,
+userInput.site,
+"Pending",
+userInput.loan_number
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
+
+
+user.advancefetchs = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "company_name"=($3) ORDER BY "ddate" ASC', [userInput.employee_id,userInput.advance_type,userInput.company_name])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchloan_numbers = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select max(loan_number) from public."advance"', [])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.deleteinstalments = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."advance" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchadvances = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select *  FROM public."advance" WHERE "loan_number"=($1)', [userInput.id])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.deleteadvances = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."advance" WHERE "loan_number"=($1)', [userInput.id])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.updateadvances = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+     executor.one('UPDATE public.advance SET  "employee_id"=$1 ,employee_name=$2 ,bank=$3,pamount=$4,pbalanceamount=$5,pinstalment=$6,ppendinginstalment=$7,dfullcash=$8,dpaytype=$9,ddate=$10,damount=$11,daddi=$12,dnaration=$13,advance_type=$14,company_name=$15,site=$16,loan_number=$17 WHERE  "id" = $18 RETURNING *',
+[
+userInput.employee_id,
+userInput.employee_name,
+userInput.bank,
+userInput.pamount,
+userInput.pbalanceamount,
+userInput.pinstalment,
+userInput.ppendinginstalment,
+userInput.dfullcash,
+userInput.dpaytype,
+userInput.ddate,
+userInput.damount,
+userInput.daddi,
+userInput.dnaration,
+userInput.advance_type,
+userInput.company_name,
+userInput.site,
+userInput.loan_number,
+userInput.id
+])
+.then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.updateoneinstalments = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+                  executor.one('UPDATE public.advance SET  ddate=$2, pamount=$3  WHERE id=$1 RETURNING *',
+                 [
+userInput.id,
+userInput.date,
+userInput.amount
+                 ])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 
