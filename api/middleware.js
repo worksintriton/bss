@@ -3354,7 +3354,7 @@ function advcancebulk(req, res, next) {
                 let site_info = [];
                 lists.forEach(function(belement) {
                 for(var i = 1; i <= belement.Installment; i++){
-                var futureMonth = moment('2019-05-07').add( i , 'months').calendar();
+                var futureMonth = moment(belement.Date).add( i , 'months').calendar();
                 var date = dateFormat(futureMonth, "yyyy-mm-dd");
                 var amount = belement.Amount / belement.Installment;
                 console.log(date,amount)
@@ -3364,39 +3364,7 @@ function advcancebulk(req, res, next) {
                 }
                 });
                 }
-
-
-
-
-
-
-                //             let project = {
-                //                  'advance_type': belement.Advance_Type,
-                //                  'bank':belement.Bank,
-                //                  'company_name':belement.Company_Name,
-                //                  'daddi':belement.Add,
-                //                  'damount': belement.Amount,
-                //                  'ddate':'2019-05-07',
-                //                  'dfullcash':belement.FullCash,
-                //                  'dnaration':'No',
-                //                  'dpaytype':belement.PayType,
-                //                  'employee_id': belement.Employee_ID,
-                //                  'employee_name':belement.Employee_Name,
-                //                  'loan_number':belement.Loan_Number,
-                //                  'pamount':belement.PendingAmount,
-                //                  'pbalanceamount':belement.BalanceAmount,
-                //                  'pinstalment': belement.Installment,
-                //                  'ppendinginstalment':belement.PendingInstallment
-                //             };
-                // site_info.push(project);
-
-                 });
-
-
-                // console.log(site_info);
-                // console.log(site_info[0].pinstalment);
-            
-               
+                 });               
             }
         ]);
 
