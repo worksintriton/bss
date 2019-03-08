@@ -132,6 +132,9 @@ addRoute("/advance/fetchadvance", "POST", [middleware.fetchadvance]);
 addRoute("/advance/updateadvance", "POST", [middleware.updateadvance]);
 
 
+
+
+
 addRoute("/advance/updateoneinstalment", "POST", [middleware.updateoneinstalment]);
 
 

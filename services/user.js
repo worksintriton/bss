@@ -3946,9 +3946,9 @@ userInput.loan_number,
 userInput.id
 ])
 .then(data => {
-                 resultCallback(null,data );
-        })
-        .catch(error => {
+resultCallback(null,data );
+})
+.catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
@@ -3958,21 +3958,22 @@ userInput.id
 user.updateoneinstalments = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                  executor.one('UPDATE public.advance SET  ddate=$2, pamount=$3 , dpaytype=$4  WHERE id=$1 RETURNING *',
-                 [
+executor.one('UPDATE public.advance SET  ddate=$2,pamount=$3,dpaytype=$4,status=$5  WHERE id=$1 RETURNING *',
+[
 userInput.id,
 userInput.date,
 userInput.amount,
-userInput.dpaytype
-                 ])
-                      .then(data => {
-                 console.log(data);
-                 resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            console.log('ERROR:', error);
-        })
+userInput.dpaytype,
+userInput.status
+])
+.then(data => {
+console.log(data);
+resultCallback(null,data );
+})
+.catch(error => {
+resultCallback(error,null );
+console.log('ERROR:', error);
+})
 };
 
 
