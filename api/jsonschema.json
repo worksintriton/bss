@@ -8541,7 +8541,7 @@
                         "type": "number"
                     },
                     "dfullcash": {
-                        "type": "string"
+                        "type": "boolean"
                     },
                     "dpaytype": {
                         "type": "string"
