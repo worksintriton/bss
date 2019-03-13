@@ -36,6 +36,7 @@ app.options('*', cors());
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 
 
+
 /*Add Employee*/
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
@@ -46,6 +47,9 @@ addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
 addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee_id]);
 addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]);
+
+addRoute("/authentication/efetchsitedetails", "GET", [middleware.efetchsitedetails]);
+
 
 
 
@@ -79,64 +83,38 @@ addRoute("/authentication/deleteTrackinglist", "POST", [middleware.deleteTrackin
 addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
 
 
-/*t*/
+/*tracking*/
 addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
 
-
+/*AssignEmployee*/
 addRoute("/assigningemployee/assignemployeeadd", "POST", [middleware.assignemployeeadd]);
 addRoute("/assigningemployee/assignlists", "POST", [middleware.assignlists]);
-
-
-
-
-addRoute("/Attendance/Attendancecheck", "POST", [middleware.Attendancecheck]);
-
-
-
-
-addRoute("/Attendance/fetchdetails", "POST", [middleware.fetchdetails]);
-
-
-
-
 addRoute("/assigningemployee/clientfetchlist", "POST", [middleware.clientfetchlist]);
-
-
 addRoute("/assigningemployee/employeetfetchlist", "POST", [middleware.employeetfetchlist]);
 
-
-
-
+/*Attendance Mark*/
+addRoute("/Attendance/Attendancecheck", "POST", [middleware.Attendancecheck]);
+addRoute("/Attendance/fetchdetails", "POST", [middleware.fetchdetails]);
 addRoute("/employeecheck/checkemployee", "POST", [middleware.checkemployee]);
 
 
-
+/*EMI Voucher*/
 addRoute("/advance/advanceadd", "POST", [middleware.advanceadd]);
 addRoute("/advance/advancefetch", "POST", [middleware.advancefetch]);
-
-
 addRoute("/advance/fetchloan_number", "POST", [middleware.fetchloan_number]);
-
-
-
 addRoute("/advance/deleteinstalment", "POST", [middleware.deleteinstalment]);
-
-
 addRoute("/advance/deleteadvance", "POST", [middleware.deleteadvance]);
-
-
 addRoute("/advance/fetchadvance", "POST", [middleware.fetchadvance]);
-
-
-
 addRoute("/advance/updateadvance", "POST", [middleware.updateadvance]);
-
-
-
-
-
 addRoute("/advance/updateoneinstalment", "POST", [middleware.updateoneinstalment]);
 
+
+
+
+/*Payroll Reports*/
+
+addRoute("/payroll/fetchsitedetails", "GET", [middleware.fetchsitedetails]);
+addRoute("/payroll/fetchsitedpayment", "POST", [middleware.fetchsitedpayment]);
 
 
 
@@ -485,6 +463,7 @@ addRoute("/employee/fetchemptype", "POST", [middleware.fetchemptype]);
 
 
 /*Finanace process*/
+
 /*Finanace management*/
 addRoute("/finanace/addfinanace", "POST", [middleware.addfinanace]);
 addRoute("/finanace/finanacelist", "POST", [middleware.finanacelist]);
@@ -497,6 +476,11 @@ addRoute("/finanace/fetchfinanace", "POST", [middleware.fetchfinanace]);
 
 /*Bulk Uploading*/
 addRoute("/advance/advcancebulk", "POST", [middleware.advcancebulk]);
+
+
+
+
+// addRoute("/employee/addemployeebulkupload", "POST", [middleware.addemployeebulkupload]);
 
 
 

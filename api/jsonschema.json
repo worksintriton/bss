@@ -59,6 +59,54 @@
         }
     },
 
+        "/payroll/fetchsitedetails": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
+
+    "/authentication/efetchsitedetails": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
+
 
         "/assigningemployee/assignlists": {
         "POST": {
@@ -82,6 +130,40 @@
                     },
                     "properties": {
                         "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+"/payroll/fetchsitedpayment": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array"
+                    },
+                    "startdate": {
+                        "type": "string"
+                    },
+                    "enddate": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "data"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "data": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "data": "userId must be string"
                     }
                 }
             }
@@ -418,9 +500,6 @@
             }
         }
     },
-
-
-
     "/notification/listofnotification": {
         "POST": {
             "body": {
@@ -4402,6 +4481,9 @@
                     },
                     "naadharcard5": {
                         "type": "string"
+                    },
+                    "site_name": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -4743,6 +4825,9 @@
                         "type": "string"
                     },
                     "age": {
+                        "type": "string"
+                    },
+                    "site_name": {
                         "type": "string"
                     }
                 },
@@ -5414,6 +5499,32 @@
 
 
         "/advance/advcancebulk":{
+        "POST": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        
+                    },
+                    "properties": {
+
+                    }
+                }
+            }
+        }
+    },
+
+
+            "/employee/addemployeebulkupload":{
         "POST": {
             "body": {
                 "type": "object",

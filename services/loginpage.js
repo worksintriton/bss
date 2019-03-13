@@ -28,6 +28,10 @@ login_page.bsslogincheck = function (userInput, resultCallback) {
         })
 };
 
+
+
+
+
 login_page.clientlogincheck = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
