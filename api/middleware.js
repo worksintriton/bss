@@ -6035,6 +6035,29 @@ function advancefetch(req, res, next) {
 
 }
 
+function monthlyfetch(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.monthlyfetchs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 
 function fetchloan_number(req, res, next) {
 
@@ -6254,7 +6277,7 @@ function fetchsitedpayment(req, res, next) {
                    console.log(req.body.enddate)
                   let payment = [];
                 req.body.data.forEach(function(pelement) {
-                services.user.fetchsitedpayments(pelement.site_id,req.body.startdate,req.body.enddate, function (err, result) {
+                services.user.fetchsitedpayments(pelement.site_name,req.body.date, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
@@ -6270,6 +6293,63 @@ function fetchsitedpayment(req, res, next) {
             },
             function (mydata, waterfallCallback){
                   console.log(mydata)
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function fetchsitepaymentss(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+               console.log(req.body)
+               console.log(req.body.startdate)
+               console.log(req.body.enddate)
+                  let payment = [];
+                req.body.data.forEach(function(pelement) {
+                services.user.fetchsitepaymentssss(pelement.site_name,req.body.date, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                 console.log(result[0])
+                 payment.push(result[0])
+                 waterfallCallback(null,payment);
+                });
+            });
+              
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function addsalaryprocess(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.addsalaryprocesss(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
                 return res.json(_.merge({
                     data: mydata
                 }, utils.errors["200"]));
@@ -6659,6 +6739,8 @@ exports.updateadvance = updateadvance;
 exports.fetchadvance =fetchadvance;
 exports.updateoneinstalment = updateoneinstalment;
 exports.advcancebulk = advcancebulk;
+exports.monthlyfetch = monthlyfetch;
+exports.addsalaryprocess = addsalaryprocess;
 
 
 
@@ -6673,6 +6755,7 @@ exports.fetchcompany = fetchcompany;
 exports.fetchsitedetails =fetchsitedetails;
 exports.fetchsitedpayment = fetchsitedpayment;
 exports.efetchsitedetails = efetchsitedetails;
+exports.fetchsitepaymentss = fetchsitepaymentss;
 
 
 

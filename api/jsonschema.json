@@ -171,6 +171,37 @@
     },
 
 
+    "/payroll/fetchsitepaymentss": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "data"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "data": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "data": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
 
     "/assigningemployee/assignemployeeadd": {
         "POST": {
@@ -8699,6 +8730,162 @@
             }
         }
     },
+
+         "/advance/monthlyfetch": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "number"
+                    },
+                    "start_date": {
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "employee_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+ "/payroll/addsalaryprocess": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_name": {
+                        "type": "string"
+                    },
+                    "employee_type": {
+                        "type": "string"
+                    },
+                    "employee_id": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "ifscnumber": {
+                        "type": "string"
+                    },
+                    "phonenumber": {
+                        "type": "string"
+                    },
+                    "emailid": {
+                        "type": "string"
+                    },
+                    "basic": {
+                        "type": "number"
+                    },
+                    "da": {
+                        "type": "number"
+                    },
+                    "hra": {
+                        "type": "number"
+                    },
+                    "others": {
+                        "type": "number"
+                    },
+                    "leave": {
+                        "type": "number"
+                    },
+                    "bouns": {
+                        "type": "number"
+                    },
+                    "weeklyoff": {
+                        "type": "number"
+                    },
+                    "noofdays": {
+                        "type": "number"
+                    },
+                    "gross": {
+                        "type": "number"
+                    },
+                    "pf": {
+                        "type": "number"
+                    },
+                    "esi": {
+                        "type": "number"
+                    },
+                    "prtax": {
+                        "type": "number"
+                    },
+                    "adv": {
+                        "type": "number"
+                    },
+                    "uniform": {
+                        "type": "number"
+                    },
+                    "mess": {
+                        "type": "number"
+                    },
+                    "rent": {
+                        "type": "number"
+                    },
+                    "atm": {
+                        "type": "number"
+                    },
+                    "start_date": {
+                        "type": "number"
+                    },
+                    "loan": {
+                        "type": "number"
+                    },
+                    "otherss": {
+                        "type": "number"
+                    },
+                    "totaldedcation": {
+                        "type": "number"
+                    },
+                    "netamount": {
+                        "type": "number"
+                    },
+                    "site_name": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "employee_id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
 
 
 

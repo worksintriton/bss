@@ -109,12 +109,21 @@ addRoute("/advance/updateadvance", "POST", [middleware.updateadvance]);
 addRoute("/advance/updateoneinstalment", "POST", [middleware.updateoneinstalment]);
 
 
+addRoute("/advance/monthlyfetch", "POST", [middleware.monthlyfetch]);
+
+
 
 
 /*Payroll Reports*/
 
 addRoute("/payroll/fetchsitedetails", "GET", [middleware.fetchsitedetails]);
 addRoute("/payroll/fetchsitedpayment", "POST", [middleware.fetchsitedpayment]);
+
+
+addRoute("/payroll/fetchsitepaymentss", "POST", [middleware.fetchsitepaymentss]);
+
+
+addRoute("/payroll/addsalaryprocess", "POST", [middleware.addsalaryprocess]);
 
 
 

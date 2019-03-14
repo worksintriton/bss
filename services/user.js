@@ -3657,7 +3657,7 @@ user.fetchdetailss = function (userInput, resultCallback) {
 user.fetchsitedpayments = function (site_id,start_date,end_date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT site_name, SUM (basic) AS basic, SUM (da) AS da, SUM (addhours) AS addhours, SUM (other) AS other, SUM (leave) AS leave, SUM (bouns) AS bouns, SUM (weekly) AS weekly, SUM (gross) AS gross, SUM (epf) AS epf, SUM (esi) AS esi, SUM (net) AS net from public."clientattendancemark" WHERE "site_id"=($1) and date >= ($2)  and date <= ($3)   GROUP BY site_name;', [site_id,start_date,end_date])
+    executor.any('SELECT site_name, SUM (basic) AS basic, SUM (da) AS da, SUM (addhours) AS addhours, SUM (other) AS other, SUM (leave) AS leave, SUM (bouns) AS bouns, SUM (weekly) AS weekly, SUM (gross) AS gross, SUM (epf) AS epf, SUM (esi) AS esi, SUM (net) AS net from public."salary_details" WHERE "site_id"=($1) and date >= ($2)  and date <= ($3)   GROUP BY site_name;', [site_id,start_date,end_date])
         .then(data => {
                  resultCallback(null,data );
         })
@@ -3666,6 +3666,23 @@ user.fetchsitedpayments = function (site_id,start_date,end_date, resultCallback)
             console.log('ERROR:', error);
         })
 };
+
+
+user.fetchsitepaymentssss = function (site_id,start_date, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * from public."salary_details" WHERE "site_name"=($1) and "date" = ($2)', [site_id,start_date])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
 
 
 
@@ -3916,6 +3933,20 @@ user.advancefetchs = function (userInput, resultCallback) {
 };
 
 
+user.monthlyfetchs = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and ddate >= ($2) and ddate <= ($3)', [userInput.employee_id,userInput.start_date,userInput.end_date])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
 user.fetchloan_numbers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
@@ -4046,6 +4077,8 @@ user.fetchsitedetail = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+
 
 
 user.addemployeebulkuploads = function (userInput, resultCallback) {
@@ -4193,6 +4226,55 @@ user.efetchsitedetailss = function (userInput, resultCallback) {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
+};
+
+
+
+user.addsalaryprocesss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.any('INSERT INTO public.salary_details(employee_name, employee_type, employee_id, bank_name, account_number, ifscnumber, phonenumber, emailid, basic, da, hra, others, leave, bouns, weeklyoff, noofdays, gross, pf, esi, prtax, adv, uniform, mess, rent, atm, loan, otherss, totaldedcation, netamount,site_name,date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29,$30,$31) RETURNING *',
+[
+userInput.employee_name,
+userInput.employee_type,
+userInput.employee_id,
+userInput.bank_name,
+userInput.account_number,
+userInput.ifscnumber,
+userInput.phonenumber,
+userInput.emailid,
+userInput.basic,
+userInput.da,
+userInput.hra,
+userInput.others,
+userInput.leave,
+userInput.bouns,
+userInput.weeklyoff,
+userInput.noofdays,
+userInput.gross,
+userInput.pf,
+userInput.esi,
+userInput.prtax,
+userInput.adv,
+userInput.uniform,
+userInput.mess,
+userInput.rent,
+userInput.atm,
+userInput.loan,
+userInput.otherss,
+userInput.totaldedcation,
+userInput.netamount,
+userInput.site_name,
+userInput.date
+])
+.then(data => {
+console.log(data);
+resultCallback(null,data );
+})
+.catch(error => {
+resultCallback(error,null );
+console.log('ERROR:', error);
+})
 };
 
 
