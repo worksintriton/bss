@@ -4515,6 +4515,24 @@
                     },
                     "site_name": {
                         "type": "string"
+                    },
+                    "company_name": {
+                        "type": "string"
+                    },
+                    "esi": {
+                        "type": "string"
+                    },
+                    "pf1": {
+                        "type": "string"
+                    },
+                    "pf2": {
+                        "type": "string"
+                    },
+                    "pf3": {
+                        "type": "string"
+                    },
+                    "uan": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -4859,6 +4877,24 @@
                         "type": "string"
                     },
                     "site_name": {
+                        "type": "string"
+                    },
+                    "company_name": {
+                        "type": "string"
+                    },
+                    "esi": {
+                        "type": "string"
+                    },
+                    "pf1": {
+                        "type": "string"
+                    },
+                    "pf2": {
+                        "type": "string"
+                    },
+                    "pf3": {
+                        "type": "string"
+                    },
+                    "uan": {
                         "type": "string"
                     }
                 },

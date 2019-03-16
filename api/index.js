@@ -47,7 +47,6 @@ addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
 addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee_id]);
 addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]);
-
 addRoute("/authentication/efetchsitedetails", "GET", [middleware.efetchsitedetails]);
 
 
