@@ -3558,6 +3558,30 @@ function fetchsite(req, res, next) {
 }
 
 
+function fetchcompanysite(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchcompanysites(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 
 
@@ -6246,6 +6270,7 @@ function fetchsitedetails(req, res, next) {
             },
             function (mydata, waterfallCallback){
                 console.log(mydata)
+
                 let sitedetails = [];
                     mydata.forEach(function(pelement) {
                             let project = {
@@ -6306,11 +6331,10 @@ function fetchsitepaymentss(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
                console.log(req.body)
-               console.log(req.body.startdate)
-               console.log(req.body.enddate)
-                  let payment = [];
-                req.body.data.forEach(function(pelement) {
-                services.user.fetchsitepaymentssss(pelement.site_name,req.body.date, function (err, result) {
+               let payment = [];
+               for (var i = 0; i < req.body.data.length; i++) {
+                console.log(req.body.data[i].site_name,req.body.date)
+                     services.user.fetchsitepaymentssss(req.body.data[i].site_name,req.body.date, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
@@ -6319,9 +6343,12 @@ function fetchsitepaymentss(req, res, next) {
                 }
                  console.log(result[0])
                  payment.push(result[0])
-                 waterfallCallback(null,payment);
-                });
-            });
+                 // waterfallCallback(null,payment);
+                });  
+                   }
+
+                   console.log(payment)
+
               
             },
             function (mydata, waterfallCallback){
@@ -6750,6 +6777,7 @@ exports.addcompany = addcompany;
 exports.companylists = companylists;
 exports.updatecompany = updatecompany;
 exports.fetchcompany = fetchcompany;
+exports. fetchcompanysite = fetchcompanysite;
 
 /*payroll*/
 exports.fetchsitedetails =fetchsitedetails;

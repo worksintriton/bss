@@ -59,29 +59,37 @@
         }
     },
 
-        "/payroll/fetchsitedetails": {
-        "GET": {
+
+
+    "/payroll/fetchsitedetails": {
+        "POST": {
             "body": {
                  "type": "object",
                 "properties": {
-                   
+                    "company_name": {
+                        "type": "string"
+                    }
                 },
         "additionalProperties": false,
                 "required": [
-                    
+                    "company_name"
                     
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
+                        "company_name": "should have required property Email_id"
                        
                     },
                     "properties": {
+                        "company_name": "userId must be string"
                     }
                 }
             }
         }
     },
+
+
 
     "/authentication/efetchsitedetails": {
         "GET": {
@@ -5625,15 +5633,27 @@
                     "client_id": {
                         "type": "string"
                     },
+                    "billing_address": {
+                        "type": "string"
+                    },
+                    "sitelogin": {
+                        "type": "string"
+                    },
+                    "sitepassword": {
+                        "type": "string"
+                    },
                     "title": {
                         "type": "string"
                     },
                     "description": {
                         "type": "string"
-                    }, 
+                    },
                     "address": {
                         "type": "string"
-                    }, 
+                    },
+                    "company_name": {
+                        "type": "string"
+                    },
                     "contactperson1": {
                         "type": "string"
                     }, 
@@ -5770,7 +5790,19 @@
             "body": {
                  "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "number"
+                    },
                     "client_id": {
+                        "type": "string"
+                    },
+                    "billing_address": {
+                        "type": "string"
+                    },
+                    "sitelogin": {
+                        "type": "string"
+                    },
+                    "sitepassword": {
                         "type": "string"
                     },
                     "title": {
@@ -5778,10 +5810,13 @@
                     },
                     "description": {
                         "type": "string"
-                    }, 
+                    },
                     "address": {
                         "type": "string"
-                    }, 
+                    },
+                    "company_name": {
+                        "type": "string"
+                    },
                     "contactperson1": {
                         "type": "string"
                     }, 
@@ -5808,9 +5843,6 @@
                     }, 
                     "contactemail3": {
                         "type": "string"
-                    }, 
-                    "id": {
-                        "type": "number"
                     }, 
                     "status": {
                         "type": "string"
@@ -9104,6 +9136,35 @@
             }
         }
     },
+
+
+
+      "/company/fetchcompanysite": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "company_name": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "company_name"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "company_name": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
+
 
 
 

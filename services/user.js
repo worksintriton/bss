@@ -512,7 +512,7 @@ user.deleteemployees = function (userInput, resultCallback) {
 //updateemployees///
 user.updateemployees = function (userInput , resultCallback) {
   var executor = db.getdaata.getdb();
-      executor.one('UPDATE public.employeedetails SET employee_type = ($2), father_name = ($3), gender= ($4), material_status= ($5), "Edq"= ($6), nationality= ($7), languages= ($8), date_joining= ($9), driving_licence= ($10), "Email_ID"= ($11), "Mobile_No"= ($12), "Name"= ($13), "Date_of_birth"= ($14), "Password"= ($15), aadhar_card= ($16), voter_id= ($17), "Address"= ($18), attach= ($19), qrcode= ($20), workstatus = ($21), resigned= ($22), createdtime= ($23), contact= ($24), ifsc= ($25), "a_c"= ($26), bankname= ($27), account= ($28), prom_in= ($29), pan= ($30), weight = ($31), height= ($32), "mother_tongue"= ($33), permentaddress= ($34),fname1= ($35),fsex1= ($36),frelationship1= ($37),fdateofbirth1= ($38),fage1= ($39),foccupation1= ($40),faadharcard1= ($41),fname2= ($42),fsex2= ($43),frelationship2= ($44),fdateofbirth2= ($45),fage2= ($46),foccupation2= ($47),faadharcard2= ($48),fname3= ($49),fsex3= ($50),frelationship3= ($51),fdateofbirth3= ($52),fage3= ($53),foccupation3= ($54),faadharcard3= ($55),fname4= ($56),fsex4= ($57),frelationship4= ($58),fdateofbirth4= ($59),fage4= ($60),foccupation4= ($61),faadharcard4= ($62),fname5= ($63),fsex5= ($64),frelationship5= ($65),fdateofbirth5= ($66),fage5= ($67),foccupation5= ($68),faadharcard5= ($69),nname1= ($70),nsex1= ($71),nrelationship1= ($72),ndateofbirth1= ($73),nage1= ($74),noccupation1= ($75),naadharcard1= ($76),nname2= ($77),nsex2= ($78),nrelationship2= ($79),ndateofbirth2= ($80),nage2= ($81),noccupation2= ($82),naadharcard2= ($83),nname3= ($84),nsex3= ($85),nrelationship3= ($86),ndateofbirth3= ($87),nage3= ($88),noccupation3= ($89),naadharcard3= ($90),nname4= ($91),nsex4= ($92),nrelationship4= ($93),ndateofbirth4= ($94),nage4= ($95),noccupation4= ($96),naadharcard4= ($97),nname5= ($98),nsex5= ($99),nrelationship5= ($100),ndateofbirth5= ($101),nage5= ($102),noccupation5= ($103),naadharcard5= ($104),site_name = ($105) , company_name = ($106) ,esi = ($107), pf1 = ($107), pf2= ($108), pf3=($109) , uan = ($110)) WHERE  id=($1) RETURNING *',
+      executor.one('UPDATE public.employeedetails SET employee_type = ($2), father_name = ($3), gender= ($4), material_status= ($5), "Edq"= ($6), nationality= ($7), languages= ($8), date_joining= ($9), driving_licence= ($10), "Email_ID"= ($11), "Mobile_No"= ($12), "Name"= ($13), "Date_of_birth"= ($14), "Password"= ($15), aadhar_card= ($16), voter_id= ($17), "Address"= ($18), attach= ($19), qrcode= ($20), workstatus = ($21), resigned= ($22), createdtime= ($23), contact= ($24), ifsc= ($25), "a_c"= ($26), bankname= ($27), account= ($28), prom_in= ($29), pan= ($30), weight = ($31), height= ($32), "mother_tongue"= ($33), permentaddress= ($34),fname1= ($35),fsex1= ($36),frelationship1= ($37),fdateofbirth1= ($38),fage1= ($39),foccupation1= ($40),faadharcard1= ($41),fname2= ($42),fsex2= ($43),frelationship2= ($44),fdateofbirth2= ($45),fage2= ($46),foccupation2= ($47),faadharcard2= ($48),fname3= ($49),fsex3= ($50),frelationship3= ($51),fdateofbirth3= ($52),fage3= ($53),foccupation3= ($54),faadharcard3= ($55),fname4= ($56),fsex4= ($57),frelationship4= ($58),fdateofbirth4= ($59),fage4= ($60),foccupation4= ($61),faadharcard4= ($62),fname5= ($63),fsex5= ($64),frelationship5= ($65),fdateofbirth5= ($66),fage5= ($67),foccupation5= ($68),faadharcard5= ($69),nname1= ($70),nsex1= ($71),nrelationship1= ($72),ndateofbirth1= ($73),nage1= ($74),noccupation1= ($75),naadharcard1= ($76),nname2= ($77),nsex2= ($78),nrelationship2= ($79),ndateofbirth2= ($80),nage2= ($81),noccupation2= ($82),naadharcard2= ($83),nname3= ($84),nsex3= ($85),nrelationship3= ($86),ndateofbirth3= ($87),nage3= ($88),noccupation3= ($89),naadharcard3= ($90),nname4= ($91),nsex4= ($92),nrelationship4= ($93),ndateofbirth4= ($94),nage4= ($95),noccupation4= ($96),naadharcard4= ($97),nname5= ($98),nsex5= ($99),nrelationship5= ($100),ndateofbirth5= ($101),nage5= ($102),noccupation5= ($103),naadharcard5= ($104),site_name = ($105) , company_name = ($106) ,esi = ($107), pf1 = ($107), pf2= ($108), pf3=($109) , uan = ($110) WHERE  id=($1) RETURNING *',
 [                userInput.id,
                  userInput.employee_type,
                  userInput.father_name,
@@ -1493,7 +1493,7 @@ user.deletclientattachs = function (userInput, resultCallback) {
 user.newclientsites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public."clientsite"(client_id,title,description,address,contactperson1,contactnumber1,contactemail1,contactperson2,contactnumber2,contactemail2,contactperson3,contactnumber3,contactemail3,status)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *',
+                 executor.one('INSERT INTO public."clientsite"(client_id,title,description,address,contactperson1,contactnumber1,contactemail1,contactperson2,contactnumber2,contactemail2,contactperson3,contactnumber3,contactemail3,status,company_name,sitelogin,sitepassword,billing_address)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *',
                  [
 userInput.client_id,
 userInput.title,
@@ -1508,7 +1508,13 @@ userInput.contactemail2,
 userInput.contactperson3,
 userInput.contactnumber3,
 userInput.contactemail3,
-userInput.status
+userInput.status,
+userInput.company_name,
+userInput.sitelogin,
+userInput.sitepassword,
+userInput.sitelogin,
+userInput.billing_address
+
                  ])
                       .then(data => {
                  console.log(data);
@@ -1526,7 +1532,7 @@ userInput.status
 user.sitelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."clientsite" WHERE "client_id"=($1)', [userInput.client_id])
+    executor.any('select * FROM public."clientsite"', [userInput.client_id])
         .then(data => {
 
                  resultCallback(null,data );
@@ -1542,7 +1548,7 @@ user.sitelists = function (userInput, resultCallback) {
 user.updateclientsites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                  executor.one('UPDATE public."clientsite" SET  "client_id"=$2, "title"=$3,"description"=$4,"address"=$5,"contactperson1"=$6,"contactnumber1"=$7,"contactemail1"=$8,"contactperson2"=$9,"contactnumber2"=$10,"contactemail2"=$11,"contactperson3"=$12,"contactnumber3"=$13,"contactemail3"=$14,"status"=$15  WHERE  "id" = $1 RETURNING *',
+                  executor.one('UPDATE public."clientsite" SET  "client_id"=$2, "title"=$3,"description"=$4,"address"=$5,"contactperson1"=$6,"contactnumber1"=$7,"contactemail1"=$8,"contactperson2"=$9,"contactnumber2"=$10,"contactemail2"=$11,"contactperson3"=$12,"contactnumber3"=$13,"contactemail3"=$14,"status"=$15 , "company_name"=$16 , "sitelogin"=$17, "sitepassword"=$18,"billing_address"=$19 WHERE  "id" = $1 RETURNING *',
                  [
 userInput.id,
 userInput.client_id,
@@ -1558,7 +1564,12 @@ userInput.contactemail2,
 userInput.contactperson3,
 userInput.contactnumber3,
 userInput.contactemail3,
-userInput.status
+userInput.status,
+userInput.company_name,
+userInput.sitelogin,
+userInput.sitepassword,
+userInput.billing_address
+
                  ])
                       .then(data => {
                  console.log(data);
@@ -1612,6 +1623,22 @@ user.fetchsites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
     executor.any('select * FROM public."clientsite" WHERE "id"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.fetchcompanysites = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."clientsite" WHERE "company_name"=($1)', [userInput.company_name])
         .then(data => {
 
                  resultCallback(null,data );
@@ -3567,7 +3594,7 @@ user.insertdata = function (userInput, resultCallback) {
   console.log(userInput)
 var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
-executor.any('INSERT INTO public.attendancemark(employee_id, employee_name, client_id, client_name, employee_type, hrs, site_id, site_name, contract_id, date, status, basic, da, addhours, other, leave, bouns, weekly, gross, epf, esi, net, timein, timeout, duration) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING *' ,
+executor.any('INSERT INTO public.attendancemark(employee_id, employee_name, employee_type, hrs, site_id, site_name, contract_id, date, status, basic, da, addhours, other, leave, bouns, weekly, gross, epf, esi, net, timein, timeout, duration) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING *' ,
 [
 userInput[0].employee_id,
 userInput[0].employee_name,
@@ -3681,11 +3708,12 @@ user.fetchsitedpayments = function (site_id,start_date,end_date, resultCallback)
 
 
 user.fetchsitepaymentssss = function (site_id,start_date, resultCallback) {
+  console.log("in"+site_id,start_date)
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * from public."salary_details" WHERE "site_name"=($1) and "date" = ($2)', [site_id,start_date])
+    executor.any('SELECT * from public."salary_details" WHERE "site_name"=($1) and "date" = ($2)', ['Triton IT Solutions ',start_date])
         .then(data => {
-                 resultCallback(null,data );
+        resultCallback(null,data );
         })
         .catch(error => {
             resultCallback(error,null );
@@ -4078,7 +4106,7 @@ user.fetchsitedetail = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."clientsite"', [userInput.id])
+    executor.any('select * FROM public."clientsite" where company_name=($1)', [userInput.company_name])
         .then(data => {
 
                  resultCallback(null,data );

@@ -52,6 +52,8 @@ addRoute("/authentication/efetchsitedetails", "GET", [middleware.efetchsitedetai
 
 
 
+
+
 addRoute("/authentication/fetchemployee_id", "POST", [middleware.fetchemployee_id]);
 addRoute("/authentication/updateprofilephoto", "POST", [middleware.updateprofilephoto]);
 
@@ -115,7 +117,9 @@ addRoute("/advance/monthlyfetch", "POST", [middleware.monthlyfetch]);
 
 /*Payroll Reports*/
 
-addRoute("/payroll/fetchsitedetails", "GET", [middleware.fetchsitedetails]);
+addRoute("/payroll/fetchsitedetails", "POST", [middleware.fetchsitedetails]);
+
+
 addRoute("/payroll/fetchsitedpayment", "POST", [middleware.fetchsitedpayment]);
 
 
@@ -292,6 +296,18 @@ addRoute("/client/updateclientsite", "POST", [middleware.updateclientsite]);
 addRoute("/client/deletclientsite", "POST", [middleware.deletclientsite]);
 addRoute("/client/sitestatus", "POST", [middleware.sitestatus]);
 addRoute("/client/fetchsite", "POST", [middleware.fetchsite]);
+
+
+
+
+/*bss,bsspl*/
+addRoute("/company/fetchcompanysite", "POST", [middleware.fetchcompanysite]);
+
+
+
+
+
+
 
 /*Create site Contract */
 addRoute("/client/newclientcontract", "POST", [middleware.newclientcontract]);
