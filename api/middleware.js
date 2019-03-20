@@ -6343,7 +6343,7 @@ function fetchsitepaymentss(req, res, next) {
                 }
                  console.log(result[0])
                  payment.push(result[0])
-                 // waterfallCallback(null,payment);
+                 waterfallCallback(null,payment);
                 });  
                    }
 
@@ -6383,6 +6383,47 @@ function addsalaryprocess(req, res, next) {
             }
         ]);
 
+}
+
+
+function addclientbulk(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                  if (Object.keys(req.files).length == 0) {
+                    return res.status(400).send('No files were uploaded.');
+                  }
+                  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+                  let sampleFile = req.files.filetoupload;
+                  // Use the mv() method to place the file somewhere on your server
+                  var time_details = moment().format('YYYYMMDDHHmmss');
+                  var path = 'www/pics/'+time_details+"_"+sampleFile.name; 
+                  sampleFile.mv(path, function(err) {
+                    if (err)
+                      return res.status(500).send(err);
+                    var result = {
+                        path: path,
+                        uploadstatus: true
+                    }
+                    waterfallCallback(null,result);
+                  });
+            },
+            function (mydata, waterfallCallback){
+                var XLSX = require('xlsx');
+                var workbook = XLSX.readFile(mydata.path);
+                var sheet_name_list = workbook.SheetNames;
+                var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+                let site_info = [];
+                lists.forEach(function(belement) {
+                console.log(belement)
+                services.user.addclientbulks(belement, function (err, result) {
+                if (err) {
+                   console.log(err)
+                }
+                });
+                
+                 });               
+            }
+        ]);
 }
 
 
@@ -6768,6 +6809,7 @@ exports.updateoneinstalment = updateoneinstalment;
 exports.advcancebulk = advcancebulk;
 exports.monthlyfetch = monthlyfetch;
 exports.addsalaryprocess = addsalaryprocess;
+exports.addclientbulk = addclientbulk;
 
 
 

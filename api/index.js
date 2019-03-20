@@ -504,6 +504,8 @@ addRoute("/advance/advcancebulk", "POST", [middleware.advcancebulk]);
 
 
 
+addRoute("/client/addclientbulk", "POST", [middleware.addclientbulk]);
+
 // addRoute("/employee/addemployeebulkupload", "POST", [middleware.addemployeebulkupload]);
 
 

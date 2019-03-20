@@ -3594,12 +3594,10 @@ user.insertdata = function (userInput, resultCallback) {
   console.log(userInput)
 var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
-executor.any('INSERT INTO public.attendancemark(employee_id, employee_name, employee_type, hrs, site_id, site_name, contract_id, date, status, basic, da, addhours, other, leave, bouns, weekly, gross, epf, esi, net, timein, timeout, duration) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING *' ,
+executor.any('INSERT INTO public.attendancemark(employee_id, employee_name, employee_type, hrs, site_id, site_name, contract_id, date, status, basic, da, addhours, other, leave, bouns, weekly, gross, epf, esi, net, timein, timeout, duration) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23) RETURNING *' ,
 [
 userInput[0].employee_id,
 userInput[0].employee_name,
-userInput[0].client_id,
-userInput[0].client_name,
 userInput[0].employee_type,
 userInput[0].hrs,
 userInput[0].site_id,
@@ -3711,7 +3709,7 @@ user.fetchsitepaymentssss = function (site_id,start_date, resultCallback) {
   console.log("in"+site_id,start_date)
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * from public."salary_details" WHERE "site_name"=($1) and "date" = ($2)', ['Triton IT Solutions ',start_date])
+    executor.any('SELECT * from public."salary_details" WHERE "site_name"=($1) and "date" = ($2)', ['TRITON',start_date])
         .then(data => {
         resultCallback(null,data );
         })
@@ -4317,6 +4315,42 @@ console.log('ERROR:', error);
 })
 };
 
+
+
+user.addclientbulks = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('INSERT INTO public.clientsite(sitelogin,sitepassword,title,site_billing_name,address,billing_address_2,upin,udistrict,ustate,esi_flag,unit_flag,area_code,area_name,duty_type,contactnumber1,company_name)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *',
+[
+userInput.login,
+userInput.password,
+userInput.site_name,
+userInput.site_billing_name,
+userInput.address,
+userInput.address_2,
+userInput.UPIN,
+userInput.UDISTRICT,
+userInput.USTATE,
+userInput.ESI_FLAG,
+userInput.UNIT_FLAG,
+userInput.AreaCode,
+userInput.AreaName,
+userInput.DutyType,
+userInput.UPHONE,
+userInput.company
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+
+
+};
 
 
 

@@ -5625,6 +5625,33 @@
     },
 
 
+            "/client/addclientbulk":{
+        "POST": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        
+                    },
+                    "properties": {
+
+                    }
+                }
+            }
+        }
+    },
+
+
+
      "/client/newclientsite": {
         "POST": {
             "body": {
