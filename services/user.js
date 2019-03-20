@@ -713,20 +713,15 @@ user.fetchclients = function (userInput, resultCallback) {
 //EmployeeList
 user.employeelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
-
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.employeedetails ORDER BY "Name" ASC')
+   executor.any('SELECT * FROM public.employeedetails  where "company_name"=($1) ORDER BY "Name" ASC' , [userInput.company_name])
         .then(data => {
-
                  resultCallback(null,data );
-            
         })
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
 };
 
 
@@ -1532,11 +1527,9 @@ userInput.billing_address
 user.sitelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."clientsite"', [userInput.client_id])
+    executor.any('select * FROM public."clientsite" where "company_name"=($1)', [userInput.company_name])
         .then(data => {
-
-                 resultCallback(null,data );
-            
+                 resultCallback(null,data);
         })
         .catch(error => {
             resultCallback(error,null );
