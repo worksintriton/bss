@@ -4110,136 +4110,45 @@ user.fetchsitedetail = function (userInput, resultCallback) {
 };
 
 
-
-
-user.addemployeebulkuploads = function (userInput, resultCallback) {
+user.addemployeebulkuploads = function (userInput,dob,doj, resultCallback) {
   var executor = db.getdaata.getdb();
+  console.log(userInput);
   //\''+userInput.appartment_ukey+'\' 
-   executor.any('SELECT * FROM public.employeedetails WHERE "Mobile_No"=($1) ' , [userInput.Mobile_No])
-        .then(data => {
-                 console.log(data.length);
-                 if(data.length == 1 )//eruthuchuna
-                 {
-                  var string = {message:"This Mobile No already exits!",status:"falied"} ;
-                  resultCallback(null,string);
-               }else{
-                 console.log("2");
-                 executor.one('INSERT INTO public.employeedetails(employee_type, father_name, gender, material_status, "Edq", nationality, languages, date_joining, driving_licence, "Email_ID", "Mobile_No", "Name", "Date_of_birth", "Password", aadhar_card, voter_id, "Address", attach, qrcode, workstatus, resigned, createdtime, contact, ifsc, "a_c", bankname, account, prom_in, pan, weight, height, "mother_tongue", permentaddress,fname1,fsex1,frelationship1,fdateofbirth1,fage1,foccupation1,faadharcard1,fname2,fsex2,frelationship2,fdateofbirth2,fage2,foccupation2,faadharcard2,fname3,fsex3,frelationship3,fdateofbirth3,fage3,foccupation3,faadharcard3,fname4,fsex4,frelationship4,fdateofbirth4,fage4,foccupation4,faadharcard4,fname5,fsex5,frelationship5,fdateofbirth5,fage5,foccupation5,faadharcard5,nname1,nsex1,nrelationship1,ndateofbirth1,nage1,noccupation1,naadharcard1,nname2,nsex2,nrelationship2,ndateofbirth2,nage2,noccupation2,naadharcard2,nname3,nsex3,nrelationship3,ndateofbirth3,nage3,noccupation3,naadharcard3,nname4,nsex4,nrelationship4,ndateofbirth4,nage4,noccupation4,naadharcard4,nname5,nsex5,nrelationship5,ndateofbirth5,nage5,noccupation5,naadharcard5,age)VALUES ($1, $2 , $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61,$62,$63,$64,$65,$66,$67,$68,$69,$70,$71,$72,$73,$74,$75,$76,$77,$78,$79,$80,$81,$82,$83,$84,$85,$86,$87,$88,$89,$90,$91,$92,$93,$94,$95,$96,$97,$98,$99,$100,$101,$102,$103,$104)RETURNING *',
-                 [userInput.employee_type,
-                 userInput.father_name,
-                 userInput.gender,
-                 userInput.material_status,
-                 userInput.Edq,
-                 userInput.nationality,
-                 userInput.languages,
-                 userInput.date_joining,
-                 userInput.driving_licence,
-                 userInput.Email_ID,
-                 userInput.Mobile_No,
-                 userInput.Name,
-                 userInput.Date_of_birth,
-                 userInput.Password,
-                 userInput.aadhar_card,
-                 userInput.voter_id,
-                 userInput.Address,
-                 userInput.attach,
-                 userInput.qrcode,
-                 userInput.workstatus,
-                 userInput.resigned,
-                 userInput.createdtime,
-                 userInput.contact,
-                 userInput.ifsc,
-                 userInput.a_c,
-                 userInput.bankname,
-                 userInput.account,
-                 userInput.prom_in,
-                 userInput.pan,
-                 userInput.weight,
-                 userInput.height,
-                 userInput.mother_tongue,
-                 userInput.permentaddress,
-                 userInput.fname1,
-                  userInput.fsex1,
-                  userInput.frelationship1,
-                  userInput.fdateofbirth1,
-                  userInput.fage1,
-                  userInput.foccupation1,
-                  userInput.faadharcard1,
-                  userInput.fname2,
-                  userInput.fsex2,
-                  userInput.frelationship2,
-                  userInput.fdateofbirth2,
-                  userInput.fage2,
-                  userInput.foccupation2,
-                  userInput.faadharcard2,
-                  userInput.fname3,
-                  userInput.fsex3,
-                  userInput.frelationship3,
-                  userInput.fdateofbirth3,
-                  userInput.fage3,
-                  userInput.foccupation3,
-                  userInput.faadharcard3,
-                  userInput.fname4,
-                  userInput.fsex4,
-                  userInput.frelationship4,
-                  userInput.fdateofbirth4,
-                  userInput.fage4,
-                  userInput.foccupation4,
-                  userInput.faadharcard4,
-                  userInput.fname5,
-                  userInput.fsex5,
-                  userInput.frelationship5,
-                  userInput.fdateofbirth5,
-                  userInput.fage5,
-                  userInput.foccupation5,
-                  userInput.faadharcard5,
-                  userInput.nname1,
-                  userInput.nsex1,
-                  userInput.nrelationship1,
-                  userInput.ndateofbirth1,
-                  userInput.nage1,
-                  userInput.noccupation1,
-                  userInput.naadharcard1,
-                  userInput.nname2,
-                  userInput.nsex2,
-                  userInput.nrelationship2,
-                  userInput.ndateofbirth2,
-                  userInput.nage2,
-                  userInput.noccupation2,
-                  userInput.naadharcard2,
-                  userInput.nname3,
-                  userInput.nsex3,
-                  userInput.nrelationship3,
-                  userInput.ndateofbirth3,
-                  userInput.nage3,
-                  userInput.noccupation3,
-                  userInput.naadharcard3,
-                  userInput.nname4,
-                  userInput.nsex4,
-                  userInput.nrelationship4,
-                  userInput.ndateofbirth4,
-                  userInput.nage4,
-                  userInput.noccupation4,
-                  userInput.naadharcard4,
-                  userInput.nname5,
-                  userInput.nsex5,
-                  userInput.nrelationship5,
-                  userInput.ndateofbirth5,
-                  userInput.nage5,
-                  userInput.noccupation5,
-                  userInput.naadharcard5,
-                  userInput.age
-                 ])
-                 .then(data => {
-              resultCallback(null,data);
-                 })
-              }          
+executor.one('INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","ifsc","bankname","resigned","ecode","site_name","company_name")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+[
+userInput.phone_number,
+userInput.password,
+userInput.ENAME,
+userInput.EGRADE,
+userInput.GENDER,
+userInput.UANNO,
+userInput.PFNO,
+userInput.PFNO1,
+userInput.ESINO,
+dob,
+doj,
+userInput.EFNAME,
+userInput.MaritalStatus,
+userInput.Acno,
+userInput.Refno,
+userInput.BankName,
+userInput.WorkStatus,
+userInput.ECODE,
+userInput.Uname,
+userInput.CCODE
+])
+                      .then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
         })
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
+
+
 };
+
 
 
 
@@ -4264,7 +4173,7 @@ user.efetchsitedetailss = function (userInput, resultCallback) {
 user.addsalaryprocesss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-executor.any('INSERT INTO public.salary_details(employee_name, employee_type, employee_id, bank_name, account_number, ifscnumber, phonenumber, emailid, basic, da, hra, others, leave, bouns, weeklyoff, noofdays, gross, pf, esi, prtax, adv, uniform, mess, rent, atm, loan, otherss, totaldedcation, netamount,site_name,date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29,$30,$31) RETURNING *',
+executor.any('INSERT INTO public.salary_details(employee_name, employee_type, employee_id, bank_name, account_number, ifscnumber, phonenumber, emailid, basic, da, hra, others, leave, bouns, weeklyoff, noofdays, gross, pf, esi, prtax, adv, uniform, mess, rent, atm, loan, otherss, totaldedcation, netamount,site_name,date,additional_duty,duty_amount,total_amount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29,$30,$31,$32,$33,$34) RETURNING *',
 [
 userInput.employee_name,
 userInput.employee_type,
@@ -4296,7 +4205,10 @@ userInput.otherss,
 userInput.totaldedcation,
 userInput.netamount,
 userInput.site_name,
-userInput.date
+userInput.date,
+userInput.additional_duty,
+userInput.duty_amount,
+userInput.total_amount
 ])
 .then(data => {
 console.log(data);
@@ -4306,6 +4218,23 @@ resultCallback(null,data );
 resultCallback(error,null );
 console.log('ERROR:', error);
 })
+};
+
+
+
+user.salaryprocesstatuss = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."salary_details" where "date"= ($1)', [userInput.date])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
 };
 
 

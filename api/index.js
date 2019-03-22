@@ -97,6 +97,7 @@ addRoute("/assigningemployee/employeetfetchlist", "POST", [middleware.employeetf
 addRoute("/Attendance/Attendancecheck", "POST", [middleware.Attendancecheck]);
 addRoute("/Attendance/fetchdetails", "POST", [middleware.fetchdetails]);
 addRoute("/employeecheck/checkemployee", "POST", [middleware.checkemployee]);
+addRoute("/Attendance/manualAttendancecheck", "POST", [middleware.manualAttendancecheck]);
 
 
 /*EMI Voucher*/
@@ -127,6 +128,10 @@ addRoute("/payroll/fetchsitepaymentss", "POST", [middleware.fetchsitepaymentss])
 
 
 addRoute("/payroll/addsalaryprocess", "POST", [middleware.addsalaryprocess]);
+
+
+addRoute("/payroll/salaryprocesstatus", "POST", [middleware.salaryprocesstatus]);
+
 
 
 
@@ -500,11 +505,12 @@ addRoute("/finanace/fetchfinanace", "POST", [middleware.fetchfinanace]);
 
 /*Bulk Uploading*/
 addRoute("/advance/advcancebulk", "POST", [middleware.advcancebulk]);
-
-
-
-
 addRoute("/client/addclientbulk", "POST", [middleware.addclientbulk]);
+addRoute("/employee/addemployeebulk", "POST", [middleware.addemployeebulk]);
+
+
+
+
 
 // addRoute("/employee/addemployeebulkupload", "POST", [middleware.addemployeebulkupload]);
 

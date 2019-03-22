@@ -17,6 +17,7 @@ var fileUpload = require('express-fileupload');
   var moment = require('moment');
   var dateFormat = require('dateformat');
   var XLSX = require('xlsx')
+  var strtotime = require('strtotime');
 
 //var FORGOT_PASSWORD_HTML = fs.readFileSync("www/resetpassword.html", "utf8");
 /*
@@ -3370,43 +3371,6 @@ function advcancebulk(req, res, next) {
 
 
 
-function addemployeebulkupload(req, res, next) {
-       async.waterfall([
-            function (waterfallCallback){
-                  if (Object.keys(req.files).length == 0) {
-                    return res.status(400).send('No files were uploaded.');
-                  }
-                  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-                  let sampleFile = req.files.filetoupload;
-                  // Use the mv() method to place the file somewhere on your server
-                  var time_details = moment().format('YYYYMMDDHHmmss');
-                  var path = 'www/pics/'+time_details+"_"+sampleFile.name; 
-                  sampleFile.mv(path, function(err) {
-                    if (err)
-                      return res.status(500).send(err);
-                    var result = {
-                        path: path,
-                        uploadstatus: true
-                    }
-                    waterfallCallback(null,result);
-                  });
-            },
-            function (mydata, waterfallCallback){
-                var XLSX = require('xlsx');
-                var workbook = XLSX.readFile(mydata.path);
-                var sheet_name_list = workbook.SheetNames;
-                var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-                let site_info = [];
-                lists.forEach(function(belement) {
-                services.user.addemployeebulkuploads(belement, function (err, result) {
-                if (err) {
-                   console.log(err)
-                }
-                });
-                 });               
-            }
-        ]);
-}
 
 
 
@@ -6386,6 +6350,28 @@ function addsalaryprocess(req, res, next) {
 }
 
 
+function salaryprocesstatus(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.salaryprocesstatuss(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
 function addclientbulk(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
@@ -6424,6 +6410,169 @@ function addclientbulk(req, res, next) {
                  });               
             }
         ]);
+}
+
+
+
+function addemployeebulk(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                  if (Object.keys(req.files).length == 0) {
+                    return res.status(400).send('No files were uploaded.');
+                  }
+                  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+                  let sampleFile = req.files.filetoupload;
+                  // Use the mv() method to place the file somewhere on your server
+                  var time_details = moment().format('YYYYMMDDHHmmss');
+                  var path = 'www/pics/'+time_details+"_"+sampleFile.name; 
+                  sampleFile.mv(path, function(err) {
+                    if (err)
+                      return res.status(500).send(err);
+                    var result = {
+                        path: path,
+                        uploadstatus: true
+                    }
+                    waterfallCallback(null,result);
+                  });
+            },
+            function (mydata, waterfallCallback){
+                var XLSX = require('xlsx');
+                var workbook = XLSX.readFile(mydata.path);
+                var sheet_name_list = workbook.SheetNames;
+                var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+                
+                lists.forEach(function(belement) {
+                     var exdate = +belement.DOB; // represents Jan 1, 1993
+                      var exdate1 = +belement.DOJ; // represents Jan 1, 1993
+                      var e0date = new Date(0); // epoch "zero" date
+                      var offset = e0date.getTimezoneOffset(); // tz offset in min
+                      var jsdate1 = new Date(0, 0, exdate-1, 0, -offset, 0)     
+                      var jsdate2 = new Date(0, 0, exdate1-1, 0, -offset, 0)        
+                  console.log(jsdate1,jsdate2);
+                services.user.addemployeebulkuploads(belement,jsdate1,jsdate2, function (err, result) {
+                if (err) {
+                   console.log(err)
+                }
+                });
+                 });               
+            }
+        ]);
+}
+
+
+
+function manualAttendancecheck(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchpaymentdetails(req.body, function (err, fetchpaymentdetails) {
+                if (err) {
+                    console.log(err)
+                }
+                waterfallCallback(null,fetchpaymentdetails);
+                });
+            },
+            function (fetchpaymentdetails,waterfallCallback){
+                fetchpaymentdetails.forEach(function(belement) {
+                        if(belement.employee_type == req.body.employee_type){
+                             waterfallCallback(null,belement);
+                        }
+                });
+            },
+            function (paymentstructure,waterfallCallback){
+                var now = new Date();
+                var days =  new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+                let payment = [];
+                let p = {
+                    "employee_id": req.body.employee_id,
+                    "employee_name": req.body.employee_name,
+                    "client_id": req.body.client_id,
+                    "client_name": req.body.client_name,
+                    "employee_type":req.body.employee_type,
+                    "hrs":req.body.hrs,
+                    "site_id": req.body.site_id,
+                    "site_name": req.body.site_name,
+                    "contract_id": req.body.contract_id,
+                    "date": req.body.date,
+                    "status": req.body.status,
+                    "basic":paymentstructure.ebasic/days,
+                    "da":paymentstructure.eda/days,
+                    "addhours":paymentstructure.eadditional_hours/days,
+                    "other":paymentstructure.eothers/days,
+                    "leave":paymentstructure.eleave/days,
+                    "bouns":paymentstructure.ebound/days,
+                    "weekly":paymentstructure.eweekly_off/days,
+                    "epf":paymentstructure.epf/days,
+                    "esi":paymentstructure.eesi/days,
+                    "rounded":paymentstructure.erounded/days,
+                    "timein":req.body.time_in,
+                    "timeout":req.body.time_out,
+                    "duration": req.body.duration,
+                }
+                payment.push(p)
+                waterfallCallback(null,paymentstructure,payment)
+            },
+              function (paymentstructure,employeepay,waterfallCallback){
+                var now = new Date();
+                var days =  new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+                let clientpayment = [];
+                let p = {
+                    "employee_id": req.body.employee_id,
+                    "employee_name": req.body.employee_name,
+                    "client_id": req.body.client_id,
+                    "client_name": req.body.client_name,
+                    "employee_type":req.body.employee_type,
+                    "hrs":req.body.hrs,
+                    "site_id": req.body.site_id,
+                    "site_name": req.body.site_name,
+                    "contract_id": req.body.contract_id,
+                    "date": req.body.date,
+                    "status": req.body.status,
+                    "basic":paymentstructure.basic/days,
+                    "da":paymentstructure.da/days,
+                    "addhours":paymentstructure.additional_hours/days,
+                    "other":paymentstructure.others/days,
+                    "leave":paymentstructure.leave/days,
+                    "bouns":paymentstructure.bound/days,
+                    "weekly":paymentstructure.weekly_off/days,
+                    "epf":paymentstructure.pf/days,
+                    "esi":paymentstructure.esi/days,
+                    "rounded":paymentstructure.rounded/days,
+                    "timein":req.body.time_in,
+                    "timeout":req.body.time_out,
+                    "duration": req.body.duration,
+                }
+                clientpayment.push(p)
+                waterfallCallback(null,clientpayment,employeepay)
+            },
+            function (clientpayment,payment,waterfallCallback){
+                services.user.insertdata(payment, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,clientpayment,payment);
+                });
+            },
+             function (clientpayment,payment,waterfallCallback){
+                services.user.clientinsertdata(clientpayment, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data:  mydata  
+                }, utils.errors["200"]));
+            }
+        ]);
+
 }
 
 
@@ -6791,6 +6940,7 @@ exports.updatenotification = updatenotification;
 exports.notificationcount = notificationcount
 exports.listofnotification = listofnotification;
 
+
 exports.assignemployeeadd = assignemployeeadd;
 exports.Attendancecheck = Attendancecheck;
 exports.fetchdetails = fetchdetails;
@@ -6810,8 +6960,9 @@ exports.advcancebulk = advcancebulk;
 exports.monthlyfetch = monthlyfetch;
 exports.addsalaryprocess = addsalaryprocess;
 exports.addclientbulk = addclientbulk;
-
-
+exports.addemployeebulk = addemployeebulk;
+exports.manualAttendancecheck = manualAttendancecheck;
+exports.salaryprocesstatus = salaryprocesstatus;
 
 
 /* Master Company */
