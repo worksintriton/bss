@@ -117,20 +117,39 @@ addRoute("/advance/monthlyfetch", "POST", [middleware.monthlyfetch]);
 
 
 /*Payroll Reports*/
-
 addRoute("/payroll/fetchsitedetails", "POST", [middleware.fetchsitedetails]);
-
-
 addRoute("/payroll/fetchsitedpayment", "POST", [middleware.fetchsitedpayment]);
-
-
 addRoute("/payroll/fetchsitepaymentss", "POST", [middleware.fetchsitepaymentss]);
-
-
 addRoute("/payroll/addsalaryprocess", "POST", [middleware.addsalaryprocess]);
-
-
 addRoute("/payroll/salaryprocesstatus", "POST", [middleware.salaryprocesstatus]);
+
+
+
+
+
+
+
+
+
+/*Manualentry*/
+
+addRoute("/manual_entry/manual_entry_unit_add", "POST", [middleware.manual_entry_unit_add]);
+addRoute("/manual_entry/manual_entry_unit_update", "POST", [middleware.manual_entry_unit_update]);
+addRoute("/manual_entry/manual_entry_unit_delete", "POST", [middleware.manual_entry_unit_delete]);
+addRoute("/manual_entry/manual_entry_unit_list", "POST", [middleware.manual_entry_unit_list]);
+addRoute("/manual_entry/manual_entry_unit_fetch", "POST", [middleware.manual_entry_unit_fetch]);
+
+addRoute("/manual_entry/manual_entry_rate_add", "POST", [middleware.manual_entry_rate_add]);
+addRoute("/manual_entry/manual_entry_rate_update", "POST", [middleware.manual_entry_rate_update]);
+addRoute("/manual_entry/manual_entry_rate_delete", "POST", [middleware.manual_entry_rate_delete]);
+addRoute("/manual_entry/manual_entry_rate_list", "POST", [middleware.manual_entry_rate_list]);
+addRoute("/manual_entry/manual_entry_rate_fetch", "POST", [middleware.manual_entry_rate_fetch]);
+
+addRoute("/manual_entry/manual_entry_emp_add", "POST", [middleware.manual_entry_emp_add]);
+addRoute("/manual_entry/manual_entry_emp_update", "POST", [middleware.manual_entry_emp_update]);
+addRoute("/manual_entry/manual_entry_emp_delete", "POST", [middleware.manual_entry_emp_delete]);
+addRoute("/manual_entry/manual_entry_emp_list", "POST", [middleware.manual_entry_emp_list]);
+addRoute("/manual_entry/manual_entry_emp_fetch", "POST", [middleware.manual_entry_emp_fetch]);
 
 
 

@@ -6578,6 +6578,342 @@ function manualAttendancecheck(req, res, next) {
 
 
 
+// maualentry_process
+
+
+function manual_entry_unit_add(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_unit_adds(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_unit_update(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_unit_updates(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_unit_delete(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_unit_deletes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_unit_list(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_unit_lists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_unit_fetch(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_unit_fetchs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_rate_add(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_rate_adds(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_rate_update(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_rate_updates(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_rate_delete(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_rate_deletes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_rate_list(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_rate_lists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+function manual_entry_rate_fetch(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_rate_fetchs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+function manual_entry_emp_add(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_emp_adds(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+function manual_entry_emp_update(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_emp_updates(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+function manual_entry_emp_delete(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_emp_deletes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+function manual_entry_emp_list(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_emp_lists(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+function manual_entry_emp_fetch(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_emp_fetchs(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6977,6 +7313,27 @@ exports.fetchsitedetails =fetchsitedetails;
 exports.fetchsitedpayment = fetchsitedpayment;
 exports.efetchsitedetails = efetchsitedetails;
 exports.fetchsitepaymentss = fetchsitepaymentss;
+
+
+/*manual Entry*/
+exports.manual_entry_unit_add =manual_entry_unit_add;
+exports.manual_entry_unit_update = manual_entry_unit_update;
+exports.manual_entry_unit_delete = manual_entry_unit_delete;
+exports.manual_entry_unit_list = manual_entry_unit_list
+exports.manual_entry_unit_fetch = manual_entry_unit_fetch;
+
+exports.manual_entry_rate_add = manual_entry_rate_add;
+exports.manual_entry_rate_update = manual_entry_rate_update;
+exports.manual_entry_rate_delete = manual_entry_rate_delete
+exports.manual_entry_rate_list = manual_entry_rate_list;
+exports.manual_entry_rate_fetch = manual_entry_rate_fetch;
+
+exports.manual_entry_emp_add = manual_entry_emp_add;
+exports.manual_entry_emp_update = manual_entry_emp_update
+exports.manual_entry_emp_delete =manual_entry_emp_delete;
+exports.manual_entry_emp_list = manual_entry_emp_list;
+exports.manual_entry_emp_fetch = manual_entry_emp_fetch;
+
 
 
 

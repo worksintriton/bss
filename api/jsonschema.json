@@ -9062,15 +9062,6 @@
                     },
                     "date": {
                         "type": "string"
-                    },
-                    "additional_duty": {
-                        "type": "number"
-                    },
-                    "duty_amount": {
-                        "type": "number"
-                    },
-                    "total_amount": {
-                        "type": "number"
                     }
                 },
         "additionalProperties": true,
@@ -9085,34 +9076,6 @@
                     },
                     "properties": {
                         "employee_id": "userId must be string"
-                    }
-                }
-            }
-        }
-    },
-
-
-     "/payroll/salaryprocesstatus": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "date": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": true,
-                "required": [
-                    "date"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "date": "should have required property client_id"
-                        
-                    },
-                    "properties": {
-                        "date": "userId must be string"
                     }
                 }
             }
@@ -9333,6 +9296,884 @@
 
 
 
+
+"/manual_entry/manual_entry_unit_add": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "company": {
+                        "type": "string"
+                    },
+                    "unit_code": {
+                        "type": "string"
+                    },
+                    "option": {
+                        "type": "string"
+                    },
+                    "salary_type": {
+                        "type": "string"
+                    },
+                    "unit_name": {
+                        "type": "string"
+                    },
+                    "day_month": {
+                        "type": "string"
+                    },
+                    "pf_cover": {
+                        "type": "string"
+                    },
+                    "pf_amount": {
+                        "type": "string"
+                    },
+                    "esi_cover": {
+                        "type": "string"
+                    },
+                    "esi_amount": {
+                        "type": "string"
+                    },
+                    "esi_code": {
+                        "type": "string"
+                    },
+                    "esi_district": {
+                        "type": "string"
+                    },
+                    "pf_basic": {
+                        "type": "string"
+                    },
+                    "pf_da": {
+                        "type": "string"
+                    },
+                    "pf_hra": {
+                        "type": "string"
+                    },
+                    "pf_trv": {
+                        "type": "string"
+                    },
+                    "esi_basic": {
+                        "type": "string"
+                    },
+                    "esi_da": {
+                        "type": "string"
+                    },
+                    "esi_hra": {
+                        "type": "string"
+                    },
+                    "esi_trv": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company": "company must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/manual_entry/manual_entry_unit_update": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "company": {
+                        "type": "string"
+                    },
+                    "unit_code": {
+                        "type": "string"
+                    },
+                    "option": {
+                        "type": "string"
+                    },
+                    "salary_type": {
+                        "type": "string"
+                    },
+                    "unit_name": {
+                        "type": "string"
+                    },
+                    "day_month": {
+                        "type": "string"
+                    },
+                    "pf_cover": {
+                        "type": "string"
+                    },
+                    "pf_amount": {
+                        "type": "string"
+                    },
+                    "esi_cover": {
+                        "type": "string"
+                    },
+                    "esi_amount": {
+                        "type": "string"
+                    },
+                    "esi_code": {
+                        "type": "string"
+                    },
+                    "esi_district": {
+                        "type": "string"
+                    },
+                    "pf_basic": {
+                        "type": "string"
+                    },
+                    "pf_da": {
+                        "type": "string"
+                    },
+                    "pf_hra": {
+                        "type": "string"
+                    },
+                    "pf_trv": {
+                        "type": "string"
+                    },
+                    "esi_basic": {
+                        "type": "string"
+                    },
+                    "esi_da": {
+                        "type": "string"
+                    },
+                    "esi_hra": {
+                        "type": "string"
+                    },
+                    "esi_trv": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company": "company must be string"
+                    }
+                }
+            }
+        }
+    },
+
+"/manual_entry/manual_entry_unit_list": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company": "company must be string"
+                    }
+                }
+            }
+        }
+    },
+
+    "/manual_entry/manual_entry_unit_delete": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company": "company must be string"
+                    }
+                }
+            }
+        }
+    },
+
+        "/manual_entry/manual_entry_unit_fetch": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company": "company must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+    "/manual_entry/manual_entry_rate_add": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "rank": {
+                        "type": "string"
+                    },
+                    "basic": {
+                        "type": "number"
+                    },
+                    "da": {
+                        "type": "number"
+                    },
+                    "hra": {
+                        "type": "number"
+                    },
+                    "trv_exp": {
+                        "type": "number"
+                    },
+                    "others": {
+                        "type": "number"
+                    },
+                    "medical": {
+                        "type": "number"
+                    },
+                    "others1": {
+                        "type": "number"
+                    },
+                    "others2": {
+                        "type": "number"
+                    },
+                    "others3": {
+                        "type": "number"
+                    },
+                    "others4": {
+                        "type": "number"
+                    },
+                    "total_pay": {
+                        "type": "number"
+                    },
+                    "pf": {
+                        "type": "number"
+                    },
+                    "esi": {
+                        "type": "number"
+                    },
+                    "dec": {
+                        "type": "number"
+                    },
+                    "total": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "rank"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "rank": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "rank": "rank must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/manual_entry/manual_entry_rate_update": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "rank": {
+                        "type": "string"
+                    },
+                    "basic": {
+                        "type": "number"
+                    },
+                    "da": {
+                        "type": "number"
+                    },
+                    "hra": {
+                        "type": "number"
+                    },
+                    "trv_exp": {
+                        "type": "number"
+                    },
+                    "others": {
+                        "type": "number"
+                    },
+                    "medical": {
+                        "type": "number"
+                    },
+                    "others1": {
+                        "type": "number"
+                    },
+                    "others2": {
+                        "type": "number"
+                    },
+                    "others3": {
+                        "type": "number"
+                    },
+                    "others4": {
+                        "type": "number"
+                    },
+                    "total_pay": {
+                        "type": "number"
+                    },
+                    "pf": {
+                        "type": "number"
+                    },
+                    "esi": {
+                        "type": "number"
+                    },
+                    "dec": {
+                        "type": "number"
+                    },
+                    "total": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "rank"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "rank": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "rank": "rank must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/manual_entry/manual_entry_rate_delete": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "id": "id must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/manual_entry/manual_entry_rate_fetch": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "id": "id must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+
+     "/manual_entry/manual_entry_rate_list": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "id"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "id": "id must be number"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/manual_entry/manual_entry_emp_add": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "company_name": {
+                        "type": "string"
+                    },
+                    "unit_name": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "ecode": {
+                        "type": "string"
+                    },
+                    "ename": {
+                        "type": "string"
+                    },
+                    "etype": {
+                        "type": "string"
+                    },
+                    "eac": {
+                        "type": "string"
+                    },
+                    "ebankname": {
+                        "type": "string"
+                    },
+                    "eifsc": {
+                        "type": "string"
+                    },
+                    "designation": {
+                        "type": "string"
+                    },
+                    "present": {
+                        "type": "number"
+                    },
+                    "dutyoff": {
+                        "type": "number"
+                    },
+                    "add_duties": {
+                        "type": "number"
+                    },
+                    "payments_type": {
+                        "type": "number"
+                    },
+                    "paymentmode": {
+                        "type": "number"
+                    },
+                    "total_duties": {
+                        "type": "number"
+                    },
+                    "basic": {
+                        "type": "number"
+                    },
+                    "da": {
+                        "type": "number"
+                    },
+                    "hra": {
+                        "type": "number"
+                    },
+                    "trv_ex": {
+                        "type": "number"
+                    },
+                    "others": {
+                        "type": "number"
+                    },
+                    "medical": {
+                        "type": "number"
+                    },
+                    "others1": {
+                        "type": "number"
+                    },
+                    "others2": {
+                        "type": "number"
+                    },
+                    "others3": {
+                        "type": "number"
+                    },
+                    "others4": {
+                        "type": "number"
+                    },
+                    "waesi": {
+                        "type": "number"
+                    },
+                    "ewdays": {
+                        "type": "number"
+                    },
+                    "ewamount": {
+                        "type": "number"
+                    },
+                    "gross": {
+                        "type": "number"
+                    },
+                    "advance": {
+                        "type": "number"
+                    },
+                    "loan": {
+                        "type": "number"
+                    },
+                    "uniform": {
+                        "type": "number"
+                    },
+                    "mess": {
+                        "type": "number"
+                    },
+                    "rent": {
+                        "type": "number"
+                    },
+                    "atm": {
+                        "type": "number"
+                    },
+                    "phone": {
+                        "type": "number"
+                    },
+                    "pf": {
+                        "type": "number"
+                    },
+                    "esi": {
+                        "type": "number"
+                    },
+                    "pr_tax": {
+                        "type": "number"
+                    },
+                    "staff_wellfare": {
+                        "type": "number"
+                    },
+                    "total_dec": {
+                        "type": "number"
+                    },
+                    "net_pay": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company_name"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company_name": "company_name must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/manual_entry/manual_entry_emp_update": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "company_name": {
+                        "type": "string"
+                    },
+                    "unit_name": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "ecode": {
+                        "type": "string"
+                    },
+                    "ename": {
+                        "type": "string"
+                    },
+                    "etype": {
+                        "type": "string"
+                    },
+                    "eac": {
+                        "type": "string"
+                    },
+                    "ebankname": {
+                        "type": "string"
+                    },
+                    "eifsc": {
+                        "type": "string"
+                    },
+                    "designation": {
+                        "type": "string"
+                    },
+                    "present": {
+                        "type": "number"
+                    },
+                    "dutyoff": {
+                        "type": "number"
+                    },
+                    "add_duties": {
+                        "type": "number"
+                    },
+                    "payments_type": {
+                        "type": "number"
+                    },
+                    "paymentmode": {
+                        "type": "number"
+                    },
+                    "total_duties": {
+                        "type": "number"
+                    },
+                    "basic": {
+                        "type": "number"
+                    },
+                    "da": {
+                        "type": "number"
+                    },
+                    "hra": {
+                        "type": "number"
+                    },
+                    "trv_ex": {
+                        "type": "number"
+                    },
+                    "others": {
+                        "type": "number"
+                    },
+                    "medical": {
+                        "type": "number"
+                    },
+                    "others1": {
+                        "type": "number"
+                    },
+                    "others2": {
+                        "type": "number"
+                    },
+                    "others3": {
+                        "type": "number"
+                    },
+                    "others4": {
+                        "type": "number"
+                    },
+                    "waesi": {
+                        "type": "number"
+                    },
+                    "ewdays": {
+                        "type": "number"
+                    },
+                    "ewamount": {
+                        "type": "number"
+                    },
+                    "gross": {
+                        "type": "number"
+                    },
+                    "advance": {
+                        "type": "number"
+                    },
+                    "loan": {
+                        "type": "number"
+                    },
+                    "uniform": {
+                        "type": "number"
+                    },
+                    "mess": {
+                        "type": "number"
+                    },
+                    "rent": {
+                        "type": "number"
+                    },
+                    "atm": {
+                        "type": "number"
+                    },
+                    "phone": {
+                        "type": "number"
+                    },
+                    "pf": {
+                        "type": "number"
+                    },
+                    "esi": {
+                        "type": "number"
+                    },
+                    "pr_tax": {
+                        "type": "number"
+                    },
+                    "staff_wellfare": {
+                        "type": "number"
+                    },
+                    "total_dec": {
+                        "type": "number"
+                    },
+                    "net_pay": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company_name"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company_name": "company_name must be string"
+                    }
+                }
+            }
+        }
+    },
+    
+         "/manual_entry/manual_entry_emp_fetch": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company_name"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company_name": "company_name must be string"
+                    }
+                }
+            }
+        }
+    },
+
+             "/manual_entry/manual_entry_emp_list": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company_name"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company_name": "company_name must be string"
+                    }
+                }
+            }
+        }
+    },
+    
+ "/manual_entry/manual_entry_emp_delete": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "company_name"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "company_name": "company_name must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
      "/advance/updateadvance": {
         "POST": {
             "body": {
@@ -9410,24 +10251,4 @@
             }
         }
     }
-
-
-
-
-   
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
