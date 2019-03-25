@@ -9338,6 +9338,9 @@
                     "esi_district": {
                         "type": "string"
                     },
+                    "esi_protax": {
+                        "type": "string"
+                    },
                     "pf_basic": {
                         "type": "string"
                     },
@@ -9387,7 +9390,7 @@
                  "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string"
+                        "type": "number"
                     },
                     "company": {
                         "type": "string"
@@ -9423,6 +9426,9 @@
                         "type": "string"
                     },
                     "esi_district": {
+                        "type": "string"
+                    },
+                    "esi_protax": {
                         "type": "string"
                     },
                     "pf_basic": {
@@ -9479,16 +9485,16 @@
                 },
         "additionalProperties": true,
                 "required": [
-                    "company"
+                    "id"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "company": "should have required property client_id"
+                        "id": "should have required property client_id"
                         
                     },
                     "properties": {
-                        "company": "company must be string"
+                        "id": "company must be string"
                     }
                 }
             }
@@ -9601,6 +9607,9 @@
                         "type": "number"
                     },
                     "total": {
+                        "type": "number"
+                    },
+                    "unit_id": {
                         "type": "number"
                     }
                 },

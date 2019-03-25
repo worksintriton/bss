@@ -1631,7 +1631,7 @@ user.fetchsites = function (userInput, resultCallback) {
 user.fetchcompanysites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."clientsite" WHERE "company_name"=($1)', [userInput.company_name])
+    executor.any('select * FROM public."clientsite" WHERE "company_name"=($1) ORDER BY "title" ASC', [userInput.company_name])
         .then(data => {
 
                  resultCallback(null,data );
@@ -4262,7 +4262,7 @@ userInput.DutyType,
 userInput.UPHONE,
 userInput.company
 ])
-                      .then(data => {
+.then(data => {
                  console.log(data);
                  resultCallback(null,data );
         })
@@ -4270,9 +4270,433 @@ userInput.company
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
-
-
 };
+
+
+// manualentry
+user.manual_entry_unit_adds = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('INSERT INTO public.payroll_manual_unit_entry(company,unit_code,option,salary_type,unit_name,day_month,pf_cover,pf_amount,esi_cover,esi_amount,esi_code,esi_district,pf_basic,pf_da,pf_hra,pf_trv,esi_basic,esi_da,esi_hra,esi_trv,esi_protax)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING *',
+[
+userInput.company,
+userInput.unit_code,
+userInput.option,
+userInput.salary_type,
+userInput.unit_name,
+userInput.day_month,
+userInput.pf_cover,
+userInput.pf_amount,
+userInput.esi_cover,
+userInput.esi_amount,
+userInput.esi_code,
+userInput.esi_district,
+userInput.pf_basic,
+userInput.pf_da,
+userInput.pf_hra,
+userInput.pf_trv,
+userInput.esi_basic,
+userInput.esi_da,
+userInput.esi_hra,
+userInput.esi_trv,
+userInput.esi_protax
+])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_unit_updates = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('UPDATE public.payroll_manual_unit_entry SET  company=$2, unit_code=$3, option=$4, salary_type=$5, unit_name=$6, day_month=$7, pf_cover=$8, pf_amount=$9, esi_cover=$10, esi_amount=$11, esi_code=$12, esi_district=$13, pf_basic=$14, pf_da=$15, pf_hra=$16, pf_trv=$17, esi_basic=$18, esi_da=$19, esi_hra=$20, esi_trv=$21 , esi_protax = $22 WHERE id=$1 RETURNING *',
+[
+userInput.id,
+userInput.company,
+userInput.unit_code,
+userInput.option,
+userInput.salary_type,
+userInput.unit_name,
+userInput.day_month,
+userInput.pf_cover,
+userInput.pf_amount,
+userInput.esi_cover,
+userInput.esi_amount,
+userInput.esi_code,
+userInput.esi_district,
+userInput.pf_basic,
+userInput.pf_da,
+userInput.pf_hra,
+userInput.pf_trv,
+userInput.esi_basic,
+userInput.esi_da,
+userInput.esi_hra,
+userInput.esi_trv,
+userInput.esi_protax
+])
+.then(data => {
+console.log(data);
+resultCallback(null,data );
+})
+.catch(error => {
+resultCallback(error,null );
+console.log('ERROR:', error);
+})
+};
+
+user.manual_entry_unit_deletes = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."payroll_manual_unit_entry" where "id"= ($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_unit_lists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_unit_entry" where "unit_code"=($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_unit_fetchs = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_unit_entry" where "id"= ($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+user.manual_entry_rate_adds = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('INSERT INTO public.payroll_manual_unit_rate(rank,basic,da,hra,trv_exp,others,medical,others1,others2,others3,others4,total_pay,pf,esi,dec,total,unit_id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *',
+[
+userInput.rank,
+userInput.basic,
+userInput.da,
+userInput.hra,
+userInput.trv_exp,
+userInput.others,
+userInput.medical,
+userInput.others1,
+userInput.others2,
+userInput.others3,
+userInput.others4,
+userInput.total_pay,
+userInput.pf,
+userInput.esi,
+userInput.dec,
+userInput.total,
+userInput.unit_id
+])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_rate_updates = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('UPDATE public.payroll_manual_unit_rate SET  rank=$2, basic=$3, da=$4, hra=$5, trv_exp=$6, others=$7, medical=$8, others1=$9, others2=$10, others3=$11, others4=$12, total_pay=$13, pf=$14, esi=$15, dec=$16, total=$17, unit_id=$18  WHERE id=$1 RETURNING *',
+[
+userInput.id,
+userInput.rank,
+userInput.basic,
+userInput.da,
+userInput.hra,
+userInput.trv_exp,
+userInput.day_month,
+userInput.others,
+userInput.medical,
+userInput.others1,
+userInput.others2,
+userInput.others3,
+userInput.others4,
+userInput.total_pay,
+userInput.pf,
+userInput.esi,
+userInput.dec,
+userInput.total,
+userInput.unit_id
+])
+.then(data => {
+console.log(data);
+resultCallback(null,data );
+})
+.catch(error => {
+resultCallback(error,null );
+console.log('ERROR:', error);
+})
+};
+
+user.manual_entry_rate_deletes = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."payroll_manual_unit_rate" where "id"= ($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_rate_lists = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_unit_rate" where "unit_id"= ($1)   ', [""+userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_rate_fetchs = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_unit_rate" where "id"= ($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+user.manual_entry_emp_adds = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('INSERT INTO public.payroll_manual_entry(company_name,unit_name,date,ecode,ename,etype,eac,ebankname,eifsc,designation,present,dutyoff,add_duties,payment_type,paymode,total_duties,basic,da,hra,trv_ex,others,medical,others1,others2,others3,others4,waesi,ewdays,ewamount,gross,advance,loan,uniform,mess,rent,atm,phone,pf,esi,pr_tax,staff_wellfare,total_dec,net_pay)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43) RETURNING *',
+[
+userInput.company_name,
+userInput.unit_name,
+userInput.date,
+userInput.ecode,
+userInput.ename,
+userInput.etype,
+userInput.eac,
+userInput.ebankname,
+userInput.eifsc,
+userInput.designation,
+userInput.present,
+userInput.dutyoff,
+userInput.add_duties,
+userInput.payment_type,
+userInput.paymode,
+userInput.total_duties,
+userInput.basic,
+userInput.da,
+userInput.hra,
+userInput.trv_ex,
+userInput.others,
+userInput.medical,
+userInput.others1,
+userInput.others2,
+userInput.others3,
+userInput.others4,
+userInput.waesi,
+userInput.ewdays,
+userInput.ewamount,
+userInput.gross,
+userInput.advance,
+userInput.loan,
+userInput.uniform,
+userInput.mess,
+userInput.rent,
+userInput.atm,
+userInput.phone,
+userInput.pf,
+userInput.esi,
+userInput.pr_tax,
+userInput.staff_wellfare,
+userInput.total_dec,
+userInput.ner_pay
+])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_rate_updates = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+executor.one('UPDATE public.payroll_manual_entry SET  company_name=$2, unit_name=$3, date=$4, ecode=$5, ename=$6, etype=$7, eac=$8, ebankname=$9, eifsc=$10, designation=$11, present=$12, dutyoff=$13, add_duties=$14, payment_type=$15, paymode=$16, total_duties=$17, basic=$18, da=$19 , hra=$20 , trv_ex=$21 , others=$22 , medical=$23 , others1=$24 , others2=$25, others3=$26 , others4=$27 , waesi=$28 , ewdays=$29 , ewamount=$30 , gross=$31 , advance=$32 , loan=$33 , uniform=$34 , mess=$35 , rent=$36 , atm=$37 , phone=$38 , pf=$39 , esi=$40 , pr_tax=$41 , staff_wellfare=$42 , total_dec=$43 , netpay=$44   WHERE id=$1 RETURNING *',
+[
+userInput.id,
+userInput.company_name,
+userInput.unit_name,
+userInput.date,
+userInput.ecode,
+userInput.ename,
+userInput.etype,
+userInput.eac,
+userInput.ebankname,
+userInput.eifsc,
+userInput.designation,
+userInput.present,
+userInput.dutyoff,
+userInput.add_duties,
+userInput.payment_type,
+userInput.paymode,
+userInput.total_duties,
+userInput.basic,
+userInput.da,
+userInput.hra,
+userInput.trv_ex,
+userInput.others,
+userInput.medical,
+userInput.others1,
+userInput.others2,
+userInput.others3,
+userInput.others4,
+userInput.waesi,
+userInput.ewdays,
+userInput.ewamount,
+userInput.gross,
+userInput.advance,
+userInput.loan,
+userInput.uniform,
+userInput.mess,
+userInput.rent,
+userInput.atm,
+userInput.phone,
+userInput.pf,
+userInput.esi,
+userInput.pr_tax,
+userInput.staff_wellfare,
+userInput.total_dec,
+userInput.ner_pay
+])
+.then(data => {
+console.log(data);
+resultCallback(null,data );
+})
+.catch(error => {
+resultCallback(error,null );
+console.log('ERROR:', error);
+})
+};
+
+
+user.manual_entry_emp_delete = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('Delete FROM public."payroll_manual_entry" where "id"= ($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_emp_list = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_entry" ', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_emp_fetch = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_entry" where "id"= ($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+
+
+
+
+
 
 
 
