@@ -772,7 +772,7 @@ user.employeeids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public.employeedetails WHERE "id"=($1) ' , [userInput.employee_id])
+    executor.any('SELECT * FROM public.employeedetails WHERE "ecode"=($1) ' , [userInput.employee_id])
         .then(data => {
           console.log(data);
                  resultCallback(null,data );
@@ -4278,7 +4278,7 @@ user.manual_entry_unit_adds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\' 
-executor.one('INSERT INTO public.payroll_manual_unit_entry(company,unit_code,option,salary_type,unit_name,day_month,pf_cover,pf_amount,esi_cover,esi_amount,esi_code,esi_district,pf_basic,pf_da,pf_hra,pf_trv,esi_basic,esi_da,esi_hra,esi_trv,esi_protax)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING *',
+executor.one('INSERT INTO public.payroll_manual_unit_entry(company,unit_code,option,salary_type,unit_name,day_month,pf_cover,pf_amount,esi_cover,esi_amount,esi_code,esi_district,pf_basic,pf_da,pf_hra,pf_trv,esi_basic,esi_da,esi_hra,esi_trv,esi_protax,salary_type_amount,day_month_date,pf_amount_amount)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24) RETURNING *',
 [
 userInput.company,
 userInput.unit_code,
@@ -4300,7 +4300,10 @@ userInput.esi_basic,
 userInput.esi_da,
 userInput.esi_hra,
 userInput.esi_trv,
-userInput.esi_protax
+userInput.esi_protax,
+userInput.salary_type_amount,
+userInput.day_month_date,
+userInput.pf_amount_amount
 ])
 .then(data => {
                  console.log(data);
@@ -4315,8 +4318,9 @@ userInput.esi_protax
 
 user.manual_entry_unit_updates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
+  console.log(userInput);
   //\''+userInput.appartment_ukey+'\' 
-executor.one('UPDATE public.payroll_manual_unit_entry SET  company=$2, unit_code=$3, option=$4, salary_type=$5, unit_name=$6, day_month=$7, pf_cover=$8, pf_amount=$9, esi_cover=$10, esi_amount=$11, esi_code=$12, esi_district=$13, pf_basic=$14, pf_da=$15, pf_hra=$16, pf_trv=$17, esi_basic=$18, esi_da=$19, esi_hra=$20, esi_trv=$21 , esi_protax = $22 WHERE id=$1 RETURNING *',
+executor.one('UPDATE public.payroll_manual_unit_entry SET  company=$2, unit_code=$3, option=$4, salary_type=$5, unit_name=$6, day_month=$7, pf_cover=$8, pf_amount=$9, esi_cover=$10, esi_amount=$11, esi_code=$12, esi_district=$13, pf_basic=$14, pf_da=$15, pf_hra=$16, pf_trv=$17, esi_basic=$18, esi_da=$19, esi_hra=$20, esi_trv=$21 , esi_protax = $22, salary_type_amount = $23, day_month_date = $24, pf_amount_amount = $25 WHERE id=$1 RETURNING *',
 [
 userInput.id,
 userInput.company,
@@ -4339,7 +4343,10 @@ userInput.esi_basic,
 userInput.esi_da,
 userInput.esi_hra,
 userInput.esi_trv,
-userInput.esi_protax
+userInput.esi_protax,
+userInput.salary_type_amount,
+userInput.day_month_date,
+userInput.pf_amount_amount
 ])
 .then(data => {
 console.log(data);

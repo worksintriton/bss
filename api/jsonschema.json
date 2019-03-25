@@ -8858,7 +8858,7 @@
                  "type": "object",
                 "properties": {
                     "employee_id": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "employee_name": {
                         "type": "string"
@@ -8933,7 +8933,7 @@
                  "type": "object",
                 "properties": {
                     "employee_id": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "start_date": {
                         "type": "string"
@@ -9091,7 +9091,7 @@
                  "type": "object",
                 "properties": {
                     "employee_id": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "advance_type": {
                         "type": "string"
@@ -9220,6 +9220,36 @@
                     },
                     "properties": {
                         "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+            "/advance/fetchadvance2": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_id": {
+                        "type": "string"
+                    },
+                     "company_name": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_id": "should have required property userId"
+                    },
+                    "properties": {
+                        "employee_id": "userId must be string"
                     }
                 }
             }
@@ -9364,6 +9394,15 @@
                     },
                     "esi_trv": {
                         "type": "string"
+                    },
+                    "salary_type_amount": {
+                        "type": "string"
+                    },
+                    "day_month_date": {
+                        "type": "string"
+                    },
+                    "pf_amount_amount": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -9453,6 +9492,15 @@
                         "type": "string"
                     },
                     "esi_trv": {
+                        "type": "string"
+                    },
+                    "salary_type_amount": {
+                        "type": "string"
+                    },
+                    "day_month_date": {
+                        "type": "string"
+                    },
+                    "pf_amount_amount": {
                         "type": "string"
                     }
                 },

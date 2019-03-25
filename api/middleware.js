@@ -6119,6 +6119,30 @@ function fetchadvance(req, res, next) {
 
 }
 
+function fetchadvance2(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchadvances2(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
 
 function deleteadvance(req, res, next) {
 
@@ -7334,6 +7358,8 @@ exports.manual_entry_emp_delete =manual_entry_emp_delete;
 exports.manual_entry_emp_list = manual_entry_emp_list;
 exports.manual_entry_emp_fetch = manual_entry_emp_fetch;
 
+
+exports.fetchadvance2 = fetchadvance2;
 
 
 
