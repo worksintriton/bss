@@ -10189,22 +10189,25 @@
             "body": {
                  "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "number"
+                    "date": {
+                        "type": "string"
+                    },
+                     "unit_name": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
                 "required": [
-                    "company_name"
+                    "date"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "company_name": "should have required property client_id"
+                        "date": "should have required property client_id"
                         
                     },
                     "properties": {
-                        "company_name": "company_name must be string"
+                        "date": "company_name must be string"
                     }
                 }
             }
