@@ -155,6 +155,14 @@ addRoute("/manual_entry/manual_entry_emp_fetch", "POST", [middleware.manual_entr
 
 
 
+// addRoute("/manual_entry/manual_entry_emp_single_add", "POST", [middleware.manual_entry_emp_single_add]);
+// addRoute("/manual_entry/manual_entry_emp_single_update", "POST", [middleware.manual_entry_emp_single_update]);
+// addRoute("/manual_entry/manual_entry_emp_single_delete", "POST", [middleware.manual_entry_emp_single_delete]);
+// addRoute("/manual_entry/manual_entry_emp_single_list", "POST", [middleware.manual_entry_emp_single_list]);
+// addRoute("/manual_entry/manual_entry_emp_single_fetch", "POST", [middleware.manual_entry_emp_single_fetch]);
+
+
+
 
 
 

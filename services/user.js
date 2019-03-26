@@ -4020,6 +4020,21 @@ user.fetchadvances = function (userInput, resultCallback) {
 };
 
 
+user.fetchadvances2 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select *  FROM public."advance" WHERE "company_name"=($1) and ', [userInput.id])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
 
 user.deleteadvances = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
@@ -4681,10 +4696,10 @@ user.manual_entry_emp_list = function (userInput, resultCallback) {
 };
 
 
-user.manual_entry_emp_fetch = function (userInput, resultCallback) {
+user.manual_entry_emp_fetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_entry" where "id"= ($1)', [userInput.id])
+    executor.any('select * FROM public."payroll_manual_entry" where "ecode"= ($1) and "date" = ($2)   ', [userInput.ecode,userInput.date])
         .then(data => {
 
                  resultCallback(null,data );

@@ -9885,10 +9885,10 @@
                         "type": "number"
                     },
                     "payments_type": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "paymentmode": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "total_duties": {
                         "type": "number"
@@ -10148,33 +10148,41 @@
             }
         }
     },
-    
-         "/manual_entry/manual_entry_emp_fetch": {
+
+
+
+
+     "/manual_entry/manual_entry_emp_fetch": {
         "POST": {
             "body": {
                  "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "number"
+                    "ecode": {
+                        "type": "string"
+                    },
+                     "date": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
                 "required": [
-                    "company_name"
+                    "ecode"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "company_name": "should have required property client_id"
+                        "ecode": "should have required property client_id"
                         
                     },
                     "properties": {
-                        "company_name": "company_name must be string"
+                        "ecode": "id must be number"
                     }
                 }
             }
         }
     },
+    
+        
 
              "/manual_entry/manual_entry_emp_list": {
         "POST": {
@@ -10229,6 +10237,121 @@
             }
         }
     },
+
+
+
+
+
+
+"/manual_entry/manual_entry_emp_single_add": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "uname": {
+                        "type": "string"
+                    },
+                    "ucode": {
+                        "type": "string"
+                    },
+                    "ename": {
+                        "type": "string"
+                    },
+                    "ecode": {
+                        "type": "string"
+                    },
+                    "designation": {
+                        "type": "string"
+                    },
+                    "noofduties": {
+                        "type": "string"
+                    },
+                    "ot": {
+                        "type": "string"
+                    },
+                    "total": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "uname"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "uname": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "uname": "company_name must be string"
+                    }
+                }
+            }
+        }
+    },
+
+     "/manual_entry/manual_entry_emp_update": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "uname": {
+                        "type": "string"
+                    },
+                    "ucode": {
+                        "type": "string"
+                    },
+                    "ename": {
+                        "type": "string"
+                    },
+                    "ecode": {
+                        "type": "string"
+                    },
+                    "designation": {
+                        "type": "string"
+                    },
+                    "noofduties": {
+                        "type": "string"
+                    },
+                    "ot": {
+                        "type": "string"
+                    },
+                    "total": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "uname"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "uname": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "uname": "company_name must be string"
+                    }
+                }
+            }
+        }
+    },
+    
+  
+
+ 
+
 
 
      "/advance/updateadvance": {
