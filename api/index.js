@@ -151,6 +151,7 @@ addRoute("/manual_entry/manual_entry_emp_add", "POST", [middleware.manual_entry_
 addRoute("/manual_entry/manual_entry_emp_update", "POST", [middleware.manual_entry_emp_update]);
 addRoute("/manual_entry/manual_entry_emp_delete", "POST", [middleware.manual_entry_emp_delete]);
 addRoute("/manual_entry/manual_entry_emp_list", "POST", [middleware.manual_entry_emp_list]);
+addRoute("/manual_entry/manual_entry_emp_list1", "POST", [middleware.manual_entry_emp_list1]);
 addRoute("/manual_entry/manual_entry_emp_fetch", "POST", [middleware.manual_entry_emp_fetch]);
 
 

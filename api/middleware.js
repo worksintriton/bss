@@ -6908,6 +6908,28 @@ function manual_entry_emp_list(req, res, next) {
         ]);
 }
 
+
+function manual_entry_emp_list1(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_emp_lists1(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
 function manual_entry_emp_fetch(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
@@ -7363,6 +7385,7 @@ exports.manual_entry_emp_fetch = manual_entry_emp_fetch;
 
 
 exports.fetchadvance2 = fetchadvance2;
+exports.manual_entry_emp_list1 = manual_entry_emp_list1;
 
 
 

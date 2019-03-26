@@ -10213,6 +10213,37 @@
             }
         }
     },
+
+
+"/manual_entry/manual_entry_emp_list1": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string"
+                    },
+                     "unit_name": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                    "date"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "date": "should have required property client_id"
+                        
+                    },
+                    "properties": {
+                        "date": "company_name must be string"
+                    }
+                }
+            }
+        }
+    },
     
  "/manual_entry/manual_entry_emp_delete": {
         "POST": {

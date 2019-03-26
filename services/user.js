@@ -4680,14 +4680,27 @@ user.manual_entry_emp_delete = function (userInput, resultCallback) {
 };
 
 
-user.manual_entry_emp_list = function (userInput, resultCallback) {
+user.manual_entry_emp_lists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_entry" ', [userInput.id])
+    executor.any('SELECT * FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)', [userInput.unit_name,userInput.date])
         .then(data => {
-
                  resultCallback(null,data );
-            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+user.manual_entry_emp_lists1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+
+    executor.any('SELECT designation, SUM (present) AS present ,COUNT(designation) as strength ,SUM (add_duties) AS add_duties, SUM (total_duties) AS total_duties FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)  GROUP BY "designation" ', [userInput.unit_name,userInput.date])
+        .then(data => {
+                 resultCallback(null,data );
         })
         .catch(error => {
             resultCallback(error,null );
