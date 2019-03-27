@@ -3993,6 +3993,20 @@ user.monthlyfetchs = function (userInput, resultCallback) {
 };
 
 
+user.monthlyfetchs1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and "status"=($2)', [userInput.employee_id,"Pending"])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
 user.fetchloan_numbers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 

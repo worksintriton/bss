@@ -122,6 +122,9 @@ addRoute("/advance/fetchadvance2", "POST", [middleware.fetchadvance2]);
 addRoute("/advance/monthlyfetch", "POST", [middleware.monthlyfetch]);
 
 
+addRoute("/advance/monthlyfetch1", "POST", [middleware.monthlyfetch1]);
+
+
 
 
 /*Payroll Reports*/
