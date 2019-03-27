@@ -6092,6 +6092,28 @@ function fetchloan_number(req, res, next) {
 }
 
 
+function fetchloan_number1(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.fetchloan_numbers1(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
 function deleteinstalment(req, res, next) {
 
        async.waterfall([
@@ -7407,6 +7429,8 @@ exports.manual_entry_emp_fetch = manual_entry_emp_fetch;
 
 exports.fetchadvance2 = fetchadvance2;
 exports.manual_entry_emp_list1 = manual_entry_emp_list1;
+exports. fetchloan_number1 = fetchloan_number1;
+exports.employee_id1 = employee_id1;
 
 
 

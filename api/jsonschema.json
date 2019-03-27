@@ -4642,6 +4642,9 @@
                     },
                     "uan": {
                         "type": "string"
+                    },
+                    "ecode": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -9147,6 +9150,33 @@
 
 
     "/advance/fetchloan_number": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property userId"
+                    },
+                    "properties": {
+                        "id": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+     "/advance/fetchloan_number1": {
         "POST": {
             "body": {
                  "type": "object",

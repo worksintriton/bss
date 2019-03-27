@@ -101,10 +101,15 @@ addRoute("/employeecheck/checkemployee", "POST", [middleware.checkemployee]);
 addRoute("/Attendance/manualAttendancecheck", "POST", [middleware.manualAttendancecheck]);
 
 
+
+
+
+
 /*EMI Voucher*/
 addRoute("/advance/advanceadd", "POST", [middleware.advanceadd]);
 addRoute("/advance/advancefetch", "POST", [middleware.advancefetch]);
 addRoute("/advance/fetchloan_number", "POST", [middleware.fetchloan_number]);
+addRoute("/advance/fetchloan_number1", "POST", [middleware.fetchloan_number1]);
 addRoute("/advance/deleteinstalment", "POST", [middleware.deleteinstalment]);
 addRoute("/advance/deleteadvance", "POST", [middleware.deleteadvance]);
 addRoute("/advance/fetchadvance", "POST", [middleware.fetchadvance]);
