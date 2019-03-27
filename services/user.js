@@ -772,7 +772,7 @@ user.employeeids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT * FROM public.employeedetails WHERE "ecode"=($1) ' , [userInput.employee_id])
+    executor.any('SELECT * FROM public.employeedetails WHERE "id"=($1) ' , [userInput.employee_id])
         .then(data => {
           console.log(data);
                  resultCallback(null,data );
@@ -783,6 +783,21 @@ user.employeeids = function (userInput, resultCallback) {
         })
 };
 
+
+user.employeeids11 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM public.employeedetails WHERE "ecode"=($1) ' , [userInput.employee_id])
+        .then(data => {
+          console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 user.employeeidss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
@@ -891,7 +906,6 @@ user.Questionlists = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
-
 
 
 user.employeeids1 = function (userInput, resultCallback) {

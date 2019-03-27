@@ -42,6 +42,7 @@ addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
 addRoute("/authentication/employee_id", "POST", [middleware.employee_id]);
+addRoute("/authentication/employee_id1", "POST", [middleware.employee_id1]);
 addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
 addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
 addRoute("/authentication/Updateemployee_id", "POST", [middleware.Updateemployee_id]);
