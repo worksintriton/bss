@@ -548,8 +548,9 @@ addRoute("/client/addclientbulk", "POST", [middleware.addclientbulk]);
 addRoute("/employee/addemployeebulk", "POST", [middleware.addemployeebulk]);
 
 
+addRoute("/reports/getreportssssss", "GET", [middleware.getreportssssss]);
 
-
+addRoute("/reports/getreportssssssall", "GET", [middleware.getreportssssssall]);
 
 // addRoute("/employee/addemployeebulkupload", "POST", [middleware.addemployeebulkupload]);
 

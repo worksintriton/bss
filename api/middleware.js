@@ -7016,7 +7016,50 @@ function manual_entry_emp_fetch(req, res, next) {
         ]);
 }
 /////////////////////////////
+function getreportssssss(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.getreportssssss1(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
 
+}
+
+
+function getreportssssssall(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.getreportssssssall1(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
 
 
 
@@ -7454,6 +7497,8 @@ exports.manual_entry_emp_list1 = manual_entry_emp_list1;
 exports. fetchloan_number1 = fetchloan_number1;
 exports.employee_id1 = employee_id1;
 exports.monthlyfetch1 = monthlyfetch1;
+exports.getreportssssss = getreportssssss;
+exports. getreportssssssall= getreportssssssall;
 
 
 

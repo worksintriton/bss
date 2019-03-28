@@ -116,6 +116,60 @@
     },
 
 
+
+
+    "/reports/getreportssssss": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
+    
+
+    
+    "/reports/getreportssssssall": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
+
+
+
         "/assigningemployee/assignlists": {
         "POST": {
             "body": {
