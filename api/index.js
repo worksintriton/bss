@@ -129,8 +129,20 @@ addRoute("/advance/monthlyfetch1", "POST", [middleware.monthlyfetch1]);
 
 /*Payroll Reports*/
 addRoute("/payroll/fetchsitedetails", "POST", [middleware.fetchsitedetails]);
+
+
+
+
 addRoute("/payroll/fetchsitedpayment", "POST", [middleware.fetchsitedpayment]);
+
+
+///working////
+
 addRoute("/payroll/fetchsitepaymentss", "POST", [middleware.fetchsitepaymentss]);
+
+
+
+
 addRoute("/payroll/addsalaryprocess", "POST", [middleware.addsalaryprocess]);
 addRoute("/payroll/salaryprocesstatus", "POST", [middleware.salaryprocesstatus]);
 
@@ -548,7 +560,15 @@ addRoute("/client/addclientbulk", "POST", [middleware.addclientbulk]);
 addRoute("/employee/addemployeebulk", "POST", [middleware.addemployeebulk]);
 
 
+
+
+
 addRoute("/reports/getreportssssss", "GET", [middleware.getreportssssss]);
+
+
+addRoute("/reports/gettingreportsall", "post", [middleware.gettingreportsall]);
+
+
 
 addRoute("/reports/getreportssssssall", "GET", [middleware.getreportssssssall]);
 

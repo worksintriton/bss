@@ -6385,24 +6385,23 @@ function fetchsitepaymentss(req, res, next) {
             function (waterfallCallback){
                console.log(req.body)
                let payment = [];
+               var a = req.body.data.length - 1 ;
                for (var i = 0; i < req.body.data.length; i++) {
-                console.log(req.body.data[i].site_name,req.body.date)
-                     services.user.fetchsitepaymentssss(req.body.data[i].site_name,req.body.date, function (err, result) {
+                services.user.gettingreportsall1(req.body.data[i].site_name,req.body.date, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
                 }
-                 console.log(result[0])
-                 payment.push(result[0])
-                 waterfallCallback(null,payment);
+                 payment.push(result[0]) 
+                 console.log(payment.length)
+                 if(payment.length == req.body.data.length){
+                    console.log(payment);
+                    waterfallCallback(null,payment);
+                 }
                 });  
-                   }
-
-                   console.log(payment)
-
-              
+            }               
             },
             function (mydata, waterfallCallback){
                 return res.json(_.merge({
@@ -7064,6 +7063,39 @@ function getreportssssssall(req, res, next) {
 
 
 
+function gettingreportsall(req, res, next) {
+    console.log(req)
+       async.waterfall([
+            function (waterfallCallback){
+               var datass = [];
+              for(var i = 0 ; i < req.body.data ; i++){
+               services.user.gettingreportsall1(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                console.log(result);
+                datass.push(result);
+                });
+                 if( i < req.body.data ){
+                      waterfallCallback(null,result);
+                 }
+                }
+            
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata 
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
 
 
 
@@ -7499,6 +7531,7 @@ exports.employee_id1 = employee_id1;
 exports.monthlyfetch1 = monthlyfetch1;
 exports.getreportssssss = getreportssssss;
 exports. getreportssssssall= getreportssssssall;
+exports.gettingreportsall = gettingreportsall;
 
 
 

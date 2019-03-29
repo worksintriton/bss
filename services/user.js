@@ -4811,7 +4811,18 @@ user.getreportssssssall1 = function (userInput, resultCallback) {
 
 
 
-
+user.gettingreportsall1 = function (unit_name,date, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT * FROM  public."payroll_manual_entry" where "date"=($2) and "unit_name"=($1) ORDER BY "unit_name"  ',[unit_name,date])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 

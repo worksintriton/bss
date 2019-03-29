@@ -264,6 +264,37 @@
     },
 
 
+     "/reports/gettingreportsall": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "data"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "data": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "data": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
 
     "/assigningemployee/assignemployeeadd": {
         "POST": {
