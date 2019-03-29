@@ -142,6 +142,16 @@ addRoute("/payroll/fetchsitepaymentss", "POST", [middleware.fetchsitepaymentss])
 
 
 
+addRoute("/payroll/fetchsitepaymentss2", "POST", [middleware.fetchsitepaymentss2]);
+
+
+addRoute("/payroll/fetchsitepaymentss3", "POST", [middleware.fetchsitepaymentss3]);
+
+
+
+
+
+
 
 addRoute("/payroll/addsalaryprocess", "POST", [middleware.addsalaryprocess]);
 addRoute("/payroll/salaryprocesstatus", "POST", [middleware.salaryprocesstatus]);

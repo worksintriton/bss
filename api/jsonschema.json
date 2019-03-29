@@ -264,6 +264,71 @@
     },
 
 
+        "/payroll/fetchsitepaymentss2": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "data"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "data": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "data": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+        "/payroll/fetchsitepaymentss3": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "data"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "data": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "data": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
      "/reports/gettingreportsall": {
         "POST": {
             "body": {

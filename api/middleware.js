@@ -6394,7 +6394,74 @@ function fetchsitepaymentss(req, res, next) {
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
                 }
+                 payment.push(result) 
+                 console.log(payment.length)
+                 if(payment.length == req.body.data.length){
+                    console.log(payment);
+                    waterfallCallback(null,payment);
+                 }
+                });  
+            }               
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+function fetchsitepaymentss2(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+               console.log(req.body)
+               let payment = [];
+               var a = req.body.data.length - 1 ;
+               for (var i = 0; i < req.body.data.length; i++) {
+                services.user.gettingreportsall12(req.body.data[i].site_name,req.body.date, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
                  payment.push(result[0]) 
+                 console.log(payment.length)
+                 if(payment.length == req.body.data.length){
+                    console.log(payment);
+                    waterfallCallback(null,payment);
+                 }
+                });  
+            }               
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
+
+
+function fetchsitepaymentss3(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+               console.log(req.body)
+               let payment = [];
+               var a = req.body.data.length - 1 ;
+               for (var i = 0; i < req.body.data.length; i++) {
+                services.user.gettingreportsall13(req.body.data[i].site_name,req.body.date,req.body.type, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                 payment.push(result) 
                  console.log(payment.length)
                  if(payment.length == req.body.data.length){
                     console.log(payment);
@@ -7532,6 +7599,8 @@ exports.monthlyfetch1 = monthlyfetch1;
 exports.getreportssssss = getreportssssss;
 exports. getreportssssssall= getreportssssssall;
 exports.gettingreportsall = gettingreportsall;
+exports.fetchsitepaymentss2 = fetchsitepaymentss2;
+exports.fetchsitepaymentss3 = fetchsitepaymentss3;
 
 
 
