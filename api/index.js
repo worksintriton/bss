@@ -539,6 +539,7 @@ addRoute("/company/addcompany", "POST", [middleware.addcompany]);
 addRoute("/company/companylists", "POST", [middleware.companylists]);
 addRoute("/company/updatecompany", "POST", [middleware.updatecompany]);
 addRoute("/company/fetchcompany", "POST", [middleware.fetchcompany]);
+addRoute("/company/deletecompany", "POST", [middleware.deletecompany]);
 
 
 

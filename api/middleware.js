@@ -5972,6 +5972,30 @@ function updatecompany(req, res, next) {
 
 }
 
+
+
+function deletecompany(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.deletecompanys(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+}
+
 function fetchcompany(req, res, next) {
 
        async.waterfall([
@@ -7563,6 +7587,7 @@ exports.companylists = companylists;
 exports.updatecompany = updatecompany;
 exports.fetchcompany = fetchcompany;
 exports. fetchcompanysite = fetchcompanysite;
+exports.deletecompany = deletecompany;
 
 /*payroll*/
 exports.fetchsitedetails =fetchsitedetails;
