@@ -47,8 +47,8 @@ app.use(function (error, req, res, next) {
 function runServer() {
     db.init();
     api.init();
-    app.listen(80, function () {
-        console.info("Application listening on port " + 80);
+    app.listen(83, function () {
+        console.info("Application listening on port " + 83);
     });
 }
 
