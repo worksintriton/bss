@@ -10550,16 +10550,16 @@
                 },
         "additionalProperties": true,
                 "required": [
-                    "company_name"
+                    "id"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "company_name": "should have required property client_id"
+                        "id": "should have required property id"
                         
                     },
                     "properties": {
-                        "company_name": "company_name must be string"
+                        "id": "id must be string"
                     }
                 }
             }
