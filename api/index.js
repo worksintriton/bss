@@ -51,6 +51,8 @@ addRoute("/authentication/updateemployee1", "POST", [middleware.updateemployee1]
 addRoute("/authentication/efetchsitedetails", "GET", [middleware.efetchsitedetails]);
 
 
+addRoute("/authentication/searchecode", "POST", [middleware.searchecode]);
+
 
 
 

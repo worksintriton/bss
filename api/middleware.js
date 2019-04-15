@@ -6330,6 +6330,29 @@ function efetchsitedetails(req, res, next) {
 }
 
 
+function searchecode(req, res, next) {
+
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.searchecodes(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata
+                }, utils.errors["200"]));
+            }
+        ]);
+
+}
+
 
 
 function fetchsitedetails(req, res, next) {

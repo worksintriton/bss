@@ -61,6 +61,37 @@
 
 
 
+
+    "/authentication/searchecode": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "ecode": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "ecode"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "ecode": "should have required property Email_id"
+                       
+                    },
+                    "properties": {
+                        "ecode": "userId must be string"
+                    }
+                }
+            }
+        }
+    },
+
+
+
     "/payroll/fetchsitedetails": {
         "POST": {
             "body": {
@@ -4459,6 +4490,7 @@
             "body": {
                  "type": "object",
                 "properties": {
+                    
                     "employee_type": {
                         "type": "string"
                     },
