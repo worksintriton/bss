@@ -6330,28 +6330,7 @@ function efetchsitedetails(req, res, next) {
 }
 
 
-function searchecode(req, res, next) {
 
-       async.waterfall([
-            function (waterfallCallback){
-                services.user.searchecodes(req.body, function (err, result) {
-                if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
-                }
-                waterfallCallback(null,result);
-                });
-            },
-            function (mydata, waterfallCallback){
-                return res.json(_.merge({
-                    data: mydata
-                }, utils.errors["200"]));
-            }
-        ]);
-
-}
 
 
 
@@ -7126,6 +7105,30 @@ function manual_entry_emp_fetch(req, res, next) {
                     data: mydata
                 }, utils.errors["200"]));
             }
+   
+        ]);
+}
+
+
+function manual_entry_emp_fetch_id(req, res, next) {
+       async.waterfall([
+            function (waterfallCallback){
+                services.user.manual_entry_emp_fetch_ids(req.body, function (err, result) {
+                if (err) {
+                    req.log.error({
+                        error: err
+                    }, "Error while getting available users by mobiles");
+                    return res.json(utils.errors["500"]);
+                }
+                waterfallCallback(null,result);
+                });
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    data: mydata[0]
+                }, utils.errors["200"]));
+            }
+   
         ]);
 }
 /////////////////////////////
@@ -7649,6 +7652,7 @@ exports. getreportssssssall= getreportssssssall;
 exports.gettingreportsall = gettingreportsall;
 exports.fetchsitepaymentss2 = fetchsitepaymentss2;
 exports.fetchsitepaymentss3 = fetchsitepaymentss3;
+exports.manual_entry_emp_fetch_id = manual_entry_emp_fetch_id;
 
 
 

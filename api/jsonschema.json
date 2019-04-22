@@ -60,6 +60,34 @@
     },
 
 
+    "/manual_entry/manual_entry_emp_fetch_id": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property id"
+                       
+                    },
+                    "properties": {
+                        "id": "id must be number"
+                    }
+                }
+            }
+        }
+    },
+
 
 
     "/authentication/searchecode": {
@@ -10266,6 +10294,9 @@
                         "type": "number"
                     },
                     "net_pay": {
+                        "type": "number"
+                    },
+                    "add_amount": {
                         "type": "number"
                     }
                 },

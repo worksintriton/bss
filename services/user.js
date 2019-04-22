@@ -4624,7 +4624,7 @@ user.manual_entry_emp_adds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\' 
-executor.one('INSERT INTO public.payroll_manual_entry(company_name,unit_name,date,ecode,ename,etype,eac,ebankname,eifsc,designation,present,dutyoff,add_duties,payment_type,paymode,total_duties,basic,da,hra,trv_ex,others,medical,others1,others2,others3,others4,waesi,ewdays,ewamount,gross,advance,loan,uniform,mess,rent,atm,phone,pf,esi,pr_tax,staff_wellfare,total_dec,net_pay)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43) RETURNING *',
+executor.one('INSERT INTO public.payroll_manual_entry(company_name,unit_name,date,ecode,ename,etype,eac,ebankname,eifsc,designation,present,dutyoff,add_duties,payment_type,paymode,total_duties,basic,da,hra,trv_ex,others,medical,others1,others2,others3,others4,waesi,ewdays,ewamount,gross,advance,loan,uniform,mess,rent,atm,phone,pf,esi,pr_tax,staff_wellfare,total_dec,net_pay,add_amount)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44) RETURNING *',
 [
 userInput.company_name,
 userInput.unit_name,
@@ -4668,7 +4668,8 @@ userInput.esi,
 userInput.pr_tax,
 userInput.staff_wellfare,
 userInput.total_dec,
-userInput.ner_pay
+userInput.ner_pay,
+userInput.add_amount
 ])
 .then(data => {
                  console.log(data);
@@ -4742,7 +4743,7 @@ console.log('ERROR:', error);
 };
 
 
-user.manual_entry_emp_delete = function (userInput, resultCallback) {
+user.manual_entry_emp_deletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
     executor.any('Delete FROM public."payroll_manual_entry" where "id"= ($1)', [userInput.id])
@@ -4802,6 +4803,21 @@ user.manual_entry_emp_fetchs = function (userInput, resultCallback) {
         })
 };
 
+
+user.manual_entry_emp_fetch_ids = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_entry" where "id"= ($1)', [userInput.id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 user.manual_entry_emp_lists1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
@@ -4864,7 +4880,7 @@ user.gettingreportsall1 = function (unit_name,date, resultCallback) {
 user.gettingreportsall12 = function (unit_name,date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewdays) AS ewdays, SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  where "date"=($2) and "unit_name"=($1) GROUP BY "unit_name" ', [unit_name,date])
+    executor.any('SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewdays) AS ewdays, SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec,SUM (add_amount) AS add_amount, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  where "date"=($2) and "unit_name"=($1) GROUP BY "unit_name" ', [unit_name,date])
         .then(data => {
                  resultCallback(null,data );
         })
