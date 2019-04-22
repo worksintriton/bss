@@ -4906,9 +4906,34 @@ user.gettingreportsall13 = function (unit_name,date,type, resultCallback) {
         })
 };
 
+user.manual_entry_unit_list_id = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_unit_rate" where "unit_id"=($1) and "rank"=($2)', [userInput.unit_id, userInput.rank])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
-
+user.fetchunit_numbers1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select max(id) from public."clientsite"', [])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 

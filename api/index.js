@@ -191,6 +191,8 @@ addRoute("/manual_entry/manual_entry_emp_fetch", "POST", [middleware.manual_entr
 
 addRoute("/manual_entry/manual_entry_emp_fetch_id", "POST", [middleware.manual_entry_emp_fetch_id]);
 
+// karthikeyan update employee payment details list
+addRoute("/manual_entry/manual_entry_unit_list_id", "POST", [middleware.manual_entry_unit_list_id]);
 
 
 
@@ -587,6 +589,7 @@ addRoute("/reports/getreportssssssall", "GET", [middleware.getreportssssssall]);
 
 // addRoute("/employee/addemployeebulkupload", "POST", [middleware.addemployeebulkupload]);
 
+addRoute("/advance/fetchunit_number1", "POST", [middleware.fetchunit_number1]);
 
 
 

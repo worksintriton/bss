@@ -7212,10 +7212,52 @@ function gettingreportsall(req, res, next) {
 }
 
 
+function manual_entry_unit_list_id(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.manual_entry_unit_list_id(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             console.log(result);
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata
+             }, utils.errors["200"]));
+         }
+     ]);
+}
 
 
 
+function fetchunit_number1(req, res, next) {
 
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.fetchunit_numbers1(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
 
 
 
@@ -7626,17 +7668,17 @@ exports.fetchsitepaymentss = fetchsitepaymentss;
 exports.manual_entry_unit_add =manual_entry_unit_add;
 exports.manual_entry_unit_update = manual_entry_unit_update;
 exports.manual_entry_unit_delete = manual_entry_unit_delete;
-exports.manual_entry_unit_list = manual_entry_unit_list
+exports.manual_entry_unit_list = manual_entry_unit_list;
 exports.manual_entry_unit_fetch = manual_entry_unit_fetch;
 
 exports.manual_entry_rate_add = manual_entry_rate_add;
 exports.manual_entry_rate_update = manual_entry_rate_update;
-exports.manual_entry_rate_delete = manual_entry_rate_delete
+exports.manual_entry_rate_delete = manual_entry_rate_delete;
 exports.manual_entry_rate_list = manual_entry_rate_list;
 exports.manual_entry_rate_fetch = manual_entry_rate_fetch;
 
 exports.manual_entry_emp_add = manual_entry_emp_add;
-exports.manual_entry_emp_update = manual_entry_emp_update
+exports.manual_entry_emp_update = manual_entry_emp_update;
 exports.manual_entry_emp_delete =manual_entry_emp_delete;
 exports.manual_entry_emp_list = manual_entry_emp_list;
 exports.manual_entry_emp_fetch = manual_entry_emp_fetch;
@@ -7654,7 +7696,10 @@ exports.fetchsitepaymentss2 = fetchsitepaymentss2;
 exports.fetchsitepaymentss3 = fetchsitepaymentss3;
 exports.manual_entry_emp_fetch_id = manual_entry_emp_fetch_id;
 
+exports.manual_entry_unit_list_id = manual_entry_unit_list_id;
 
 
 /*file upload*/
 exports.uploadingfile = uploadingfile;
+
+exports. fetchunit_number1 = fetchunit_number1;
