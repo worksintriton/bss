@@ -4855,6 +4855,12 @@
                     },
                     "ecode": {
                         "type": "string"
+                    },
+                    "pf_action": {
+                        "type": "boolean"
+                    },
+                    "esi_action": {
+                        "type": "boolean"
                     }
                 },
         "additionalProperties": true,
@@ -5218,6 +5224,12 @@
                     },
                     "uan": {
                         "type": "string"
+                    },
+                    "pf_action": {
+                        "type": "boolean"
+                    },
+                    "esi_action": {
+                        "type": "boolean"
                     }
                 },
         "additionalProperties": true,
