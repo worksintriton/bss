@@ -4193,7 +4193,7 @@ user.addemployeebulkuploads = function (userInput,dob,doj, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\' 
-executor.one('INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","ifsc","bankname","resigned","ecode","site_name","company_name")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+executor.one('INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","ifsc","bankname","resigned","ecode","site_name","company_name","id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING *',
 [
 userInput.phone_number,
 userInput.password,
@@ -4214,7 +4214,8 @@ userInput.BankName,
 userInput.WorkStatus,
 userInput.ECODE,
 userInput.Uname,
-userInput.CCODE
+userInput.CCODE,
+userInput.id
 ])
                       .then(data => {
                  console.log(data);

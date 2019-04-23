@@ -572,6 +572,8 @@ addRoute("/finanace/fetchfinanace", "POST", [middleware.fetchfinanace]);
 /*Bulk Uploading*/
 addRoute("/advance/advcancebulk", "POST", [middleware.advcancebulk]);
 addRoute("/client/addclientbulk", "POST", [middleware.addclientbulk]);
+
+
 addRoute("/employee/addemployeebulk", "POST", [middleware.addemployeebulk]);
 
 
