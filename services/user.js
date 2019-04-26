@@ -4863,9 +4863,137 @@ user.getreportssssssall1 = function (userInput, resultCallback) {
         })
 };
 
-
-
-
+user.getemployeedetails1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.employeedetails' , [])
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getunitmaster1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_unit_entry' , [])
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getunitmaster2 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_unit_rate' , [])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getwagesheet1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_entry' , [])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getemployeevoucher1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.advance' , [])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getproftaxform1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT ecode, ename ,SUM (total_duties) AS total_duties, SUM (gross) AS gross, SUM (pr_tax) AS pr_tax FROM  public."payroll_manual_entry"  GROUP BY "ecode" , "ename"  ', [])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getwageslip1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_entry where "id"= ($1) ' , [userInput.id])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.bulkuploadformats = function (userInput,dob,doj, resultCallback) {
+  console.log(userInput,dob,doj);
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","bankname","resigned","ecode","site_name","company_name","pf3","dor","dispensary","emname","hname","Edq","pf_action","esi_action","prtax_action","ifsc","ucode")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30) RETURNING *',
+  [
+  userInput.phone_number,
+  userInput.password,
+  userInput.ENAME,
+  userInput.EGRADE,
+  userInput.GENDER,
+  userInput.UANNO,
+  userInput.PFNO,
+  userInput.PFNO1,
+  userInput.ESINO,
+  dob,
+  doj,
+  userInput.FATHER,
+  userInput.MaritalStatus,
+  userInput.BankName,
+  userInput.WorkStatus,
+  userInput.ECODE,
+  userInput.Uname,
+  userInput.CCODE,
+  userInput.ID,
+  userInput.PFNO2,
+  userInput.DOR,
+  userInput.DISPENSORY,
+  userInput.MOTHER,
+  userInput.HUSBAND,
+  userInput.QUALIFICATION,
+  userInput.PF_FLAG,
+  userInput.ESI_FLAG,
+  userInput.PrTax_flag,
+  userInput.IFSC,
+  userInput.UCODE
+  ])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 user.gettingreportsall1 = function (unit_name,date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 

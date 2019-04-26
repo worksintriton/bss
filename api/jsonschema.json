@@ -148,7 +148,30 @@
         }
     },
 
+    "/bulkupload/bulkuploadformat":{
+        "POST": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        
+                    },
+                    "properties": {
 
+                    }
+                }
+            }
+        }
+    },
 
     "/authentication/efetchsitedetails": {
         "GET": {
@@ -227,8 +250,150 @@
         }
     },
 
+    "/reports/getemployeedetails": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
 
+    "/reports/getunitmaster": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
+    "/reports/getwagesheet": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
 
+    "/reports/getemployeevoucher": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
+    "/reports/getproftaxform": {
+        "GET": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                   
+                },
+        "additionalProperties": false,
+                "required": [
+                    
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                       
+                    },
+                    "properties": {
+                    }
+                }
+            }
+        }
+    },
+    "/reports/getwageslip": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property id"
+                       
+                    },
+                    "properties": {
+                        "id": "id must be string"
+                    }
+                }
+            }
+        }
+    },
         "/assigningemployee/assignlists": {
         "POST": {
             "body": {
