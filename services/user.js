@@ -4541,7 +4541,7 @@ userInput.unit_id
 };
 
 
-user.manual_entry_rate_updates = function (userInput, resultCallback) {
+user.manual_entry_rate_updatess = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
 executor.one('UPDATE public.payroll_manual_unit_rate SET  rank=$2, basic=$3, da=$4, hra=$5, trv_exp=$6, others=$7, medical=$8, others1=$9, others2=$10, others3=$11, others4=$12, total_pay=$13, pf=$14, esi=$15, dec=$16, total=$17, unit_id=$18  WHERE id=$1 RETURNING *',
@@ -4552,7 +4552,6 @@ userInput.basic,
 userInput.da,
 userInput.hra,
 userInput.trv_exp,
-userInput.day_month,
 userInput.others,
 userInput.medical,
 userInput.others1,
@@ -4948,12 +4947,18 @@ user.getwageslip1 = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+
+
+
+
+
 user.bulkuploadformats = function (userInput,dob,doj, resultCallback) {
   console.log(userInput,dob,doj);
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\' 
-  executor.one('INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","bankname","workstatus","site_name","ccode","ecode","pf3","dor","dispensary","emname","hname","Edq","pf_action","esi_action","prtax_action","ifsc","ucode", "id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31) RETURNING *',
+  executor.one('INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","bankname","workstatus","site_name","ccode","ecode","pf3","dor","dispensary","emname","hname","Edq","pf_action","esi_action","prtax_action","ifsc","ucode","company_name", "id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32) RETURNING *',
   [
     userInput.PHONE_NUMBER,
     userInput.PASSWORD,
@@ -4985,6 +4990,7 @@ user.bulkuploadformats = function (userInput,dob,doj, resultCallback) {
     userInput.PrTax_flag,
     userInput.IFSC_CODE,
     userInput.UCODE,
+    userInput.CCODE,
     userInput.ID ])
 .then(data => {
                  console.log(data);
@@ -4995,6 +5001,88 @@ user.bulkuploadformats = function (userInput,dob,doj, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+user.manual_unit_rates = function (userInput, resultCallback) {
+  console.log(userInput);
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.payroll_manual_unit_rate( "rank", "basic", "da", "hra", "trv_exp", "others", "medical", "others1", "others2", "others3", "others4", "total_pay", "pf", "esi", "dec", "total", "unit_id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *',
+  [
+    userInput.rank,
+    userInput.basic,
+    userInput.da,
+    userInput.hra,
+    userInput.trv_exp,
+    userInput.others,
+    userInput.medical,
+    userInput.others1,
+    userInput.others2,
+    userInput.others3,
+    userInput.others4,
+    userInput.total_pay,
+    userInput.pf,
+    userInput.esi,
+    userInput.dec,
+    userInput.total,
+    userInput.unit_id
+  ])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.unit_master_salary_detailss = function (userInput, resultCallback) {
+  console.log(userInput);
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.payroll_manual_unit_entry( company, unit_code, option, salary_type, unit_name, day_month, pf_cover, pf_amount, esi_cover, esi_amount, esi_code, esi_district, pf_basic, pf_da, pf_hra, pf_trv, esi_basic, esi_da, esi_hra, esi_trv, esi_protax, salary_type_amount, day_month_date, pf_amount_amount)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24) RETURNING *',
+  [
+    userInput.company,
+    userInput.unit_code,
+    userInput.option,
+    userInput.salary_type,
+    userInput.unit_name,
+    userInput.day_month,
+    userInput.pf_cover,
+    userInput.pf_amount,
+    userInput.esi_cover,
+    userInput.esi_amount,
+    userInput.esi_code,
+    userInput.esi_district,
+    userInput.pf_basic,
+    userInput.pf_da,
+    userInput.pf_hra,
+    userInput.pf_trv,
+    userInput.esi_basic,
+    userInput.esi_da,
+    userInput.esi_hra,
+    userInput.esi_trv,
+    userInput.esi_protax,
+    userInput.salary_type_amount,
+    userInput.day_month_date,
+    userInput.pf_amount_amount
+  ])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+
+
+
 user.gettingreportsall1 = function (unit_name,date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 

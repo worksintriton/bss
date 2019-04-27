@@ -6897,7 +6897,7 @@ function manual_entry_rate_add(req, res, next) {
 function manual_entry_rate_update(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
-                services.user.manual_entry_rate_updates(req.body, function (err, result) {
+                services.user.manual_entry_rate_updatess(req.body, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
@@ -7386,7 +7386,84 @@ function bulkuploadformat(req, res, next) {
          }
      ]);
 }
-
+function manual_unit_rate(req, res, next) {
+    console.log(req.body);
+    async.waterfall([
+         function (waterfallCallback){
+               if (Object.keys(req.files).length == 0) {
+                 return res.status(400).send('No files were uploaded.');
+               }
+               // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+               let sampleFile = req.files.filetoupload;
+               // Use the mv() method to place the file somewhere on your server
+               var time_details = moment().format('YYYYMMDDHHmmss');
+               var path = 'www/pics/'+time_details+"_"+sampleFile.name;
+               console.log(path); 
+               sampleFile.mv(path, function(err) {
+                 if (err)
+                   return res.status(500).send(err);
+                 var result = {
+                     path: path,
+                     uploadstatus: true
+                 }
+                 waterfallCallback(null,result);
+               });
+         },
+         function (mydata, waterfallCallback){
+             var XLSX = require('xlsx');
+             var workbook = XLSX.readFile(mydata.path);
+             var sheet_name_list = workbook.SheetNames;
+             var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+             console.log(lists);
+             lists.forEach(function(belement) {
+             services.user.manual_unit_rates(belement, function (err, result) {
+             if (err) {
+                console.log(err)
+             }
+             });
+              });               
+         }
+     ]);
+}
+function unit_master_salary_details(req, res, next) {
+    console.log(req.body);
+    async.waterfall([
+         function (waterfallCallback){
+               if (Object.keys(req.files).length == 0) {
+                 return res.status(400).send('No files were uploaded.');
+               }
+               // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+               let sampleFile = req.files.filetoupload;
+               // Use the mv() method to place the file somewhere on your server
+               var time_details = moment().format('YYYYMMDDHHmmss');
+               var path = 'www/pics/'+time_details+"_"+sampleFile.name;
+               console.log(path); 
+               sampleFile.mv(path, function(err) {
+                 if (err)
+                   return res.status(500).send(err);
+                 var result = {
+                     path: path,
+                     uploadstatus: true
+                 }
+                 waterfallCallback(null,result);
+               });
+         },
+         function (mydata, waterfallCallback){
+             var XLSX = require('xlsx');
+             var workbook = XLSX.readFile(mydata.path);
+             var sheet_name_list = workbook.SheetNames;
+             var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+             console.log(lists);
+             lists.forEach(function(belement) {
+             services.user.unit_master_salary_detailss(belement, function (err, result) {
+             if (err) {
+                console.log(err)
+             }
+             });
+              });               
+         }
+     ]);
+}
 
 function gettingreportsall(req, res, next) {
     console.log(req)
@@ -7920,3 +7997,5 @@ exports.getproftaxform = getproftaxform;
 exports.getwageslip = getwageslip;
 
 exports.bulkuploadformat = bulkuploadformat;
+exports.manual_unit_rate = manual_unit_rate;
+exports.unit_master_salary_details = unit_master_salary_details;

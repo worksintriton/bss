@@ -172,7 +172,54 @@
             }
         }
     },
+    "/bulkupload/bulkupload_manual_unit_rate":{
+        "POST": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        
+                    },
+                    "properties": {
 
+                    }
+                }
+            }
+        }
+    },
+    "/bulkupload/bulkupload_unit_master_salary_details":{
+        "POST": {
+            "body": {
+                "type": "object",
+                "properties": {
+                    "Files": {
+                        "type": "string"
+                    }                 
+                },
+        "additionalProperties": true,
+                "required": [    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        
+                    },
+                    "properties": {
+
+                    }
+                }
+            }
+        }
+    },
     "/authentication/efetchsitedetails": {
         "GET": {
             "body": {
