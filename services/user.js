@@ -4953,7 +4953,7 @@ user.getwageslip1 = function (userInput, resultCallback) {
 
 
 
-user.bulkuploadformats = function (userInput,dob,doj, resultCallback) {
+user.bulkuploadformats = function (userInput,dob,doj,dor, resultCallback) {
   console.log(userInput,dob,doj);
   var executor = db.getdaata.getdb();
   console.log(userInput);
@@ -4980,7 +4980,7 @@ user.bulkuploadformats = function (userInput,dob,doj, resultCallback) {
     userInput.CCODE,
     userInput.ECODE,
     userInput.PFNO2,
-    userInput.DOR,
+    dor,
     userInput.DISPENSORY,
     userInput.MOTHER_NAME,
     userInput.HUSBAND_NAME,

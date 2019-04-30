@@ -7372,12 +7372,14 @@ function bulkuploadformat(req, res, next) {
              lists.forEach(function(belement) {
                   var exdate = +belement.DOB; // represents Jan 1, 1993
                    var exdate1 = +belement.DOJ; // represents Jan 1, 1993
+                   var exdate2 = +belement.DOR; // represents Jan 1, 1993
                    var e0date = new Date(0); // epoch "zero" date
                    var offset = e0date.getTimezoneOffset(); // tz offset in min
                    var jsdate1 = new Date(0, 0, exdate-1, 0, -offset, 0)     
-                   var jsdate2 = new Date(0, 0, exdate1-1, 0, -offset, 0)        
-               console.log(jsdate1,jsdate2);
-             services.user.bulkuploadformats(belement,jsdate1,jsdate2, function (err, result) {
+                   var jsdate2 = new Date(0, 0, exdate1-1, 0, -offset, 0)
+                   var jsdate3 = new Date(0, 0, exdate2-1, 0, -offset, 0)        
+               console.log(jsdate1,jsdate2,jsdate3);
+             services.user.bulkuploadformats(belement,jsdate1,jsdate2,jsdate3, function (err, result) {
              if (err) {
                 console.log(err)
              }
