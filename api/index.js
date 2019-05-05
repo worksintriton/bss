@@ -594,6 +594,22 @@ addRoute("/reports/getreportssssssall", "GET", [middleware.getreportssssssall]);
 addRoute("/advance/fetchunit_number1", "POST", [middleware.fetchunit_number1]);
 
 
+addRoute("/reports/getemployeedetails", "GET", [middleware.getemployeedetails]);
+addRoute("/reports/getunitmaster", "GET", [middleware.getunitmaster]);
+addRoute("/reports/getwagesheet", "GET", [middleware.getwagesheet]);
+addRoute("/reports/getemployeevoucher", "GET", [middleware.getemployeevoucher]);
+addRoute("/reports/getproftaxform", "GET", [middleware.getproftaxform]);
+addRoute("/reports/getwageslip", "POST", [middleware.getwageslip]);
+
+// bulk upload
+addRoute("/bulkupload/bulkuploadformat", "POST", [middleware.bulkuploadformat]);
+addRoute("/bulkupload/bulkupload_manual_unit_rate", "POST", [middleware.manual_unit_rate]);
+addRoute("/bulkupload/bulkupload_unit_master_salary_details", "POST", [middleware.unit_master_salary_details]);
+
+
+// report ========================================
+
+
 
 
 

@@ -516,7 +516,7 @@ user.deleteemployees = function (userInput, resultCallback) {
 //updateemployees///
 user.updateemployees = function (userInput , resultCallback) {
   var executor = db.getdaata.getdb();
-      executor.one('UPDATE public.employeedetails SET employee_type = ($2), father_name = ($3), gender= ($4), material_status= ($5), "Edq"= ($6), nationality= ($7), languages= ($8), date_joining= ($9), driving_licence= ($10), "Email_ID"= ($11), "Mobile_No"= ($12), "Name"= ($13), "Date_of_birth"= ($14), "Password"= ($15), aadhar_card= ($16), voter_id= ($17), "Address"= ($18), attach= ($19), qrcode= ($20), workstatus = ($21), resigned= ($22), createdtime= ($23), contact= ($24), ifsc= ($25), "a_c"= ($26), bankname= ($27), account= ($28), prom_in= ($29), pan= ($30), weight = ($31), height= ($32), "mother_tongue"= ($33), permentaddress= ($34),fname1= ($35),fsex1= ($36),frelationship1= ($37),fdateofbirth1= ($38),fage1= ($39),foccupation1= ($40),faadharcard1= ($41),fname2= ($42),fsex2= ($43),frelationship2= ($44),fdateofbirth2= ($45),fage2= ($46),foccupation2= ($47),faadharcard2= ($48),fname3= ($49),fsex3= ($50),frelationship3= ($51),fdateofbirth3= ($52),fage3= ($53),foccupation3= ($54),faadharcard3= ($55),fname4= ($56),fsex4= ($57),frelationship4= ($58),fdateofbirth4= ($59),fage4= ($60),foccupation4= ($61),faadharcard4= ($62),fname5= ($63),fsex5= ($64),frelationship5= ($65),fdateofbirth5= ($66),fage5= ($67),foccupation5= ($68),faadharcard5= ($69),nname1= ($70),nsex1= ($71),nrelationship1= ($72),ndateofbirth1= ($73),nage1= ($74),noccupation1= ($75),naadharcard1= ($76),nname2= ($77),nsex2= ($78),nrelationship2= ($79),ndateofbirth2= ($80),nage2= ($81),noccupation2= ($82),naadharcard2= ($83),nname3= ($84),nsex3= ($85),nrelationship3= ($86),ndateofbirth3= ($87),nage3= ($88),noccupation3= ($89),naadharcard3= ($90),nname4= ($91),nsex4= ($92),nrelationship4= ($93),ndateofbirth4= ($94),nage4= ($95),noccupation4= ($96),naadharcard4= ($97),nname5= ($98),nsex5= ($99),nrelationship5= ($100),ndateofbirth5= ($101),nage5= ($102),noccupation5= ($103),naadharcard5= ($104),site_name = ($105) , company_name = ($106) ,esi = ($107), pf1 = ($107), pf2= ($108), pf3=($109) , uan = ($110), pf_action=($111), esi_action=($112) WHERE  id=($1) RETURNING *',
+      executor.one('UPDATE public.employeedetails SET employee_type = ($2), father_name = ($3), gender= ($4), material_status= ($5), "Edq"= ($6), nationality= ($7), languages= ($8), date_joining= ($9), driving_licence= ($10), "Email_ID"= ($11), "Mobile_No"= ($12), "Name"= ($13), "Date_of_birth"= ($14), "Password"= ($15), aadhar_card= ($16), voter_id= ($17), "Address"= ($18), attach= ($19), qrcode= ($20), workstatus = ($21), resigned= ($22), createdtime= ($23), contact= ($24), ifsc= ($25), "a_c"= ($26), bankname= ($27), account= ($28), prom_in= ($29), pan= ($30), weight = ($31), height= ($32), "mother_tongue"= ($33), permentaddress= ($34),fname1= ($35),fsex1= ($36),frelationship1= ($37),fdateofbirth1= ($38),fage1= ($39),foccupation1= ($40),faadharcard1= ($41),fname2= ($42),fsex2= ($43),frelationship2= ($44),fdateofbirth2= ($45),fage2= ($46),foccupation2= ($47),faadharcard2= ($48),fname3= ($49),fsex3= ($50),frelationship3= ($51),fdateofbirth3= ($52),fage3= ($53),foccupation3= ($54),faadharcard3= ($55),fname4= ($56),fsex4= ($57),frelationship4= ($58),fdateofbirth4= ($59),fage4= ($60),foccupation4= ($61),faadharcard4= ($62),fname5= ($63),fsex5= ($64),frelationship5= ($65),fdateofbirth5= ($66),fage5= ($67),foccupation5= ($68),faadharcard5= ($69),nname1= ($70),nsex1= ($71),nrelationship1= ($72),ndateofbirth1= ($73),nage1= ($74),noccupation1= ($75),naadharcard1= ($76),nname2= ($77),nsex2= ($78),nrelationship2= ($79),ndateofbirth2= ($80),nage2= ($81),noccupation2= ($82),naadharcard2= ($83),nname3= ($84),nsex3= ($85),nrelationship3= ($86),ndateofbirth3= ($87),nage3= ($88),noccupation3= ($89),naadharcard3= ($90),nname4= ($91),nsex4= ($92),nrelationship4= ($93),ndateofbirth4= ($94),nage4= ($95),noccupation4= ($96),naadharcard4= ($97),nname5= ($98),nsex5= ($99),nrelationship5= ($100),ndateofbirth5= ($101),nage5= ($102),noccupation5= ($103),naadharcard5= ($104),site_name = ($105) , company_name = ($106) ,esi = ($107), pf1 = ($108), pf2= ($109), pf3=($110) , uan = ($111), pf_action=($112), esi_action=($113) WHERE  id=($1) RETURNING *',
 [                userInput.id,
                  userInput.employee_type,
                  userInput.father_name,
@@ -2470,7 +2470,7 @@ user.undeliverds = function (userInput, resultCallback) {
 user.deleteattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-  executor.any('Delete FROM public."attachment" WHERE "id"=($1) ' , [userInput.empid])    
+  executor.any('Delete FROM public."attachment" WHERE "id"=($1) ' , [userInput.id])    
 
       .then(data => {
 
@@ -4541,7 +4541,7 @@ userInput.unit_id
 };
 
 
-user.manual_entry_rate_updates = function (userInput, resultCallback) {
+user.manual_entry_rate_updatess = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
 executor.one('UPDATE public.payroll_manual_unit_rate SET  rank=$2, basic=$3, da=$4, hra=$5, trv_exp=$6, others=$7, medical=$8, others1=$9, others2=$10, others3=$11, others4=$12, total_pay=$13, pf=$14, esi=$15, dec=$16, total=$17, unit_id=$18  WHERE id=$1 RETURNING *',
@@ -4552,7 +4552,6 @@ userInput.basic,
 userInput.da,
 userInput.hra,
 userInput.trv_exp,
-userInput.day_month,
 userInput.others,
 userInput.medical,
 userInput.others1,
@@ -4863,6 +4862,223 @@ user.getreportssssssall1 = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+
+user.getemployeedetails1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.employeedetails' , [])
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getunitmaster1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_unit_entry' , [])
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getunitmaster2 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_unit_rate' , [])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getwagesheet1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_entry' , [])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getemployeevoucher1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.advance' , [])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getproftaxform1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('SELECT ecode, ename ,SUM (total_duties) AS total_duties, SUM (gross) AS gross, SUM (pr_tax) AS pr_tax FROM  public."payroll_manual_entry"  GROUP BY "ecode" , "ename"  ', [])
+        .then(data => {
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getwageslip1 = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_entry where "id"= ($1) ' , [userInput.id])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
+
+
+
+user.bulkuploadformats = function (userInput,dob,doj,dor, resultCallback) {
+  console.log(userInput,dob,doj);
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","bankname","workstatus","site_name","ccode","ecode","pf3","dor","dispensary","emname","hname","Edq","pf_action","esi_action","prtax_action","ifsc","ucode","company_name", "id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32) RETURNING *',
+  [
+    userInput.PHONE_NUMBER,
+    userInput.PASSWORD,
+    userInput.NAME,
+    userInput.RANK,
+    userInput.GENDER,
+    userInput.UANNO,
+    userInput.PFNO,
+    userInput.PFNO1,
+    userInput.ESINO,
+    dob,
+    doj,
+    userInput.FATHER_NAME,
+    userInput.MaritalStatus,
+    userInput.ACCOUNT_NUMBER,
+    userInput.BANK_NAME,
+    userInput.WORKING_STATUS,
+    userInput.UNIT_NAME,
+    userInput.CCODE,
+    userInput.ECODE,
+    userInput.PFNO2,
+    dor,
+    userInput.DISPENSORY,
+    userInput.MOTHER_NAME,
+    userInput.HUSBAND_NAME,
+    userInput.QUALIFICATION,
+    userInput.PF_FLAG,
+    userInput.ESI_FLAG,
+    userInput.PrTax_flag,
+    userInput.IFSC_CODE,
+    userInput.UCODE,
+    userInput.CCODE,
+    userInput.ID ])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.manual_unit_rates = function (userInput, resultCallback) {
+  console.log(userInput);
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.payroll_manual_unit_rate( "rank", "basic", "da", "hra", "trv_exp", "others", "medical", "others1", "others2", "others3", "others4", "total_pay", "pf", "esi", "dec", "total", "unit_id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *',
+  [
+    userInput.rank,
+    userInput.basic,
+    userInput.da,
+    userInput.hra,
+    userInput.trv_exp,
+    userInput.others,
+    userInput.medical,
+    userInput.others1,
+    userInput.others2,
+    userInput.others3,
+    userInput.others4,
+    userInput.total_pay,
+    userInput.pf,
+    userInput.esi,
+    userInput.dec,
+    userInput.total,
+    userInput.unit_id
+  ])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.unit_master_salary_detailss = function (userInput, resultCallback) {
+  console.log(userInput);
+  var executor = db.getdaata.getdb();
+  console.log(userInput);
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public.payroll_manual_unit_entry( company, unit_code, option, salary_type, unit_name, day_month, pf_cover, pf_amount, esi_cover, esi_amount, esi_code, esi_district, pf_basic, pf_da, pf_hra, pf_trv, esi_basic, esi_da, esi_hra, esi_trv, esi_protax, salary_type_amount, day_month_date, pf_amount_amount)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24) RETURNING *',
+  [
+    userInput.company,
+    userInput.unit_code,
+    userInput.option,
+    userInput.salary_type,
+    userInput.unit_name,
+    userInput.day_month,
+    userInput.pf_cover,
+    userInput.pf_amount,
+    userInput.esi_cover,
+    userInput.esi_amount,
+    userInput.esi_code,
+    userInput.esi_district,
+    userInput.pf_basic,
+    userInput.pf_da,
+    userInput.pf_hra,
+    userInput.pf_trv,
+    userInput.esi_basic,
+    userInput.esi_da,
+    userInput.esi_hra,
+    userInput.esi_trv,
+    userInput.esi_protax,
+    userInput.salary_type_amount,
+    userInput.day_month_date,
+    userInput.pf_amount_amount
+  ])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+
+
 
 
 

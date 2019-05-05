@@ -6895,7 +6895,7 @@ function manual_entry_rate_add(req, res, next) {
 function manual_entry_rate_update(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
-                services.user.manual_entry_rate_updates(req.body, function (err, result) {
+                services.user.manual_entry_rate_updatess(req.body, function (err, result) {
                 if (err) {
                     req.log.error({
                         error: err
@@ -7176,7 +7176,294 @@ function getreportssssssall(req, res, next) {
 }
 
 
+function getemployeedetails(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getemployeedetails1(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
 
+}
+function getunitmaster(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getunitmaster1(req.body, function (err, unit_entry) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,unit_entry);
+             });
+         },
+         function (unit_entry, waterfallCallback){
+            services.user.getunitmaster2(req.body, function (err, unit_rate) {
+            if (err) {
+                req.log.error({
+                    error: err
+                }, "Error while getting available users by mobiles");
+                return res.json(utils.errors["500"]);
+            }
+            waterfallCallback(null,unit_entry, unit_rate);
+            });
+        },
+         function (unit_entry,unit_rate, waterfallCallback){
+            var data = [];
+            console.log(unit_entry.length,unit_rate.length);
+            for(var i = 0; i < unit_rate.length; i++){
+                for(var j = 0; j< unit_entry.length; j++){
+                 if(unit_entry[i].id == unit_rate[j].unit_id) {
+                    var a = {
+                        ccode: unit_entry[j].company,
+                        ucode: unit_entry[j].unit_code,
+                        unitname: unit_entry[j].unit_name,
+                        dcode: unit_rate[i].rank,
+                        basic: unit_rate[i].basic,
+                        da: unit_rate[i].da,
+                        hra: unit_rate[i].hra,
+                        trvexp: unit_rate[i].trv_exp,
+                        others: unit_rate[i].others,
+                        medical: unit_rate[i].medical,
+                        others1: unit_rate[i].others1,
+                        others2: unit_rate[i].others2,
+                        others3: unit_rate[i].others3,
+                        totalpay: unit_rate[i].total_pay,
+                    }
+                    data.push(a);
+                 }
+                }
+            }
+             return res.json(_.merge({
+                 data: data
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getwagesheet(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getwagesheet1(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getemployeevoucher(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getemployeevoucher1(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getproftaxform(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getproftaxform1(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getwageslip(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getwageslip1(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function bulkuploadformat(req, res, next) {
+    console.log(req.body);
+    async.waterfall([
+         function (waterfallCallback){
+               if (Object.keys(req.files).length == 0) {
+                 return res.status(400).send('No files were uploaded.');
+               }
+               // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+               let sampleFile = req.files.filetoupload;
+               // Use the mv() method to place the file somewhere on your server
+               var time_details = moment().format('YYYYMMDDHHmmss');
+               var path = 'www/pics/'+time_details+"_"+sampleFile.name;
+               console.log(path); 
+               sampleFile.mv(path, function(err) {
+                 if (err)
+                   return res.status(500).send(err);
+                 var result = {
+                     path: path,
+                     uploadstatus: true
+                 }
+                 waterfallCallback(null,result);
+               });
+         },
+         function (mydata, waterfallCallback){
+             var XLSX = require('xlsx');
+             var workbook = XLSX.readFile(mydata.path);
+             var sheet_name_list = workbook.SheetNames;
+             var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+             console.log(lists);
+             lists.forEach(function(belement) {
+                  var exdate = +belement.DOB; // represents Jan 1, 1993
+                   var exdate1 = +belement.DOJ; // represents Jan 1, 1993
+                   var exdate2 = +belement.DOR; // represents Jan 1, 1993
+                   var e0date = new Date(0); // epoch "zero" date
+                   var offset = e0date.getTimezoneOffset(); // tz offset in min
+                   var jsdate1 = new Date(0, 0, exdate-1, 0, -offset, 0)     
+                   var jsdate2 = new Date(0, 0, exdate1-1, 0, -offset, 0)
+                   var jsdate3 = new Date(0, 0, exdate2-1, 0, -offset, 0)        
+               console.log(jsdate1,jsdate2,jsdate3);
+             services.user.bulkuploadformats(belement,jsdate1,jsdate2,jsdate3, function (err, result) {
+             if (err) {
+                console.log(err)
+             }
+             });
+              });               
+         }
+     ]);
+}
+function manual_unit_rate(req, res, next) {
+    console.log(req.body);
+    async.waterfall([
+         function (waterfallCallback){
+               if (Object.keys(req.files).length == 0) {
+                 return res.status(400).send('No files were uploaded.');
+               }
+               // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+               let sampleFile = req.files.filetoupload;
+               // Use the mv() method to place the file somewhere on your server
+               var time_details = moment().format('YYYYMMDDHHmmss');
+               var path = 'www/pics/'+time_details+"_"+sampleFile.name;
+               console.log(path); 
+               sampleFile.mv(path, function(err) {
+                 if (err)
+                   return res.status(500).send(err);
+                 var result = {
+                     path: path,
+                     uploadstatus: true
+                 }
+                 waterfallCallback(null,result);
+               });
+         },
+         function (mydata, waterfallCallback){
+             var XLSX = require('xlsx');
+             var workbook = XLSX.readFile(mydata.path);
+             var sheet_name_list = workbook.SheetNames;
+             var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+             console.log(lists);
+             lists.forEach(function(belement) {
+             services.user.manual_unit_rates(belement, function (err, result) {
+             if (err) {
+                console.log(err)
+             }
+             });
+              });               
+         }
+     ]);
+}
+function unit_master_salary_details(req, res, next) {
+    console.log(req.body);
+    async.waterfall([
+         function (waterfallCallback){
+               if (Object.keys(req.files).length == 0) {
+                 return res.status(400).send('No files were uploaded.');
+               }
+               // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+               let sampleFile = req.files.filetoupload;
+               // Use the mv() method to place the file somewhere on your server
+               var time_details = moment().format('YYYYMMDDHHmmss');
+               var path = 'www/pics/'+time_details+"_"+sampleFile.name;
+               console.log(path); 
+               sampleFile.mv(path, function(err) {
+                 if (err)
+                   return res.status(500).send(err);
+                 var result = {
+                     path: path,
+                     uploadstatus: true
+                 }
+                 waterfallCallback(null,result);
+               });
+         },
+         function (mydata, waterfallCallback){
+             var XLSX = require('xlsx');
+             var workbook = XLSX.readFile(mydata.path);
+             var sheet_name_list = workbook.SheetNames;
+             var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+             console.log(lists);
+             lists.forEach(function(belement) {
+             services.user.unit_master_salary_detailss(belement, function (err, result) {
+             if (err) {
+                console.log(err)
+             }
+             });
+              });               
+         }
+     ]);
+}
 
 function gettingreportsall(req, res, next) {
     console.log(req)
@@ -7701,3 +7988,14 @@ exports.manual_entry_unit_list_id = manual_entry_unit_list_id;
 exports.uploadingfile = uploadingfile;
 
 exports. fetchunit_number1 = fetchunit_number1;
+
+exports.getemployeedetails = getemployeedetails;
+exports.getunitmaster = getunitmaster;
+exports.getwagesheet = getwagesheet;
+exports.getemployeevoucher = getemployeevoucher;
+exports.getproftaxform = getproftaxform;
+exports.getwageslip = getwageslip;
+
+exports.bulkuploadformat = bulkuploadformat;
+exports.manual_unit_rate = manual_unit_rate;
+exports.unit_master_salary_details = unit_master_salary_details;
