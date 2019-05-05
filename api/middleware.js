@@ -6621,9 +6621,8 @@ function addemployeebulk(req, res, next) {
                 var workbook = XLSX.readFile(mydata.path);
                 var sheet_name_list = workbook.SheetNames;
                 var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-                
                 lists.forEach(function(belement) {
-                     var exdate = +belement.DOB; // represents Jan 1, 1993
+                      var exdate = +belement.DOB; // represents Jan 1, 1993
                       var exdate1 = +belement.DOJ; // represents Jan 1, 1993
                       var e0date = new Date(0); // epoch "zero" date
                       var offset = e0date.getTimezoneOffset(); // tz offset in min
@@ -6635,11 +6634,10 @@ function addemployeebulk(req, res, next) {
                    console.log(err)
                 }
                 });
-                 });               
+              });               
             }
         ]);
 }
-
 
 
 function manualAttendancecheck(req, res, next) {
