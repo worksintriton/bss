@@ -401,6 +401,7 @@ addRoute("/employee_tracking/fetchemployees", "GET", [middleware.fetchemployees]
 addRoute("/employee_tracking/fetchTrackinglist", "POST", [middleware.fetchTrackinglist]);
 addRoute("/employee_tracking/fetchtrackdate", "POST", [middleware.fetchtrackdate]);
 addRoute("/employee_tracking/fetchtracksingledate", "POST", [middleware.fetchtracksingledate]);
+addRoute("/employee_tracking/deleteEmployeeTracking", "POST", [middleware.deleteEmployeeTracking]);
 
 
 
