@@ -7359,6 +7359,127 @@ function getwageslip(req, res, next) {
      ]);
 
 }
+function getpfecr(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getsiteDetails(req.body, function (err, siteDetails) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,siteDetails);
+             });
+         },
+         function (siteDetails, waterfallCallback){
+            siteDetails.forEach(function(siteDetail) {
+            services.user.getpayrolldetails(siteDetail.site_billing_name, function (err, payRollDetail) {
+            if (err) {
+                req.log.error({
+                    error: err
+                }, "Error while getting available users by mobiles");
+                return res.json(utils.errors["500"]);
+            }
+            waterfallCallback(null,payRollDetail);
+            });
+        });
+        },
+        function (payRollDetail, waterfallCallback){
+            payRollDetail.forEach(function(payRollDetails) {
+            services.user.getEmployeeDetail(payRollDetails.unit_name, function (err, employeeDetail) {
+            if (err) {
+                req.log.error({
+                    error: err
+                }, "Error while getting available users by mobiles");
+                return res.json(utils.errors["500"]);
+            }
+            waterfallCallback(null,payRollDetail,employeeDetail);
+            });
+        });
+        },
+         function (payRollDetail,employeeDetail, waterfallCallback){
+             console.log(payRollDetail);
+            var myData = [];
+            payRollDetail.forEach(function(data1){
+            employeeDetail.forEach(function(data){
+                if(data1.ecode == data.ecode) {
+                    var a = {
+                        ecode: data.ecode,
+                        dob: data.Date_of_birth,
+                        doj: data.date_joining,
+                        gender: data.gender,
+                        f_m_name: data.father_name,
+                        relationship: '-',
+                        mobile_no: data.Mobile_No,
+                        email_id: data.Email_ID,
+                        nationality: data.nationality,
+                        qualification: data.Edq,
+                        marital_status: data.material_status,
+                        ifsc: data.ifsc,
+                        panNo: data.pan,
+                        aadhaarNo: data.aadhar_card,
+                        uan: data.uan,
+                        ename: data1.ename,
+                        etype: data1.etype,
+                        date: data1.date,
+                        present: data1.present,
+                        dutyoff: data1.dutyoff,
+                        add_duties: data1.add_duties,
+                        total_duties: data1.total_duties,
+                        basic: data1.basic,
+                        da: data1.da,
+                        hra: data1.hra,
+                        tr_exp: data1.trv_ex,
+                        others: data1.others,
+                        medical: data1.medical,
+                        others1: data1.others1,
+                        others2: data1.others2,
+                        others3: data1.others3,
+                        others4: data1.others4,
+                        waesi: data1.waesi,
+                        ewdays: data1.ewdays,
+                        ewamount: data1.ewamount,
+                        gross: data1.gross,
+                        advance: data1.advance,
+                        loan: data1.loan,
+                        uniform: data1.uniform,
+                        mess: data1.mess,
+                        rent: data1.rent,
+                        atm: data1.atm,
+                        phone: data1.phone,
+                        pf: data1.pf,
+                        esi: data1.esi,
+                        pr_tax: data1.pr_tax,
+                        staff_wellfare: data1.staff_wellfare,
+                        total_dec: data1.total_dec,
+                        net_pay: data1.net_pay,
+                        add_amount: data1.add_amount,
+                        isInternationalWorker: '-',
+                        countryOfOrigin: '-',
+                        passportNo: '-',
+                        passportValidFrom: '-',
+                        passportValidTo: '-',
+                        isPhysicalHandicap: '-',
+                        locomotive: '-',
+                        hearing: '-',
+                        visual: '-',
+                        nameAsPerBank: '-',
+                        nameAsPerPan: '-',
+                        nameAsPerAadhaar: '-',
+                        refund: '-'
+                    }
+                    myData.push(a);
+                 }
+            });
+        });
+             return res.json(_.merge({
+                 data: myData 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
 function bulkuploadformat(req, res, next) {
     console.log(req.body);
     async.waterfall([
@@ -8016,6 +8137,7 @@ exports.getwagesheet = getwagesheet;
 exports.getemployeevoucher = getemployeevoucher;
 exports.getproftaxform = getproftaxform;
 exports.getwageslip = getwageslip;
+exports.getpfecr = getpfecr;
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

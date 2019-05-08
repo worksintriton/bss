@@ -441,6 +441,32 @@
             }
         }
     },
+    "/reports/getpfecr": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "title"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property title"
+                    },
+                    "properties": {
+                        "title": "title must be string"
+                    }
+                }
+            }
+        }
+    },
         "/assigningemployee/assignlists": {
         "POST": {
             "body": {

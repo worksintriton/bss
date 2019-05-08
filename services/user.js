@@ -4947,9 +4947,42 @@ user.getwageslip1 = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
-
-
-
+user.getsiteDetails = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('select * FROM public."clientsite" WHERE "title"=($1)', [userInput.title])    
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getpayrolldetails = function (site_billing_name, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('select * FROM public."payroll_manual_entry" WHERE "unit_name"=($1)', [site_billing_name])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getEmployeeDetail = function (unit_name, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('select * FROM public."employeedetails" WHERE "site_name"=($1)', [unit_name])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 

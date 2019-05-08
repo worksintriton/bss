@@ -601,6 +601,9 @@ addRoute("/reports/getwagesheet", "GET", [middleware.getwagesheet]);
 addRoute("/reports/getemployeevoucher", "GET", [middleware.getemployeevoucher]);
 addRoute("/reports/getproftaxform", "GET", [middleware.getproftaxform]);
 addRoute("/reports/getwageslip", "POST", [middleware.getwageslip]);
+addRoute("/reports/getpfecr", "POST", [middleware.getpfecr]);
+
+
 
 // bulk upload
 addRoute("/bulkupload/bulkuploadformat", "POST", [middleware.bulkuploadformat]);
