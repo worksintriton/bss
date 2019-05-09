@@ -596,13 +596,13 @@ addRoute("/advance/fetchunit_number1", "POST", [middleware.fetchunit_number1]);
 
 
 addRoute("/reports/getemployeedetails", "GET", [middleware.getemployeedetails]);
-addRoute("/reports/getunitmaster", "GET", [middleware.getunitmaster]);
+addRoute("/reports/getunitmaster", "POST", [middleware.getunitmaster]);
 addRoute("/reports/getwagesheet", "GET", [middleware.getwagesheet]);
 addRoute("/reports/getemployeevoucher", "GET", [middleware.getemployeevoucher]);
 addRoute("/reports/getproftaxform", "GET", [middleware.getproftaxform]);
 addRoute("/reports/getwageslip", "POST", [middleware.getwageslip]);
 addRoute("/reports/getpfecr", "POST", [middleware.getpfecr]);
-
+addRoute("/reports/getDesignation", "POST", [middleware.getDesignation]);
 
 
 // bulk upload

@@ -7219,6 +7219,7 @@ function getemployeedetails(req, res, next) {
 
 }
 function getunitmaster(req, res, next) {
+    // console.log(req.body)
     async.waterfall([
          function (waterfallCallback){
              services.user.getunitmaster1(req.body, function (err, unit_entry) {
@@ -7231,45 +7232,52 @@ function getunitmaster(req, res, next) {
              waterfallCallback(null,unit_entry);
              });
          },
-         function (unit_entry, waterfallCallback){
-            services.user.getunitmaster2(req.body, function (err, unit_rate) {
+         function (unit_entry,waterfallCallback){
+            services.user.getunitmaster2(unit_entry[0].id, function (err, unit_rate) {
             if (err) {
                 req.log.error({
                     error: err
                 }, "Error while getting available users by mobiles");
                 return res.json(utils.errors["500"]);
             }
-            waterfallCallback(null,unit_entry, unit_rate);
+            waterfallCallback(null,unit_entry,unit_rate);
             });
         },
          function (unit_entry,unit_rate, waterfallCallback){
-            var data = [];
-            console.log(unit_entry.length,unit_rate.length);
-            for(var i = 0; i < unit_rate.length; i++){
-                for(var j = 0; j< unit_entry.length; j++){
-                 if(unit_entry[i].id == unit_rate[j].unit_id) {
-                    var a = {
-                        ccode: unit_entry[j].company,
-                        ucode: unit_entry[j].unit_code,
-                        unitname: unit_entry[j].unit_name,
-                        dcode: unit_rate[i].rank,
-                        basic: unit_rate[i].basic,
-                        da: unit_rate[i].da,
-                        hra: unit_rate[i].hra,
-                        trvexp: unit_rate[i].trv_exp,
-                        others: unit_rate[i].others,
-                        medical: unit_rate[i].medical,
-                        others1: unit_rate[i].others1,
-                        others2: unit_rate[i].others2,
-                        others3: unit_rate[i].others3,
-                        totalpay: unit_rate[i].total_pay,
-                    }
-                    data.push(a);
+             let mydata = [];
+            unit_entry.forEach(function(data1) {
+             unit_rate.forEach(function(data) {
+                 if (data1.id == data.unit_id) {
+                let a = {
+                    id: data.id,
+                    ucode: data1.unit_code,
+                    unit_name: data1.unit_name,
+                    rank: data.rank,
+                    basic: data.basic,
+                    da: data.da,
+                    hra: data.hra,
+                    trv_exp: data.trv_exp,
+                    others: data.others,
+                    medical: data.medical,
+                    others1: data.others1,
+                    others2: data.others2,
+                    others3: data.others3,
+                    others4: data.others4,
+                    total_pay: data.total_pay,
+                    pf: data.pf,
+                    esi: data.esi,
+                    dec: data.dec,
+                    total: data.total,
+                    unit_id: data.unit_id,
+                    ccode: '-',
+                    dcode: '-' 
                  }
+                 mydata.push(a);
                 }
-            }
+             });
+            });
              return res.json(_.merge({
-                 data: data
+                 data: mydata
              }, utils.errors["200"]));
          }
      ]);
@@ -7399,7 +7407,8 @@ function getpfecr(req, res, next) {
         });
         },
          function (payRollDetail,employeeDetail, waterfallCallback){
-             console.log(payRollDetail);
+            //  console.log(payRollDetail);
+             console.log(employeeDetail);
             var myData = [];
             payRollDetail.forEach(function(data1){
             employeeDetail.forEach(function(data){
@@ -7408,6 +7417,7 @@ function getpfecr(req, res, next) {
                         ecode: data.ecode,
                         dob: data.Date_of_birth,
                         doj: data.date_joining,
+                        dor: data.dor,
                         gender: data.gender,
                         f_m_name: data.father_name,
                         relationship: '-',
@@ -7420,6 +7430,11 @@ function getpfecr(req, res, next) {
                         panNo: data.pan,
                         aadhaarNo: data.aadhar_card,
                         uan: data.uan,
+                        pfNo: data.pf1,
+                        company_name: data.company_name,
+                        site_name: data.site_name,
+                        ccode: data.ccode,
+                        ucode: data.ucode,
                         ename: data1.ename,
                         etype: data1.etype,
                         date: data1.date,
@@ -7467,7 +7482,9 @@ function getpfecr(req, res, next) {
                         nameAsPerBank: '-',
                         nameAsPerPan: '-',
                         nameAsPerAadhaar: '-',
-                        refund: '-'
+                        refund: '-',
+                        contribution: '-',
+                        dcode: '-'
                     }
                     myData.push(a);
                  }
@@ -7475,6 +7492,28 @@ function getpfecr(req, res, next) {
         });
              return res.json(_.merge({
                  data: myData 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getDesignation(req, res, next) {
+
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getDesignations(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata
              }, utils.errors["200"]));
          }
      ]);
@@ -8138,6 +8177,7 @@ exports.getemployeevoucher = getemployeevoucher;
 exports.getproftaxform = getproftaxform;
 exports.getwageslip = getwageslip;
 exports.getpfecr = getpfecr;
+exports.getDesignation = getDesignation
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

@@ -4878,22 +4878,26 @@ user.getemployeedetails1 = function (userInput, resultCallback) {
 user.getunitmaster1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.payroll_manual_unit_entry' , [])
-                 .then(data => {
-              resultCallback(null,data);
-                 })
+    executor.any('select * FROM public."payroll_manual_unit_entry" where "unit_code"= ($1)   ', [userInput.unit_code])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
 };
-user.getunitmaster2 = function (userInput, resultCallback) {
+user.getunitmaster2 = function (id, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.payroll_manual_unit_rate' , [])   
-                 .then(data => {
-              resultCallback(null,data);
-                 })
+    executor.any('select * FROM public."payroll_manual_unit_rate" where "unit_id"= ($1)   ', [""+id])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
@@ -4983,7 +4987,20 @@ user.getEmployeeDetail = function (unit_name, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+user.getDesignations = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_entry" where "unit_name"=($1) ', [userInput.unit_name])
+        .then(data => {
 
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 
 user.bulkuploadformats = function (userInput,dob,doj,dor, resultCallback) {
