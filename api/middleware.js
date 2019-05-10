@@ -7326,6 +7326,7 @@ function getemployeevoucher(req, res, next) {
 
 }
 function getproftaxform(req, res, next) {
+    console.log(req.body);
     async.waterfall([
          function (waterfallCallback){
              services.user.getproftaxform1(req.body, function (err, result) {
@@ -7502,6 +7503,28 @@ function getDesignation(req, res, next) {
     async.waterfall([
          function (waterfallCallback){
              services.user.getDesignations(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getloanandoutstanding(req, res, next) {
+
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getloanandoutstandings(req.body, function (err, result) {
              if (err) {
                  req.log.error({
                      error: err
@@ -8177,7 +8200,8 @@ exports.getemployeevoucher = getemployeevoucher;
 exports.getproftaxform = getproftaxform;
 exports.getwageslip = getwageslip;
 exports.getpfecr = getpfecr;
-exports.getDesignation = getDesignation
+exports.getDesignation = getDesignation;
+exports.getloanandoutstanding = getloanandoutstanding;
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

@@ -4866,7 +4866,7 @@ user.getreportssssssall1 = function (userInput, resultCallback) {
 user.getemployeedetails1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.employeedetails' , [])
+               executor.any('SELECT * FROM public.employeedetails where "site_name"=($1)' , [userInput.title])
                  .then(data => {
               resultCallback(null,data);
                  })
@@ -4906,7 +4906,7 @@ user.getunitmaster2 = function (id, resultCallback) {
 user.getwagesheet1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.payroll_manual_entry' , [])   
+               executor.any('SELECT * FROM public.payroll_manual_entry where "unit_name"=($1)' , [userInput.title])   
                  .then(data => {
               resultCallback(null,data);
                  })
@@ -4930,7 +4930,7 @@ user.getemployeevoucher1 = function (userInput, resultCallback) {
 user.getproftaxform1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('SELECT ecode, ename ,SUM (total_duties) AS total_duties, SUM (gross) AS gross, SUM (pr_tax) AS pr_tax FROM  public."payroll_manual_entry"  GROUP BY "ecode" , "ename"  ', [])
+    executor.any('SELECT ecode, ename ,SUM (total_duties) AS total_duties, SUM (gross) AS gross, SUM (pr_tax) AS pr_tax FROM  public."payroll_manual_entry"  where "unit_name"=($1)  GROUP BY "ecode" , "ename" ', [userInput.title])
         .then(data => {
                  resultCallback(null,data );
         })
@@ -5001,7 +5001,20 @@ user.getDesignations = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+user.getloanandoutstandings = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_entry" where "unit_name"=($1) ', [userInput.title])
+        .then(data => {
 
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 user.bulkuploadformats = function (userInput,dob,doj,dor, resultCallback) {
   console.log(userInput,dob,doj);

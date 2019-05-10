@@ -298,26 +298,30 @@
     },
 
     "/reports/getemployeedetails": {
-        "GET": {
+        "POST": {
             "body": {
-                 "type": "object",
-                "properties": {
+                "type": "object",
+               "properties": {
+                   "title": {
+                       "type": "string"
+                   }
+               },
+       "additionalProperties": false,
+               "required": [
+                   "title"
                    
-                },
-        "additionalProperties": false,
-                "required": [
-                    
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                       
-                    },
-                    "properties": {
-                    }
-                }
-            }
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                       "title": "should have required property title"
+                      
+                   },
+                   "properties": {
+                       "title": "title must be string"
+                   }
+               }
+           }
         }
     },
     "/reports/getunitmaster": {
@@ -346,26 +350,28 @@
         }
     },
     "/reports/getwagesheet": {
-        "GET": {
+        "POST": {
             "body": {
-                 "type": "object",
-                "properties": {
-                   
-                },
-        "additionalProperties": false,
-                "required": [
-                    
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                       
-                    },
-                    "properties": {
-                    }
-                }
-            }
+                "type": "object",
+               "properties": {
+                   "title": {
+                       "type": "string"
+                   }
+               },
+       "additionalProperties": false,
+               "required": [
+                  "title"
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                       "title": "should have required property title"
+                   },
+                   "properties": {
+                       "title": "title must be string"
+                   }
+               }
+           }
         }
     },
 
@@ -393,26 +399,30 @@
         }
     },
     "/reports/getproftaxform": {
-        "GET": {
+        "POST": {
             "body": {
-                 "type": "object",
-                "properties": {
+                "type": "object",
+               "properties": {
+                   "title": {
+                       "type": "string"
+                   }
+               },
+       "additionalProperties": false,
+               "required": [
+                   "title"
                    
-                },
-        "additionalProperties": false,
-                "required": [
-                    
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                       
-                    },
-                    "properties": {
-                    }
-                }
-            }
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                       "title": "should have required property title"
+                      
+                   },
+                   "properties": {
+                       "title": "title must be string"
+                   }
+               }
+           }
         }
     },
     "/reports/getwageslip": {
@@ -488,6 +498,31 @@
                     },
                     "properties": {
                         "unit_name": "unit_name must be string"
+                    }
+                }
+            }
+        }
+    },
+    "/reports/getloanandoutstanding": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                   "title"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property title"
+                    },
+                    "properties": {
+                        "title": "title must be string"
                     }
                 }
             }
