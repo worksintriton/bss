@@ -3400,13 +3400,19 @@ function advcancebulk(req, res, next) {
                 var date = dateFormat(futureMonth, "yyyy-mm-dd");
                 var amount = belement.Amount / belement.Installment;
                 console.log(date,amount)
-                services.user.advanceaddss(belement,date,amount, function (err, result) {
-                if (err) {
-                   console.log(err)
-                }
-                });
+                // services.user.advanceaddss(belement,date,amount, function (err, result) {
+                // if (err) {
+                //    console.log(err)
+                // }
+                // waterfallCallback(null,result);
+                // });
                 }
                  });               
+            },
+            function (mydata, waterfallCallback){
+                return res.json(_.merge({
+                    // data: mydata
+                }, utils.errors["200"]));
             }
         ]);
 }
@@ -7532,7 +7538,6 @@ function getpfecr(req, res, next) {
 
 }
 function getDesignation(req, res, next) {
-
     async.waterfall([
          function (waterfallCallback){
              services.user.getDesignations(req.body, function (err, result) {
