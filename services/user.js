@@ -4918,7 +4918,19 @@ user.getwagesheet1 = function (userInput, resultCallback) {
 user.getemployeevoucher1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.advance' , [])   
+               executor.any('SELECT * FROM public.advance where "site"=($1)' , [userInput.title])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getemployeevoucher2 = function (employee_id, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.employeedetails where "ecode"=($1)' , [employee_id]) 
                  .then(data => {
               resultCallback(null,data);
                  })

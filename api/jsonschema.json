@@ -376,26 +376,30 @@
     },
 
     "/reports/getemployeevoucher": {
-        "GET": {
+        "POST": {
             "body": {
-                 "type": "object",
-                "properties": {
+                "type": "object",
+               "properties": {
+                   "title": {
+                       "type": "string"
+                   }
+               },
+       "additionalProperties": false,
+               "required": [
+                   "title"
                    
-                },
-        "additionalProperties": false,
-                "required": [
-                    
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                       
-                    },
-                    "properties": {
-                    }
-                }
-            }
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                       "title": "should have required property title"
+                      
+                   },
+                   "properties": {
+                       "title": "title must be string"
+                   }
+               }
+           }
         }
     },
     "/reports/getproftaxform": {

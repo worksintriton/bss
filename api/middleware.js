@@ -7307,17 +7307,50 @@ function getwagesheet(req, res, next) {
 function getemployeevoucher(req, res, next) {
     async.waterfall([
          function (waterfallCallback){
-             services.user.getemployeevoucher1(req.body, function (err, result) {
+             services.user.getemployeevoucher1(req.body, function (err, advanceDetails) {
              if (err) {
                  req.log.error({
                      error: err
                  }, "Error while getting available users by mobiles");
                  return res.json(utils.errors["500"]);
              }
-             waterfallCallback(null,result);
+             waterfallCallback(null,advanceDetails);
              });
          },
-         function (mydata, waterfallCallback){
+         function (advanceDetails,waterfallCallback){
+                for (var i = 0; i < advanceDetails.length; i++) {
+                    services.user.getemployeevoucher2(advanceDetails[i].employee_id, function (err, employeeDetail) {
+                        if (err) {
+                            req.log.error({
+                                error: err
+                            }, "Error while getting available users by mobiles");
+                            return res.json(utils.errors["500"]);
+                        }
+                        waterfallCallback(null,advanceDetails,employeeDetail);
+                        });
+                }
+        },
+         function (advanceDetails,employeeDetail, waterfallCallback){
+             let mydata = [];
+                for (var j = 0; j < advanceDetails.length; j++) {
+                    for (var k = 0; k < employeeDetail.length; k++) {
+                        if (advanceDetails[j].employee_id == employeeDetail[k].ecode) {
+                            let a = {
+                                ecode: advanceDetails[j].employee_id,
+                                ename: advanceDetails[j].employee_name,
+                                Deductiontype: advanceDetails[j].advance_type,
+                                vtype: advanceDetails[j].dpaytype,
+                                vno: 'V' + advanceDetails[j].id,
+                                date: advanceDetails[j].ddate,
+                                Totalamount: advanceDetails[j].pamount,
+                                inst: advanceDetails[j].pinstalment,
+                                acno: employeeDetail[k].a_c,
+                                ifsc: employeeDetail[k].ifsc
+                            }
+                            mydata.push(a);
+                        }
+                    }
+                }
              return res.json(_.merge({
                  data: mydata 
              }, utils.errors["200"]));
