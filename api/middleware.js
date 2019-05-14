@@ -1706,6 +1706,27 @@ function fetchemployees(req, res, next) {
         ]);
 }
 
+function deleteEmployeeTracking(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.point_tracking.deleteEmployeeTrackings(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
+}
+
 function fetchTrackinglist(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
@@ -3345,50 +3366,82 @@ function uploadingfile(req, res, next) {
 }
 
 
-
 function advcancebulk(req, res, next) {
-       async.waterfall([
-            function (waterfallCallback){
-                  if (Object.keys(req.files).length == 0) {
-                    return res.status(400).send('No files were uploaded.');
-                  }
-                  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-                  let sampleFile = req.files.filetoupload;
-                  // Use the mv() method to place the file somewhere on your server
-                  var time_details = moment().format('YYYYMMDDHHmmss');
-                  var path = 'www/pics/'+time_details+"_"+sampleFile.name; 
-                  sampleFile.mv(path, function(err) {
-                    if (err)
-                      return res.status(500).send(err);
-                    var result = {
-                        path: path,
-                        uploadstatus: true
-                    }
-                    waterfallCallback(null,result);
-                  });
-            },
-            function (mydata, waterfallCallback){
-                var XLSX = require('xlsx');
-                var workbook = XLSX.readFile(mydata.path);
-                var sheet_name_list = workbook.SheetNames;
-                var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-                let site_info = [];
-                lists.forEach(function(belement) {
-                for(var i = 1; i <= belement.Installment; i++){
-                var futureMonth = moment(belement.Date).add( i , 'months').calendar();
-                var date = dateFormat(futureMonth, "yyyy-mm-dd");
+    async.waterfall([
+         function (waterfallCallback){
+               if (Object.keys(req.files).length == 0) {
+                 return res.status(400).send('No files were uploaded.');
+               }
+               // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+               let sampleFile = req.files.filetoupload;
+               // Use the mv() method to place the file somewhere on your server
+               var time_details = moment().format('YYYYMMDDHHmmss');
+               var path = 'www/pics/'+time_details+"_"+sampleFile.name; 
+               sampleFile.mv(path, function(err) {
+                 if (err)
+                   return res.status(500).send(err);
+                 var result = {
+                     path: path,
+                     uploadstatus: true
+                 }
+                 waterfallCallback(null,result);
+               });
+         },
+         function (mydata, waterfallCallback){
+             var XLSX = require('xlsx');
+             var workbook = XLSX.readFile(mydata.path);
+             var sheet_name_list = workbook.SheetNames;
+             var lists = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+             let site_info = [];
+             lists.forEach(function(belement) {
+                 var j = 0 ;
+                 var month = 0 ;
+             for(var i = 1; i <= belement.Installment; i++){
+                var exdate = +belement.Date; // represents Jan 1, 1993
+                var e0date = new Date(0); // epoch "zero" date
+                var offset = e0date.getTimezoneOffset(); // tz offset in min
+                var jsdate1 = new Date(0, 0, exdate-1, 0, -offset, 0) 
+                console.log(jsdate1);
+                var date1 = dateFormat(jsdate1, "yyyy");
+                var date2 = dateFormat(jsdate1, "mm");
+                var date3 = dateFormat(jsdate1, "dd");
+                var datess = +date2 + j ;
+                console.log(datess)
+                if(datess > 12){
+                    console.log("in");
+                    var year = +date1 + 1;
+                    var month = month  + 1 ;
+                    var date = date3;
+                    var date1 = year;
+                    var date2 = month;
+                    var date3 = date;
+                    var datesss  = date1+"-"+date2+"-"+date3;
+                    j ++;
+                console.log(datesss)
                 var amount = belement.Amount / belement.Installment;
-                console.log(date,amount)
-                services.user.advanceaddss(belement,date,amount, function (err, result) {
+                console.log(datesss,amount)
+                services.user.advanceaddss(belement,datesss,amount, function (err, result) {
                 if (err) {
                    console.log(err)
                 }
                 });
+                }else{
+                    var datesss  = date1+"-"+datess+"-"+date3;
+                    j ++;
+                console.log(datesss)
+                var amount = belement.Amount / belement.Installment;
+                console.log(datesss,amount)
+                services.user.advanceaddss(belement,datesss,amount, function (err, result) {
+                if (err) {
+                   console.log(err)
                 }
+ 
                 });               
             }
-        ]);
-}
+        }
+    }
+
+               
 
 
 
@@ -3565,7 +3618,36 @@ function fetchcompanysite(req, res, next) {
         ]);
 
 }
+function fetchcompanysites(req, res, next) {
 
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.fetchcompanysitess(req.body, function (err, siteList) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,siteList);
+             });
+         },
+         function (siteList, waterfallCallback){
+            let data = [];
+             siteList.forEach(function(detail){
+                let a = {
+                    'id': detail.id,
+                    'title': detail.title
+                 }
+                 data.push(a)
+             });
+             return res.json(_.merge({
+                 data: data
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
 
 
 
@@ -7179,17 +7261,23 @@ function getreportssssssall(req, res, next) {
 function getemployeedetails(req, res, next) {
     async.waterfall([
          function (waterfallCallback){
-             services.user.getemployeedetails1(req.body, function (err, result) {
-             if (err) {
-                 req.log.error({
-                     error: err
-                 }, "Error while getting available users by mobiles");
-                 return res.json(utils.errors["500"]);
-             }
-             waterfallCallback(null,result);
-             });
+             var detailss = [];
+            req.body.title.forEach(function(detail){
+                services.user.getemployeedetails1(detail.title, function (err, result) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    detailss.push(result)
+                    if ( req.body.title.length == detailss.length) {
+                     waterfallCallback(null,detailss);
+                    }
+                }
+                });
+            });
+          
          },
          function (mydata, waterfallCallback){
+            console.log(mydata)
              return res.json(_.merge({
                  data: mydata 
              }, utils.errors["200"]));
@@ -7198,57 +7286,74 @@ function getemployeedetails(req, res, next) {
 
 }
 function getunitmaster(req, res, next) {
+    console.log(req.body.unit_code)
     async.waterfall([
          function (waterfallCallback){
-             services.user.getunitmaster1(req.body, function (err, unit_entry) {
+            var detailss = [];
+            req.body.unit_code.forEach(function(element){
+             services.user.getunitmaster1(element.title, function (err, unit_entry) {
              if (err) {
                  req.log.error({
                      error: err
                  }, "Error while getting available users by mobiles");
                  return res.json(utils.errors["500"]);
-             }
-             waterfallCallback(null,unit_entry);
+             }  else {
+                detailss.push(result)
+                if ( req.body.title.length == detailss.length) {
+                 waterfallCallback(null,detailss);
+                }
+            }
+             console.log(unit_entry)
+            //  waterfallCallback(null,unit_entry);
              });
+            })
          },
-         function (unit_entry, waterfallCallback){
-            services.user.getunitmaster2(req.body, function (err, unit_rate) {
+         function (unit_entry,waterfallCallback){
+            services.user.getunitmaster2(unit_entry[0].id, function (err, unit_rate) {
             if (err) {
                 req.log.error({
                     error: err
                 }, "Error while getting available users by mobiles");
                 return res.json(utils.errors["500"]);
             }
-            waterfallCallback(null,unit_entry, unit_rate);
+            waterfallCallback(null,unit_entry,unit_rate);
             });
         },
          function (unit_entry,unit_rate, waterfallCallback){
-            var data = [];
-            console.log(unit_entry.length,unit_rate.length);
-            for(var i = 0; i < unit_rate.length; i++){
-                for(var j = 0; j< unit_entry.length; j++){
-                 if(unit_entry[i].id == unit_rate[j].unit_id) {
-                    var a = {
-                        ccode: unit_entry[j].company,
-                        ucode: unit_entry[j].unit_code,
-                        unitname: unit_entry[j].unit_name,
-                        dcode: unit_rate[i].rank,
-                        basic: unit_rate[i].basic,
-                        da: unit_rate[i].da,
-                        hra: unit_rate[i].hra,
-                        trvexp: unit_rate[i].trv_exp,
-                        others: unit_rate[i].others,
-                        medical: unit_rate[i].medical,
-                        others1: unit_rate[i].others1,
-                        others2: unit_rate[i].others2,
-                        others3: unit_rate[i].others3,
-                        totalpay: unit_rate[i].total_pay,
-                    }
-                    data.push(a);
+             let mydata = [];
+            unit_entry.forEach(function(data1) {
+             unit_rate.forEach(function(data) {
+                 if (data1.id == data.unit_id) {
+                let a = {
+                    id: data.id,
+                    ucode: data1.unit_code,
+                    unit_name: data1.unit_name,
+                    rank: data.rank,
+                    basic: data.basic,
+                    da: data.da,
+                    hra: data.hra,
+                    trv_exp: data.trv_exp,
+                    others: data.others,
+                    medical: data.medical,
+                    others1: data.others1,
+                    others2: data.others2,
+                    others3: data.others3,
+                    others4: data.others4,
+                    total_pay: data.total_pay,
+                    pf: data.pf,
+                    esi: data.esi,
+                    dec: data.dec,
+                    total: data.total,
+                    unit_id: data.unit_id,
+                    ccode: '-',
+                    dcode: '-' 
                  }
+                 mydata.push(a);
                 }
-            }
+             });
+            });
              return res.json(_.merge({
-                 data: data
+                 data: mydata
              }, utils.errors["200"]));
          }
      ]);
@@ -7296,7 +7401,74 @@ function getemployeevoucher(req, res, next) {
      ]);
 
 }
+function getemployeevoucherss(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             var detailss = [];
+            req.body.title.forEach(function(element){
+             services.user.getemployeevoucher11(element.title, function (err, advanceDetails) {
+             if (err) {
+                 console.log(err)
+                //  req.log.error({
+                //      error: err
+                //  }, "Error while getting available users by mobiles");
+                //  return res.json(utils.errors["500"]);
+             } else {
+                detailss.push(advanceDetails)
+                if ( req.body.title.length == detailss.length) {
+                    console.log(detailss)
+                //  waterfallCallback(null,detailss);
+                }
+            }
+             });
+            });
+         },
+         function (advanceDetails,waterfallCallback){
+                for (var i = 0; i < advanceDetails.length; i++) {
+                    services.user.getemployeevoucher2(advanceDetails[i].employee_id, function (err, employeeDetail) {
+                        if (err) {
+                            console.log(err)
+                            // req.log.error({
+                            //     error: err
+                            // }, "Error while getting available users by mobiles");
+                            // return res.json(utils.errors["500"]);
+                        }
+                        if (advanceDetails.length == employeeDetail.length){
+                            waterfallCallback(null,advanceDetails,employeeDetail);
+                        }
+                        });
+                }
+        },
+         function (advanceDetails,employeeDetail, waterfallCallback){
+             let mydata = [];
+                for (var j = 0; j < advanceDetails.length; j++) {
+                    for (var k = 0; k < employeeDetail.length; k++) {
+                        if (advanceDetails[j].employee_id == employeeDetail[k].ecode) {
+                            let a = {
+                                ecode: advanceDetails[j].employee_id,
+                                ename: advanceDetails[j].employee_name,
+                                Deductiontype: advanceDetails[j].advance_type,
+                                vtype: advanceDetails[j].dpaytype,
+                                vno: 'V' + advanceDetails[j].id,
+                                date: advanceDetails[j].ddate,
+                                Totalamount: advanceDetails[j].pamount,
+                                inst: advanceDetails[j].pinstalment,
+                                acno: employeeDetail[k].a_c,
+                                ifsc: employeeDetail[k].ifsc
+                            }
+                            mydata.push(a);
+                        }
+                    }
+                }
+             return res.json(_.merge({
+                 data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
 function getproftaxform(req, res, next) {
+    console.log(req.body);
     async.waterfall([
          function (waterfallCallback){
              services.user.getproftaxform1(req.body, function (err, result) {
@@ -7333,6 +7505,188 @@ function getwageslip(req, res, next) {
          function (mydata, waterfallCallback){
              return res.json(_.merge({
                  data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getpfecr(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getsiteDetails(req.body, function (err, siteDetails) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,siteDetails);
+             });
+         },
+         function (siteDetails, waterfallCallback){
+            siteDetails.forEach(function(siteDetail) {
+            services.user.getpayrolldetails(siteDetail.site_billing_name, function (err, payRollDetail) {
+            if (err) {
+                req.log.error({
+                    error: err
+                }, "Error while getting available users by mobiles");
+                return res.json(utils.errors["500"]);
+            }
+            waterfallCallback(null,payRollDetail);
+            });
+        });
+        },
+        function (payRollDetail, waterfallCallback){
+            payRollDetail.forEach(function(payRollDetails) {
+            services.user.getEmployeeDetail(payRollDetails.unit_name, function (err, employeeDetail) {
+            if (err) {
+                req.log.error({
+                    error: err
+                }, "Error while getting available users by mobiles");
+                return res.json(utils.errors["500"]);
+            }
+            waterfallCallback(null,payRollDetail,employeeDetail);
+            });
+        });
+        },
+         function (payRollDetail,employeeDetail, waterfallCallback){
+            //  console.log(payRollDetail);
+             console.log(employeeDetail);
+            var myData = [];
+            payRollDetail.forEach(function(data1){
+            employeeDetail.forEach(function(data){
+                if(data1.ecode == data.ecode) {
+                    var a = {
+                        ecode: data.ecode,
+                        dob: data.Date_of_birth,
+                        doj: data.date_joining,
+                        dor: data.dor,
+                        gender: data.gender,
+                        f_m_name: data.father_name,
+                        relationship: '-',
+                        mobile_no: data.Mobile_No,
+                        email_id: data.Email_ID,
+                        nationality: data.nationality,
+                        qualification: data.Edq,
+                        marital_status: data.material_status,
+                        ifsc: data.ifsc,
+                        panNo: data.pan,
+                        aadhaarNo: data.aadhar_card,
+                        uan: data.uan,
+                        pfNo: data.pf1,
+                        company_name: data.company_name,
+                        site_name: data.site_name,
+                        ccode: data.ccode,
+                        ucode: data.ucode,
+                        ename: data1.ename,
+                        etype: data1.etype,
+                        date: data1.date,
+                        present: data1.present,
+                        dutyoff: data1.dutyoff,
+                        add_duties: data1.add_duties,
+                        total_duties: data1.total_duties,
+                        basic: data1.basic,
+                        da: data1.da,
+                        hra: data1.hra,
+                        tr_exp: data1.trv_ex,
+                        others: data1.others,
+                        medical: data1.medical,
+                        others1: data1.others1,
+                        others2: data1.others2,
+                        others3: data1.others3,
+                        others4: data1.others4,
+                        waesi: data1.waesi,
+                        ewdays: data1.ewdays,
+                        ewamount: data1.ewamount,
+                        gross: data1.gross,
+                        advance: data1.advance,
+                        loan: data1.loan,
+                        uniform: data1.uniform,
+                        mess: data1.mess,
+                        rent: data1.rent,
+                        atm: data1.atm,
+                        phone: data1.phone,
+                        pf: data1.pf,
+                        esi: data1.esi,
+                        pr_tax: data1.pr_tax,
+                        staff_wellfare: data1.staff_wellfare,
+                        total_dec: data1.total_dec,
+                        net_pay: data1.net_pay,
+                        add_amount: data1.add_amount,
+                        isInternationalWorker: '-',
+                        countryOfOrigin: '-',
+                        passportNo: '-',
+                        passportValidFrom: '-',
+                        passportValidTo: '-',
+                        isPhysicalHandicap: '-',
+                        locomotive: '-',
+                        hearing: '-',
+                        visual: '-',
+                        nameAsPerBank: '-',
+                        nameAsPerPan: '-',
+                        nameAsPerAadhaar: '-',
+                        refund: '-',
+                        contribution: '-',
+                        dcode: '-'
+                    }
+                    myData.push(a);
+                 }
+            });
+        });
+             return res.json(_.merge({
+                 data: myData 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getDesignation(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             var detailss = [];
+            req.body.unit_name.forEach(function(detail){
+                services.user.getDesignations(detail.title, function (err, result) {
+                    if (err) {
+                        console.log(err)
+                        // req.log.error({
+                        //     error: err
+                        // }, "Error while getting available users by mobiles");
+                        // return res.json(utils.errors["500"]);
+                    }
+                    console.log(result)
+                        detailss.push(result)
+                    });
+            })
+            if (req.body.unit_name.length == result.length){
+                console.log(result);
+                waterfallCallback(null,result);
+            }
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getloanandoutstanding(req, res, next) {
+
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.getloanandoutstandings(req.body, function (err, result) {
+             if (err) {
+                 req.log.error({
+                     error: err
+                 }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata
              }, utils.errors["200"]));
          }
      ]);
@@ -7893,7 +8247,7 @@ exports.fetchemployees = fetchemployees;
 exports.fetchTrackinglist = fetchTrackinglist;
 exports.fetchtrackdate = fetchtrackdate;
 exports.fetchtracksingledate = fetchtracksingledate;
-
+exports.deleteEmployeeTracking = deleteEmployeeTracking;
 
 /*Quality table check process*/
 exports.addqualitytable = addqualitytable;
@@ -7940,6 +8294,7 @@ exports.companylists = companylists;
 exports.updatecompany = updatecompany;
 exports.fetchcompany = fetchcompany;
 exports. fetchcompanysite = fetchcompanysite;
+exports. fetchcompanysites = fetchcompanysites;
 exports.deletecompany = deletecompany;
 
 /*payroll*/
@@ -7995,6 +8350,9 @@ exports.getwagesheet = getwagesheet;
 exports.getemployeevoucher = getemployeevoucher;
 exports.getproftaxform = getproftaxform;
 exports.getwageslip = getwageslip;
+exports.getpfecr = getpfecr;
+exports.getDesignation = getDesignation;
+exports.getloanandoutstanding = getloanandoutstanding;
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

@@ -395,6 +395,16 @@ point_tracking.fetchemployeess = function (userInput, resultCallback) {
                 })
 };
 
+point_tracking.deleteEmployeeTrackings = function (userInput, resultCallback) {
+   var executor = db.getdaata.getdb();
+   executor.any('DELETE FROM public.employeedetails WHERE "id"=($1)',[userInput.id])
+                  .then(data => {
+                     resultCallback(null,data);
+                  })
+                  .catch(error => {
+                     resultCallback(null,error );
+                 })
+ };
 
 point_tracking.fetchTrackinglists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();

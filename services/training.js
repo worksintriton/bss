@@ -144,7 +144,6 @@ training.fetchtracksingledates = function (userInput, resultCallback) {
 
 
 
-
 training.Trackingsupdate = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   executor.one('update public.employee_track set "Lat"= ($2),"Long"= ($3),"updated_at"= ($4),"Name"= ($5) where  "Employee_id" = ($1) RETURNING *',

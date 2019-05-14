@@ -298,120 +298,133 @@
     },
 
     "/reports/getemployeedetails": {
-        "GET": {
+        "POST": {
             "body": {
-                 "type": "object",
-                "properties": {
+                "type": "object",
+               "properties": {
+                   "title": {
+                       "type": "array"
+                   }
+               },
+       "additionalProperties": false,
+               "required": [
+                   "title"
                    
-                },
-        "additionalProperties": false,
-                "required": [
-                    
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                       
-                    },
-                    "properties": {
-                    }
-                }
-            }
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                       "title": "should have required property title"
+                      
+                   },
+                   "properties": {
+                       "title": "title must be string"
+                   }
+               }
+           }
         }
     },
-
     "/reports/getunitmaster": {
         "GET": {
             "body": {
                  "type": "object",
                 "properties": {
-                   
+                    "unit_code": {
+                        "type": "array"
+                    }
                 },
         "additionalProperties": false,
                 "required": [
-                    
-                    
+                   "unit_code"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                       
+                        "unit_code": "should have required property unit_code"
                     },
                     "properties": {
+                        "unit_code": "unit_code must be string"
                     }
                 }
             }
         }
     },
     "/reports/getwagesheet": {
-        "GET": {
+        "POST": {
             "body": {
-                 "type": "object",
-                "properties": {
-                   
-                },
-        "additionalProperties": false,
-                "required": [
-                    
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                       
-                    },
-                    "properties": {
-                    }
-                }
-            }
+                "type": "object",
+               "properties": {
+                   "title": {
+                       "type": "string"
+                   }
+               },
+       "additionalProperties": false,
+               "required": [
+                  "title"
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                       "title": "should have required property title"
+                   },
+                   "properties": {
+                       "title": "title must be string"
+                   }
+               }
+           }
         }
     },
 
     "/reports/getemployeevoucher": {
         "GET": {
             "body": {
-                 "type": "object",
-                "properties": {
+                "type": "object",
+               "properties": {
                    
-                },
-        "additionalProperties": false,
-                "required": [
-                    
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                       
-                    },
-                    "properties": {
-                    }
-                }
-            }
+               },
+       "additionalProperties": false,
+               "required": [
+                  
+                   
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                      
+                      
+                   },
+                   "properties": {
+                      
+                   }
+               }
+           }
         }
     },
     "/reports/getproftaxform": {
-        "GET": {
+        "POST": {
             "body": {
-                 "type": "object",
-                "properties": {
+                "type": "object",
+               "properties": {
+                   "title": {
+                       "type": "string"
+                   }
+               },
+       "additionalProperties": false,
+               "required": [
+                   "title"
                    
-                },
-        "additionalProperties": false,
-                "required": [
-                    
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                       
-                    },
-                    "properties": {
-                    }
-                }
-            }
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                       "title": "should have required property title"
+                      
+                   },
+                   "properties": {
+                       "title": "title must be string"
+                   }
+               }
+           }
         }
     },
     "/reports/getwageslip": {
@@ -436,6 +449,82 @@
                     },
                     "properties": {
                         "id": "id must be string"
+                    }
+                }
+            }
+        }
+    },
+    "/reports/getpfecr": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "title"
+                    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property title"
+                    },
+                    "properties": {
+                        "title": "title must be string"
+                    }
+                }
+            }
+        }
+    },
+    "/reports/getDesignation": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "unit_name": {
+                        "type": "array"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                   "unit_name"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "unit_name": "should have required property unit_name"
+                    },
+                    "properties": {
+                        "unit_name": "unit_name must be string"
+                    }
+                }
+            }
+        }
+    },
+    "/reports/getloanandoutstanding": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                   "title"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "title": "should have required property title"
+                    },
+                    "properties": {
+                        "title": "title must be string"
                     }
                 }
             }
@@ -1971,7 +2060,31 @@
             }
         }
     },
-
+    "/employee_tracking/deleteEmployeeTracking": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "id"    
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "id": "should have required property id"
+                    },
+                    "properties": {
+                        "id": "id must be number"
+                    }
+                }
+            }
+        }
+    },
 
     "/authentication/Trackinglist": {
         "POST": {
@@ -9869,6 +9982,31 @@
         }
     },
 
+    "/company/fetchcompanysites": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "company_name": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "company_name"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "company_name": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
 
 
 

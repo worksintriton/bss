@@ -372,7 +372,7 @@ addRoute("/client/fetchsite", "POST", [middleware.fetchsite]);
 
 /*bss,bsspl*/
 addRoute("/company/fetchcompanysite", "POST", [middleware.fetchcompanysite]);
-
+addRoute("/company/fetchcompanysites", "POST", [middleware.fetchcompanysites]);
 
 
 
@@ -401,6 +401,7 @@ addRoute("/employee_tracking/fetchemployees", "GET", [middleware.fetchemployees]
 addRoute("/employee_tracking/fetchTrackinglist", "POST", [middleware.fetchTrackinglist]);
 addRoute("/employee_tracking/fetchtrackdate", "POST", [middleware.fetchtrackdate]);
 addRoute("/employee_tracking/fetchtracksingledate", "POST", [middleware.fetchtracksingledate]);
+addRoute("/employee_tracking/deleteEmployeeTracking", "POST", [middleware.deleteEmployeeTracking]);
 
 
 
@@ -594,12 +595,15 @@ addRoute("/reports/getreportssssssall", "GET", [middleware.getreportssssssall]);
 addRoute("/advance/fetchunit_number1", "POST", [middleware.fetchunit_number1]);
 
 
-addRoute("/reports/getemployeedetails", "GET", [middleware.getemployeedetails]);
-addRoute("/reports/getunitmaster", "GET", [middleware.getunitmaster]);
-addRoute("/reports/getwagesheet", "GET", [middleware.getwagesheet]);
+addRoute("/reports/getemployeedetails", "POST", [middleware.getemployeedetails]);
+addRoute("/reports/getunitmaster", "POST", [middleware.getunitmaster]);
+addRoute("/reports/getwagesheet", "POST", [middleware.getwagesheet]);
 addRoute("/reports/getemployeevoucher", "GET", [middleware.getemployeevoucher]);
-addRoute("/reports/getproftaxform", "GET", [middleware.getproftaxform]);
+addRoute("/reports/getproftaxform", "POST", [middleware.getproftaxform]);
 addRoute("/reports/getwageslip", "POST", [middleware.getwageslip]);
+addRoute("/reports/getpfecr", "POST", [middleware.getpfecr]);
+addRoute("/reports/getDesignation", "POST", [middleware.getDesignation]);
+addRoute("/reports/getloanandoutstanding", "POST", [middleware.getloanandoutstanding]);
 
 // bulk upload
 addRoute("/bulkupload/bulkuploadformat", "POST", [middleware.bulkuploadformat]);
