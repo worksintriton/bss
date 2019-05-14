@@ -4939,7 +4939,7 @@ user.getwagesheet1 = function (userInput, resultCallback) {
 user.getemployeevoucher1 = function (title, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.advance where "site"=($1)' , [title])   
+               executor.any('SELECT * FROM public.advance ORDER BY "employee_id"' , [])   
                  .then(data => {
                   if ( data.length == 0) {
                     var a = {}

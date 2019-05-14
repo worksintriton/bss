@@ -598,7 +598,7 @@ addRoute("/advance/fetchunit_number1", "POST", [middleware.fetchunit_number1]);
 addRoute("/reports/getemployeedetails", "POST", [middleware.getemployeedetails]);
 addRoute("/reports/getunitmaster", "POST", [middleware.getunitmaster]);
 addRoute("/reports/getwagesheet", "POST", [middleware.getwagesheet]);
-addRoute("/reports/getemployeevoucher", "POST", [middleware.getemployeevoucher]);
+addRoute("/reports/getemployeevoucher", "GET", [middleware.getemployeevoucher]);
 addRoute("/reports/getproftaxform", "POST", [middleware.getproftaxform]);
 addRoute("/reports/getwageslip", "POST", [middleware.getwageslip]);
 addRoute("/reports/getpfecr", "POST", [middleware.getpfecr]);

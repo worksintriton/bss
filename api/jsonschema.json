@@ -325,7 +325,7 @@
         }
     },
     "/reports/getunitmaster": {
-        "POST": {
+        "GET": {
             "body": {
                  "type": "object",
                 "properties": {
@@ -376,27 +376,25 @@
     },
 
     "/reports/getemployeevoucher": {
-        "POST": {
+        "GET": {
             "body": {
                 "type": "object",
                "properties": {
-                   "title": {
-                       "type": "array"
-                   }
+                   
                },
        "additionalProperties": false,
                "required": [
-                   "title"
+                  
                    
                ],
                "errorMessage": {
                    "additionalProperties": "should not have additional properties",
                    "required": {
-                       "title": "should have required property title"
+                      
                       
                    },
                    "properties": {
-                       "title": "title must be string"
+                      
                    }
                }
            }
