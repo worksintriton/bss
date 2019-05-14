@@ -372,7 +372,7 @@ addRoute("/client/fetchsite", "POST", [middleware.fetchsite]);
 
 /*bss,bsspl*/
 addRoute("/company/fetchcompanysite", "POST", [middleware.fetchcompanysite]);
-
+addRoute("/company/fetchcompanysites", "POST", [middleware.fetchcompanysites]);
 
 
 

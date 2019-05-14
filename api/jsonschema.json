@@ -303,7 +303,7 @@
                 "type": "object",
                "properties": {
                    "title": {
-                       "type": "string"
+                       "type": "array"
                    }
                },
        "additionalProperties": false,
@@ -330,7 +330,7 @@
                  "type": "object",
                 "properties": {
                     "unit_code": {
-                        "type": "string"
+                        "type": "array"
                     }
                 },
         "additionalProperties": false,
@@ -381,7 +381,7 @@
                 "type": "object",
                "properties": {
                    "title": {
-                       "type": "string"
+                       "type": "array"
                    }
                },
        "additionalProperties": false,
@@ -488,7 +488,7 @@
                  "type": "object",
                 "properties": {
                     "unit_name": {
-                        "type": "string"
+                        "type": "array"
                     }
                 },
         "additionalProperties": false,
@@ -9984,6 +9984,31 @@
         }
     },
 
+    "/company/fetchcompanysites": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "company_name": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "company_name"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "company_name": "should have required property LoginKey"
+                    },
+                    "properties": {
+                        "company_name": "userId must be number"
+                    }
+                }
+            }
+        }
+    },
 
 
 

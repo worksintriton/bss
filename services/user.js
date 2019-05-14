@@ -1662,7 +1662,20 @@ user.fetchcompanysites = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+user.fetchcompanysitess = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."clientsite" WHERE "company_name"=($1) ORDER BY "title" ASC', [userInput.company_name])
+        .then(data => {
 
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
 /////contract/////
 
@@ -4863,26 +4876,34 @@ user.getreportssssssall1 = function (userInput, resultCallback) {
         })
 };
 
-user.getemployeedetails1 = function (userInput, resultCallback) {
+user.getemployeedetails1 = function (title, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.employeedetails where "site_name"=($1)' , [userInput.title])
+               executor.any('SELECT * FROM public.employeedetails where "site_name"=($1)' , [title])
                  .then(data => {
-              resultCallback(null,data);
+                   if ( data.length == 0) {
+                     var a = {}
+                    resultCallback(null,a);
+                   } else {
+                    resultCallback(null,data);
+                   }
                  })
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
 };
-user.getunitmaster1 = function (userInput, resultCallback) {
+user.getunitmaster1 = function (title, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_unit_entry" where "unit_code"= ($1)   ', [userInput.unit_code])
+    executor.any('select * FROM public."payroll_manual_unit_entry" where "unit_code"= ($1)   ', [title])
         .then(data => {
-
-                 resultCallback(null,data );
-            
+          if ( data.length == 0) {
+            var a = {}
+           resultCallback(null,a);
+          } else {
+           resultCallback(null,data);
+          }
         })
         .catch(error => {
             resultCallback(error,null );
@@ -4915,12 +4936,17 @@ user.getwagesheet1 = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
-user.getemployeevoucher1 = function (userInput, resultCallback) {
+user.getemployeevoucher1 = function (title, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.advance where "site"=($1)' , [userInput.title])   
+               executor.any('SELECT * FROM public.advance where "site"=($1)' , [title])   
                  .then(data => {
-              resultCallback(null,data);
+                  if ( data.length == 0) {
+                    var a = {}
+                   resultCallback(null,a);
+                  } else {
+                   resultCallback(null,data);
+                  }
                  })
         .catch(error => {
             resultCallback(error,null );
@@ -4999,14 +5025,17 @@ user.getEmployeeDetail = function (unit_name, resultCallback) {
             console.log('ERROR:', error);
         })
 };
-user.getDesignations = function (userInput, resultCallback) {
+user.getDesignations = function (title, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_entry" where "unit_name"=($1) ', [userInput.unit_name])
+    executor.any('select * FROM public."payroll_manual_entry" where "unit_name"=($1) ', [title])
         .then(data => {
-
-                 resultCallback(null,data );
-            
+          if ( data.length == 0) {
+          var a = {}
+         resultCallback(null,a);
+        } else {
+         resultCallback(null,data);
+        }
         })
         .catch(error => {
             resultCallback(error,null );
