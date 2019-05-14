@@ -3385,7 +3385,7 @@ function advcancebulk(req, res, next) {
                 }
                 });
                 }
-                 });               
+                });               
             }
         ]);
 }
