@@ -3435,16 +3435,13 @@ function advcancebulk(req, res, next) {
                 if (err) {
                    console.log(err)
                 }
-                });
+ 
+                });               
+            }
+        }
+    }
 
-                }
-
-             }
-             });               
-         }
-     ]);
-}
-
+               
 
 
 
