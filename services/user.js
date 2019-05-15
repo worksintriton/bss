@@ -4894,16 +4894,18 @@ user.getemployeedetails1 = function (title, resultCallback) {
             console.log('ERROR:', error);
         })
 };
-user.getunitmaster1 = function (title, resultCallback) {
+user.getunitmaster1 = function (element, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_unit_entry" where "unit_code"= ($1)   ', [title])
+    executor.any('select * FROM public."payroll_manual_unit_entry" where "unit_name"= ($1)   ', [element])
         .then(data => {
           if ( data.length == 0) {
-            var a = {}
+            var a = [{
+
+            }]
            resultCallback(null,a);
           } else {
-           resultCallback(null,data);
+              resultCallback(null,data);
           }
         })
         .catch(error => {
@@ -5032,10 +5034,12 @@ user.getDesignations = function (title, resultCallback) {
     executor.any('select * FROM public."payroll_manual_entry" where "unit_name"=($1) ', [title])
         .then(data => {
           if ( data.length == 0) {
-          var a = {}
-         resultCallback(null,a);
-        } else {
-         resultCallback(null,data);
+          var a = [{
+
+          }]
+          resultCallback(null,a);
+        } else if ( data.length !== 0)  {
+          resultCallback(null,data);
         }
         })
         .catch(error => {

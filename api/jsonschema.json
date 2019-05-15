@@ -325,25 +325,25 @@
         }
     },
     "/reports/getunitmaster": {
-        "GET": {
+        "POST": {
             "body": {
                  "type": "object",
                 "properties": {
-                    "unit_code": {
+                    "title": {
                         "type": "array"
                     }
                 },
         "additionalProperties": false,
                 "required": [
-                   "unit_code"
+                   "title"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "unit_code": "should have required property unit_code"
+                        "title": "should have required property title"
                     },
                     "properties": {
-                        "unit_code": "unit_code must be string"
+                        "title": "title must be string"
                     }
                 }
             }

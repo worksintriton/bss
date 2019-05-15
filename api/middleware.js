@@ -7289,38 +7289,45 @@ function getemployeedetails(req, res, next) {
 
 }
 function getunitmaster(req, res, next) {
-    console.log(req.body.unit_code)
+    console.log(req.body.title)
     async.waterfall([
          function (waterfallCallback){
-            var detailss = [];
-            req.body.unit_code.forEach(function(element){
-             services.user.getunitmaster1(element.title, function (err, unit_entry) {
+            var unit_entry = [];
+            req.body.title.forEach(function(element){
+                console.log(element.title)
+             services.user.getunitmaster1(element.title, function (err, result) {
              if (err) {
-                 req.log.error({
-                     error: err
-                 }, "Error while getting available users by mobiles");
-                 return res.json(utils.errors["500"]);
-             }  else {
-                detailss.push(result)
-                if ( req.body.title.length == detailss.length) {
-                 waterfallCallback(null,detailss);
-                }
-            }
-             console.log(unit_entry)
-            //  waterfallCallback(null,unit_entry);
+                 console.log(err)
+                //  req.log.error({
+                //      error: err
+                //  }, "Error while getting available users by mobiles");
+                //  return res.json(utils.errors["500"]);
+             } else {
+                 for( var i = 0; i < result.length; i++) {
+                    if(element.title == result[i].unit_name ) {
+                        unit_entry.push(result[i])
+                     }
+                 }
+                 if(element.title == result[i].unit_name ) {
+                    waterfallCallback(null,unit_entry);
+                 }
+             }
              });
             })
+
          },
          function (unit_entry,waterfallCallback){
-            services.user.getunitmaster2(unit_entry[0].id, function (err, unit_rate) {
-            if (err) {
-                req.log.error({
-                    error: err
-                }, "Error while getting available users by mobiles");
-                return res.json(utils.errors["500"]);
-            }
-            waterfallCallback(null,unit_entry,unit_rate);
-            });
+             for( var i = 0; i < unit_entry.length; i++) {
+                services.user.getunitmaster2(unit_entry[i].id, function (err, unit_rate) {
+                    if (err) {
+                        req.log.error({
+                            error: err
+                        }, "Error while getting available users by mobiles");
+                        return res.json(utils.errors["500"]);
+                    }
+                    waterfallCallback(null,unit_entry,unit_rate);
+                    });
+             }
         },
          function (unit_entry,unit_rate, waterfallCallback){
              let mydata = [];
@@ -7648,22 +7655,25 @@ function getDesignation(req, res, next) {
          function (waterfallCallback){
              var detailss = [];
             req.body.unit_name.forEach(function(detail){
-                services.user.getDesignations(detail.title, function (err, result) {
+                console.log(detail.title)
+                services.user.getDesignations(detail.title, function (err, manualEntryDetails) {
                     if (err) {
                         console.log(err)
                         // req.log.error({
                         //     error: err
                         // }, "Error while getting available users by mobiles");
                         // return res.json(utils.errors["500"]);
+                    } else {
+                        for ( var i = 0; i < manualEntryDetails.length; i++) {
+                            if (detail.title == manualEntryDetails[i].unit_name) {
+                                detailss.push(manualEntryDetails[i]);
+                                waterfallCallback(null,detailss);
+                            }
+                        }
+                            
                     }
-                    console.log(result)
-                        detailss.push(result)
                     });
-            })
-            if (req.body.unit_name.length == result.length){
-                console.log(result);
-                waterfallCallback(null,result);
-            }
+            })   
          },
          function (mydata, waterfallCallback){
              return res.json(_.merge({
