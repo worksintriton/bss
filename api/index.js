@@ -604,6 +604,8 @@ addRoute("/reports/getwageslip", "POST", [middleware.getwageslip]);
 addRoute("/reports/getpfecr", "POST", [middleware.getpfecr]);
 addRoute("/reports/getDesignation", "POST", [middleware.getDesignation]);
 addRoute("/reports/getloanandoutstanding", "POST", [middleware.getloanandoutstanding]);
+addRoute("/reports/getform36b", "GET", [middleware.getform36b]);
+
 
 // bulk upload
 addRoute("/bulkupload/bulkuploadformat", "POST", [middleware.bulkuploadformat]);

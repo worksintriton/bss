@@ -7672,22 +7672,147 @@ function getDesignation(req, res, next) {
          }
      ]);
 
-}
+} 
 function getloanandoutstanding(req, res, next) {
 
     async.waterfall([
          function (waterfallCallback){
-             services.user.getloanandoutstandings(req.body, function (err, result) {
+             services.user.getloanandoutstandings(req.body, function (err, totalPayDetails) {
              if (err) {
                  req.log.error({
                      error: err
                  }, "Error while getting available users by mobiles");
                  return res.json(utils.errors["500"]);
              }
-             waterfallCallback(null,result);
+             waterfallCallback(null,totalPayDetails);
              });
          },
-         function (mydata, waterfallCallback){
+         function (totalPayDetails,waterfallCallback){
+            totalPayDetails.forEach(function(element){
+                services.user.getloanandoutstandingss(element.unit_name, function (err, siteDetails) {
+                    if (err) {
+                        req.log.error({
+                            error: err
+                        }, "Error while getting available users by mobiles");
+                        return res.json(utils.errors["500"]);
+                    }
+                    waterfallCallback(null,totalPayDetails, siteDetails);
+                    });
+            })
+        },
+         function (totalPayDetails, siteDetails, waterfallCallback){
+             var mydata = [];
+            totalPayDetails.forEach(function(pay){
+                siteDetails.forEach(function(site){
+                    if (pay.unit_name == site.title) {
+                        let a = {
+                            ucode: site.sitelogin,
+                            company_name: pay.company_name,
+                            unit_name: pay.unit_name,
+                            date: pay.date,
+                            ecode: pay.ecode,
+                            ename: pay.ename,
+                            etype: pay.etype,
+                            eac: pay.eac,
+                            ebankname: pay.ebankname,
+                            eifsc: pay.eifsc,
+                            designation: pay.designation,
+                            present: pay.present,
+                            dutyoff: pay.dutyoff,
+                            add_duties: pay.add_duties,
+                            payment_type: pay.payment_type,
+                            paymode: pay.paymode,
+                            total_duties: pay.total_duties,
+                            basic: pay.basic,
+                            da: pay.da,
+                            hra: pay.hra,
+                            trv_ex: pay.trv_ex,
+                            others: pay.others,
+                            medical: pay.medical,
+                            others1: pay.others1,
+                            others2: pay.others2,
+                            others3: pay.others3,
+                            others4: pay.others4,
+                            waesi: pay.waesi,
+                            ewdays: pay.ewdays,
+                            ewamount: pay.ewamount,
+                            gross: pay.gross,
+                            advance: pay.advance,
+                            loan: pay.loan,
+                            uniform: pay.uniform,
+                            mess: pay.mess,
+                            rent: pay.rent,
+                            atm: pay.atm,
+                            phone: pay.phone,
+                            pf: pay.pf,
+                            esi: pay.esi,
+                            pr_tax: pay.pr_tax,
+                            staff_wellfare: pay.staff_wellfare,
+                            total_dec: pay.total_dec,
+                            net_pay: pay.net_pay,
+                            add_amount: pay.add_amount,
+                            Insur: '-',
+                            IT_Mess: '-'
+                        }
+                        mydata.push(a);
+                    }
+                })
+            })
+             return res.json(_.merge({
+                 data: mydata
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+function getform36b(req, res, next) {
+
+    async.waterfall([
+        function (waterfallCallback){
+            services.user.getgetform36bpayrollmanualentrys(req.body, function (err, payrollManualEntryDetails) {
+            if (err) {
+                req.log.error({
+                    error: err
+                }, "Error while getting available users by mobiles");
+                return res.json(utils.errors["500"]);
+            }
+            waterfallCallback(null,payrollManualEntryDetails);
+            });
+        },
+         function (payrollManualEntryDetails,waterfallCallback){
+            payrollManualEntryDetails.forEach(function(element){
+                services.user.getgetform36bemployeedetails(element.ecode, function (err, employeeDetailss) {
+                    if (err) {
+                        console.log(err)
+                        // req.log.error({
+                        //     error: err
+                        // }, "Error while getting available users by mobiles");
+                        // return res.json(utils.errors["500"]);
+                    }
+                        waterfallCallback(null,payrollManualEntryDetails,employeeDetailss);
+                    });
+            })
+         },
+         function (payrollManualEntryDetails,employeeDetailss, waterfallCallback){
+             var mydata = [];
+             payrollManualEntryDetails.forEach(function(payroll){
+                employeeDetailss.forEach(function(employee){
+                    if ( payroll.ecode == employee.ecode) {
+                        let a = {
+                            EName: employee.Name,
+                            FName: employee.father_name,
+                            DOJ: employee.date_joining,
+                            PFNO: employee.pf1,
+                            Total_duties: payroll.total_duties,
+                            Gross: payroll.gross,
+                            PF_Wages: payroll.basic + payroll.da,
+                            Contribution: Math.round(payroll.total_dec * 0.12)
+                        }
+                        mydata.push(a)
+                    }
+                })
+            })
+            console.log(mydata)
              return res.json(_.merge({
                  data: mydata
              }, utils.errors["200"]));
@@ -8356,6 +8481,7 @@ exports.getwageslip = getwageslip;
 exports.getpfecr = getpfecr;
 exports.getDesignation = getDesignation;
 exports.getloanandoutstanding = getloanandoutstanding;
+exports.getform36b = getform36b;
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

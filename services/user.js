@@ -5056,7 +5056,48 @@ user.getloanandoutstandings = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
+user.getloanandoutstandingss = function (unit_name, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."clientsite" where "title"=($1) ', [unit_name])
+        .then(data => {
 
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
+user.getgetform36bpayrollmanualentrys = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."payroll_manual_entry"', [])
+        .then(data => {
+
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.getgetform36bemployeedetails = function (ecode, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."employeedetails" WHERE ecode=($1) ', [ecode])
+        .then(data => {
+                 resultCallback(null,data );
+            
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 user.bulkuploadformats = function (userInput,dob,doj,dor, resultCallback) {
   console.log(userInput,dob,doj);
   var executor = db.getdaata.getdb();
