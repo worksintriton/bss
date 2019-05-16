@@ -4017,7 +4017,7 @@ user.advancefetchs = function (userInput, resultCallback) {
 user.monthlyfetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and ddate >= ($2) and ddate <= ($3)', [userInput.employee_id,userInput.start_date,userInput.end_date])
+    executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and ddate >= ($2) ', [userInput.employee_id,userInput.start_date])
         .then(data => {
                  resultCallback(null,data );
         })
