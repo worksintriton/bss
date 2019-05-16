@@ -4900,12 +4900,12 @@ user.getunitmaster1 = function (element, resultCallback) {
     executor.any('select * FROM public."payroll_manual_unit_entry" where "unit_name"= ($1)   ', [element])
         .then(data => {
           if ( data.length == 0) {
-            var a = [{
+            var a = {
 
-            }]
+            }
            resultCallback(null,a);
           } else {
-              resultCallback(null,data);
+              resultCallback(null,data[0]);
           }
         })
         .catch(error => {
@@ -4918,9 +4918,14 @@ user.getunitmaster2 = function (id, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
     executor.any('select * FROM public."payroll_manual_unit_rate" where "unit_id"= ($1)   ', [""+id])
         .then(data => {
+          if ( data.length == 0) {
+            var a = {
 
-                 resultCallback(null,data );
-            
+            }
+           resultCallback(null,a);
+          } else {
+              resultCallback(null,data[0]);
+          }
         })
         .catch(error => {
             resultCallback(error,null );

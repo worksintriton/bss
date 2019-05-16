@@ -7289,12 +7289,10 @@ function getemployeedetails(req, res, next) {
 
 }
 function getunitmaster(req, res, next) {
-    console.log(req.body.title)
     async.waterfall([
          function (waterfallCallback){
             var unit_entry = [];
             req.body.title.forEach(function(element){
-                console.log(element.title)
              services.user.getunitmaster1(element.title, function (err, result) {
              if (err) {
                  console.log(err)
@@ -7303,29 +7301,30 @@ function getunitmaster(req, res, next) {
                 //  }, "Error while getting available users by mobiles");
                 //  return res.json(utils.errors["500"]);
              } else {
-                 for( var i = 0; i < result.length; i++) {
-                    if(element.title == result[i].unit_name ) {
-                        unit_entry.push(result[i])
-                     }
-                 }
-                 if(element.title == result[i].unit_name ) {
+                        unit_entry.push(result)
+                 if(req.body.title.length == unit_entry.length) {
                     waterfallCallback(null,unit_entry);
                  }
              }
              });
             })
-
          },
          function (unit_entry,waterfallCallback){
+             console.log(unit_entry.length)
+             var unit_rate = [];
              for( var i = 0; i < unit_entry.length; i++) {
-                services.user.getunitmaster2(unit_entry[i].id, function (err, unit_rate) {
+                services.user.getunitmaster2(unit_entry[i].id, function (err, result) {
                     if (err) {
-                        req.log.error({
-                            error: err
-                        }, "Error while getting available users by mobiles");
-                        return res.json(utils.errors["500"]);
+                        console.log(err)
+                        // req.log.error({
+                        //     error: err
+                        // }, "Error while getting available users by mobiles");
+                        // return res.json(utils.errors["500"]);
                     }
-                    waterfallCallback(null,unit_entry,unit_rate);
+                    unit_rate.push(result)
+                    if(unit_entry.length == unit_rate.length) {
+                        waterfallCallback(null,unit_entry,unit_rate);
+                    }
                     });
              }
         },
