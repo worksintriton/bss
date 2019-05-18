@@ -6856,6 +6856,7 @@ function manual_entry_unit_add(req, res, next) {
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
                 }
+                console.log(result)
                 waterfallCallback(null,result);
                 });
             },

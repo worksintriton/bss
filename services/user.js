@@ -4418,7 +4418,6 @@ userInput.day_month_date,
 userInput.pf_amount_amount
 ])
 .then(data => {
-                 console.log(data);
                  resultCallback(null,data );
         })
         .catch(error => {
