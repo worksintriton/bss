@@ -194,7 +194,7 @@ addRoute("/manual_entry/manual_entry_emp_fetch_id", "POST", [middleware.manual_e
 // karthikeyan update employee payment details list
 addRoute("/manual_entry/manual_entry_unit_list_id", "POST", [middleware.manual_entry_unit_list_id]);
 
-
+addRoute("/manual_entry/fetch_payment_entry", "POST", [middleware.fetch_payment_entry]);
 
 
 
@@ -373,7 +373,7 @@ addRoute("/client/fetchsite", "POST", [middleware.fetchsite]);
 /*bss,bsspl*/
 addRoute("/company/fetchcompanysite", "POST", [middleware.fetchcompanysite]);
 addRoute("/company/fetchcompanysites", "POST", [middleware.fetchcompanysites]);
-
+addRoute("/company/fetchemployeeid", "POST", [middleware.fetchemployeeid]);
 
 
 

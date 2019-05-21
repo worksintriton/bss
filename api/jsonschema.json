@@ -220,6 +220,40 @@
             }
         }
     },
+    "/manual_entry/fetch_payment_entry": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "unit_code": {
+                        "type": "string"
+                    },
+                    "ecode": {
+                        "type": "string"
+                    },
+                    "designation": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                   
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "unit_code": "should have required property unit_code"
+                    },
+                    "properties": {
+                        "unit_code": "unit_code must be string"
+                    }
+                }
+            }
+        }
+    },
     "/authentication/efetchsitedetails": {
         "GET": {
             "body": {
@@ -5211,6 +5245,12 @@
                     },
                     "esi_action": {
                         "type": "boolean"
+                    },
+                    "prof_tax_action": {
+                        "type": "boolean"
+                    },
+                    "work_status_action": {
+                        "type": "boolean"
                     }
                 },
         "additionalProperties": true,
@@ -5579,6 +5619,12 @@
                         "type": "boolean"
                     },
                     "esi_action": {
+                        "type": "boolean"
+                    },
+                    "prof_tax_action": {
+                        "type": "boolean"
+                    },
+                    "work_status_action": {
                         "type": "boolean"
                     }
                 },
@@ -10033,7 +10079,31 @@
         }
     },
 
-
+    "/company/fetchemployeeid": {
+        "POST": {
+            "body": {
+                 "type": "object",
+                "properties": {
+                    "employee_code": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "employee_code"  
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "employee_code": "should have required property employee_code"
+                    },
+                    "properties": {
+                        "employee_code": "employee_code must be string"
+                    }
+                }
+            }
+        }
+    },
 
 
 "/manual_entry/manual_entry_unit_add": {

@@ -3652,7 +3652,29 @@ function fetchcompanysites(req, res, next) {
 
 }
 
+function fetchemployeeid(req, res, next) {
 
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.fetchemployeeids(req.body, function (err, result) {
+             if (err) {
+                console.log(err);
+                //  req.log.error({
+                //     //  error: err
+                //  }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,result);
+             });
+         },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
 
 
 function newclientcontract(req, res, next) {
@@ -8045,7 +8067,48 @@ function manual_entry_unit_list_id(req, res, next) {
          }
      ]);
 }
-
+function fetch_payment_entry(req, res, next) {
+    async.waterfall([
+        function (waterfallCallback){
+            services.user.fetch_payment_entryss(req.body, function (err, payment_entry) {
+            if (err) {
+                console.log(err);
+                // req.log.error({
+                //     error: err
+                // }, "Error while getting available users by mobiles");
+                return res.json(utils.errors["500"]);
+            }
+            waterfallCallback(null,req,payment_entry);
+            });
+        },
+         function (req,payment_entry,waterfallCallback){
+             services.user.fetch_clientsss(req.body, function (err, siteDetails) {
+             if (err) {
+                console.log(err);
+                //  req.log.error({
+                //      error: err
+                //  }, "Error while getting available users by mobiles");
+                 return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,payment_entry,siteDetails);
+             });
+         },
+         function (payment_entry,siteDetails, waterfallCallback){
+            payment_entry.forEach(function(element){
+                siteDetails.forEach(function(element1){
+                    if (element.site_billing_name == element1.unit_name) {
+                        waterfallCallback(null,payment_entry);
+                    }
+                })
+            })
+         },
+         function (payment_entry, waterfallCallback){
+             return res.json(_.merge({
+                 data: payment_entry
+             }, utils.errors["200"]));
+         }
+     ]);
+}
 
 
 function fetchunit_number1(req, res, next) {
@@ -8468,6 +8531,7 @@ exports.updatecompany = updatecompany;
 exports.fetchcompany = fetchcompany;
 exports. fetchcompanysite = fetchcompanysite;
 exports. fetchcompanysites = fetchcompanysites;
+exports.fetchemployeeid = fetchemployeeid;
 exports.deletecompany = deletecompany;
 
 /*payroll*/
@@ -8510,7 +8574,7 @@ exports.fetchsitepaymentss3 = fetchsitepaymentss3;
 exports.manual_entry_emp_fetch_id = manual_entry_emp_fetch_id;
 
 exports.manual_entry_unit_list_id = manual_entry_unit_list_id;
-
+exports.fetch_payment_entry = fetch_payment_entry;
 
 /*file upload*/
 exports.uploadingfile = uploadingfile;
