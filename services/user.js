@@ -4035,7 +4035,7 @@ user.advancefetchs = function (userInput, resultCallback) {
 user.monthlyfetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and ddate >= ($2) ', [userInput.employee_id,userInput.start_date])
+    executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and ddate >= ($2) and ddate <= ($3)', [userInput.employee_id,userInput.start_date,userInput.end_date])
         .then(data => {
                  resultCallback(null,data );
         })
@@ -5316,7 +5316,7 @@ user.manual_entry_unit_list_id = function (userInput, resultCallback) {
 user.fetch_payment_entryss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_entry" WHERE "etype"=($1) and "ecode"=($2) and "date"=($3)', [userInput.designation,userInput.ecode,userInput.date])
+    executor.any('select * FROM public."payroll_manual_entry" WHERE "designation"=($1) and "ecode"=($2) and "date"=($3)', [userInput.designation,userInput.ecode,userInput.date])
         .then(data => {
 
                  resultCallback(null,data );
