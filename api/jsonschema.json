@@ -5251,6 +5251,39 @@
                     },
                     "work_status_action": {
                         "type": "boolean"
+                    },
+                    "prom_in1": {
+                        "type": "string"
+                    },
+                    "prom_in_mobile_no": {
+                        "type": "string"
+                    },
+                    "prom_in_mobile_no1": {
+                        "type": "string"
+                    },
+                    "work_exp": {
+                        "type": "string"
+                    },
+                    "chest": {
+                        "type": "string"
+                    },
+                    "area": {
+                        "type": "string"
+                    },
+                    "fcontact1": {
+                        "type": "string"
+                    },
+                    "fcontact2": {
+                        "type": "string"
+                    },
+                    "fcontact3": {
+                        "type": "string"
+                    },
+                    "fcontact4": {
+                        "type": "string"
+                    },
+                    "fcontact5": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -5626,6 +5659,39 @@
                     },
                     "work_status_action": {
                         "type": "boolean"
+                    },
+                    "prom_in1": {
+                        "type": "string"
+                    },
+                    "prom_in_mobile_no": {
+                        "type": "string"
+                    },
+                    "prom_in_mobile_no1": {
+                        "type": "string"
+                    },
+                    "work_exp": {
+                        "type": "string"
+                    },
+                    "chest": {
+                        "type": "string"
+                    },
+                    "area": {
+                        "type": "string"
+                    },
+                    "fcontact1": {
+                        "type": "string"
+                    },
+                    "fcontact2": {
+                        "type": "string"
+                    },
+                    "fcontact3": {
+                        "type": "string"
+                    },
+                    "fcontact4": {
+                        "type": "string"
+                    },
+                    "fcontact5": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -10182,6 +10248,21 @@
                     },
                     "pf_amount_amount": {
                         "type": "string"
+                    },
+                    "prtax_basic": {
+                        "type": "string"
+                    },
+                    "prtax_da": {
+                        "type": "string"
+                    },
+                    "prtax_hra": {
+                        "type": "string"
+                    },
+                    "prtax_trv": {
+                        "type": "string"
+                    },
+                    "prtax_cover": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -10280,6 +10361,21 @@
                         "type": "string"
                     },
                     "pf_amount_amount": {
+                        "type": "string"
+                    },
+                    "prtax_basic": {
+                        "type": "string"
+                    },
+                    "prtax_da": {
+                        "type": "string"
+                    },
+                    "prtax_hra": {
+                        "type": "string"
+                    },
+                    "prtax_trv": {
+                        "type": "string"
+                    },
+                    "prtax_cover": {
                         "type": "string"
                     }
                 },
