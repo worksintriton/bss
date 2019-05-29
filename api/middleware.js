@@ -6129,18 +6129,19 @@ function fetchcompany(req, res, next) {
 function advanceadd(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
-
                 for(var i = 1; i <= req.body.pinstalment; i++){
+                    // var date = moment(req.body.ddate).format( "yyyy-mm-dd");
                 var futureMonth = moment(req.body.ddate).add( i , 'months').calendar();
                 var date = dateFormat(futureMonth, "yyyy-mm-dd");
                 var amount = req.body.pamount / req.body.pinstalment;
-                console.log(date,amount)
+                console.log(date);
                 services.user.advanceadds(req.body,date,amount, function (err, result) {
                 if (err) {
                    console.log(err)
                 }
                 });
                 }
+                console.log(result);
                 waterfallCallback(null,"Inserted");
             },
             function (mydata, waterfallCallback){
