@@ -7304,39 +7304,41 @@ function getemployeedetails(req, res, next) {
           
          },
          function (mydata, waterfallCallback){
-        //     var mydata = [];
-        //     for(var i=0;i<result.length;i++){
-        //         let a = {
-        //         employee_type: result[i].employee_type,
-        //         father_name: result[i].father_name,
-        //         gender: result[i].gender,
-        //         material_status: result[i].material_status,
-        //         date_joining: result[i].date_joining,
-        //         driving_licence: result[i].driving_licence,
-        //         Mobile_No: result[i].Mobile_No,
-        //         Name: result[i].Name,
-        //         Date_of_birth: result[i].Date_of_birth,
-        //         aadhar_card: result[i].aadhar_card,
-        //         voter_id: result[i].voter_id,
-        //         Address: result[i].Address,
-        //         workstatus: result[i].workstatus,
-        //         ifsc: result[i].ifsc,
-        //         bankname: result[i].bankname,
-        //         a_c: result[i].a_c,
-        //         sponname: result[i].sponname,
-        //         site_name: result[i].site_name,
-        //         esi: result[i].esi,
-        //         pf1: result[i].pf1,
-        //         pf2: result[i].pf2,
-        //         pf3: result[i].pf3,
-        //         ecode: result[i].ecode,
-        //         uan: result[i].uan,
-        //         dor: result[i].dor,
-        //         dispensary: result[i].dispensary,
-        //         ucode: result[i].ucode,
-        //         bankbranchname: '-'
-        //         }
-        //         mydata.push(a)
+            // var mydata = [];
+            // for(var i=0;i<result.length;i++){
+            //     if (req.body.title.site_name == result[i].site_name) {
+            //     let a = {
+            //     employee_type: result[i].employee_type,
+            //     father_name: result[i].father_name,
+            //     gender: result[i].gender,
+            //     material_status: result[i].material_status,
+            //     date_joining: result[i].date_joining,
+            //     driving_licence: result[i].driving_licence,
+            //     Mobile_No: result[i].Mobile_No,
+            //     Name: result[i].Name,
+            //     Date_of_birth: result[i].Date_of_birth,
+            //     aadhar_card: result[i].aadhar_card,
+            //     voter_id: result[i].voter_id,
+            //     Address: result[i].Address,
+            //     workstatus: result[i].workstatus,
+            //     ifsc: result[i].ifsc,
+            //     bankname: result[i].bankname,
+            //     a_c: result[i].a_c,
+            //     sponname: result[i].sponname,
+            //     site_name: result[i].site_name,
+            //     esi: result[i].esi,
+            //     pf1: result[i].pf1,
+            //     pf2: result[i].pf2,
+            //     pf3: result[i].pf3,
+            //     ecode: result[i].ecode,
+            //     uan: result[i].uan,
+            //     dor: result[i].dor,
+            //     dispensary: result[i].dispensary,
+            //     ucode: result[i].ucode,
+            //     bankbranchname: '-'
+            //     }
+            //     mydata.push(a);     
+            // }
         // }
              return res.json(_.merge({
                  data: mydata 

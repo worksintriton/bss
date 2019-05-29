@@ -352,7 +352,7 @@
                       
                    },
                    "properties": {
-                       "title": "title must be string"
+                       "title": "title must be array"
                    }
                }
            }
