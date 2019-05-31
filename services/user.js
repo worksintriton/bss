@@ -3873,11 +3873,20 @@ user.assignlistss = function (userInput, resultCallback) {
 user.addcompanys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public.company(company_name,area)VALUES ( $1, $2) RETURNING *',
+                 executor.one('INSERT INTO public.company(company_name,area,company_address,company_bank_name,company_bank_a_c_no,company_bank_ifsc,company_bank_branch,company_gst_tax_reg_no,company_pan_no,company_cin_no,company_pf_code_no,company_esi_code_no)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
 [
 userInput.company_name,
-userInput.area
-
+userInput.area,
+userInput.company_address,
+userInput.company_bank_name,
+userInput.company_bank_a_c_no,
+userInput.company_bank_ifsc,
+userInput.company_bank_branch,
+userInput.company_gst_tax_reg_no,
+userInput.company_pan_no,
+userInput.company_cin_no,
+userInput.company_pf_code_no,
+userInput.company_esi_code_no
                  ])
                       .then(data => {
                  console.log(data);
@@ -3894,13 +3903,21 @@ userInput.area
 user.updatecompanys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                  executor.one('UPDATE public.company SET  company_name=$2, area=$3  WHERE id=$1 RETURNING *',
+                  executor.one('UPDATE public.company SET  company_name=$2, area=$3,company_address=$4 ,company_bank_name=$5 ,company_bank_a_c_no=$6 ,company_bank_ifsc=$7 ,company_bank_branch=$8 ,company_gst_tax_reg_no=$9 ,company_pan_no=$10 ,company_cin_no=$11 ,company_pf_code_no=$12 ,company_esi_code_no=$13  WHERE id=$1 RETURNING *',
                  [
                  userInput.id,
-userInput.items,
-userInput.rates
-
-
+                 userInput.company_name,
+                 userInput.area,
+                 userInput.company_address,
+                 userInput.company_bank_name,
+                 userInput.company_bank_a_c_no,
+                 userInput.company_bank_ifsc,
+                 userInput.company_bank_branch,
+                 userInput.company_gst_tax_reg_no,
+                 userInput.company_pan_no,
+                 userInput.company_cin_no,
+                 userInput.company_pf_code_no,
+                 userInput.company_esi_code_no
                  ])
                       .then(data => {
                  console.log(data);
@@ -4748,6 +4765,67 @@ userInput.add_amount
         })
 };
 
+user.manual_entry_emp_updates = function (userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('UPDATE public.payroll_manual_entry SET company_name=$1,unit_name=$2,date=$3,ecode=$4,ename=$5,etype=$6,eac=$7,ebankname=$8,eifsc=$9,designation=$10,present=$11,dutyoff=$12,add_duties=$13,payment_type=$14,paymode=$15,total_duties=$16,basic=$17,da=$18,hra=$19,trv_ex=$20,others=$21,medical=$22,others1=$23,others2=$24,others3=$25,others4=$26,waesi=$27,ewdays=$28,ewamount=$29,gross=$30,advance=$31,loan=$32,uniform=$33,mess=$34,rent=$35,atm=$36,phone=$37,pf=$38,esi=$39,pr_tax=$40,staff_wellfare=$41,total_dec=$42,net_pay=$43,add_amount=$44  WHERE id=$45 RETURNING *',
+  [
+    userInput.company_name,
+    userInput.unit_name,
+    userInput.date,
+    userInput.ecode,
+    userInput.ename,
+    userInput.etype,
+    userInput.eac,
+    userInput.ebankname,
+    userInput.eifsc,
+    userInput.designation,
+    userInput.present,
+    userInput.dutyoff,
+    userInput.add_duties,
+    userInput.payment_type,
+    userInput.paymode,
+    userInput.total_duties,
+    userInput.basic,
+    userInput.da,
+    userInput.hra,
+    userInput.trv_ex,
+    userInput.others,
+    userInput.medical,
+    userInput.others1,
+    userInput.others2,
+    userInput.others3,
+    userInput.others4,
+    userInput.waesi,
+    userInput.ewdays,
+    userInput.ewamount,
+    userInput.gross,
+    userInput.advance,
+    userInput.loan,
+    userInput.uniform,
+    userInput.mess,
+    userInput.rent,
+    userInput.atm,
+    userInput.phone,
+    userInput.pf,
+    userInput.esi,
+    userInput.pr_tax,
+    userInput.staff_wellfare,
+    userInput.total_dec,
+    userInput.ner_pay,
+    userInput.add_amount,
+    userInput.id
+    ])
+.then(data => {
+                 console.log(data);
+                 resultCallback(null,data );
+        })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+
 
 user.manual_entry_rate_updates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
@@ -5351,7 +5429,17 @@ user.fetch_payment_entryss = function (userInput, resultCallback) {
     executor.any('select * FROM public."payroll_manual_entry" WHERE "designation"=($1) and "ecode"=($2) and "date"=($3)', [userInput.designation,userInput.ecode,userInput.date])
         .then(data => {
 
-                 resultCallback(null,data );
+          console.log(data.length);
+          if (data.length > 0) {
+            resultCallback(null,data );
+          } else {
+            let a = {
+              message: "null"
+            }
+            data.push(a)
+            resultCallback(null,data );
+          }
+                 
             
         })
         .catch(error => {

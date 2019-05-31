@@ -7111,14 +7111,16 @@ function manual_entry_emp_add(req, res, next) {
 }
 
 function manual_entry_emp_update(req, res, next) {
+    console.log(req.body);
        async.waterfall([
             function (waterfallCallback){
                 services.user.manual_entry_emp_updates(req.body, function (err, result) {
                 if (err) {
-                    req.log.error({
-                        error: err
-                    }, "Error while getting available users by mobiles");
-                    return res.json(utils.errors["500"]);
+                    console.log(err);
+                    // req.log.error({
+                    //     error: err
+                    // }, "Error while getting available users by mobiles");
+                    // return res.json(utils.errors["500"]);
                 }
                 waterfallCallback(null,result);
                 });

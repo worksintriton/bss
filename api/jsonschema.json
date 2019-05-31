@@ -7947,11 +7947,41 @@
                     },
                      "area": {
                         "type": "string"
-                    }
+                    },
+                    "company_address": {
+                       "type": "string"
+                   },
+                   "company_bank_name": {
+                      "type": "string"
+                  },
+                  "company_bank_a_c_no": {
+                     "type": "string"
+                 },
+                 "company_bank_ifsc": {
+                    "type": "string"
                 },
-        "additionalProperties": true,
+                "company_bank_branch": {
+                   "type": "string"
+               },
+               "company_gst_tax_reg_no": {
+                  "type": "string"
+              },
+              "company_pan_no": {
+                 "type": "string"
+             },
+             "company_cin_no": {
+                "type": "string"
+            },
+            "company_pf_code_no": {
+               "type": "string"
+           },
+           "company_esi_code_no": {
+              "type": "string"
+          }
+                },
+        "additionalProperties": false,
                 "required": [
-                   
+                   "company_name"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
@@ -7980,20 +8010,49 @@
                     },
                      "area": {
                         "type": "string"
-                    }
-
+                    },
+                    "company_address": {
+                        "type": "string"
+                    },
+                    "company_bank_name": {
+                       "type": "string"
+                   },
+                   "company_bank_a_c_no": {
+                      "type": "string"
+                  },
+                  "company_bank_ifsc": {
+                     "type": "string"
+                 },
+                 "company_bank_branch": {
+                    "type": "string"
                 },
-        "additionalProperties": true,
+                "company_gst_tax_reg_no": {
+                   "type": "string"
+               },
+               "company_pan_no": {
+                  "type": "string"
+              },
+              "company_cin_no": {
+                 "type": "string"
+             },
+             "company_pf_code_no": {
+                "type": "string"
+            },
+            "company_esi_code_no": {
+               "type": "string"
+           }
+                },
+        "additionalProperties": false,
                 "required": [
-                   
+                   "id"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "id": "should have required property userId"
+                        "id": "should have required property id"
                     },
                     "properties": {
-                        "id": "userId must be string"
+                        "id": "id must be nimber"
                     }
                 }
             }
@@ -10919,10 +10978,10 @@
                         "type": "number"
                     },
                     "payments_type": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "paymentmode": {
-                        "type": "number"
+                        "type": "string"
                     },
                     "total_duties": {
                         "type": "number"
@@ -11007,20 +11066,23 @@
                     },
                     "net_pay": {
                         "type": "number"
+                    },
+                    "add_amount": {
+                        "type": "number"
                     }
                 },
         "additionalProperties": true,
                 "required": [
-                    "company_name"
+                    "id"
                 ],
                 "errorMessage": {
                     "additionalProperties": "should not have additional properties",
                     "required": {
-                        "company_name": "should have required property client_id"
+                        "id": "should have required property id"
                         
                     },
                     "properties": {
-                        "company_name": "company_name must be string"
+                        "id": "id must be number"
                     }
                 }
             }
@@ -11206,7 +11268,7 @@
         }
     },
 
-     "/manual_entry/manual_entry_emp_update": {
+     "/manual_entry/manual_entry_emp_update8798": {
         "POST": {
             "body": {
                  "type": "object",
