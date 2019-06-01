@@ -5432,11 +5432,11 @@ user.fetch_payment_entryss = function (userInput, resultCallback) {
           console.log(data.length);
           if (data.length > 0) {
             resultCallback(null,data );
-          } else {
+          } else if (data.length === 0)  {
             let a = {
               message: "null"
             }
-            data.push(a)
+            data.push(a);
             resultCallback(null,data );
           }
                  
