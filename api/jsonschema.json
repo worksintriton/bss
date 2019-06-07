@@ -5284,6 +5284,9 @@
                     },
                     "fcontact5": {
                         "type": "string"
+                    },
+                    "age": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,
@@ -5748,6 +5751,9 @@
                     "personmark": {
                         "type": "string"
                     },
+                    "personmark1": {
+                        "type": "string"
+                    },
                     "nameorg": {
                         "type": "string"
                     },
@@ -5885,8 +5891,31 @@
                     },
                     "lanstate5": {
                         "type": "string"
+                    },
+                    "Spectacles": {
+                        "type": "string"
+                    },
+                    "RightEyePower": {
+                        "type": "string"
+                    },
+                    "LeftEyePower": {
+                        "type": "string"
+                    },
+                    "School_CollegeName": {
+                        "type": "string"
+                    },
+                    "School_CollegeAddress": {
+                        "type": "string"
+                    },
+                    "HigherClassStudied": {
+                        "type": "string"
+                    },
+                    "StudiedYear": {
+                        "type": "string"
+                    },
+                    "StudiedResultStatus": {
+                        "type": "string"
                     }
-
                 },
         "additionalProperties": true,
                 "required": [

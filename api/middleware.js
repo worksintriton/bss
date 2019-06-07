@@ -326,7 +326,7 @@ function updateusers(req, res, next) {
 
 
 function updateemployee(req, res, next) {
-
+console.log(req.body);
        async.waterfall([
             function (waterfallCallback){
                 services.user.updateemployees(req.body, function (err, result) {
@@ -336,6 +336,7 @@ function updateemployee(req, res, next) {
                     }, "Error while getting available users by mobiles");
                     return res.json(utils.errors["500"]);
                 }
+                console.log(result);
                 waterfallCallback(null,result);
                 });
             },
