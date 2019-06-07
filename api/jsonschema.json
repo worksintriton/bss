@@ -5915,6 +5915,45 @@
                     },
                     "StudiedResultStatus": {
                         "type": "string"
+                    },
+                    "TC_No": {
+                        "type": "string"
+                    },
+                    "TC_Type": {
+                        "type": "string"
+                    },
+                    "MarkSheet_of": {
+                        "type": "string"
+                    },
+                    "MarkSheet_of_Type": {
+                        "type": "string"
+                    },
+                    "Games": {
+                        "type": "string"
+                    },
+                    "Hobbies": {
+                        "type": "string"
+                    },
+                    "RecOfIntWrittenWork": {
+                        "type": "string"
+                    },
+                    "RecOfIntAppearance": {
+                        "type": "string"
+                    },
+                    "RecOfIntFirstImperssion": {
+                        "type": "string"
+                    },
+                    "RecOfIntResult": {
+                        "type": "string"
+                    },
+                    "RecOfIntDesignationEntry": {
+                        "type": "string"
+                    },
+                    "RecOfIntToBePostedTo": {
+                        "type": "string"
+                    },
+                    "RecOfIntRemarks": {
+                        "type": "string"
                     }
                 },
         "additionalProperties": true,

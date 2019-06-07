@@ -61,7 +61,7 @@ user.confignumbers = function (userInput, resultCallback) {
 user.updateemployee1s = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\
-executor.any('UPDATE public.employeedetails SET  "personmark"=$2, "nameorg"=$3, "position"=$4, "servicef"=$5 ,"servicet"=$6 ,"lastsalary"=$7,"reasonlev"=$8,"nomiename1"=$9,"nomieaddress1"=$10,"nomiedate1"=$11,"nomiefund1"=$12,"nomiemirror1"=$13,"nomiename2"=$14,"nomieaddress2"=$15,"nomiedate2"=$16,"nomiefund2"=$17,"nomiemirror2"=$18,"nomiename3"=$19,"nomieaddress3"=$20,"nomiedate3"=$21,"nomiefund3"=$22,"nomiemirror3"=$23,"nomiename4"=$24,"nomieaddress4"=$25,"nomiedate4"=$26,"nomiefund4"=$27,"nomiemirror4"=$28,"nomiename5"=$29,"nomieaddress5"=$30,"nomiedate5"=$31,"nomiefund5"=$32,"nomiemirror5"=$33, "nomierelation1"=$34, "nomierelation2"=$35, "nomierelation3"=$36, "nomierelation4"=$37, "nomierelation5"=$38  , "epf_no"=$39, "esic_no"=$40, "sponsored_by"=$41, "rank"=$42, "sponname"=$43, "Sponregion"=$44, "remarks"=$45, "language1"=$46, "language2"=$47, "language3"=$48, "language4"=$49, "language5"=$50, "lanstate1"=$51, "lanstate2"=$52, "lanstate3"=$53, "lanstate4"=$54, "lanstate5"=$55, "personmark1"=$56, "Spectacles"=$57, "RightEyePower"=$58, "LeftEyePower"=$59, "School_CollegeName"=$60, "School_CollegeAddress"=$61, "HigherClassStudied"=$62, "StudiedYear"=$63, "StudiedResultStatus"=$64  WHERE  "id" = $1 RETURNING *',
+executor.any('UPDATE public.employeedetails SET  "personmark"=$2, "nameorg"=$3, "position"=$4, "servicef"=$5 ,"servicet"=$6 ,"lastsalary"=$7,"reasonlev"=$8,"nomiename1"=$9,"nomieaddress1"=$10,"nomiedate1"=$11,"nomiefund1"=$12,"nomiemirror1"=$13,"nomiename2"=$14,"nomieaddress2"=$15,"nomiedate2"=$16,"nomiefund2"=$17,"nomiemirror2"=$18,"nomiename3"=$19,"nomieaddress3"=$20,"nomiedate3"=$21,"nomiefund3"=$22,"nomiemirror3"=$23,"nomiename4"=$24,"nomieaddress4"=$25,"nomiedate4"=$26,"nomiefund4"=$27,"nomiemirror4"=$28,"nomiename5"=$29,"nomieaddress5"=$30,"nomiedate5"=$31,"nomiefund5"=$32,"nomiemirror5"=$33, "nomierelation1"=$34, "nomierelation2"=$35, "nomierelation3"=$36, "nomierelation4"=$37, "nomierelation5"=$38  , "epf_no"=$39, "esic_no"=$40, "sponsored_by"=$41, "rank"=$42, "sponname"=$43, "Sponregion"=$44, "remarks"=$45, "language1"=$46, "language2"=$47, "language3"=$48, "language4"=$49, "language5"=$50, "lanstate1"=$51, "lanstate2"=$52, "lanstate3"=$53, "lanstate4"=$54, "lanstate5"=$55, "personmark1"=$56, "Spectacles"=$57, "RightEyePower"=$58, "LeftEyePower"=$59, "School_CollegeName"=$60, "School_CollegeAddress"=$61, "HigherClassStudied"=$62, "StudiedYear"=$63, "StudiedResultStatus"=$64, "TC_No"=$65, "TC_Type"=$66, "MarkSheet_of"=$67, "MarkSheet_of_Type"=$68, "Games"=$69, "Hobbies"=$70, "RecOfIntWrittenWork"=$71, "RecOfIntAppearance"=$72, "RecOfIntFirstImperssion"=$73, "RecOfIntResult"=$74, "RecOfIntDesignationEntry"=$75, "RecOfIntToBePostedTo"=$76, "RecOfIntRemarks"=$77  WHERE  "id" = $1 RETURNING *',
           [
 userInput.Emp_id,
 userInput.personmark,
@@ -139,9 +139,21 @@ userInput.School_CollegeName,
 userInput.School_CollegeAddress,
 userInput.HigherClassStudied,
 userInput.StudiedYear,
-userInput.StudiedResultStatus
+userInput.StudiedResultStatus,
 
-
+userInput.TC_No,
+userInput.TC_Type,
+userInput.MarkSheet_of,
+userInput.MarkSheet_of_Type,
+userInput.Games,
+userInput.Hobbies,
+userInput.RecOfIntWrittenWork,
+userInput.RecOfIntAppearance,
+userInput.RecOfIntFirstImperssion,
+userInput.RecOfIntResult,
+userInput.RecOfIntDesignationEntry,
+userInput.RecOfIntToBePostedTo,
+userInput.RecOfIntRemarks
           ])
                  .then(data => {
                     console.log("1");
