@@ -6131,6 +6131,7 @@ function advanceadd(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
                 for(var i = 1; i <= req.body.pinstalment; i++){
+                    console.log(ddate);
                     // var date = moment(req.body.ddate).format( "yyyy-mm-dd");
                 var futureMonth = moment(req.body.ddate).add( i , 'months').calendar();
                 var date = dateFormat(futureMonth, "yyyy-mm-dd");
