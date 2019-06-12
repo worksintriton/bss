@@ -9720,7 +9720,7 @@
         }
     },
 
-     "/advance/advanceadd": {
+     "/advances/advanceadd": {
         "POST": {
             "body": {
                  "type": "object",
@@ -10978,6 +10978,30 @@
                     },
                     "add_amount": {
                         "type": "number"
+                    },
+                    "advance_id": {
+                        "type": "number"
+                    },
+                    "loan_id": {
+                        "type": "number"
+                    },
+                    "uniform_id": {
+                        "type": "number"
+                    },
+                    "mess_id": {
+                        "type": "number"
+                    },
+                    "rent_id": {
+                        "type": "number"
+                    },
+                    "atmcard_id": {
+                        "type": "number"
+                    },
+                    "others_id": {
+                        "type": "number"
+                    },
+                    "phone_id": {
+                        "type": "number"
                     }
                 },
         "additionalProperties": true,
@@ -11136,6 +11160,30 @@
                         "type": "number"
                     },
                     "add_amount": {
+                        "type": "number"
+                    },
+                    "advance_id": {
+                        "type": "number"
+                    },
+                    "loan_id": {
+                        "type": "number"
+                    },
+                    "uniform_id": {
+                        "type": "number"
+                    },
+                    "mess_id": {
+                        "type": "number"
+                    },
+                    "rent_id": {
+                        "type": "number"
+                    },
+                    "atmcard_id": {
+                        "type": "number"
+                    },
+                    "others_id": {
+                        "type": "number"
+                    },
+                    "phone_id": {
                         "type": "number"
                     }
                 },

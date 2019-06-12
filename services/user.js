@@ -4005,40 +4005,117 @@ user.companylistss = function (userInput, resultCallback) {
 ///add advance/////
 
 
-user.advanceadds = function (userInput,date,amount, resultCallback) {
+user.advanceaddsss = function (userInput,date,amount,date1, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-                 executor.one('INSERT INTO public.advance(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *',
-[
-userInput.employee_id,
-userInput.employee_name,
-userInput.bank,
-amount,
-userInput.pbalanceamount,
-userInput.pinstalment,
-userInput.ppendinginstalment,
-userInput.dfullcash,
-userInput.dpaytype,
-date,
-userInput.damount,
-userInput.daddi,
-userInput.dnaration,
-userInput.advance_type,
-userInput.company_name,
-userInput.site,
-"Pending",
-userInput.loan_number
-])
-                      .then(data => {
-                 console.log(data);
-                 resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            console.log('ERROR:', error);
-        })
+  executor.any('select * FROM public."advance" where "employee_id"=$1 and "company_name"=$2 and "advance_type"=$3 and  "cdate"=$4 and  "employee_name"=$5 ',
+   [userInput.employee_id, userInput.company_name, userInput.advance_type, date1, userInput.employee_name])
+  .then(data => {
+    if ( data.length > 0) {
+      "update"
+      console.log(data);
+      executor.one('UPDATE public.advance SET  pamount=$1 WHERE  "id" = $2 RETURNING *',
+      [
+        +data[0].pamount + +userInput.pamount,
+        data[0].id
+      ])
+      .then(data1 => {
+        console.log(data1);
+        executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+        [
+         data1.employee_id,
+         data1.employee_name,
+         data1.account_number,
+         data1.pamount,
+         data1.pbalanceamount,
+         data1.pinstalment,
+         data1.ppendinginstalment,
+         data1.dfullcash,
+         data1.dpaytype,
+         data1.ddate,
+         data1.damount,
+         data1.daddi,
+         data1.dnaration,
+         data1.advance_type,
+         data1.company_name,
+         data1.site,
+         data1.status,
+         data1.loan_number,
+         data1.cdate,
+         data1.id
+        ])
+      
+      resultCallback(null,data1 );
+      })
+      .catch(error => {
+                  resultCallback(error,null );
+                  console.log('ERROR:', error);
+              })
+    } else if (data.length == 0) {
+      "insert"
+      executor.one('INSERT INTO public.advance(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number, cdate)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
+      [
+      userInput.employee_id,
+      userInput.employee_name,
+      userInput.bank,
+      amount,
+      userInput.pbalanceamount,
+      userInput.pinstalment,
+      userInput.ppendinginstalment,
+      userInput.dfullcash,
+      userInput.dpaytype,
+      date,
+      userInput.damount,
+      userInput.daddi,
+      userInput.dnaration,
+      userInput.advance_type,
+      userInput.company_name,
+      userInput.site,
+      "Pending",
+      userInput.loan_number,
+      date1
+      ])
+                            .then(data2 => {
+                       console.log(data2);
+                       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                       [
+                        data2.employee_id,
+                        data2.employee_name,
+                        data2.account_number,
+                        data2.pamount,
+                        data2.pbalanceamount,
+                        data2.pinstalment,
+                        data2.ppendinginstalment,
+                        data2.dfullcash,
+                        data2.dpaytype,
+                       data2.ddate,
+                       data2.damount,
+                       data2.daddi,
+                       data2.dnaration,
+                       data2.advance_type,
+                       data2.company_name,
+                       data2.site,
+                       data2.status,
+                       data2.loan_number,
+                       data2.cdate,
+                       data2.id
+                       ])
+                     
+                       resultCallback(null,data2 );
+              })
+              .catch(error => {
+                  resultCallback(error,null );
+                  console.log('ERROR:', error);
+              })
+    }
 
-
+           resultCallback(null,data );
+      
+  })
+  .catch(error => {
+      resultCallback(error,null );
+      console.log('ERROR:', error);
+  })
 };
 
 
@@ -4234,6 +4311,29 @@ userInput.loan_number,
 userInput.id
 ])
 .then(data => {
+  executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
+  [
+   data.employee_id,
+   data.employee_name,
+   data.account_number,
+   data.pamount,
+   data.pbalanceamount,
+   data.pinstalment,
+   data.ppendinginstalment,
+   data.dfullcash,
+   data.dpaytype,
+  data.ddate,
+  data.damount,
+  data.daddi,
+  data.dnaration,
+  data.advance_type,
+  data.company_name,
+  data.site,
+  data.status,
+  data.loan_number,
+  data.id
+  ])
+
 resultCallback(null,data );
 })
 .catch(error => {
@@ -4255,6 +4355,29 @@ userInput.dpaytype,
 userInput.status
 ])
 .then(data => {
+  executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
+  [
+   data.employee_id,
+   data.employee_name,
+   data.account_number,
+   data.pamount,
+   data.pbalanceamount,
+   data.pinstalment,
+   data.ppendinginstalment,
+   data.dfullcash,
+   data.dpaytype,
+  data.ddate,
+  data.damount,
+  data.daddi,
+  data.dnaration,
+  data.advance_type,
+  data.company_name,
+  data.site,
+  data.status,
+  data.loan_number,
+  data.id
+  ])
+
 console.log(data);
 resultCallback(null,data );
 })
@@ -4731,7 +4854,7 @@ user.manual_entry_emp_adds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\' 
-executor.one('INSERT INTO public.payroll_manual_entry(company_name,unit_name,date,ecode,ename,etype,eac,ebankname,eifsc,designation,present,dutyoff,add_duties,payment_type,paymode,total_duties,basic,da,hra,trv_ex,others,medical,others1,others2,others3,others4,waesi,ewdays,ewamount,gross,advance,loan,uniform,mess,rent,atm,phone,pf,esi,pr_tax,staff_wellfare,total_dec,net_pay,add_amount)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44) RETURNING *',
+executor.one('INSERT INTO public.payroll_manual_entry(company_name,unit_name,date,ecode,ename,etype,eac,ebankname,eifsc,designation,present,dutyoff,add_duties,payment_type,paymode,total_duties,basic,da,hra,trv_ex,others,medical,others1,others2,others3,others4,waesi,ewdays,ewamount,gross,advance,loan,uniform,mess,rent,atm,phone,pf,esi,pr_tax,staff_wellfare,total_dec,net_pay,add_amount,advance_id,loan_id,uniform_id,mess_id,rent_id,atmcard_id,others_id,phone_id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45 ,$46 ,$47 ,$48 ,$49 ,$50 ,$51 ,$52) RETURNING *',
 [
 userInput.company_name,
 userInput.unit_name,
@@ -4776,10 +4899,612 @@ userInput.pr_tax,
 userInput.staff_wellfare,
 userInput.total_dec,
 userInput.ner_pay,
-userInput.add_amount
+userInput.add_amount,
+userInput.advance_id,
+userInput.loan_id,
+userInput.uniform_id,
+userInput.mess_id,
+userInput.rent_id,
+userInput.atmcard_id,
+userInput.others_id,
+userInput.phone_id
 ])
 .then(data => {
                  console.log(data);
+                 console.log(+data.advance_id);
+                 if (+data.advance_id == 0) {
+
+                 } else if (+data.advance_id > 0){
+                  executor.one('select * from public.advance  WHERE id=$1',[+data.advance_id])
+                  .then(advanceDetail => {
+                    console.log(advanceDetail)
+                    if(data.advance == advanceDetail.pamount) {
+                      console.log("Paid")
+                      executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+                      [
+                        "Paid",
+                        +data.advance_id])
+                      .then(advanceStatus => {
+                        console.log(advanceStatus)
+                        executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                        [
+                          advanceStatus.employee_id,
+                          advanceStatus.employee_name,
+                          advanceStatus.account_number,
+                          advanceStatus.pamount,
+                          advanceStatus.pbalanceamount,
+                          advanceStatus.pinstalment,
+                          advanceStatus.ppendinginstalment,
+                          advanceStatus.dfullcash,
+                          advanceStatus.dpaytype,
+                          advanceStatus.ddate,
+                          advanceStatus.damount,
+                          advanceStatus.daddi,
+                          advanceStatus.dnaration,
+                          advanceStatus.advance_type,
+                          advanceStatus.company_name,
+                          advanceStatus.site,
+                          advanceStatus.status,
+                          advanceStatus.loan_number,
+                          advanceStatus.cdate,
+                          advanceStatus.id
+                        ])
+                      
+                      })
+                    } else if(data.advance < advanceDetail.pamount) {
+                      console.log("Pending")
+                      executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+                      [
+                        advanceDetail.pamount-data.advance,
+                        +data.advance_id])
+                      .then(advanceStatus1 => {
+                        console.log(advanceStatus1)
+                        executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                        [
+                          advanceStatus1.employee_id,
+                          advanceStatus1.employee_name,
+                          advanceStatus1.account_number,
+                          advanceStatus1.pamount,
+                          advanceStatus1.pbalanceamount,
+                          advanceStatus1.pinstalment,
+                          advanceStatus1.ppendinginstalment,
+                          advanceStatus1.dfullcash,
+                          advanceStatus1.dpaytype,
+                          advanceStatus1.ddate,
+                          advanceStatus1.damount,
+                          advanceStatus1.daddi,
+                          advanceStatus1.dnaration,
+                          advanceStatus1.advance_type,
+                          advanceStatus1.company_name,
+                          advanceStatus1.site,
+                          advanceStatus1.status,
+                          advanceStatus1.loan_number,
+                          advanceStatus1.cdate,
+                          advanceStatus1.id
+                        ])
+                      })
+                    }
+
+                  })
+                 }
+                 if (+data.loan_id == 0) {
+
+                } else if (+data.loan_id > 0){
+                 executor.one('select * from public.advance  WHERE id=$1',[+data.loan_id])
+                 .then(loanDetail => {
+                   console.log(loanDetail)
+                  if(data.loan == loanDetail.pamount) {
+                    console.log("Paid")
+                    executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+                    [
+                      "Paid",
+                      +data.loan_id])
+                    .then(loanStatus => {
+                      console.log(loanStatus)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                        [
+                          loanStatus.employee_id,
+                          loanStatus.employee_name,
+                          loanStatus.account_number,
+                          loanStatus.pamount,
+                          loanStatus.pbalanceamount,
+                          loanStatus.pinstalment,
+                          loanStatus.ppendinginstalment,
+                          loanStatus.dfullcash,
+                          loanStatus.dpaytype,
+                          loanStatus.ddate,
+                          loanStatus.damount,
+                          loanStatus.daddi,
+                          loanStatus.dnaration,
+                          loanStatus.advance_type,
+                          loanStatus.company_name,
+                          loanStatus.site,
+                          loanStatus.status,
+                          loanStatus.loan_number,
+                          loanStatus.cdate,
+                          loanStatus.id
+                        ])
+                    })
+                  } else if(data.loan < loanDetail.pamount) {
+                    console.log("Pending")
+                    executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+                    [
+                      loanDetail.pamount-data.loan,
+                      +data.loan_id])
+                    .then(loanStatus1 => {
+                      console.log(loanStatus1)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        loanStatus1.employee_id,
+                        loanStatus1.employee_name,
+                        loanStatus1.account_number,
+                        loanStatus1.pamount,
+                        loanStatus1.pbalanceamount,
+                        loanStatus1.pinstalment,
+                        loanStatus1.ppendinginstalment,
+                        loanStatus1.dfullcash,
+                        loanStatus1.dpaytype,
+                        loanStatus1.ddate,
+                        loanStatus1.damount,
+                        loanStatus1.daddi,
+                        loanStatus1.dnaration,
+                        loanStatus1.advance_type,
+                        loanStatus1.company_name,
+                        loanStatus1.site,
+                        loanStatus1.status,
+                        loanStatus1.loan_number,
+                        loanStatus1.cdate,
+                        loanStatus1.id
+                      ])
+                    })
+                  }
+
+                 })
+                }
+                if (+data.uniform_id == 0) {
+
+                } else if (+data.uniform_id > 0){
+                 executor.one('select * from public.advance  WHERE id=$1',[+data.uniform_id])
+                 .then(uniformDetail => {
+                   console.log(uniformDetail)
+                  if(data.uniform == uniformDetail.pamount) {
+                    console.log("Paid")
+                    executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+                    [
+                      "Paid",
+                      +data.uniform_id])
+                    .then(uniformStatus => {
+                      console.log(uniformStatus)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        uniformStatus.employee_id,
+                        uniformStatus.employee_name,
+                        uniformStatus.account_number,
+                        uniformStatus.pamount,
+                        uniformStatus.pbalanceamount,
+                        uniformStatus.pinstalment,
+                        uniformStatus.ppendinginstalment,
+                        uniformStatus.dfullcash,
+                        uniformStatus.dpaytype,
+                        uniformStatus.ddate,
+                        uniformStatus.damount,
+                        uniformStatus.daddi,
+                        uniformStatus.dnaration,
+                        uniformStatus.advance_type,
+                        uniformStatus.company_name,
+                        uniformStatus.site,
+                        uniformStatus.status,
+                        uniformStatus.loan_number,
+                        uniformStatus.cdate,
+                        uniformStatus.id
+                      ])
+                    })
+                  } else if(data.uniform < uniformDetail.pamount) {
+                    console.log("Pending")
+                    executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+                    [
+                      uniformDetail.pamount-data.uniform,
+                      +data.uniform_id])
+                    .then(uniformStatus1 => {
+                      console.log(uniformStatus1)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        uniformStatus1.employee_id,
+                        uniformStatus1.employee_name,
+                        uniformStatus1.account_number,
+                        uniformStatus1.pamount,
+                        uniformStatus1.pbalanceamount,
+                        uniformStatus1.pinstalment,
+                        uniformStatus1.ppendinginstalment,
+                        uniformStatus1.dfullcash,
+                        uniformStatus1.dpaytype,
+                        uniformStatus1.ddate,
+                        uniformStatus1.damount,
+                        uniformStatus1.daddi,
+                        uniformStatus1.dnaration,
+                        uniformStatus1.advance_type,
+                        uniformStatus1.company_name,
+                        uniformStatus1.site,
+                        uniformStatus1.status,
+                        uniformStatus1.loan_number,
+                        uniformStatus1.cdate,
+                        uniformStatus1.id
+                      ])
+                    })
+                  }
+
+                 })
+                }
+                if (+data.mess_id == 0) {
+
+                } else if (+data.mess_id > 0){
+                 executor.one('select * from public.advance  WHERE id=$1',[+data.mess_id])
+                 .then(messDetail => {
+                   console.log(messDetail)
+                  if(data.mess == messDetail.pamount) {
+                    console.log("Paid")
+                    executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+                    [
+                      "Paid",
+                      +data.mess_id])
+                    .then(messStatus => {
+                      console.log(messStatus)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        messStatus.employee_id,
+                        messStatus.employee_name,
+                        messStatus.account_number,
+                        messStatus.pamount,
+                        messStatus.pbalanceamount,
+                        messStatus.pinstalment,
+                        messStatus.ppendinginstalment,
+                        messStatus.dfullcash,
+                        messStatus.dpaytype,
+                        messStatus.ddate,
+                        messStatus.damount,
+                        messStatus.daddi,
+                        messStatus.dnaration,
+                        messStatus.advance_type,
+                        messStatus.company_name,
+                        messStatus.site,
+                        messStatus.status,
+                        messStatus.loan_number,
+                        messStatus.cdate,
+                        messStatus.id
+                      ])
+                    })
+                  } else if(data.mess < messDetail.pamount) {
+                    console.log("Pending")
+                    executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+                    [
+                      messDetail.pamount-data.mess,
+                      +data.mess_id])
+                    .then(messStatus1 => {
+                      console.log(messStatus1)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        messStatus1.employee_id,
+                        messStatus1.employee_name,
+                        messStatus1.account_number,
+                        messStatus1.pamount,
+                        messStatus1.pbalanceamount,
+                        messStatus1.pinstalment,
+                        messStatus1.ppendinginstalment,
+                        messStatus1.dfullcash,
+                        messStatus1.dpaytype,
+                        messStatus1.ddate,
+                        messStatus1.damount,
+                        messStatus1.daddi,
+                        messStatus1.dnaration,
+                        messStatus1.advance_type,
+                        messStatus1.company_name,
+                        messStatus1.site,
+                        messStatus1.status,
+                        messStatus1.loan_number,
+                        messStatus1.cdate,
+                        messStatus1.id
+                      ])
+                    })
+                  }
+
+                 })
+                }
+                if (+data.rent_id == 0) {
+
+                } else if (+data.rent_id > 0){
+                 executor.one('select * from public.advance  WHERE id=$1',[+data.rent_id])
+                 .then(rentDetail => {
+                   console.log(rentDetail)
+                  if(data.rent == rentDetail.pamount) {
+                    console.log("Paid")
+                    executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+                    [
+                      "Paid",
+                      +data.rent_id])
+                    .then(rentStatus => {
+                      console.log(rentStatus)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        rentStatus.employee_id,
+                        rentStatus.employee_name,
+                        rentStatus.account_number,
+                        rentStatus.pamount,
+                        rentStatus.pbalanceamount,
+                        rentStatus.pinstalment,
+                        rentStatus.ppendinginstalment,
+                        rentStatus.dfullcash,
+                        rentStatus.dpaytype,
+                        rentStatus.ddate,
+                        rentStatus.damount,
+                        rentStatus.daddi,
+                        rentStatus.dnaration,
+                        rentStatus.advance_type,
+                        rentStatus.company_name,
+                        rentStatus.site,
+                        rentStatus.status,
+                        rentStatus.loan_number,
+                        rentStatus.cdate,
+                        rentStatus.id
+                      ])
+                    })
+                  } else if(data.rent < rentDetail.pamount) {
+                    console.log("Pending")
+                    executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+                    [
+                      rentDetail.pamount-data.rent,
+                      +data.rent_id])
+                    .then(rentStatus1 => {
+                      console.log(rentStatus1)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        rentStatus1.employee_id,
+                        rentStatus1.employee_name,
+                        rentStatus1.account_number,
+                        rentStatus1.pamount,
+                        rentStatus1.pbalanceamount,
+                        rentStatus1.pinstalment,
+                        rentStatus1.ppendinginstalment,
+                        rentStatus1.dfullcash,
+                        rentStatus1.dpaytype,
+                        rentStatus1.ddate,
+                        rentStatus1.damount,
+                        rentStatus1.daddi,
+                        rentStatus1.dnaration,
+                        rentStatus1.advance_type,
+                        rentStatus1.company_name,
+                        rentStatus1.site,
+                        rentStatus1.status,
+                        rentStatus1.loan_number,
+                        rentStatus1.cdate,
+                        rentStatus1.id
+                      ])
+                    })
+                  }
+
+                 })
+                }
+                if (+data.atmcard_id == 0) {
+
+                } else if (+data.atmcard_id > 0){
+                 executor.one('select * from public.advance  WHERE id=$1',[+data.atmcard_id])
+                 .then(atmDetail => {
+                   console.log(atmDetail)
+                  if(data.atm == atmDetail.pamount) {
+                    console.log("Paid")
+                    executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+                    [
+                      "Paid",
+                      +data.atmcard_id])
+                    .then(atmStatus => {
+                      console.log(atmStatus)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        atmStatus.employee_id,
+                        atmStatus.employee_name,
+                        atmStatus.account_number,
+                        atmStatus.pamount,
+                        atmStatus.pbalanceamount,
+                        atmStatus.pinstalment,
+                        atmStatus.ppendinginstalment,
+                        atmStatus.dfullcash,
+                        atmStatus.dpaytype,
+                        atmStatus.ddate,
+                        atmStatus.damount,
+                        atmStatus.daddi,
+                        atmStatus.dnaration,
+                        atmStatus.advance_type,
+                        atmStatus.company_name,
+                        atmStatus.site,
+                        atmStatus.status,
+                        atmStatus.loan_number,
+                        atmStatus.cdate,
+                        atmStatus.id
+                      ])
+                    })
+                  } else if(data.atm < atmDetail.pamount) {
+                    console.log("Pending")
+                    executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+                    [
+                      atmDetail.pamount-data.atm,
+                      +data.atmcard_id])
+                    .then(atmStatus1 => {
+                      console.log(atmStatus1)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        atmStatus1.employee_id,
+                        atmStatus1.employee_name,
+                        atmStatus1.account_number,
+                        atmStatus1.pamount,
+                        atmStatus1.pbalanceamount,
+                        atmStatus1.pinstalment,
+                        atmStatus1.ppendinginstalment,
+                        atmStatus1.dfullcash,
+                        atmStatus1.dpaytype,
+                        atmStatus1.ddate,
+                        atmStatus1.damount,
+                        atmStatus1.daddi,
+                        atmStatus1.dnaration,
+                        atmStatus1.advance_type,
+                        atmStatus1.company_name,
+                        atmStatus1.site,
+                        atmStatus1.status,
+                        atmStatus1.loan_number,
+                        atmStatus1.cdate,
+                        atmStatus1.id
+                      ])
+                    })
+                  }
+
+                 })
+                }
+                if (+data.phone_id == 0) {
+
+                } else if (+data.phone_id > 0){
+                 executor.one('select * from public.advance  WHERE id=$1',[+data.phone_id])
+                 .then(phoneDetail => {
+                   console.log(phoneDetail)
+                  if(data.phone == phoneDetail.pamount) {
+                    console.log("Paid")
+                    executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+                    [
+                      "Paid",
+                      +data.phone_id])
+                    .then(phoneStatus => {
+                      console.log(phoneStatus)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        phoneStatus.employee_id,
+                        phoneStatus.employee_name,
+                        phoneStatus.account_number,
+                        phoneStatus.pamount,
+                        phoneStatus.pbalanceamount,
+                        phoneStatus.pinstalment,
+                        phoneStatus.ppendinginstalment,
+                        phoneStatus.dfullcash,
+                        phoneStatus.dpaytype,
+                        phoneStatus.ddate,
+                        phoneStatus.damount,
+                        phoneStatus.daddi,
+                        phoneStatus.dnaration,
+                        phoneStatus.advance_type,
+                        phoneStatus.company_name,
+                        phoneStatus.site,
+                        phoneStatus.status,
+                        phoneStatus.loan_number,
+                        phoneStatus.cdate,
+                        phoneStatus.id
+                      ])
+                    })
+                  } else if(data.phone < phoneDetail.pamount) {
+                    console.log("Pending")
+                    executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+                    [
+                      phoneDetail.pamount-data.phone,
+                      +data.phone_id])
+                    .then(phoneStatus1 => {
+                      console.log(phoneStatus1)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        phoneStatus1.employee_id,
+                        phoneStatus1.employee_name,
+                        phoneStatus1.account_number,
+                        phoneStatus1.pamount,
+                        phoneStatus1.pbalanceamount,
+                        phoneStatus1.pinstalment,
+                        phoneStatus1.ppendinginstalment,
+                        phoneStatus1.dfullcash,
+                        phoneStatus1.dpaytype,
+                        phoneStatus1.ddate,
+                        phoneStatus1.damount,
+                        phoneStatus1.daddi,
+                        phoneStatus1.dnaration,
+                        phoneStatus1.advance_type,
+                        phoneStatus1.company_name,
+                        phoneStatus1.site,
+                        phoneStatus1.status,
+                        phoneStatus1.loan_number,
+                        phoneStatus1.cdate,
+                        phoneStatus1.id
+                      ])
+                    })
+                  }
+
+                 })
+                }
+                if (+data.others_id == 0) {
+
+                } else if (+data.others_id > 0){
+                 executor.one('select * from public.advance  WHERE id=$1',[+data.others_id])
+                 .then(otherDetail => {
+                   console.log(otherDetail)
+                  if(data.others == otherDetail.pamount) {
+                    console.log("Paid")
+                    executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+                    [
+                      "Paid",
+                      +data.others_id])
+                    .then(otherStatus => {
+                      console.log(otherStatus)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        otherStatus.employee_id,
+                        otherStatus.employee_name,
+                        otherStatus.account_number,
+                        otherStatus.pamount,
+                        otherStatus.pbalanceamount,
+                        otherStatus.pinstalment,
+                        otherStatus.ppendinginstalment,
+                        otherStatus.dfullcash,
+                        otherStatus.dpaytype,
+                        otherStatus.ddate,
+                        otherStatus.damount,
+                        otherStatus.daddi,
+                        otherStatus.dnaration,
+                        otherStatus.advance_type,
+                        otherStatus.company_name,
+                        otherStatus.site,
+                        otherStatus.status,
+                        otherStatus.loan_number,
+                        otherStatus.cdate,
+                        otherStatus.id
+                      ])
+                    })
+                  } else if(data.others < otherDetail.pamount) {
+                    console.log("Pending")
+                    executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+                    [
+                      otherDetail.pamount-data.others,
+                      +data.others_id])
+                    .then(otherStatus1 => {
+                      console.log(otherStatus1)
+                      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                      [
+                        otherStatus1.employee_id,
+                        otherStatus1.employee_name,
+                        otherStatus1.account_number,
+                        otherStatus1.pamount,
+                        otherStatus1.pbalanceamount,
+                        otherStatus1.pinstalment,
+                        otherStatus1.ppendinginstalment,
+                        otherStatus1.dfullcash,
+                        otherStatus1.dpaytype,
+                        otherStatus1.ddate,
+                        otherStatus1.damount,
+                        otherStatus1.daddi,
+                        otherStatus1.dnaration,
+                        otherStatus1.advance_type,
+                        otherStatus1.company_name,
+                        otherStatus1.site,
+                        otherStatus1.status,
+                        otherStatus1.loan_number,
+                        otherStatus1.cdate,
+                        otherStatus1.id
+                      ])
+                    })
+                  }
+
+                 })
+                }
                  resultCallback(null,data );
         })
         .catch(error => {
@@ -4791,7 +5516,7 @@ userInput.add_amount
 user.manual_entry_emp_updates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-  executor.one('UPDATE public.payroll_manual_entry SET company_name=$1,unit_name=$2,date=$3,ecode=$4,ename=$5,etype=$6,eac=$7,ebankname=$8,eifsc=$9,designation=$10,present=$11,dutyoff=$12,add_duties=$13,payment_type=$14,paymode=$15,total_duties=$16,basic=$17,da=$18,hra=$19,trv_ex=$20,others=$21,medical=$22,others1=$23,others2=$24,others3=$25,others4=$26,waesi=$27,ewdays=$28,ewamount=$29,gross=$30,advance=$31,loan=$32,uniform=$33,mess=$34,rent=$35,atm=$36,phone=$37,pf=$38,esi=$39,pr_tax=$40,staff_wellfare=$41,total_dec=$42,net_pay=$43,add_amount=$44  WHERE id=$45 RETURNING *',
+  executor.one('UPDATE public.payroll_manual_entry SET company_name=$1,unit_name=$2,date=$3,ecode=$4,ename=$5,etype=$6,eac=$7,ebankname=$8,eifsc=$9,designation=$10,present=$11,dutyoff=$12,add_duties=$13,payment_type=$14,paymode=$15,total_duties=$16,basic=$17,da=$18,hra=$19,trv_ex=$20,others=$21,medical=$22,others1=$23,others2=$24,others3=$25,others4=$26,waesi=$27,ewdays=$28,ewamount=$29,gross=$30,advance=$31,loan=$32,uniform=$33,mess=$34,rent=$35,atm=$36,phone=$37,pf=$38,esi=$39,pr_tax=$40,staff_wellfare=$41,total_dec=$42,net_pay=$43,add_amount=$44, advance_id=$45 ,loan_id=$46 ,uniform_id=$47 ,mess_id=$48 ,rent_id=$49 ,atmcard_id=$50 ,others_id=$51 ,phone_id=$52  WHERE id=$53 RETURNING *',
   [
     userInput.company_name,
     userInput.unit_name,
@@ -4837,12 +5562,614 @@ user.manual_entry_emp_updates = function (userInput, resultCallback) {
     userInput.total_dec,
     userInput.ner_pay,
     userInput.add_amount,
+    userInput.advance_id,
+    userInput.loan_id,
+    userInput.uniform_id,
+    userInput.mess_id,
+    userInput.rent_id,
+    userInput.atmcard_id,
+    userInput.others_id,
+    userInput.phone_id,
     userInput.id
     ])
-.then(data => {
-                 console.log(data);
-                 resultCallback(null,data );
-        })
+    .then(data => {
+      console.log(data);
+      console.log(+data.advance_id);
+      if (+data.advance_id == 0) {
+
+      } else if (+data.advance_id > 0){
+       executor.one('select * from public.advance  WHERE id=$1',[+data.advance_id])
+       .then(advanceDetail => {
+         console.log(advanceDetail)
+         if(data.advance == advanceDetail.pamount) {
+           console.log("Paid")
+           executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+           [
+             "Paid",
+             +data.advance_id])
+           .then(advanceStatus => {
+             console.log(advanceStatus)
+             executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+             [
+               advanceStatus.employee_id,
+               advanceStatus.employee_name,
+               advanceStatus.account_number,
+               advanceStatus.pamount,
+               advanceStatus.pbalanceamount,
+               advanceStatus.pinstalment,
+               advanceStatus.ppendinginstalment,
+               advanceStatus.dfullcash,
+               advanceStatus.dpaytype,
+               advanceStatus.ddate,
+               advanceStatus.damount,
+               advanceStatus.daddi,
+               advanceStatus.dnaration,
+               advanceStatus.advance_type,
+               advanceStatus.company_name,
+               advanceStatus.site,
+               advanceStatus.status,
+               advanceStatus.loan_number,
+               advanceStatus.cdate,
+               advanceStatus.id
+             ])
+           
+           })
+         } else if(data.advance < advanceDetail.pamount) {
+           console.log("Pending")
+           executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+           [
+             advanceDetail.pamount-data.advance,
+             +data.advance_id])
+           .then(advanceStatus1 => {
+             console.log(advanceStatus1)
+             executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+             [
+               advanceStatus1.employee_id,
+               advanceStatus1.employee_name,
+               advanceStatus1.account_number,
+               advanceStatus1.pamount,
+               advanceStatus1.pbalanceamount,
+               advanceStatus1.pinstalment,
+               advanceStatus1.ppendinginstalment,
+               advanceStatus1.dfullcash,
+               advanceStatus1.dpaytype,
+               advanceStatus1.ddate,
+               advanceStatus1.damount,
+               advanceStatus1.daddi,
+               advanceStatus1.dnaration,
+               advanceStatus1.advance_type,
+               advanceStatus1.company_name,
+               advanceStatus1.site,
+               advanceStatus1.status,
+               advanceStatus1.loan_number,
+               advanceStatus1.cdate,
+               advanceStatus1.id
+             ])
+           })
+         }
+
+       })
+      }
+      if (+data.loan_id == 0) {
+
+     } else if (+data.loan_id > 0){
+      executor.one('select * from public.advance  WHERE id=$1',[+data.loan_id])
+      .then(loanDetail => {
+        console.log(loanDetail)
+       if(data.loan == loanDetail.pamount) {
+         console.log("Paid")
+         executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+         [
+           "Paid",
+           +data.loan_id])
+         .then(loanStatus => {
+           console.log(loanStatus)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+             [
+               loanStatus.employee_id,
+               loanStatus.employee_name,
+               loanStatus.account_number,
+               loanStatus.pamount,
+               loanStatus.pbalanceamount,
+               loanStatus.pinstalment,
+               loanStatus.ppendinginstalment,
+               loanStatus.dfullcash,
+               loanStatus.dpaytype,
+               loanStatus.ddate,
+               loanStatus.damount,
+               loanStatus.daddi,
+               loanStatus.dnaration,
+               loanStatus.advance_type,
+               loanStatus.company_name,
+               loanStatus.site,
+               loanStatus.status,
+               loanStatus.loan_number,
+               loanStatus.cdate,
+               loanStatus.id
+             ])
+         })
+       } else if(data.loan < loanDetail.pamount) {
+         console.log("Pending")
+         executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+         [
+           loanDetail.pamount-data.loan,
+           +data.loan_id])
+         .then(loanStatus1 => {
+           console.log(loanStatus1)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             loanStatus1.employee_id,
+             loanStatus1.employee_name,
+             loanStatus1.account_number,
+             loanStatus1.pamount,
+             loanStatus1.pbalanceamount,
+             loanStatus1.pinstalment,
+             loanStatus1.ppendinginstalment,
+             loanStatus1.dfullcash,
+             loanStatus1.dpaytype,
+             loanStatus1.ddate,
+             loanStatus1.damount,
+             loanStatus1.daddi,
+             loanStatus1.dnaration,
+             loanStatus1.advance_type,
+             loanStatus1.company_name,
+             loanStatus1.site,
+             loanStatus1.status,
+             loanStatus1.loan_number,
+             loanStatus1.cdate,
+             loanStatus1.id
+           ])
+         })
+       }
+
+      })
+     }
+     if (+data.uniform_id == 0) {
+
+     } else if (+data.uniform_id > 0){
+      executor.one('select * from public.advance  WHERE id=$1',[+data.uniform_id])
+      .then(uniformDetail => {
+        console.log(uniformDetail)
+       if(data.uniform == uniformDetail.pamount) {
+         console.log("Paid")
+         executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+         [
+           "Paid",
+           +data.uniform_id])
+         .then(uniformStatus => {
+           console.log(uniformStatus)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             uniformStatus.employee_id,
+             uniformStatus.employee_name,
+             uniformStatus.account_number,
+             uniformStatus.pamount,
+             uniformStatus.pbalanceamount,
+             uniformStatus.pinstalment,
+             uniformStatus.ppendinginstalment,
+             uniformStatus.dfullcash,
+             uniformStatus.dpaytype,
+             uniformStatus.ddate,
+             uniformStatus.damount,
+             uniformStatus.daddi,
+             uniformStatus.dnaration,
+             uniformStatus.advance_type,
+             uniformStatus.company_name,
+             uniformStatus.site,
+             uniformStatus.status,
+             uniformStatus.loan_number,
+             uniformStatus.cdate,
+             uniformStatus.id
+           ])
+         })
+       } else if(data.uniform < uniformDetail.pamount) {
+         console.log("Pending")
+         executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+         [
+           uniformDetail.pamount-data.uniform,
+           +data.uniform_id])
+         .then(uniformStatus1 => {
+           console.log(uniformStatus1)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             uniformStatus1.employee_id,
+             uniformStatus1.employee_name,
+             uniformStatus1.account_number,
+             uniformStatus1.pamount,
+             uniformStatus1.pbalanceamount,
+             uniformStatus1.pinstalment,
+             uniformStatus1.ppendinginstalment,
+             uniformStatus1.dfullcash,
+             uniformStatus1.dpaytype,
+             uniformStatus1.ddate,
+             uniformStatus1.damount,
+             uniformStatus1.daddi,
+             uniformStatus1.dnaration,
+             uniformStatus1.advance_type,
+             uniformStatus1.company_name,
+             uniformStatus1.site,
+             uniformStatus1.status,
+             uniformStatus1.loan_number,
+             uniformStatus1.cdate,
+             uniformStatus1.id
+           ])
+         })
+       }
+
+      })
+     }
+     if (+data.mess_id == 0) {
+
+     } else if (+data.mess_id > 0){
+      executor.one('select * from public.advance  WHERE id=$1',[+data.mess_id])
+      .then(messDetail => {
+        console.log(messDetail)
+       if(data.mess == messDetail.pamount) {
+         console.log("Paid")
+         executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+         [
+           "Paid",
+           +data.mess_id])
+         .then(messStatus => {
+           console.log(messStatus)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             messStatus.employee_id,
+             messStatus.employee_name,
+             messStatus.account_number,
+             messStatus.pamount,
+             messStatus.pbalanceamount,
+             messStatus.pinstalment,
+             messStatus.ppendinginstalment,
+             messStatus.dfullcash,
+             messStatus.dpaytype,
+             messStatus.ddate,
+             messStatus.damount,
+             messStatus.daddi,
+             messStatus.dnaration,
+             messStatus.advance_type,
+             messStatus.company_name,
+             messStatus.site,
+             messStatus.status,
+             messStatus.loan_number,
+             messStatus.cdate,
+             messStatus.id
+           ])
+         })
+       } else if(data.mess < messDetail.pamount) {
+         console.log("Pending")
+         executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+         [
+           messDetail.pamount-data.mess,
+           +data.mess_id])
+         .then(messStatus1 => {
+           console.log(messStatus1)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             messStatus1.employee_id,
+             messStatus1.employee_name,
+             messStatus1.account_number,
+             messStatus1.pamount,
+             messStatus1.pbalanceamount,
+             messStatus1.pinstalment,
+             messStatus1.ppendinginstalment,
+             messStatus1.dfullcash,
+             messStatus1.dpaytype,
+             messStatus1.ddate,
+             messStatus1.damount,
+             messStatus1.daddi,
+             messStatus1.dnaration,
+             messStatus1.advance_type,
+             messStatus1.company_name,
+             messStatus1.site,
+             messStatus1.status,
+             messStatus1.loan_number,
+             messStatus1.cdate,
+             messStatus1.id
+           ])
+         })
+       }
+
+      })
+     }
+     if (+data.rent_id == 0) {
+
+     } else if (+data.rent_id > 0){
+      executor.one('select * from public.advance  WHERE id=$1',[+data.rent_id])
+      .then(rentDetail => {
+        console.log(rentDetail)
+       if(data.rent == rentDetail.pamount) {
+         console.log("Paid")
+         executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+         [
+           "Paid",
+           +data.rent_id])
+         .then(rentStatus => {
+           console.log(rentStatus)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             rentStatus.employee_id,
+             rentStatus.employee_name,
+             rentStatus.account_number,
+             rentStatus.pamount,
+             rentStatus.pbalanceamount,
+             rentStatus.pinstalment,
+             rentStatus.ppendinginstalment,
+             rentStatus.dfullcash,
+             rentStatus.dpaytype,
+             rentStatus.ddate,
+             rentStatus.damount,
+             rentStatus.daddi,
+             rentStatus.dnaration,
+             rentStatus.advance_type,
+             rentStatus.company_name,
+             rentStatus.site,
+             rentStatus.status,
+             rentStatus.loan_number,
+             rentStatus.cdate,
+             rentStatus.id
+           ])
+         })
+       } else if(data.rent < rentDetail.pamount) {
+         console.log("Pending")
+         executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+         [
+           rentDetail.pamount-data.rent,
+           +data.rent_id])
+         .then(rentStatus1 => {
+           console.log(rentStatus1)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             rentStatus1.employee_id,
+             rentStatus1.employee_name,
+             rentStatus1.account_number,
+             rentStatus1.pamount,
+             rentStatus1.pbalanceamount,
+             rentStatus1.pinstalment,
+             rentStatus1.ppendinginstalment,
+             rentStatus1.dfullcash,
+             rentStatus1.dpaytype,
+             rentStatus1.ddate,
+             rentStatus1.damount,
+             rentStatus1.daddi,
+             rentStatus1.dnaration,
+             rentStatus1.advance_type,
+             rentStatus1.company_name,
+             rentStatus1.site,
+             rentStatus1.status,
+             rentStatus1.loan_number,
+             rentStatus1.cdate,
+             rentStatus1.id
+           ])
+         })
+       }
+
+      })
+     }
+     if (+data.atmcard_id == 0) {
+
+     } else if (+data.atmcard_id > 0){
+      executor.one('select * from public.advance  WHERE id=$1',[+data.atmcard_id])
+      .then(atmDetail => {
+        console.log(atmDetail)
+       if(data.atm == atmDetail.pamount) {
+         console.log("Paid")
+         executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+         [
+           "Paid",
+           +data.atmcard_id])
+         .then(atmStatus => {
+           console.log(atmStatus)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             atmStatus.employee_id,
+             atmStatus.employee_name,
+             atmStatus.account_number,
+             atmStatus.pamount,
+             atmStatus.pbalanceamount,
+             atmStatus.pinstalment,
+             atmStatus.ppendinginstalment,
+             atmStatus.dfullcash,
+             atmStatus.dpaytype,
+             atmStatus.ddate,
+             atmStatus.damount,
+             atmStatus.daddi,
+             atmStatus.dnaration,
+             atmStatus.advance_type,
+             atmStatus.company_name,
+             atmStatus.site,
+             atmStatus.status,
+             atmStatus.loan_number,
+             atmStatus.cdate,
+             atmStatus.id
+           ])
+         })
+       } else if(data.atm < atmDetail.pamount) {
+         console.log("Pending")
+         executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+         [
+           atmDetail.pamount-data.atm,
+           +data.atmcard_id])
+         .then(atmStatus1 => {
+           console.log(atmStatus1)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             atmStatus1.employee_id,
+             atmStatus1.employee_name,
+             atmStatus1.account_number,
+             atmStatus1.pamount,
+             atmStatus1.pbalanceamount,
+             atmStatus1.pinstalment,
+             atmStatus1.ppendinginstalment,
+             atmStatus1.dfullcash,
+             atmStatus1.dpaytype,
+             atmStatus1.ddate,
+             atmStatus1.damount,
+             atmStatus1.daddi,
+             atmStatus1.dnaration,
+             atmStatus1.advance_type,
+             atmStatus1.company_name,
+             atmStatus1.site,
+             atmStatus1.status,
+             atmStatus1.loan_number,
+             atmStatus1.cdate,
+             atmStatus1.id
+           ])
+         })
+       }
+
+      })
+     }
+     if (+data.phone_id == 0) {
+
+     } else if (+data.phone_id > 0){
+      executor.one('select * from public.advance  WHERE id=$1',[+data.phone_id])
+      .then(phoneDetail => {
+        console.log(phoneDetail)
+       if(data.phone == phoneDetail.pamount) {
+         console.log("Paid")
+         executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+         [
+           "Paid",
+           +data.phone_id])
+         .then(phoneStatus => {
+           console.log(phoneStatus)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             phoneStatus.employee_id,
+             phoneStatus.employee_name,
+             phoneStatus.account_number,
+             phoneStatus.pamount,
+             phoneStatus.pbalanceamount,
+             phoneStatus.pinstalment,
+             phoneStatus.ppendinginstalment,
+             phoneStatus.dfullcash,
+             phoneStatus.dpaytype,
+             phoneStatus.ddate,
+             phoneStatus.damount,
+             phoneStatus.daddi,
+             phoneStatus.dnaration,
+             phoneStatus.advance_type,
+             phoneStatus.company_name,
+             phoneStatus.site,
+             phoneStatus.status,
+             phoneStatus.loan_number,
+             phoneStatus.cdate,
+             phoneStatus.id
+           ])
+         })
+       } else if(data.phone < phoneDetail.pamount) {
+         console.log("Pending")
+         executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+         [
+           phoneDetail.pamount-data.phone,
+           +data.phone_id])
+         .then(phoneStatus1 => {
+           console.log(phoneStatus1)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             phoneStatus1.employee_id,
+             phoneStatus1.employee_name,
+             phoneStatus1.account_number,
+             phoneStatus1.pamount,
+             phoneStatus1.pbalanceamount,
+             phoneStatus1.pinstalment,
+             phoneStatus1.ppendinginstalment,
+             phoneStatus1.dfullcash,
+             phoneStatus1.dpaytype,
+             phoneStatus1.ddate,
+             phoneStatus1.damount,
+             phoneStatus1.daddi,
+             phoneStatus1.dnaration,
+             phoneStatus1.advance_type,
+             phoneStatus1.company_name,
+             phoneStatus1.site,
+             phoneStatus1.status,
+             phoneStatus1.loan_number,
+             phoneStatus1.cdate,
+             phoneStatus1.id
+           ])
+         })
+       }
+
+      })
+     }
+     if (+data.others_id == 0) {
+
+     } else if (+data.others_id > 0){
+      executor.one('select * from public.advance  WHERE id=$1',[+data.others_id])
+      .then(otherDetail => {
+        console.log(otherDetail)
+       if(data.others == otherDetail.pamount) {
+         console.log("Paid")
+         executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+         [
+           "Paid",
+           +data.others_id])
+         .then(otherStatus => {
+           console.log(otherStatus)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             otherStatus.employee_id,
+             otherStatus.employee_name,
+             otherStatus.account_number,
+             otherStatus.pamount,
+             otherStatus.pbalanceamount,
+             otherStatus.pinstalment,
+             otherStatus.ppendinginstalment,
+             otherStatus.dfullcash,
+             otherStatus.dpaytype,
+             otherStatus.ddate,
+             otherStatus.damount,
+             otherStatus.daddi,
+             otherStatus.dnaration,
+             otherStatus.advance_type,
+             otherStatus.company_name,
+             otherStatus.site,
+             otherStatus.status,
+             otherStatus.loan_number,
+             otherStatus.cdate,
+             otherStatus.id
+           ])
+         })
+       } else if(data.others < otherDetail.pamount) {
+         console.log("Pending")
+         executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+         [
+           otherDetail.pamount-data.others,
+           +data.others_id])
+         .then(otherStatus1 => {
+           console.log(otherStatus1)
+           executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+           [
+             otherStatus1.employee_id,
+             otherStatus1.employee_name,
+             otherStatus1.account_number,
+             otherStatus1.pamount,
+             otherStatus1.pbalanceamount,
+             otherStatus1.pinstalment,
+             otherStatus1.ppendinginstalment,
+             otherStatus1.dfullcash,
+             otherStatus1.dpaytype,
+             otherStatus1.ddate,
+             otherStatus1.damount,
+             otherStatus1.daddi,
+             otherStatus1.dnaration,
+             otherStatus1.advance_type,
+             otherStatus1.company_name,
+             otherStatus1.site,
+             otherStatus1.status,
+             otherStatus1.loan_number,
+             otherStatus1.cdate,
+             otherStatus1.id
+           ])
+         })
+       }
+
+      })
+     }
+      resultCallback(null,data );
+})
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
@@ -4853,7 +6180,7 @@ user.manual_entry_emp_updates = function (userInput, resultCallback) {
 user.manual_entry_rate_updates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-executor.one('UPDATE public.payroll_manual_entry SET  company_name=$2, unit_name=$3, date=$4, ecode=$5, ename=$6, etype=$7, eac=$8, ebankname=$9, eifsc=$10, designation=$11, present=$12, dutyoff=$13, add_duties=$14, payment_type=$15, paymode=$16, total_duties=$17, basic=$18, da=$19 , hra=$20 , trv_ex=$21 , others=$22 , medical=$23 , others1=$24 , others2=$25, others3=$26 , others4=$27 , waesi=$28 , ewdays=$29 , ewamount=$30 , gross=$31 , advance=$32 , loan=$33 , uniform=$34 , mess=$35 , rent=$36 , atm=$37 , phone=$38 , pf=$39 , esi=$40 , pr_tax=$41 , staff_wellfare=$42 , total_dec=$43 , netpay=$44   WHERE id=$1 RETURNING *',
+executor.one('UPDATE public.payroll_manual_entry SET  company_name=$2, unit_name=$3, date=$4, ecode=$5, ename=$6, etype=$7, eac=$8, ebankname=$9, eifsc=$10, designation=$11, present=$12, dutyoff=$13, add_duties=$14, payment_type=$15, paymode=$16, total_duties=$17, basic=$18, da=$19 , hra=$20 , trv_ex=$21 , others=$22 , medical=$23 , others1=$24 , others2=$25, others3=$26 , others4=$27 , waesi=$28 , ewdays=$29 , ewamount=$30 , gross=$31 , advance=$32 , loan=$33 , uniform=$34 , mess=$35 , rent=$36 , atm=$37 , phone=$38 , pf=$39 , esi=$40 , pr_tax=$41 , staff_wellfare=$42 , total_dec=$43 , netpay=$44, advance_id=$45 ,loan_id=$46 ,uniform_id=$47 ,mess_id=$48 ,rent_id=$49 ,atmcard_id=$50 ,others_id=$51 ,phone_id=$52    WHERE id=$1 RETURNING *',
 [
 userInput.id,
 userInput.company_name,
@@ -4898,11 +6225,613 @@ userInput.esi,
 userInput.pr_tax,
 userInput.staff_wellfare,
 userInput.total_dec,
-userInput.ner_pay
+userInput.ner_pay,
+userInput.advance_id,
+userInput.loan_id,
+userInput.uniform_id,
+userInput.mess_id,
+userInput.rent_id,
+userInput.atmcard_id,
+userInput.others_id,
+userInput.phone_id
 ])
 .then(data => {
-console.log(data);
-resultCallback(null,data );
+  console.log(data);
+  console.log(+data.advance_id);
+  if (+data.advance_id == 0) {
+
+  } else if (+data.advance_id > 0){
+   executor.one('select * from public.advance  WHERE id=$1',[+data.advance_id])
+   .then(advanceDetail => {
+     console.log(advanceDetail)
+     if(data.advance == advanceDetail.pamount) {
+       console.log("Paid")
+       executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+       [
+         "Paid",
+         +data.advance_id])
+       .then(advanceStatus => {
+         console.log(advanceStatus)
+         executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+         [
+           advanceStatus.employee_id,
+           advanceStatus.employee_name,
+           advanceStatus.account_number,
+           advanceStatus.pamount,
+           advanceStatus.pbalanceamount,
+           advanceStatus.pinstalment,
+           advanceStatus.ppendinginstalment,
+           advanceStatus.dfullcash,
+           advanceStatus.dpaytype,
+           advanceStatus.ddate,
+           advanceStatus.damount,
+           advanceStatus.daddi,
+           advanceStatus.dnaration,
+           advanceStatus.advance_type,
+           advanceStatus.company_name,
+           advanceStatus.site,
+           advanceStatus.status,
+           advanceStatus.loan_number,
+           advanceStatus.cdate,
+           advanceStatus.id
+         ])
+       
+       })
+     } else if(data.advance < advanceDetail.pamount) {
+       console.log("Pending")
+       executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+       [
+         advanceDetail.pamount-data.advance,
+         +data.advance_id])
+       .then(advanceStatus1 => {
+         console.log(advanceStatus1)
+         executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+         [
+           advanceStatus1.employee_id,
+           advanceStatus1.employee_name,
+           advanceStatus1.account_number,
+           advanceStatus1.pamount,
+           advanceStatus1.pbalanceamount,
+           advanceStatus1.pinstalment,
+           advanceStatus1.ppendinginstalment,
+           advanceStatus1.dfullcash,
+           advanceStatus1.dpaytype,
+           advanceStatus1.ddate,
+           advanceStatus1.damount,
+           advanceStatus1.daddi,
+           advanceStatus1.dnaration,
+           advanceStatus1.advance_type,
+           advanceStatus1.company_name,
+           advanceStatus1.site,
+           advanceStatus1.status,
+           advanceStatus1.loan_number,
+           advanceStatus1.cdate,
+           advanceStatus1.id
+         ])
+       })
+     }
+
+   })
+  }
+  if (+data.loan_id == 0) {
+
+ } else if (+data.loan_id > 0){
+  executor.one('select * from public.advance  WHERE id=$1',[+data.loan_id])
+  .then(loanDetail => {
+    console.log(loanDetail)
+   if(data.loan == loanDetail.pamount) {
+     console.log("Paid")
+     executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+     [
+       "Paid",
+       +data.loan_id])
+     .then(loanStatus => {
+       console.log(loanStatus)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+         [
+           loanStatus.employee_id,
+           loanStatus.employee_name,
+           loanStatus.account_number,
+           loanStatus.pamount,
+           loanStatus.pbalanceamount,
+           loanStatus.pinstalment,
+           loanStatus.ppendinginstalment,
+           loanStatus.dfullcash,
+           loanStatus.dpaytype,
+           loanStatus.ddate,
+           loanStatus.damount,
+           loanStatus.daddi,
+           loanStatus.dnaration,
+           loanStatus.advance_type,
+           loanStatus.company_name,
+           loanStatus.site,
+           loanStatus.status,
+           loanStatus.loan_number,
+           loanStatus.cdate,
+           loanStatus.id
+         ])
+     })
+   } else if(data.loan < loanDetail.pamount) {
+     console.log("Pending")
+     executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+     [
+       loanDetail.pamount-data.loan,
+       +data.loan_id])
+     .then(loanStatus1 => {
+       console.log(loanStatus1)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         loanStatus1.employee_id,
+         loanStatus1.employee_name,
+         loanStatus1.account_number,
+         loanStatus1.pamount,
+         loanStatus1.pbalanceamount,
+         loanStatus1.pinstalment,
+         loanStatus1.ppendinginstalment,
+         loanStatus1.dfullcash,
+         loanStatus1.dpaytype,
+         loanStatus1.ddate,
+         loanStatus1.damount,
+         loanStatus1.daddi,
+         loanStatus1.dnaration,
+         loanStatus1.advance_type,
+         loanStatus1.company_name,
+         loanStatus1.site,
+         loanStatus1.status,
+         loanStatus1.loan_number,
+         loanStatus1.cdate,
+         loanStatus1.id
+       ])
+     })
+   }
+
+  })
+ }
+ if (+data.uniform_id == 0) {
+
+ } else if (+data.uniform_id > 0){
+  executor.one('select * from public.advance  WHERE id=$1',[+data.uniform_id])
+  .then(uniformDetail => {
+    console.log(uniformDetail)
+   if(data.uniform == uniformDetail.pamount) {
+     console.log("Paid")
+     executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+     [
+       "Paid",
+       +data.uniform_id])
+     .then(uniformStatus => {
+       console.log(uniformStatus)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         uniformStatus.employee_id,
+         uniformStatus.employee_name,
+         uniformStatus.account_number,
+         uniformStatus.pamount,
+         uniformStatus.pbalanceamount,
+         uniformStatus.pinstalment,
+         uniformStatus.ppendinginstalment,
+         uniformStatus.dfullcash,
+         uniformStatus.dpaytype,
+         uniformStatus.ddate,
+         uniformStatus.damount,
+         uniformStatus.daddi,
+         uniformStatus.dnaration,
+         uniformStatus.advance_type,
+         uniformStatus.company_name,
+         uniformStatus.site,
+         uniformStatus.status,
+         uniformStatus.loan_number,
+         uniformStatus.cdate,
+         uniformStatus.id
+       ])
+     })
+   } else if(data.uniform < uniformDetail.pamount) {
+     console.log("Pending")
+     executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+     [
+       uniformDetail.pamount-data.uniform,
+       +data.uniform_id])
+     .then(uniformStatus1 => {
+       console.log(uniformStatus1)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         uniformStatus1.employee_id,
+         uniformStatus1.employee_name,
+         uniformStatus1.account_number,
+         uniformStatus1.pamount,
+         uniformStatus1.pbalanceamount,
+         uniformStatus1.pinstalment,
+         uniformStatus1.ppendinginstalment,
+         uniformStatus1.dfullcash,
+         uniformStatus1.dpaytype,
+         uniformStatus1.ddate,
+         uniformStatus1.damount,
+         uniformStatus1.daddi,
+         uniformStatus1.dnaration,
+         uniformStatus1.advance_type,
+         uniformStatus1.company_name,
+         uniformStatus1.site,
+         uniformStatus1.status,
+         uniformStatus1.loan_number,
+         uniformStatus1.cdate,
+         uniformStatus1.id
+       ])
+     })
+   }
+
+  })
+ }
+ if (+data.mess_id == 0) {
+
+ } else if (+data.mess_id > 0){
+  executor.one('select * from public.advance  WHERE id=$1',[+data.mess_id])
+  .then(messDetail => {
+    console.log(messDetail)
+   if(data.mess == messDetail.pamount) {
+     console.log("Paid")
+     executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+     [
+       "Paid",
+       +data.mess_id])
+     .then(messStatus => {
+       console.log(messStatus)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         messStatus.employee_id,
+         messStatus.employee_name,
+         messStatus.account_number,
+         messStatus.pamount,
+         messStatus.pbalanceamount,
+         messStatus.pinstalment,
+         messStatus.ppendinginstalment,
+         messStatus.dfullcash,
+         messStatus.dpaytype,
+         messStatus.ddate,
+         messStatus.damount,
+         messStatus.daddi,
+         messStatus.dnaration,
+         messStatus.advance_type,
+         messStatus.company_name,
+         messStatus.site,
+         messStatus.status,
+         messStatus.loan_number,
+         messStatus.cdate,
+         messStatus.id
+       ])
+     })
+   } else if(data.mess < messDetail.pamount) {
+     console.log("Pending")
+     executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+     [
+       messDetail.pamount-data.mess,
+       +data.mess_id])
+     .then(messStatus1 => {
+       console.log(messStatus1)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         messStatus1.employee_id,
+         messStatus1.employee_name,
+         messStatus1.account_number,
+         messStatus1.pamount,
+         messStatus1.pbalanceamount,
+         messStatus1.pinstalment,
+         messStatus1.ppendinginstalment,
+         messStatus1.dfullcash,
+         messStatus1.dpaytype,
+         messStatus1.ddate,
+         messStatus1.damount,
+         messStatus1.daddi,
+         messStatus1.dnaration,
+         messStatus1.advance_type,
+         messStatus1.company_name,
+         messStatus1.site,
+         messStatus1.status,
+         messStatus1.loan_number,
+         messStatus1.cdate,
+         messStatus1.id
+       ])
+     })
+   }
+
+  })
+ }
+ if (+data.rent_id == 0) {
+
+ } else if (+data.rent_id > 0){
+  executor.one('select * from public.advance  WHERE id=$1',[+data.rent_id])
+  .then(rentDetail => {
+    console.log(rentDetail)
+   if(data.rent == rentDetail.pamount) {
+     console.log("Paid")
+     executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+     [
+       "Paid",
+       +data.rent_id])
+     .then(rentStatus => {
+       console.log(rentStatus)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         rentStatus.employee_id,
+         rentStatus.employee_name,
+         rentStatus.account_number,
+         rentStatus.pamount,
+         rentStatus.pbalanceamount,
+         rentStatus.pinstalment,
+         rentStatus.ppendinginstalment,
+         rentStatus.dfullcash,
+         rentStatus.dpaytype,
+         rentStatus.ddate,
+         rentStatus.damount,
+         rentStatus.daddi,
+         rentStatus.dnaration,
+         rentStatus.advance_type,
+         rentStatus.company_name,
+         rentStatus.site,
+         rentStatus.status,
+         rentStatus.loan_number,
+         rentStatus.cdate,
+         rentStatus.id
+       ])
+     })
+   } else if(data.rent < rentDetail.pamount) {
+     console.log("Pending")
+     executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+     [
+       rentDetail.pamount-data.rent,
+       +data.rent_id])
+     .then(rentStatus1 => {
+       console.log(rentStatus1)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         rentStatus1.employee_id,
+         rentStatus1.employee_name,
+         rentStatus1.account_number,
+         rentStatus1.pamount,
+         rentStatus1.pbalanceamount,
+         rentStatus1.pinstalment,
+         rentStatus1.ppendinginstalment,
+         rentStatus1.dfullcash,
+         rentStatus1.dpaytype,
+         rentStatus1.ddate,
+         rentStatus1.damount,
+         rentStatus1.daddi,
+         rentStatus1.dnaration,
+         rentStatus1.advance_type,
+         rentStatus1.company_name,
+         rentStatus1.site,
+         rentStatus1.status,
+         rentStatus1.loan_number,
+         rentStatus1.cdate,
+         rentStatus1.id
+       ])
+     })
+   }
+
+  })
+ }
+ if (+data.atmcard_id == 0) {
+
+ } else if (+data.atmcard_id > 0){
+  executor.one('select * from public.advance  WHERE id=$1',[+data.atmcard_id])
+  .then(atmDetail => {
+    console.log(atmDetail)
+   if(data.atm == atmDetail.pamount) {
+     console.log("Paid")
+     executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+     [
+       "Paid",
+       +data.atmcard_id])
+     .then(atmStatus => {
+       console.log(atmStatus)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         atmStatus.employee_id,
+         atmStatus.employee_name,
+         atmStatus.account_number,
+         atmStatus.pamount,
+         atmStatus.pbalanceamount,
+         atmStatus.pinstalment,
+         atmStatus.ppendinginstalment,
+         atmStatus.dfullcash,
+         atmStatus.dpaytype,
+         atmStatus.ddate,
+         atmStatus.damount,
+         atmStatus.daddi,
+         atmStatus.dnaration,
+         atmStatus.advance_type,
+         atmStatus.company_name,
+         atmStatus.site,
+         atmStatus.status,
+         atmStatus.loan_number,
+         atmStatus.cdate,
+         atmStatus.id
+       ])
+     })
+   } else if(data.atm < atmDetail.pamount) {
+     console.log("Pending")
+     executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+     [
+       atmDetail.pamount-data.atm,
+       +data.atmcard_id])
+     .then(atmStatus1 => {
+       console.log(atmStatus1)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         atmStatus1.employee_id,
+         atmStatus1.employee_name,
+         atmStatus1.account_number,
+         atmStatus1.pamount,
+         atmStatus1.pbalanceamount,
+         atmStatus1.pinstalment,
+         atmStatus1.ppendinginstalment,
+         atmStatus1.dfullcash,
+         atmStatus1.dpaytype,
+         atmStatus1.ddate,
+         atmStatus1.damount,
+         atmStatus1.daddi,
+         atmStatus1.dnaration,
+         atmStatus1.advance_type,
+         atmStatus1.company_name,
+         atmStatus1.site,
+         atmStatus1.status,
+         atmStatus1.loan_number,
+         atmStatus1.cdate,
+         atmStatus1.id
+       ])
+     })
+   }
+
+  })
+ }
+ if (+data.phone_id == 0) {
+
+ } else if (+data.phone_id > 0){
+  executor.one('select * from public.advance  WHERE id=$1',[+data.phone_id])
+  .then(phoneDetail => {
+    console.log(phoneDetail)
+   if(data.phone == phoneDetail.pamount) {
+     console.log("Paid")
+     executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+     [
+       "Paid",
+       +data.phone_id])
+     .then(phoneStatus => {
+       console.log(phoneStatus)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         phoneStatus.employee_id,
+         phoneStatus.employee_name,
+         phoneStatus.account_number,
+         phoneStatus.pamount,
+         phoneStatus.pbalanceamount,
+         phoneStatus.pinstalment,
+         phoneStatus.ppendinginstalment,
+         phoneStatus.dfullcash,
+         phoneStatus.dpaytype,
+         phoneStatus.ddate,
+         phoneStatus.damount,
+         phoneStatus.daddi,
+         phoneStatus.dnaration,
+         phoneStatus.advance_type,
+         phoneStatus.company_name,
+         phoneStatus.site,
+         phoneStatus.status,
+         phoneStatus.loan_number,
+         phoneStatus.cdate,
+         phoneStatus.id
+       ])
+     })
+   } else if(data.phone < phoneDetail.pamount) {
+     console.log("Pending")
+     executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+     [
+       phoneDetail.pamount-data.phone,
+       +data.phone_id])
+     .then(phoneStatus1 => {
+       console.log(phoneStatus1)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         phoneStatus1.employee_id,
+         phoneStatus1.employee_name,
+         phoneStatus1.account_number,
+         phoneStatus1.pamount,
+         phoneStatus1.pbalanceamount,
+         phoneStatus1.pinstalment,
+         phoneStatus1.ppendinginstalment,
+         phoneStatus1.dfullcash,
+         phoneStatus1.dpaytype,
+         phoneStatus1.ddate,
+         phoneStatus1.damount,
+         phoneStatus1.daddi,
+         phoneStatus1.dnaration,
+         phoneStatus1.advance_type,
+         phoneStatus1.company_name,
+         phoneStatus1.site,
+         phoneStatus1.status,
+         phoneStatus1.loan_number,
+         phoneStatus1.cdate,
+         phoneStatus1.id
+       ])
+     })
+   }
+
+  })
+ }
+ if (+data.others_id == 0) {
+
+ } else if (+data.others_id > 0){
+  executor.one('select * from public.advance  WHERE id=$1',[+data.others_id])
+  .then(otherDetail => {
+    console.log(otherDetail)
+   if(data.others == otherDetail.pamount) {
+     console.log("Paid")
+     executor.one('UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *',
+     [
+       "Paid",
+       +data.others_id])
+     .then(otherStatus => {
+       console.log(otherStatus)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         otherStatus.employee_id,
+         otherStatus.employee_name,
+         otherStatus.account_number,
+         otherStatus.pamount,
+         otherStatus.pbalanceamount,
+         otherStatus.pinstalment,
+         otherStatus.ppendinginstalment,
+         otherStatus.dfullcash,
+         otherStatus.dpaytype,
+         otherStatus.ddate,
+         otherStatus.damount,
+         otherStatus.daddi,
+         otherStatus.dnaration,
+         otherStatus.advance_type,
+         otherStatus.company_name,
+         otherStatus.site,
+         otherStatus.status,
+         otherStatus.loan_number,
+         otherStatus.cdate,
+         otherStatus.id
+       ])
+     })
+   } else if(data.others < otherDetail.pamount) {
+     console.log("Pending")
+     executor.one('UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *',
+     [
+       otherDetail.pamount-data.others,
+       +data.others_id])
+     .then(otherStatus1 => {
+       console.log(otherStatus1)
+       executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+       [
+         otherStatus1.employee_id,
+         otherStatus1.employee_name,
+         otherStatus1.account_number,
+         otherStatus1.pamount,
+         otherStatus1.pbalanceamount,
+         otherStatus1.pinstalment,
+         otherStatus1.ppendinginstalment,
+         otherStatus1.dfullcash,
+         otherStatus1.dpaytype,
+         otherStatus1.ddate,
+         otherStatus1.damount,
+         otherStatus1.daddi,
+         otherStatus1.dnaration,
+         otherStatus1.advance_type,
+         otherStatus1.company_name,
+         otherStatus1.site,
+         otherStatus1.status,
+         otherStatus1.loan_number,
+         otherStatus1.cdate,
+         otherStatus1.id
+       ])
+     })
+   }
+
+  })
+ }
+  resultCallback(null,data );
 })
 .catch(error => {
 resultCallback(error,null );

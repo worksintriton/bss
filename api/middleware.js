@@ -6127,17 +6127,23 @@ function fetchcompany(req, res, next) {
 }
 
 
-function advanceadd(req, res, next) {
+function advanceadds(req, res, next) {
        async.waterfall([
             function (waterfallCallback){
+                
+                let k = req.body.pinstalment + 1;
                 for(var i = 1; i <= req.body.pinstalment; i++){
-                    console.log(ddate);
-                    // var date = moment(req.body.ddate).format( "yyyy-mm-dd");
-                var futureMonth = moment(req.body.ddate).add( i , 'months').calendar();
+                   
+                var futureMonth = moment(req.body.ddate).add( i , 'months');
+                console.log("new"+futureMonth);
                 var date = dateFormat(futureMonth, "yyyy-mm-dd");
                 var amount = req.body.pamount / req.body.pinstalment;
                 console.log(date);
-                services.user.advanceadds(req.body,date,amount, function (err, result) {
+                let a = date.split('-');
+                let yy = a[0]
+                let mm = a[1]
+                var date1 = yy+'-'+mm;
+                services.user.advanceaddsss(req.body,date,amount,date1, function (err, result) {
                 if (err) {
                    console.log(err)
                 }
@@ -8514,7 +8520,7 @@ exports.checkemployee = checkemployee;
 exports.clientfetchlist = clientfetchlist;
 exports.employeetfetchlist = employeetfetchlist;
 exports.assignlists = assignlists;
-exports.advanceadd = advanceadd;
+exports.advanceadds = advanceadds;
 exports.advancefetch = advancefetch;
 exports.fetchloan_number = fetchloan_number;
 exports.deleteinstalment = deleteinstalment;
