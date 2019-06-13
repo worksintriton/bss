@@ -8147,7 +8147,98 @@ function fetchunit_number1(req, res, next) {
 
 }
 
+function carryForward(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             var completedate = new Date();
+             var y = completedate.getFullYear();
+             var months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+             var m = months[completedate.getMonth()];
+             var ym = y+'-'+m;
+             services.user.carryForwards(ym, function (err, CurrentMonthdata) {
+             if (err) {
+                console.log(err);
+                //  req.log.error({
+                //      error: err
+                //  }, "Error while getting available users by mobiles");
+                //  return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,CurrentMonthdata);
+             });
+         },
+         function (CurrentMonthdata,waterfallCallback){
+            var completedate = new Date();
+            var y = completedate.getFullYear();
+            var months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+            var cm = months[completedate.getMonth() + 1];
+            var ycm = y+'-'+cm;
+            console.log(ycm);
+            var NextMonthData = [];
+            for(let i = 0; i < CurrentMonthdata.length; i++) {
+            services.user.carryForwardss(CurrentMonthdata[i].employee_id, CurrentMonthdata[i].advance_type, ycm, function (err, Data) {
+            if (err) {
+                console.log(err)
+                // req.log.error({
+                //     error: err
+                // }, "Error while getting available users by mobiles");
+                // return res.json(utils.errors["500"]);
+            }
+            NextMonthData.push(Data)
+            if(CurrentMonthdata.length == NextMonthData.length) {
+                waterfallCallback(null,CurrentMonthdata,NextMonthData);
+            }
+            });
+        }
+        },
+        function (CurrentMonthdata,NextMonthData,waterfallCallback){
+            var completedate = new Date();
+            var y = completedate.getFullYear();
+            var d = completedate.getDate();
+            var months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+            var cm = months[completedate.getMonth() + 1];
+            var ycm = y+'-'+cm;
+            var ycmd = y+'-'+cm+'-'+d;
+            console.log(ycm , ycmd);
+            for(let i = 0; i < CurrentMonthdata.length; i++) {
+                for(let j = 0; j < NextMonthData.length; j++) {
+                if (( CurrentMonthdata[i].employee_id  == NextMonthData[j].employee_id) && ( CurrentMonthdata[i].advance_type  == NextMonthData[j].advance_type) ) {
+                    console.log("update")
+                    console.log(CurrentMonthdata[i]);
+                    services.user.carryForwardUpdate(CurrentMonthdata[i].employee_id, CurrentMonthdata[i].advance_type, CurrentMonthdata[i].cdate, function (err, Data) {
+                        if (err) {
+                            console.log(err)
+                            // req.log.error({
+                            //     error: err
+                            // }, "Error while getting available users by mobiles");
+                            // return res.json(utils.errors["500"]);
+                        }
+                            // waterfallCallback(null,CurrentMonthdata,NextMonthData);
+                        });
+                } else if (( CurrentMonthdata[i].employee_id  !== NextMonthData[j].employee_id) && ( CurrentMonthdata[i].advance_type  !== NextMonthData[j].advance_type) ) {
+                    console.log("insert")
+                    console.log(CurrentMonthdata[i]);
+                    services.user.carryForwardInsert(CurrentMonthdata[i],ycmd, ycm, function (err, Data) {
+                        if (err) {
+                            console.log(err)
+                            // req.log.error({
+                            //     error: err
+                            // }, "Error while getting available users by mobiles");
+                            // return res.json(utils.errors["500"]);
+                        }
+                            waterfallCallback(null,CurrentMonthdata,NextMonthData);
+                        });
+                }  
+                }
+            }
+        },
+         function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata
+             }, utils.errors["200"]));
+         }
+     ]);
 
+}
 
 
 
@@ -8608,3 +8699,6 @@ exports.getform36b = getform36b;
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;
 exports.unit_master_salary_details = unit_master_salary_details;
+
+
+exports.carryForward = carryForward;

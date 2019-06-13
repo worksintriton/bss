@@ -7427,8 +7427,184 @@ user.fetchunit_numbers1 = function (userInput, resultCallback) {
         })
 };
 
+user.carryForwards = function (c_date, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+    executor.any('select * FROM public."advance" WHERE "status"=($1) and "cdate"=($2)', ['Pending', c_date])
+        .then(data => {
+        resultCallback(null,data);
+      })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
 
+user.carryForwardss = function (employee_id,advance_type,carry_date, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)', [employee_id,advance_type,'Pending', carry_date])
+  .then(data => {
+    if(data.length == 0) {
+      let a = {}
+      resultCallback(null,a);
+    } else if(data.length > 0) {
+      resultCallback(null,data[0]);
+    }
+  })
+  .catch(error => {
+      resultCallback(error,null );
+      console.log('ERROR:', error);
+  })
+};
 
+user.carryForwardUpdate = function (employee_id,advance_type,carry_date, resultCallback) {
+  var completedate = new Date();
+  var y = completedate.getFullYear();
+  var months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+  var cm = months[completedate.getMonth() + 1];
+  var ycm = y+'-'+cm;
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)', [employee_id,advance_type,'Pending', carry_date])
+  .then(data => {
+    console.log(data);
+    executor.any('select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)', [data[0].employee_id,data[0].advance_type,'Pending', ycm])
+  .then(update => {
+    console.log(update);
+    executor.any('update advance set pamount=$1 where "employee_id"=$2 and advance_type=$3 and cdate=$4',[update[0].pamount + data[0].pamount, update[0].employee_id , update[0].advance_type, update[0].cdate])
+    .then(updatedNextMonth => {
+      executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+      [
+        updatedNextMonth.employee_id,
+        updatedNextMonth.employee_name,
+        updatedNextMonth.account_number,
+        updatedNextMonth.pamount,
+        updatedNextMonth.pbalanceamount,
+        updatedNextMonth.pinstalment,
+        updatedNextMonth.ppendinginstalment,
+        updatedNextMonth.dfullcash,
+        updatedNextMonth.dpaytype,
+        updatedNextMonth.ddate,
+        updatedNextMonth.damount,
+        updatedNextMonth.daddi,
+        updatedNextMonth.dnaration,
+        updatedNextMonth.advance_type,
+        updatedNextMonth.company_name,
+        updatedNextMonth.site,
+        updatedNextMonth.status,
+        updatedNextMonth.loan_number,
+        updatedNextMonth.cdate,
+        updatedNextMonth.id
+      ])
+      // console.log(updatedNextMonth);
+      executor.any('update advance set status=$1 where "employee_id"=$2 and advance_type=$3 and cdate=$4',["Carry Forward" + " " + ycm, data[0].employee_id , data[0].advance_type, data[0].cdate])
+      .then(updatedLastMonthStatus => {
+        // console.log(updatedLastMonthStatus);
+        executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+        [
+          updatedLastMonthStatus.employee_id,
+          updatedLastMonthStatus.employee_name,
+          updatedLastMonthStatus.account_number,
+          updatedLastMonthStatus.pamount,
+          updatedLastMonthStatus.pbalanceamount,
+          updatedLastMonthStatus.pinstalment,
+          updatedLastMonthStatus.ppendinginstalment,
+          updatedLastMonthStatus.dfullcash,
+          updatedLastMonthStatus.dpaytype,
+          updatedLastMonthStatus.ddate,
+          updatedLastMonthStatus.damount,
+          updatedLastMonthStatus.daddi,
+          updatedLastMonthStatus.dnaration,
+          updatedLastMonthStatus.advance_type,
+          updatedLastMonthStatus.company_name,
+          updatedLastMonthStatus.site,
+          updatedLastMonthStatus.status,
+          updatedLastMonthStatus.loan_number,
+          updatedLastMonthStatus.cdate,
+          updatedLastMonthStatus.id
+        ])
+          // resultCallback(null,data);
+      })
+      .catch(error => {
+          resultCallback(error,null );
+          console.log('ERROR:', error);
+      })
+        // resultCallback(null,data);
+    })
+    .catch(error => {
+        resultCallback(error,null );
+        console.log('ERROR:', error);
+    })
+      // resultCallback(null,data);
+  })
+  .catch(error => {
+      resultCallback(error,null );
+      console.log('ERROR:', error);
+  })
+      // resultCallback(null,data);
+  })
+  .catch(error => {
+      resultCallback(error,null );
+      console.log('ERROR:', error);
+  })
+};
+
+user.carryForwardInsert = function (input,ddate,cdate, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+  executor.one('INSERT INTO public."advance"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+  [
+    input.employee_id,
+    input.employee_name,
+    input.account_number,
+    input.pamount,
+    input.pbalanceamount,
+    input.pinstalment,
+    input.ppendinginstalment,
+    input.dfullcash,
+    input.dpaytype,
+    ddate,
+    input.damount,
+    input.daddi,
+    input.dnaration,
+    input.advance_type,
+    input.company_name,
+    input.site,
+    "Pending",
+    input.loan_number,
+    cdate
+  ])  
+  .then(data => {
+    executor.one('INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+        [
+          data.employee_id,
+          data.employee_name,
+          data.account_number,
+          data.pamount,
+          data.pbalanceamount,
+          data.pinstalment,
+          data.ppendinginstalment,
+          data.dfullcash,
+          data.dpaytype,
+          data.ddate,
+          data.damount,
+          data.daddi,
+          data.dnaration,
+          data.advance_type,
+          data.company_name,
+          data.site,
+          data.status,
+          data.loan_number,
+          data.cdate,
+          data.id
+        ])
+  })
+  .catch(error => {
+      resultCallback(error,null );
+      console.log('ERROR:', error);
+  })
+};
 
 
 module.exports = user;

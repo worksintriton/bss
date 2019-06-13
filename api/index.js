@@ -612,7 +612,7 @@ addRoute("/bulkupload/bulkuploadformat", "POST", [middleware.bulkuploadformat]);
 addRoute("/bulkupload/bulkupload_manual_unit_rate", "POST", [middleware.manual_unit_rate]);
 addRoute("/bulkupload/bulkupload_unit_master_salary_details", "POST", [middleware.unit_master_salary_details]);
 
-
+addRoute("/advance/carryForward", "GET", [middleware.carryForward]);
 // report ========================================
 
 
