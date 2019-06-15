@@ -7671,86 +7671,166 @@ function getpfecr(req, res, next) {
             //  console.log(payRollDetail);
             //  console.log(employeeDetail);
             var myData = [];
-            payRollDetail.forEach(function(data1){
-            employeeDetail.forEach(function(data){
-                if(data1.ecode == data.ecode) {
-                    var a = {
-                        ecode: data.ecode,
-                        dob: data.Date_of_birth,
-                        doj: data.date_joining,
-                        dor: data.dor,
-                        gender: data.gender,
-                        f_m_name: data.father_name,
-                        relationship: '-',
-                        mobile_no: data.Mobile_No,
-                        email_id: data.Email_ID,
-                        nationality: data.nationality,
-                        qualification: data.Edq,
-                        marital_status: data.material_status,
-                        ifsc: data.ifsc,
-                        panNo: data.pan,
-                        aadhaarNo: data.aadhar_card,
-                        uan: data.uan,
-                        pfNo: data.pf1,
-                        company_name: data.company_name,
-                        site_name: data.site_name,
-                        ccode: data.ccode,
-                        ucode: data.ucode,
-                        ename: data1.ename,
-                        etype: data1.etype,
-                        date: data1.date,
-                        present: data1.present,
-                        dutyoff: data1.dutyoff,
-                        add_duties: data1.add_duties,
-                        total_duties: data1.total_duties,
-                        basic: data1.basic,
-                        da: data1.da,
-                        hra: data1.hra,
-                        tr_exp: data1.trv_ex,
-                        others: data1.others,
-                        medical: data1.medical,
-                        others1: data1.others1,
-                        others2: data1.others2,
-                        others3: data1.others3,
-                        others4: data1.others4,
-                        waesi: data1.waesi,
-                        ewdays: data1.ewdays,
-                        ewamount: data1.ewamount,
-                        gross: data1.gross,
-                        advance: data1.advance,
-                        loan: data1.loan,
-                        uniform: data1.uniform,
-                        mess: data1.mess,
-                        rent: data1.rent,
-                        atm: data1.atm,
-                        phone: data1.phone,
-                        pf: data1.pf,
-                        esi: data1.esi,
-                        pr_tax: data1.pr_tax,
-                        staff_wellfare: data1.staff_wellfare,
-                        total_dec: data1.total_dec,
-                        net_pay: data1.net_pay,
-                        add_amount: data1.add_amount,
-                        isInternationalWorker: '-',
-                        countryOfOrigin: '-',
-                        passportNo: '-',
-                        passportValidFrom: '-',
-                        passportValidTo: '-',
-                        isPhysicalHandicap: '-',
-                        locomotive: '-',
-                        hearing: '-',
-                        visual: '-',
-                        nameAsPerBank: '-',
-                        nameAsPerPan: '-',
-                        nameAsPerAadhaar: '-',
-                        refund: '-',
-                        contribution: '-',
-                        dcode: '-'
-                    }
-                    myData.push(a);
-                 }
-            });
-        });
+            for(let i = 0; i < payRollDetail.length; i++) {
+                for(let j = 0; j < employeeDetail.length; j++) {
+                    if(payRollDetail[i].ecode == employeeDetail[j].ecode) {
+                        var a = {
+                            ecode: employeeDetail[j].ecode,
+                            dob: employeeDetail[j].Date_of_birth,
+                            doj: employeeDetail[j].date_joining,
+                            dor: employeeDetail[j].dor,
+                            gender: employeeDetail[j].gender,
+                            f_m_name: employeeDetail[j].father_name,
+                            relationship: '-',
+                            mobile_no: employeeDetail[j].Mobile_No,
+                            email_id: employeeDetail[j].Email_ID,
+                            nationality: employeeDetail[j].nationality,
+                            qualification: employeeDetail[j].Edq,
+                            marital_status: employeeDetail[j].material_status,
+                            ifsc: employeeDetail[j].ifsc,
+                            panNo: employeeDetail[j].pan,
+                            aadhaarNo: employeeDetail[j].aadhar_card,
+                            uan: employeeDetail[j].uan,
+                            pfNo: employeeDetail[j].pf1,
+                            company_name: employeeDetail[j].company_name,
+                            site_name: employeeDetail[j].site_name,
+                            ccode: employeeDetail[j].ccode,
+                            ucode: employeeDetail[j].ucode,
+                            ename: payRollDetail[i].ename,
+                            etype: payRollDetail[i].etype,
+                            date: payRollDetail[i].date,
+                            present: payRollDetail[i].present,
+                            dutyoff: payRollDetail[i].dutyoff,
+                            add_duties: payRollDetail[i].add_duties,
+                            total_duties: payRollDetail[i].total_duties,
+                            basic: payRollDetail[i].basic,
+                            da: payRollDetail[i].da,
+                            hra: payRollDetail[i].hra,
+                            tr_exp: payRollDetail[i].trv_ex,
+                            others: payRollDetail[i].others,
+                            medical: payRollDetail[i].medical,
+                            others1: payRollDetail[i].others1,
+                            others2: payRollDetail[i].others2,
+                            others3: payRollDetail[i].others3,
+                            others4: payRollDetail[i].others4,
+                            waesi: payRollDetail[i].waesi,
+                            ewdays: payRollDetail[i].ewdays,
+                            ewamount: payRollDetail[i].ewamount,
+                            gross: payRollDetail[i].gross,
+                            advance: payRollDetail[i].advance,
+                            loan: payRollDetail[i].loan,
+                            uniform: payRollDetail[i].uniform,
+                            mess: payRollDetail[i].mess,
+                            rent: payRollDetail[i].rent,
+                            atm: payRollDetail[i].atm,
+                            phone: payRollDetail[i].phone,
+                            pf: payRollDetail[i].pf,
+                            esi: payRollDetail[i].esi,
+                            pr_tax: payRollDetail[i].pr_tax,
+                            staff_wellfare: payRollDetail[i].staff_wellfare,
+                            total_dec: payRollDetail[i].total_dec,
+                            net_pay: payRollDetail[i].net_pay,
+                            add_amount: payRollDetail[i].add_amount,
+                            isInternationalWorker: '-',
+                            countryOfOrigin: '-',
+                            passportNo: '-',
+                            passportValidFrom: '-',
+                            passportValidTo: '-',
+                            isPhysicalHandicap: '-',
+                            locomotive: '-',
+                            hearing: '-',
+                            visual: '-',
+                            nameAsPerBank: '-',
+                            nameAsPerPan: '-',
+                            nameAsPerAadhaar: '-',
+                            refund: '-',
+                            contribution: '-',
+                            dcode: '-'
+                        }
+                        myData.push(a);
+                     }
+                }
+            }
+        //     payRollDetail.forEach(function(data1){
+        //     employeeDetail.forEach(function(data){
+        //         if(data1.ecode == data.ecode) {
+        //             var a = {
+        //                 ecode: data.ecode,
+        //                 dob: data.Date_of_birth,
+        //                 doj: data.date_joining,
+        //                 dor: data.dor,
+        //                 gender: data.gender,
+        //                 f_m_name: data.father_name,
+        //                 relationship: '-',
+        //                 mobile_no: data.Mobile_No,
+        //                 email_id: data.Email_ID,
+        //                 nationality: data.nationality,
+        //                 qualification: data.Edq,
+        //                 marital_status: data.material_status,
+        //                 ifsc: data.ifsc,
+        //                 panNo: data.pan,
+        //                 aadhaarNo: data.aadhar_card,
+        //                 uan: data.uan,
+        //                 pfNo: data.pf1,
+        //                 company_name: data.company_name,
+        //                 site_name: data.site_name,
+        //                 ccode: data.ccode,
+        //                 ucode: data.ucode,
+        //                 ename: data1.ename,
+        //                 etype: data1.etype,
+        //                 date: data1.date,
+        //                 present: data1.present,
+        //                 dutyoff: data1.dutyoff,
+        //                 add_duties: data1.add_duties,
+        //                 total_duties: data1.total_duties,
+        //                 basic: data1.basic,
+        //                 da: data1.da,
+        //                 hra: data1.hra,
+        //                 tr_exp: data1.trv_ex,
+        //                 others: data1.others,
+        //                 medical: data1.medical,
+        //                 others1: data1.others1,
+        //                 others2: data1.others2,
+        //                 others3: data1.others3,
+        //                 others4: data1.others4,
+        //                 waesi: data1.waesi,
+        //                 ewdays: data1.ewdays,
+        //                 ewamount: data1.ewamount,
+        //                 gross: data1.gross,
+        //                 advance: data1.advance,
+        //                 loan: data1.loan,
+        //                 uniform: data1.uniform,
+        //                 mess: data1.mess,
+        //                 rent: data1.rent,
+        //                 atm: data1.atm,
+        //                 phone: data1.phone,
+        //                 pf: data1.pf,
+        //                 esi: data1.esi,
+        //                 pr_tax: data1.pr_tax,
+        //                 staff_wellfare: data1.staff_wellfare,
+        //                 total_dec: data1.total_dec,
+        //                 net_pay: data1.net_pay,
+        //                 add_amount: data1.add_amount,
+        //                 isInternationalWorker: '-',
+        //                 countryOfOrigin: '-',
+        //                 passportNo: '-',
+        //                 passportValidFrom: '-',
+        //                 passportValidTo: '-',
+        //                 isPhysicalHandicap: '-',
+        //                 locomotive: '-',
+        //                 hearing: '-',
+        //                 visual: '-',
+        //                 nameAsPerBank: '-',
+        //                 nameAsPerPan: '-',
+        //                 nameAsPerAadhaar: '-',
+        //                 refund: '-',
+        //                 contribution: '-',
+        //                 dcode: '-'
+        //             }
+        //             myData.push(a);
+        //          }
+        //     });
+        // });
              return res.json(_.merge({
                  data: myData 
              }, utils.errors["200"]));
@@ -7896,8 +7976,10 @@ function getform36b(req, res, next) {
             });
         },
          function (payrollManualEntryDetails,waterfallCallback){
+            console.log(payrollManualEntryDetails.length);
+            var employeeDetailss = [];
             payrollManualEntryDetails.forEach(function(element){
-                services.user.getgetform36bemployeedetails(element.ecode, function (err, employeeDetailss) {
+                services.user.getgetform36bemployeedetails(element.ecode, function (err, Detailss) {
                     if (err) {
                         console.log(err)
                         // req.log.error({
@@ -7905,7 +7987,11 @@ function getform36b(req, res, next) {
                         // }, "Error while getting available users by mobiles");
                         // return res.json(utils.errors["500"]);
                     }
+                    employeeDetailss.push(Detailss)
+                    console.log(employeeDetailss.length);
+                    if (payrollManualEntryDetails.length == employeeDetailss.length) {
                         waterfallCallback(null,payrollManualEntryDetails,employeeDetailss);
+                    }
                     });
             })
          },

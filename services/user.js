@@ -7206,8 +7206,12 @@ user.getgetform36bemployeedetails = function (ecode, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
     executor.any('select * FROM public."employeedetails" WHERE ecode=($1) ', [ecode])
         .then(data => {
-                 resultCallback(null,data );
-            
+            if ( data.length == 0) {
+              var a = {}
+              resultCallback(null,a );
+            } else if ( data.length > 0) {
+              resultCallback(null,data[0] );
+            }
         })
         .catch(error => {
             resultCallback(error,null );
