@@ -595,15 +595,16 @@ addRoute("/reports/getreportssssssall", "GET", [middleware.getreportssssssall]);
 addRoute("/advance/fetchunit_number1", "POST", [middleware.fetchunit_number1]);
 
 
-addRoute("/reports/getemployeedetails", "POST", [middleware.getemployeedetails]);
-addRoute("/reports/getunitmaster", "POST", [middleware.getunitmaster]);
-addRoute("/reports/getwagesheet", "POST", [middleware.getwagesheet]);
+addRoute("/reports/getemployeedetails", "GET", [middleware.getemployeedetails]);
+addRoute("/reports/getunitmaster", "GET", [middleware.getunitmaster]);
+addRoute("/reports/getwagesheet", "GET", [middleware.getwagesheet]);
+addRoute("/reports/cashandbank", "GET", [middleware.cashandbank]);
 addRoute("/reports/getemployeevoucher", "GET", [middleware.getemployeevoucher]);
 addRoute("/reports/getproftaxform", "POST", [middleware.getproftaxform]);
 addRoute("/reports/getwageslip", "POST", [middleware.getwageslip]);
-addRoute("/reports/getpfecr", "POST", [middleware.getpfecr]);
-addRoute("/reports/getDesignation", "POST", [middleware.getDesignation]);
-addRoute("/reports/getloanandoutstanding", "POST", [middleware.getloanandoutstanding]);
+addRoute("/reports/getpfecr", "GET", [middleware.getpfecr]);
+addRoute("/reports/getDesignation", "GET", [middleware.getDesignation]);
+addRoute("/reports/getloanandoutstanding", "GET", [middleware.getloanandoutstanding]);
 addRoute("/reports/getform36b", "GET", [middleware.getform36b]);
 
 

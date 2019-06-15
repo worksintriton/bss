@@ -332,83 +332,106 @@
     },
 
     "/reports/getemployeedetails": {
-        "POST": {
+        "GET": {
             "body": {
                 "type": "object",
                "properties": {
-                   "title": {
-                       "type": "array"
-                   }
+                   
                },
        "additionalProperties": false,
                "required": [
-                   "title"
+                  
                    
                ],
                "errorMessage": {
                    "additionalProperties": "should not have additional properties",
                    "required": {
-                       "title": "should have required property title"
+                      
                       
                    },
                    "properties": {
-                       "title": "title must be array"
+                      
                    }
                }
            }
         }
     },
     "/reports/getunitmaster": {
-        "POST": {
-            "body": {
-                 "type": "object",
-                "properties": {
-                    "title": {
-                        "type": "array"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                   "title"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "title": "should have required property title"
-                    },
-                    "properties": {
-                        "title": "title must be string"
-                    }
-                }
-            }
-        }
-    },
-    "/reports/getwagesheet": {
-        "POST": {
+        "GET": {
             "body": {
                 "type": "object",
                "properties": {
-                   "title": {
-                       "type": "string"
-                   }
+                   
                },
        "additionalProperties": false,
                "required": [
-                  "title"
+                  
+                   
                ],
                "errorMessage": {
                    "additionalProperties": "should not have additional properties",
                    "required": {
-                       "title": "should have required property title"
+                      
+                      
                    },
                    "properties": {
-                       "title": "title must be string"
+                      
+                   }
+               }
+           }
+        }
+    },
+    "/reports/getwagesheet": {
+        "GET": {
+            "body": {
+                "type": "object",
+               "properties": {
+                   
+               },
+       "additionalProperties": false,
+               "required": [
+                  
+                   
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                      
+                      
+                   },
+                   "properties": {
+                      
                    }
                }
            }
         }
     },
 
+    "/reports/cashandbank": {
+        "GET": {
+            "body": {
+                "type": "object",
+               "properties": {
+                   
+               },
+       "additionalProperties": false,
+               "required": [
+                  
+                   
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                      
+                      
+                   },
+                   "properties": {
+                      
+                   }
+               }
+           }
+        }
+    },
     "/reports/getemployeevoucher": {
         "GET": {
             "body": {
@@ -489,79 +512,78 @@
         }
     },
     "/reports/getpfecr": {
-        "POST": {
+        "GET": {
             "body": {
-                 "type": "object",
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                    "title"
-                    
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "title": "should have required property title"
-                    },
-                    "properties": {
-                        "title": "title must be string"
-                    }
-                }
-            }
+                "type": "object",
+               "properties": {
+                   
+               },
+       "additionalProperties": false,
+               "required": [
+                  
+                   
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                      
+                      
+                   },
+                   "properties": {
+                      
+                   }
+               }
+           }
         }
     },
     "/reports/getDesignation": {
-        "POST": {
+        "GET": {
             "body": {
-                 "type": "object",
-                "properties": {
-                    "unit_name": {
-                        "type": "array"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                   "unit_name"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "unit_name": "should have required property unit_name"
-                    },
-                    "properties": {
-                        "unit_name": "unit_name must be string"
-                    }
-                }
-            }
+                "type": "object",
+               "properties": {
+                   
+               },
+       "additionalProperties": false,
+               "required": [
+                  
+                   
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                      
+                      
+                   },
+                   "properties": {
+                      
+                   }
+               }
+           }
         }
     },
     "/reports/getloanandoutstanding": {
-        "POST": {
+        "GET": {
             "body": {
-                 "type": "object",
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    }
-                },
-        "additionalProperties": false,
-                "required": [
-                   "title"
-                ],
-                "errorMessage": {
-                    "additionalProperties": "should not have additional properties",
-                    "required": {
-                        "title": "should have required property title"
-                    },
-                    "properties": {
-                        "title": "title must be string"
-                    }
-                }
-            }
+                "type": "object",
+               "properties": {
+                   
+               },
+       "additionalProperties": false,
+               "required": [
+                  
+                   
+               ],
+               "errorMessage": {
+                   "additionalProperties": "should not have additional properties",
+                   "required": {
+                      
+                      
+                   },
+                   "properties": {
+                      
+                   }
+               }
+           }
         }
     },
     "/reports/getform36b": {

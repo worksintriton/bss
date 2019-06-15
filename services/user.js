@@ -6957,35 +6957,25 @@ user.getreportssssssall1 = function (userInput, resultCallback) {
 };
 
 user.getemployeedetails1 = function (title, resultCallback) {
+  console.log(title);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.employeedetails where "site_name"=($1)' , [title])
+               executor.any('SELECT * FROM public.employeedetails' , [])
                  .then(data => {
-                   if ( data.length == 0) {
-                     var a = {}
-                    resultCallback(null,a);
-                   } else {
-                    resultCallback(null,data);
-                   }
+                  resultCallback(null,data);
                  })
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
 };
-user.getunitmaster1 = function (element, resultCallback) {
+user.getunitmasterss = function (element, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_unit_entry" where "unit_name"= ($1)   ', [element])
+    executor.any('select * FROM public."payroll_manual_unit_entry"  ', [])
         .then(data => {
-          if ( data.length == 0) {
-            var a = {
-
-            }
-           resultCallback(null,a);
-          } else {
-              resultCallback(null,data[0]);
-          }
+          console.log(data);
+          resultCallback(null,data);
         })
         .catch(error => {
             resultCallback(error,null );
@@ -7012,9 +7002,36 @@ user.getunitmaster2 = function (id, resultCallback) {
         })
 };
 user.getwagesheet1 = function (userInput, resultCallback) {
+  console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('SELECT * FROM public.payroll_manual_entry where "unit_name"=($1)' , [userInput.title])   
+               executor.any('SELECT * FROM public.payroll_manual_entry' , [])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.cashandbanks = function (userInput, resultCallback) {
+  console.log(userInput);
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\' 
+               executor.any('SELECT * FROM public.payroll_manual_entry' , [])   
+                 .then(data => {
+              resultCallback(null,data);
+                 })
+        .catch(error => {
+            resultCallback(error,null );
+            console.log('ERROR:', error);
+        })
+};
+user.cashandbankss = function (userInput, resultCallback) {
+  console.log(userInput);
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+               executor.any('SELECT ecode, SUM (net_pay) AS net_pay FROM payroll_manual_entry GROUP BY ecode' , [])   
                  .then(data => {
               resultCallback(null,data);
                  })
@@ -7077,9 +7094,10 @@ user.getwageslip1 = function (userInput, resultCallback) {
         })
 };
 user.getsiteDetails = function (userInput, resultCallback) {
+  console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('select * FROM public."clientsite" WHERE "title"=($1)', [userInput.title])    
+               executor.any('select * FROM public."clientsite"', [])    
                  .then(data => {
               resultCallback(null,data);
                  })
@@ -7093,7 +7111,12 @@ user.getpayrolldetails = function (site_billing_name, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
                executor.any('select * FROM public."payroll_manual_entry" WHERE "unit_name"=($1)', [site_billing_name])   
                  .then(data => {
-              resultCallback(null,data);
+                   if (data.length == 0) {
+                     var a = {}
+                     resultCallback(null,a);
+                   } else if (data.length > 0) {
+                    resultCallback(null,data[0]);
+                   }
                  })
         .catch(error => {
             resultCallback(error,null );
@@ -7105,26 +7128,26 @@ user.getEmployeeDetail = function (unit_name, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
                executor.any('select * FROM public."employeedetails" WHERE "site_name"=($1)', [unit_name])   
                  .then(data => {
-              resultCallback(null,data);
+                  if (data.length == 0) {
+                    var a = {}
+                    resultCallback(null,a);
+                  } else if (data.length > 0) {
+                   resultCallback(null,data[0]);
+                  }
                  })
         .catch(error => {
             resultCallback(error,null );
             console.log('ERROR:', error);
         })
 };
-user.getDesignations = function (title, resultCallback) {
+user.getDesignationss = function (title, resultCallback) {
+  console.log(title)
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_entry" where "unit_name"=($1) ', [title])
+    executor.any('select * FROM public."payroll_manual_entry" ', [])
         .then(data => {
-          if ( data.length == 0) {
-          var a = [{
-
-          }]
-          resultCallback(null,a);
-        } else if ( data.length !== 0)  {
+          console.log(data);
           resultCallback(null,data);
-        }
         })
         .catch(error => {
             resultCallback(error,null );
@@ -7132,9 +7155,10 @@ user.getDesignations = function (title, resultCallback) {
         })
 };
 user.getloanandoutstandings = function (userInput, resultCallback) {
+  console.log(userInput)
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_entry" where "unit_name"=($1) ', [userInput.title])
+    executor.any('select * FROM public."payroll_manual_entry"', [])
         .then(data => {
 
                  resultCallback(null,data );
@@ -7150,9 +7174,12 @@ user.getloanandoutstandingss = function (unit_name, resultCallback) {
   //\''+userInput.appartment_ukey+'\' 
     executor.any('select * FROM public."clientsite" where "title"=($1) ', [unit_name])
         .then(data => {
-
-                 resultCallback(null,data );
-            
+          if (data.length == 0) {
+            var a = { }
+            resultCallback(null,a);
+          } else if (data.length > 0) {
+            resultCallback(null,data[0]);
+          }
         })
         .catch(error => {
             resultCallback(error,null );

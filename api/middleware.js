@@ -7299,58 +7299,16 @@ function getreportssssssall(req, res, next) {
 function getemployeedetails(req, res, next) {
     async.waterfall([
          function (waterfallCallback){
-             var detailss = [];
-            req.body.title.forEach(function(detail){
-                services.user.getemployeedetails1(detail.title, function (err, result) {
+            services.user.getemployeedetails1('data', function (err, result) {
                 if (err) {
                     console.log(err)
                 } else {
-                    detailss.push(result)
-                    if ( req.body.title.length == detailss.length) {
-                     waterfallCallback(null,detailss);
+                     waterfallCallback(null,result);
                     }
-                }
                 });
-            });
-          
          },
          function (mydata, waterfallCallback){
-            // var mydata = [];
-            // for(var i=0;i<result.length;i++){
-            //     if (req.body.title.site_name == result[i].site_name) {
-            //     let a = {
-            //     employee_type: result[i].employee_type,
-            //     father_name: result[i].father_name,
-            //     gender: result[i].gender,
-            //     material_status: result[i].material_status,
-            //     date_joining: result[i].date_joining,
-            //     driving_licence: result[i].driving_licence,
-            //     Mobile_No: result[i].Mobile_No,
-            //     Name: result[i].Name,
-            //     Date_of_birth: result[i].Date_of_birth,
-            //     aadhar_card: result[i].aadhar_card,
-            //     voter_id: result[i].voter_id,
-            //     Address: result[i].Address,
-            //     workstatus: result[i].workstatus,
-            //     ifsc: result[i].ifsc,
-            //     bankname: result[i].bankname,
-            //     a_c: result[i].a_c,
-            //     sponname: result[i].sponname,
-            //     site_name: result[i].site_name,
-            //     esi: result[i].esi,
-            //     pf1: result[i].pf1,
-            //     pf2: result[i].pf2,
-            //     pf3: result[i].pf3,
-            //     ecode: result[i].ecode,
-            //     uan: result[i].uan,
-            //     dor: result[i].dor,
-            //     dispensary: result[i].dispensary,
-            //     ucode: result[i].ucode,
-            //     bankbranchname: '-'
-            //     }
-            //     mydata.push(a);     
-            // }
-        // }
+             console.log(mydata);
              return res.json(_.merge({
                  data: mydata 
              }, utils.errors["200"]));
@@ -7361,23 +7319,16 @@ function getemployeedetails(req, res, next) {
 function getunitmaster(req, res, next) {
     async.waterfall([
          function (waterfallCallback){
-            var unit_entry = [];
-            req.body.title.forEach(function(element){
-             services.user.getunitmaster1(element.title, function (err, result) {
+             services.user.getunitmasterss(req.body, function (err, result) {
              if (err) {
                  console.log(err)
                 //  req.log.error({
                 //      error: err
                 //  }, "Error while getting available users by mobiles");
                 //  return res.json(utils.errors["500"]);
-             } else {
-                        unit_entry.push(result)
-                 if(req.body.title.length == unit_entry.length) {
-                    waterfallCallback(null,unit_entry);
-                 }
-             }
+             } 
+             waterfallCallback(null,result);
              });
-            })
          },
          function (unit_entry,waterfallCallback){
              console.log(unit_entry.length)
@@ -7406,6 +7357,7 @@ function getunitmaster(req, res, next) {
                 let a = {
                     id: data.id,
                     ucode: data1.unit_code,
+                    company_name: data1.company,
                     unit_name: data1.unit_name,
                     rank: data.rank,
                     basic: data.basic,
@@ -7441,18 +7393,88 @@ function getunitmaster(req, res, next) {
 function getwagesheet(req, res, next) {
     async.waterfall([
          function (waterfallCallback){
-             services.user.getwagesheet1(req.body, function (err, result) {
+             services.user.getwagesheet1('data', function (err, result) {
              if (err) {
-                 req.log.error({
-                     error: err
-                 }, "Error while getting available users by mobiles");
-                 return res.json(utils.errors["500"]);
+                 console.log(err);
+                //  req.log.error({
+                //      error: err
+                //  }, "Error while getting available users by mobiles");
+                //  return res.json(utils.errors["500"]);
              }
              console.log(result)
              waterfallCallback(null,result);
              });
          },
          function (mydata, waterfallCallback){
+             return res.json(_.merge({
+                 data: mydata 
+             }, utils.errors["200"]));
+         }
+     ]);
+
+}
+
+function cashandbank(req, res, next) {
+    async.waterfall([
+         function (waterfallCallback){
+             services.user.cashandbanks('data', function (err, payRoll) {
+             if (err) {
+                 console.log(err);
+                //  req.log.error({
+                //      error: err
+                //  }, "Error while getting available users by mobiles");
+                //  return res.json(utils.errors["500"]);
+             }
+             waterfallCallback(null,payRoll);
+             });
+         },
+         function (payRoll,waterfallCallback){
+                services.user.cashandbankss('data1', function (err, netPaySum) {
+                    if (err) {
+                        console.log(err);
+                       //  req.log.error({
+                       //      error: err
+                       //  }, "Error while getting available users by mobiles");
+                       //  return res.json(utils.errors["500"]);
+                    }
+                    // console.log(result)
+                    waterfallCallback(null,payRoll,netPaySum);
+                    });
+        },
+         function (payRoll,netPaySum, waterfallCallback){
+             var mydata = [];
+             for(let i = 0; i < payRoll.length; i++) {
+                 for(let j = 0; j < netPaySum.length; j++) {
+                    if(payRoll[i].ecode == netPaySum[j].ecode ) {
+                        if ((payRoll[i].eac == null) || (payRoll[i].eac == '')) {
+                            payRoll[i].eac = 'Cash'
+                        }
+                        var a = {
+                            company_name: payRoll[i].company_name,
+                            unit_name: payRoll[i].unit_name,
+                            ecode: payRoll[i].ecode,
+                            ename: payRoll[i].ename,
+                            eac: payRoll[i].eac,
+                            eifsc: payRoll[i].eifsc,
+                            ebankname: payRoll[i].ebankname,
+                            ebankbranch: '-',
+                            net_pay: netPaySum[j].net_pay
+                        }
+                        let check = 1 ;
+                        for(let b = 0 ; b < mydata.length ; b ++){
+                            if(mydata[b].ecode == payRoll[i].ecode){
+                                 check = 0
+                            }else{
+                                 check = 1
+                            }
+                        }
+                        if(check == 1){
+                            mydata.push(a)
+                        }
+                        
+                    }
+                 }
+             }
              return res.json(_.merge({
                  data: mydata 
              }, utils.errors["200"]));
@@ -7593,7 +7615,7 @@ function getwageslip(req, res, next) {
 function getpfecr(req, res, next) {
     async.waterfall([
          function (waterfallCallback){
-             services.user.getsiteDetails(req.body, function (err, siteDetails) {
+             services.user.getsiteDetails('data', function (err, siteDetails) {
              if (err) {
                  req.log.error({
                      error: err
@@ -7604,34 +7626,50 @@ function getpfecr(req, res, next) {
              });
          },
          function (siteDetails, waterfallCallback){
+             console.log(siteDetails.length);
+             var payRollDetail = [];
             siteDetails.forEach(function(siteDetail) {
-            services.user.getpayrolldetails(siteDetail.site_billing_name, function (err, payRollDetail) {
+            services.user.getpayrolldetails(siteDetail.site_billing_name, function (err, Detail) {
             if (err) {
-                req.log.error({
-                    error: err
-                }, "Error while getting available users by mobiles");
-                return res.json(utils.errors["500"]);
+                console.log(err);
+                // req.log.error({
+                //     error: err
+                // }, "Error while getting available users by mobiles");
+                // return res.json(utils.errors["500"]);
             }
-            waterfallCallback(null,payRollDetail);
+            payRollDetail.push(Detail)
+            console.log(payRollDetail.length);
+            if(siteDetails.length == payRollDetail.length) {
+                console.log('in payRollDetail');
+                waterfallCallback(null,payRollDetail);
+            }
             });
         });
         },
         function (payRollDetail, waterfallCallback){
+            console.log(payRollDetail.length);
+             var employeeDetail = [];
             payRollDetail.forEach(function(payRollDetails) {
-            services.user.getEmployeeDetail(payRollDetails.unit_name, function (err, employeeDetail) {
+            services.user.getEmployeeDetail(payRollDetails.unit_name, function (err, Details) {
             if (err) {
-                req.log.error({
-                    error: err
-                }, "Error while getting available users by mobiles");
-                return res.json(utils.errors["500"]);
+                console.log(err);
+                // req.log.error({
+                //     error: err
+                // }, "Error while getting available users by mobiles");
+                // return res.json(utils.errors["500"]);
             }
-            waterfallCallback(null,payRollDetail,employeeDetail);
+            employeeDetail.push(Details)
+            console.log(employeeDetail.length);
+            if(payRollDetail.length == employeeDetail.length) {
+                console.log('in employeeDetail');
+                waterfallCallback(null,payRollDetail,employeeDetail);
+            }
             });
         });
         },
          function (payRollDetail,employeeDetail, waterfallCallback){
             //  console.log(payRollDetail);
-             console.log(employeeDetail);
+            //  console.log(employeeDetail);
             var myData = [];
             payRollDetail.forEach(function(data1){
             employeeDetail.forEach(function(data){
@@ -7723,10 +7761,7 @@ function getpfecr(req, res, next) {
 function getDesignation(req, res, next) {
     async.waterfall([
          function (waterfallCallback){
-             var detailss = [];
-            req.body.unit_name.forEach(function(detail){
-                console.log(detail.title)
-                services.user.getDesignations(detail.title, function (err, manualEntryDetails) {
+                services.user.getDesignationss("data", function (err, manualEntryDetails) {
                     if (err) {
                         console.log(err)
                         // req.log.error({
@@ -7734,16 +7769,10 @@ function getDesignation(req, res, next) {
                         // }, "Error while getting available users by mobiles");
                         // return res.json(utils.errors["500"]);
                     } else {
-                        for ( var i = 0; i < manualEntryDetails.length; i++) {
-                            if (detail.title == manualEntryDetails[i].unit_name) {
-                                detailss.push(manualEntryDetails[i]);
-                                waterfallCallback(null,detailss);
-                            }
-                        }
+                        waterfallCallback(null,manualEntryDetails);
                             
                     }
                     });
-            })   
          },
          function (mydata, waterfallCallback){
              return res.json(_.merge({
@@ -7757,7 +7786,7 @@ function getloanandoutstanding(req, res, next) {
 
     async.waterfall([
          function (waterfallCallback){
-             services.user.getloanandoutstandings(req.body, function (err, totalPayDetails) {
+             services.user.getloanandoutstandings("data", function (err, totalPayDetails) {
              if (err) {
                  req.log.error({
                      error: err
@@ -7768,15 +7797,22 @@ function getloanandoutstanding(req, res, next) {
              });
          },
          function (totalPayDetails,waterfallCallback){
+             console.log(totalPayDetails.length);
+             var d = [];
             totalPayDetails.forEach(function(element){
                 services.user.getloanandoutstandingss(element.unit_name, function (err, siteDetails) {
                     if (err) {
-                        req.log.error({
-                            error: err
-                        }, "Error while getting available users by mobiles");
-                        return res.json(utils.errors["500"]);
+                        console.log(err);
+                        // req.log.error({
+                        //     error: err
+                        // }, "Error while getting available users by mobiles");
+                        // return res.json(utils.errors["500"]);
                     }
-                    waterfallCallback(null,totalPayDetails, siteDetails);
+                    d.push(siteDetails)
+                    console.log(d.length);
+                    if(totalPayDetails.length ==  d.length) {
+                        waterfallCallback(null,totalPayDetails, d);
+                    }
                     });
             })
         },
@@ -8688,6 +8724,7 @@ exports. fetchunit_number1 = fetchunit_number1;
 exports.getemployeedetails = getemployeedetails;
 exports.getunitmaster = getunitmaster;
 exports.getwagesheet = getwagesheet;
+exports.cashandbank = cashandbank;
 exports.getemployeevoucher = getemployeevoucher;
 exports.getproftaxform = getproftaxform;
 exports.getwageslip = getwageslip;
