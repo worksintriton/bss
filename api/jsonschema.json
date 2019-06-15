@@ -587,28 +587,31 @@
         }
     },
     "/reports/getform36b": {
-        "GET": {
+        "POST": {
             "body": {
-                "type": "object",
-               "properties": {
-                   
-               },
-       "additionalProperties": false,
-               "required": [
-                  
-                   
-               ],
-               "errorMessage": {
-                   "additionalProperties": "should not have additional properties",
-                   "required": {
-                      
-                      
-                   },
-                   "properties": {
-                      
-                   }
-               }
-           }
+                 "type": "object",
+                "properties": {
+                    "companyName": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": true,
+                "required": [
+                   "companyName"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "companyName": "should have required property companyName"
+                    },
+                    "properties": {
+                        "companyName": "companyName must be string"
+                    }
+                }
+            }
         }
     },
     "/advance/carryForward": {

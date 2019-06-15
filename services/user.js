@@ -4012,7 +4012,7 @@ user.advanceaddsss = function (userInput,date,amount,date1, resultCallback) {
    [userInput.employee_id, userInput.company_name, userInput.advance_type, date1, userInput.employee_name])
   .then(data => {
     if ( data.length > 0) {
-      "update"
+      console.log("update");
       console.log(data);
       executor.one('UPDATE public.advance SET  pamount=$1 WHERE  "id" = $2 RETURNING *',
       [
@@ -4052,8 +4052,9 @@ user.advanceaddsss = function (userInput,date,amount,date1, resultCallback) {
                   console.log('ERROR:', error);
               })
     } else if (data.length == 0) {
-      "insert"
-      executor.one('INSERT INTO public.advance(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number, cdate)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
+      console.log(userInput.loan_number);
+      console.log("insert");
+      executor.one('INSERT INTO public.advance(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
       [
       userInput.employee_id,
       userInput.employee_name,
@@ -4142,7 +4143,7 @@ userInput.Advance_Type,
 userInput.Company_Name,
 userInput.site,
 "Pending",
-userInput.Loan_Number,
+userInput.loan_number,
 userInput.ifsc
 ])
                       .then(data => {
@@ -7190,7 +7191,7 @@ user.getloanandoutstandingss = function (unit_name, resultCallback) {
 user.getgetform36bpayrollmanualentrys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-    executor.any('select * FROM public."payroll_manual_entry"', [])
+    executor.any('select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2', [userInput.companyName , userInput.date])
         .then(data => {
 
                  resultCallback(null,data );
