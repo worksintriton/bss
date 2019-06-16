@@ -4005,7 +4005,7 @@ user.companylistss = function (userInput, resultCallback) {
 ///add advance/////
 
 
-user.advanceaddsss = function (userInput,date,amount,date1, resultCallback) {
+user.advanceaddsss = function (userInput,date,amount,date1,loanNumber, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
   executor.any('select * FROM public."advance" where "employee_id"=$1 and "company_name"=$2 and "advance_type"=$3 and  "cdate"=$4 and  "employee_name"=$5 ',
@@ -4052,7 +4052,7 @@ user.advanceaddsss = function (userInput,date,amount,date1, resultCallback) {
                   console.log('ERROR:', error);
               })
     } else if (data.length == 0) {
-      console.log(userInput.loan_number);
+      console.log(loanNumber);
       console.log("insert");
       executor.one('INSERT INTO public.advance(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
       [
@@ -4073,7 +4073,7 @@ user.advanceaddsss = function (userInput,date,amount,date1, resultCallback) {
       userInput.company_name,
       userInput.site,
       "Pending",
-      userInput.loan_number,
+      loanNumber,
       date1
       ])
                             .then(data2 => {
@@ -7098,7 +7098,7 @@ user.getsiteDetails = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('select * FROM public."clientsite"', [])    
+               executor.any('select * FROM public."payroll_manual_entry" WHERE "date"=($1)', [userInput.date])    
                  .then(data => {
               resultCallback(null,data);
                  })
@@ -7107,34 +7107,13 @@ user.getsiteDetails = function (userInput, resultCallback) {
             console.log('ERROR:', error);
         })
 };
-user.getpayrolldetails = function (site_billing_name, resultCallback) {
+
+user.getEmployeeDetail = function (ecode, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
-               executor.any('select * FROM public."payroll_manual_entry" WHERE "unit_name"=($1)', [site_billing_name])   
+               executor.any('select * FROM public."employeedetails" WHERE "ecode"=($1)', [ecode])   
                  .then(data => {
-                   if (data.length == 0) {
-                     var a = {}
-                     resultCallback(null,a);
-                   } else if (data.length > 0) {
-                    resultCallback(null,data[0]);
-                   }
-                 })
-        .catch(error => {
-            resultCallback(error,null );
-            console.log('ERROR:', error);
-        })
-};
-user.getEmployeeDetail = function (unit_name, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\' 
-               executor.any('select * FROM public."employeedetails" WHERE "site_name"=($1)', [unit_name])   
-                 .then(data => {
-                  if (data.length == 0) {
-                    var a = {}
-                    resultCallback(null,a);
-                  } else if (data.length > 0) {
-                   resultCallback(null,data[0]);
-                  }
+                  resultCallback(null,data[0]);
                  })
         .catch(error => {
             resultCallback(error,null );

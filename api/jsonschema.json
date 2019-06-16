@@ -512,28 +512,29 @@
         }
     },
     "/reports/getpfecr": {
-        "GET": {
+        "POST": {
             "body": {
-                "type": "object",
-               "properties": {
-                   
-               },
-       "additionalProperties": false,
-               "required": [
-                  
-                   
-               ],
-               "errorMessage": {
-                   "additionalProperties": "should not have additional properties",
-                   "required": {
-                      
-                      
-                   },
-                   "properties": {
-                      
-                   }
-               }
-           }
+                 "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string"
+                    }
+                },
+        "additionalProperties": false,
+                "required": [
+                    "date"
+                ],
+                "errorMessage": {
+                    "additionalProperties": "should not have additional properties",
+                    "required": {
+                        "date": "should have required property date"
+                       
+                    },
+                    "properties": {
+                        "date": "date must be string"
+                    }
+                }
+            }
         }
     },
     "/reports/getDesignation": {
