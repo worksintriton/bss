@@ -4006,6 +4006,7 @@ user.companylistss = function (userInput, resultCallback) {
 
 
 user.advanceaddsss = function (userInput,date,amount,date1,loanNumber, resultCallback) {
+  console.log(loanNumber);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\' 
   executor.any('select * FROM public."advance" where "employee_id"=$1 and "company_name"=$2 and "advance_type"=$3 and  "cdate"=$4 and  "employee_name"=$5 ',
