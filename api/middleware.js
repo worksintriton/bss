@@ -7358,8 +7358,6 @@ function fetchcompany(req, res, next) {
 }
 
 function advanceadds(req, res, next) {
-  console.log(req.body);
-
   async.waterfall([
     function(waterfallCallback) {
       let k = req.body.pinstalment + 1;
@@ -7373,7 +7371,6 @@ function advanceadds(req, res, next) {
         let yy = a[0];
         let mm = a[1];
         var date1 = yy + "-" + mm;
-        // console.log(req.body.loan_number);
         services.user.advanceaddsss(
           req.body,
           date,
