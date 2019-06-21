@@ -3981,14 +3981,9 @@ user.companylistss = function(userInput, resultCallback) {
 
 ///add advance/////
 
-user.advanceaddsss = function(
-  userInput,
-  date,
-  amount,
-  date1,
-  loanNumber,
-  resultCallback
-) {
+user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
+  console.log("test1");
+  console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4005,47 +4000,51 @@ user.advanceaddsss = function(
     .then(data => {
       if (data.length > 0) {
         console.log("update");
-        console.log(data);
+        console.log("test2");
         executor
           .one(
             'UPDATE public.advance SET  pamount=$1 WHERE  "id"= $2  and cdate=$3 RETURNING *',
-            [+data[0].pamount + +userInput.pamount, data[0].id, data[0].cdate]
+            [+data[0].pamount + +amount, data[0].id, data[0].cdate]
           )
           .then(data1 => {
-            console.log(data1);
-            executor.one(
-              'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-              [
-                data1.employee_id,
-                data1.employee_name,
-                data1.account_number,
-                data1.pamount,
-                data1.pbalanceamount,
-                data1.pinstalment,
-                data1.ppendinginstalment,
-                data1.dfullcash,
-                data1.dpaytype,
-                data1.ddate,
-                data1.damount,
-                data1.daddi,
-                data1.dnaration,
-                data1.advance_type,
-                data1.company_name,
-                data1.site,
-                data1.status,
-                data1.loan_number,
-                data1.cdate,
-                data1.id
-              ]
-            );
-
-            resultCallback(null, data1);
+            console.log("test3");
+            // resultCallback(null, data1);
+            executor
+              .one(
+                'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                [
+                  data1.employee_id,
+                  data1.employee_name,
+                  data1.account_number,
+                  data1.pamount,
+                  data1.pbalanceamount,
+                  data1.pinstalment,
+                  data1.ppendinginstalment,
+                  data1.dfullcash,
+                  data1.dpaytype,
+                  data1.ddate,
+                  data1.damount,
+                  data1.daddi,
+                  data1.dnaration,
+                  data1.advance_type,
+                  data1.company_name,
+                  data1.site,
+                  data1.status,
+                  data1.loan_number,
+                  data1.cdate,
+                  data1.id
+                ]
+              )
+              .then(historyys => {
+                resultCallback(null, historyys);
+              });
           })
           .catch(error => {
             resultCallback(error, null);
             console.log("ERROR:", error);
           });
       } else if (data.length == 0) {
+        console.log("test4");
         console.log(userInput.loan_number);
         console.log("insert");
         executor
@@ -4074,42 +4073,45 @@ user.advanceaddsss = function(
             ]
           )
           .then(data2 => {
-            console.log(data2);
-            executor.one(
-              'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-              [
-                data2.employee_id,
-                data2.employee_name,
-                data2.account_number,
-                data2.pamount,
-                data2.pbalanceamount,
-                data2.pinstalment,
-                data2.ppendinginstalment,
-                data2.dfullcash,
-                data2.dpaytype,
-                data2.ddate,
-                data2.damount,
-                data2.daddi,
-                data2.dnaration,
-                data2.advance_type,
-                data2.company_name,
-                data2.site,
-                data2.status,
-                data2.loan_number,
-                data2.cdate,
-                data2.id
-              ]
-            );
-
-            resultCallback(null, data2);
+            console.log("test5");
+            // resultCallback(null, data2);
+            executor
+              .one(
+                'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
+                [
+                  data2.employee_id,
+                  data2.employee_name,
+                  data2.account_number,
+                  data2.pamount,
+                  data2.pbalanceamount,
+                  data2.pinstalment,
+                  data2.ppendinginstalment,
+                  data2.dfullcash,
+                  data2.dpaytype,
+                  data2.ddate,
+                  data2.damount,
+                  data2.daddi,
+                  data2.dnaration,
+                  data2.advance_type,
+                  data2.company_name,
+                  data2.site,
+                  data2.status,
+                  data2.loan_number,
+                  data2.cdate,
+                  data2.id
+                ]
+              )
+              .then(historyy => {
+                resultCallback(null, historyy);
+              });
           })
           .catch(error => {
-            resultCallback(error, null);
-            console.log("ERROR:", error);
+            console.log(error);
+            // resultCallback(error, null);
+            // console.log("ERROR:", error);
           });
       }
-
-      //  resultCallback(null,data );
+      //  resultCallback(null,'result' );
     })
     .catch(error => {
       resultCallback(error, null);

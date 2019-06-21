@@ -7358,11 +7358,11 @@ function fetchcompany(req, res, next) {
 }
 
 function advanceadds(req, res, next) {
-    console.log(req.body);
   async.waterfall([
     function(waterfallCallback) {
       let k = req.body.pinstalment + 1;
       for (var i = 1; i <= req.body.pinstalment; i++) {
+          console.log(req.body.ddate);
         var futureMonth = moment(req.body.ddate).add(i, "months");
         console.log("new" + futureMonth);
         var date = dateFormat(futureMonth, "yyyy-mm-dd");
@@ -7372,23 +7372,25 @@ function advanceadds(req, res, next) {
         let yy = a[0];
         let mm = a[1];
         var date1 = yy + "-" + mm;
-        services.user.advanceaddsss(
-          req.body,
-          date,
-          amount,
-          date1,
-          req.body.loan_number,
-          function(err, result) {
-            if (err) {
-              console.log(err);
-            }
+        services.user.advanceaddsss(req.body, date, amount, date1, function(
+          err,
+          result
+        ) {
+          if (err) {
+            req.log.error(
+              {
+                error: err
+              },
+              "Error while getting available users by mobiles"
+            );
+            return res.json(utils.errors["500"]);
           }
-        );
+          waterfallCallback(null, result);
+        });
       }
-      console.log(result);
-      waterfallCallback(null, "Inserted");
     },
     function(mydata, waterfallCallback) {
+      console.log(mydata);
       return res.json(
         _.merge(
           {
