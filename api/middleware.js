@@ -7358,6 +7358,7 @@ function fetchcompany(req, res, next) {
 }
 
 function advanceadds(req, res, next) {
+    console.log(req.body);
   async.waterfall([
     function(waterfallCallback) {
       let k = req.body.pinstalment + 1;
