@@ -7362,7 +7362,7 @@ function advanceadds(req, res, next) {
     function(waterfallCallback) {
       let k = req.body.pinstalment + 1;
       for (var i = 1; i <= req.body.pinstalment; i++) {
-          console.log(req.body.ddate);
+        console.log(req.body.ddate);
         var futureMonth = moment(req.body.ddate).add(i, "months");
         console.log("new" + futureMonth);
         var date = dateFormat(futureMonth, "yyyy-mm-dd");
@@ -8924,7 +8924,7 @@ function getwagesheet(req, res, next) {
 function cashandbank(req, res, next) {
   async.waterfall([
     function(waterfallCallback) {
-      services.user.cashandbanks("data", function(err, payRoll) {
+      services.user.cashandbanks(req.body, function(err, payRoll) {
         if (err) {
           console.log(err);
           //  req.log.error({
@@ -8936,47 +8936,85 @@ function cashandbank(req, res, next) {
       });
     },
     function(payRoll, waterfallCallback) {
-      services.user.cashandbankss("data1", function(err, netPaySum) {
-        if (err) {
-          console.log(err);
-          //  req.log.error({
-          //      error: err
-          //  }, "Error while getting available users by mobiles");
-          //  return res.json(utils.errors["500"]);
-        }
-        // console.log(result)
-        waterfallCallback(null, payRoll, netPaySum);
+      console.log(payRoll.length);
+      var netPaySum = [];
+      payRoll.forEach(element => {
+        services.user.cashandbankss(element.ecode, function(err, netPayDetail) {
+          if (err) {
+            console.log(err);
+            //  req.log.error({
+            //      error: err
+            //  }, "Error while getting available users by mobiles");
+            //  return res.json(utils.errors["500"]);
+          }
+          // console.log(result)
+          netPaySum.push(netPayDetail);
+          console.log(netPaySum.length);
+          if (payRoll.length == netPaySum.length) {
+            waterfallCallback(null, payRoll, netPaySum);
+          }
+        });
       });
     },
     function(payRoll, netPaySum, waterfallCallback) {
+      console.log(netPaySum.length);
+      var employeeData = [];
+      netPaySum.forEach(element => {
+        services.user.cashandbanksss(element.ecode, function(
+          err,
+          employeeDetail
+        ) {
+          if (err) {
+            console.log(err);
+            //  req.log.error({
+            //      error: err
+            //  }, "Error while getting available users by mobiles");
+            //  return res.json(utils.errors["500"]);
+          }
+          // console.log(result)
+          employeeData.push(employeeDetail);
+          console.log(employeeData.length);
+          if (netPaySum.length == employeeData.length) {
+            waterfallCallback(null, payRoll, netPaySum, employeeData);
+          }
+        });
+      });
+    },
+    function(payRoll, netPaySum, employeeData, waterfallCallback) {
       var mydata = [];
       for (let i = 0; i < payRoll.length; i++) {
         for (let j = 0; j < netPaySum.length; j++) {
-          if (payRoll[i].ecode == netPaySum[j].ecode) {
-            if (payRoll[i].eac == null || payRoll[i].eac == "") {
-              payRoll[i].eac = "Cash";
-            }
-            var a = {
-              company_name: payRoll[i].company_name,
-              unit_name: payRoll[i].unit_name,
-              ecode: payRoll[i].ecode,
-              ename: payRoll[i].ename,
-              eac: payRoll[i].eac,
-              eifsc: payRoll[i].eifsc,
-              ebankname: payRoll[i].ebankname,
-              ebankbranch: "-",
-              net_pay: netPaySum[j].net_pay
-            };
-            let check = 1;
-            for (let b = 0; b < mydata.length; b++) {
-              if (mydata[b].ecode == payRoll[i].ecode) {
-                check = 0;
-              } else {
-                check = 1;
+          for (let k = 0; k < employeeData.length; k++) {
+            if (payRoll[i].ecode == netPaySum[j].ecode) {
+              if (payRoll[i].eac == null || payRoll[i].eac == "") {
+                payRoll[i].eac = "Cash";
               }
-            }
-            if (check == 1) {
-              mydata.push(a);
+              if (payRoll[i].eifsc == "undefined") {
+                payRoll[i].eifsc = employeeData[k].ifsc;
+              }
+              var a = {
+                company_name: payRoll[i].company_name,
+                unit_name: payRoll[i].unit_name,
+                ecode: payRoll[i].ecode,
+                ename: payRoll[i].ename,
+                eac: payRoll[i].eac,
+                eifsc: payRoll[i].eifsc,
+                ebankname: payRoll[i].ebankname,
+                ebankbranch: "-",
+                date: payRoll[i].date,
+                net_pay: Math.round(netPaySum[j].net_pay)
+              };
+              let check = 1;
+              for (let b = 0; b < mydata.length; b++) {
+                if (mydata[b].ecode == payRoll[i].ecode) {
+                  check = 0;
+                } else {
+                  check = 1;
+                }
+              }
+              if (check == 1) {
+                mydata.push(a);
+              }
             }
           }
         }
@@ -9586,6 +9624,125 @@ function getform36b(req, res, next) {
     }
   ]);
 }
+function gettotalpay(req, res, next) {
+  async.waterfall([
+    function(waterfallCallback) {
+      services.user.gettotalpays(req.body, function(err, totalPayDetails) {
+        if (err) {
+            console.log(err);
+        //   req.log.error(
+        //     {
+        //       error: err
+        //     },
+        //     "Error while getting available users by mobiles"
+        //   );
+        //   return res.json(utils.errors["500"]);
+        }
+        waterfallCallback(null, totalPayDetails);
+      });
+    },
+    function(totalPayDetails, waterfallCallback) {
+      console.log(totalPayDetails.length);
+      var d = [];
+      totalPayDetails.forEach(function(element) {
+        services.user.gettotalpayss(element.unit_name, function(
+          err,
+          siteDetails
+        ) {
+          if (err) {
+            console.log(err);
+            // req.log.error({
+            //     error: err
+            // }, "Error while getting available users by mobiles");
+            // return res.json(utils.errors["500"]);
+          }
+          d.push(siteDetails);
+          console.log(d.length);
+          if (totalPayDetails.length == d.length) {
+            waterfallCallback(null, totalPayDetails, d);
+          }
+        });
+      });
+    },
+    function(totalPayDetails, siteDetails, waterfallCallback) {
+        var data = [];
+        totalPayDetails.forEach(function(pay) {
+          siteDetails.forEach(function(site) {
+            if (pay.unit_name == site.title) {
+              let a = {
+                ucode: site.sitelogin,
+                company_name: pay.company_name,
+                unit_name: pay.unit_name,
+                date: pay.date,
+                ecode: pay.ecode,
+                ename: pay.ename,
+                etype: pay.etype,
+                eac: pay.eac,
+                ebankname: pay.ebankname,
+                eifsc: pay.eifsc,
+                designation: pay.designation,
+                present: pay.present,
+                dutyoff: pay.dutyoff,
+                add_duties: pay.add_duties,
+                payment_type: pay.payment_type,
+                paymode: pay.paymode,
+                total_duties: pay.total_duties,
+                basic: pay.basic,
+                da: pay.da,
+                hra: pay.hra,
+                trv_ex: pay.trv_ex,
+                others: pay.others,
+                medical: pay.medical,
+                others1: pay.others1,
+                others2: pay.others2,
+                others3: pay.others3,
+                others4: pay.others4,
+                waesi: pay.waesi,
+                ewdays: pay.ewdays,
+                ewamount: pay.ewamount,
+                gross: pay.gross,
+                advance: pay.advance,
+                loan: pay.loan,
+                uniform: pay.uniform,
+                mess: pay.mess,
+                rent: pay.rent,
+                atm: pay.atm,
+                phone: pay.phone,
+                pf: pay.pf,
+                esi: pay.esi,
+                pr_tax: pay.pr_tax,
+                staff_wellfare: pay.staff_wellfare,
+                total_dec: pay.total_dec,
+                net_pay: pay.net_pay,
+                add_amount: pay.add_amount,
+                Insur: "-",
+                IT_Mess: "-"
+              };
+              data.push(a);
+              if(totalPayDetails.length == data.length) {
+                waterfallCallback(null, data);
+              }
+            }
+          });
+        });
+      },
+    function(mydata, waterfallCallback) {
+        console.log(mydata);
+        let total = mydata.map(t => t.net_pay).reduce((acc, value) => acc + value, 0);
+        console.log(total);
+      return res.json(
+        _.merge(
+          {
+            data: mydata,
+            total: total
+          },
+          utils.errors["200"]
+        )
+      );
+    },
+  ]);
+}
+
 function bulkuploadformat(req, res, next) {
   console.log(req.body);
   async.waterfall([
@@ -10414,6 +10571,7 @@ exports.getpfecr = getpfecr;
 exports.getDesignation = getDesignation;
 exports.getloanandoutstanding = getloanandoutstanding;
 exports.getform36b = getform36b;
+exports.gettotalpay = gettotalpay;
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

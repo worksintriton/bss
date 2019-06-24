@@ -7186,11 +7186,13 @@ user.getwagesheet1 = function(userInput, resultCallback) {
     });
 };
 user.cashandbanks = function(userInput, resultCallback) {
-  console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
-    .any("SELECT * FROM public.payroll_manual_entry", [])
+    .any(
+      'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2',
+      [userInput.companyName, userInput.date]
+    )
     .then(data => {
       resultCallback(null, data);
     })
@@ -7199,17 +7201,29 @@ user.cashandbanks = function(userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.cashandbankss = function(userInput, resultCallback) {
-  console.log(userInput);
+user.cashandbankss = function(ecode, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
-      "SELECT ecode, SUM (net_pay) AS net_pay FROM payroll_manual_entry GROUP BY ecode",
-      []
+      'SELECT ecode, SUM (net_pay) AS net_pay FROM public."payroll_manual_entry" where "ecode"=$1 GROUP BY ecode',
+      [ecode]
     )
     .then(data => {
-      resultCallback(null, data);
+      resultCallback(null, data[0]);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+user.cashandbanksss = function(ecode, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [ecode])
+    .then(data => {
+      resultCallback(null, data[0]);
     })
     .catch(error => {
       resultCallback(error, null);
@@ -7358,6 +7372,35 @@ user.getloanandoutstandingss = function(unit_name, resultCallback) {
     });
 };
 
+user.gettotalpays = function(userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any(
+      'SELECT unit_name,"date",SUM (gross) AS gross , SUM (pf) AS pf , SUM (esi) AS esi, SUM (pr_tax) AS pr_tax ,SUM (advance) AS advance , SUM (loan) AS loan , SUM (uniform) AS uniform, SUM (mess) AS mess ,SUM (rent) AS rent , SUM (atm) AS atm , SUM ("others") AS "others", SUM (total_dec) AS total_dec , SUM (net_pay) AS net_pay  FROM payroll_manual_entry where "company_name"=($1) and "date"=($2) GROUP BY unit_name ,"date"',
+      [userInput.companyName, userInput.date]
+    )
+    .then(data => {
+      resultCallback(null, data);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+user.gettotalpayss = function(unit_name, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any('select * FROM public."clientsite" where title=$1', [unit_name])
+    .then(data => {
+      resultCallback(null, data[0]);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
 user.getgetform36bpayrollmanualentrys = function(userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
