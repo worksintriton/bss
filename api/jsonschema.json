@@ -199,7 +199,7 @@
           }
         },
         "additionalProperties": false,
-        "required": [],
+        "required": ["unit_code"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {

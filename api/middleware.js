@@ -9629,14 +9629,14 @@ function gettotalpay(req, res, next) {
     function(waterfallCallback) {
       services.user.gettotalpays(req.body, function(err, totalPayDetails) {
         if (err) {
-            console.log(err);
-        //   req.log.error(
-        //     {
-        //       error: err
-        //     },
-        //     "Error while getting available users by mobiles"
-        //   );
-        //   return res.json(utils.errors["500"]);
+          console.log(err);
+          //   req.log.error(
+          //     {
+          //       error: err
+          //     },
+          //     "Error while getting available users by mobiles"
+          //   );
+          //   return res.json(utils.errors["500"]);
         }
         waterfallCallback(null, totalPayDetails);
       });
@@ -9665,71 +9665,73 @@ function gettotalpay(req, res, next) {
       });
     },
     function(totalPayDetails, siteDetails, waterfallCallback) {
-        var data = [];
-        totalPayDetails.forEach(function(pay) {
-          siteDetails.forEach(function(site) {
-            if (pay.unit_name == site.title) {
-              let a = {
-                ucode: site.sitelogin,
-                company_name: pay.company_name,
-                unit_name: pay.unit_name,
-                date: pay.date,
-                ecode: pay.ecode,
-                ename: pay.ename,
-                etype: pay.etype,
-                eac: pay.eac,
-                ebankname: pay.ebankname,
-                eifsc: pay.eifsc,
-                designation: pay.designation,
-                present: pay.present,
-                dutyoff: pay.dutyoff,
-                add_duties: pay.add_duties,
-                payment_type: pay.payment_type,
-                paymode: pay.paymode,
-                total_duties: pay.total_duties,
-                basic: pay.basic,
-                da: pay.da,
-                hra: pay.hra,
-                trv_ex: pay.trv_ex,
-                others: pay.others,
-                medical: pay.medical,
-                others1: pay.others1,
-                others2: pay.others2,
-                others3: pay.others3,
-                others4: pay.others4,
-                waesi: pay.waesi,
-                ewdays: pay.ewdays,
-                ewamount: pay.ewamount,
-                gross: pay.gross,
-                advance: pay.advance,
-                loan: pay.loan,
-                uniform: pay.uniform,
-                mess: pay.mess,
-                rent: pay.rent,
-                atm: pay.atm,
-                phone: pay.phone,
-                pf: pay.pf,
-                esi: pay.esi,
-                pr_tax: pay.pr_tax,
-                staff_wellfare: pay.staff_wellfare,
-                total_dec: pay.total_dec,
-                net_pay: pay.net_pay,
-                add_amount: pay.add_amount,
-                Insur: "-",
-                IT_Mess: "-"
-              };
-              data.push(a);
-              if(totalPayDetails.length == data.length) {
-                waterfallCallback(null, data);
-              }
+      var data = [];
+      totalPayDetails.forEach(function(pay) {
+        siteDetails.forEach(function(site) {
+          if (pay.unit_name == site.title) {
+            let a = {
+              ucode: site.sitelogin,
+              company_name: pay.company_name,
+              unit_name: pay.unit_name,
+              date: pay.date,
+              ecode: pay.ecode,
+              ename: pay.ename,
+              etype: pay.etype,
+              eac: pay.eac,
+              ebankname: pay.ebankname,
+              eifsc: pay.eifsc,
+              designation: pay.designation,
+              present: pay.present,
+              dutyoff: pay.dutyoff,
+              add_duties: pay.add_duties,
+              payment_type: pay.payment_type,
+              paymode: pay.paymode,
+              total_duties: pay.total_duties,
+              basic: pay.basic,
+              da: pay.da,
+              hra: pay.hra,
+              trv_ex: pay.trv_ex,
+              others: pay.others,
+              medical: pay.medical,
+              others1: pay.others1,
+              others2: pay.others2,
+              others3: pay.others3,
+              others4: pay.others4,
+              waesi: pay.waesi,
+              ewdays: pay.ewdays,
+              ewamount: pay.ewamount,
+              gross: pay.gross,
+              advance: pay.advance,
+              loan: pay.loan,
+              uniform: pay.uniform,
+              mess: pay.mess,
+              rent: pay.rent,
+              atm: pay.atm,
+              phone: pay.phone,
+              pf: pay.pf,
+              esi: pay.esi,
+              pr_tax: pay.pr_tax,
+              staff_wellfare: pay.staff_wellfare,
+              total_dec: pay.total_dec,
+              net_pay: pay.net_pay,
+              add_amount: pay.add_amount,
+              Insur: "-",
+              IT_Mess: "-"
+            };
+            data.push(a);
+            if (totalPayDetails.length == data.length) {
+              waterfallCallback(null, data);
             }
-          });
+          }
         });
-      },
+      });
+    },
     function(mydata, waterfallCallback) {
-        console.log(mydata);
-        let total = mydata.map(t => t.net_pay).reduce((acc, value) => acc + value, 0);
-        console.log(total);
+      console.log(mydata);
+      let total = mydata
+        .map(t => t.net_pay)
+        .reduce((acc, value) => acc + value, 0);
+      console.log(total);
       return res.json(
         _.merge(
           {
@@ -9739,7 +9741,7 @@ function gettotalpay(req, res, next) {
           utils.errors["200"]
         )
       );
-    },
+    }
   ]);
 }
 
@@ -9945,7 +9947,20 @@ function manual_entry_unit_list_id(req, res, next) {
 function fetch_payment_entry(req, res, next) {
   async.waterfall([
     function(waterfallCallback) {
-      services.user.fetch_payment_entryss(req.body, function(
+      services.user.fetch_clientsss(req.body, function(err, siteDetails) {
+        if (err) {
+          console.log(err);
+          //  req.log.error({
+          //      error: err
+          //  }, "Error while getting available users by mobiles");
+          return res.json(utils.errors["500"]);
+        }
+        waterfallCallback(null, req, siteDetails);
+      });
+    },
+    function(req, siteDetails, waterfallCallback) {
+      console.log(siteDetails);
+      services.user.fetch_payment_entryss(req.body,siteDetails[0].title, function(
         err,
         payment_entry
       ) {
@@ -9956,22 +9971,11 @@ function fetch_payment_entry(req, res, next) {
           // }, "Error while getting available users by mobiles");
           return res.json(utils.errors["500"]);
         }
-        waterfallCallback(null, req, payment_entry);
+        waterfallCallback(null, siteDetails, payment_entry);
       });
     },
-    function(req, payment_entry, waterfallCallback) {
-      services.user.fetch_clientsss(req.body, function(err, siteDetails) {
-        if (err) {
-          console.log(err);
-          //  req.log.error({
-          //      error: err
-          //  }, "Error while getting available users by mobiles");
-          return res.json(utils.errors["500"]);
-        }
-        waterfallCallback(null, payment_entry, siteDetails);
-      });
-    },
-    function(payment_entry, siteDetails, waterfallCallback) {
+
+    function(siteDetails,payment_entry, waterfallCallback) {
       payment_entry.forEach(function(element) {
         siteDetails.forEach(function(element1) {
           if (element.site_billing_name == element1.unit_name) {

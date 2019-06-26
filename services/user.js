@@ -7636,13 +7636,28 @@ user.manual_entry_unit_list_id = function(userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.fetch_payment_entryss = function(userInput, resultCallback) {
+user.fetch_clientsss = function(userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any('select * FROM public."clientsite" WHERE "sitelogin"=($1)', [
+      userInput.unit_code
+    ])
+    .then(data => {
+      resultCallback(null, data);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+user.fetch_payment_entryss = function(userInput, unit_name, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
-      'select * FROM public."payroll_manual_entry" WHERE "designation"=($1) and "ecode"=($2) and "date"=($3)',
-      [userInput.designation, userInput.ecode, userInput.date]
+      'select * FROM public."payroll_manual_entry" WHERE "designation"=($1) and "ecode"=($2) and "date"=($3) and "unit_name"=($4)',
+      [userInput.designation, userInput.ecode, userInput.date, unit_name]
     )
     .then(data => {
       console.log(data.length);
@@ -7655,21 +7670,6 @@ user.fetch_payment_entryss = function(userInput, resultCallback) {
         data.push(a);
         resultCallback(null, data);
       }
-    })
-    .catch(error => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
-    });
-};
-user.fetch_clientsss = function(userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."clientsite" WHERE "sitelogin"=($1)', [
-      userInput.unit_code
-    ])
-    .then(data => {
-      resultCallback(null, data);
     })
     .catch(error => {
       resultCallback(error, null);
