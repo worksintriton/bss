@@ -636,7 +636,9 @@ addRoute("/reports/getreportssssssall", "GET", [middleware.getreportssssssall]);
 
 addRoute("/advance/fetchunit_number1", "POST", [middleware.fetchunit_number1]);
 
-addRoute("/reports/getemployeedetails", "GET", [middleware.getemployeedetails]);
+addRoute("/reports/getemployeedetails", "POST", [
+  middleware.getemployeedetails
+]);
 addRoute("/reports/getunitmaster", "GET", [middleware.getunitmaster]);
 addRoute("/reports/getwagesheet", "GET", [middleware.getwagesheet]);
 addRoute("/reports/cashandbank", "POST", [middleware.cashandbank]);

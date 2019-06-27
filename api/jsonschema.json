@@ -261,16 +261,24 @@
   },
 
   "/reports/getemployeedetails": {
-    "GET": {
+    "POST": {
       "body": {
         "type": "object",
-        "properties": {},
-        "additionalProperties": false,
-        "required": [],
+        "properties": {
+          "companyName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": ["companyName"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
-          "required": {},
-          "properties": {}
+          "required": {
+            "companyName": "should have required property companyName"
+          },
+          "properties": {
+            "companyName": "companyName must be string"
+          }
         }
       }
     }
@@ -315,6 +323,9 @@
             "type": "string"
           },
           "date": {
+            "type": "string"
+          },
+          "paymode": {
             "type": "string"
           }
         },

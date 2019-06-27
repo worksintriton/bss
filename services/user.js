@@ -7122,12 +7122,11 @@ user.getreportssssssall1 = function(userInput, resultCallback) {
     });
 };
 
-user.getemployeedetails1 = function(title, resultCallback) {
-  console.log(title);
+user.getemployeedetails1 = function(userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
-    .any("SELECT * FROM public.employeedetails", [])
+    .any('SELECT * FROM public.employeedetails where "company_name"= ($1)   ', [userInput.companyName])
     .then(data => {
       resultCallback(null, data);
     })
@@ -7190,8 +7189,8 @@ user.cashandbanks = function(userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
-      'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2',
-      [userInput.companyName, userInput.date]
+      'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2  and paymode=$3',
+      [userInput.companyName, userInput.date, userInput.paymode]
     )
     .then(data => {
       resultCallback(null, data);
@@ -7201,13 +7200,13 @@ user.cashandbanks = function(userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.cashandbankss = function(ecode, resultCallback) {
+user.cashandbankss = function(ecode, unit_name, date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
-      'SELECT ecode, SUM (net_pay) AS net_pay FROM public."payroll_manual_entry" where "ecode"=$1 GROUP BY ecode',
-      [ecode]
+      'SELECT ecode, SUM (net_pay) AS net_pay FROM public."payroll_manual_entry" where "ecode"=$1 and unit_name=$2 and date=$3 GROUP BY ecode',
+      [ecode, unit_name, date]
     )
     .then(data => {
       resultCallback(null, data[0]);
@@ -7377,7 +7376,7 @@ user.gettotalpays = function(userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
-      'SELECT unit_name,"date",SUM (gross) AS gross , SUM (pf) AS pf , SUM (esi) AS esi, SUM (pr_tax) AS pr_tax ,SUM (advance) AS advance , SUM (loan) AS loan , SUM (uniform) AS uniform, SUM (mess) AS mess ,SUM (rent) AS rent , SUM (atm) AS atm , SUM ("others") AS "others", SUM (total_dec) AS total_dec , SUM (net_pay) AS net_pay  FROM payroll_manual_entry where "company_name"=($1) and "date"=($2) GROUP BY unit_name ,"date"',
+      'SELECT unit_name,"date",company_name,SUM (gross) AS gross , SUM (pf) AS pf , SUM (esi) AS esi, SUM (pr_tax) AS pr_tax ,SUM (advance) AS advance , SUM (loan) AS loan , SUM (uniform) AS uniform, SUM (mess) AS mess ,SUM (rent) AS rent , SUM (atm) AS atm , SUM ("others") AS "others", SUM (total_dec) AS total_dec , SUM (net_pay) AS net_pay  FROM payroll_manual_entry where "company_name"=($1) and "date"=($2) GROUP BY unit_name ,"date",company_name',
       [userInput.companyName, userInput.date]
     )
     .then(data => {

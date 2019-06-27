@@ -8794,7 +8794,7 @@ function getreportssssssall(req, res, next) {
 function getemployeedetails(req, res, next) {
   async.waterfall([
     function(waterfallCallback) {
-      services.user.getemployeedetails1("data", function(err, result) {
+      services.user.getemployeedetails1(req.body, function(err, result) {
         if (err) {
           console.log(err);
         } else {
@@ -8939,7 +8939,7 @@ function cashandbank(req, res, next) {
       console.log(payRoll.length);
       var netPaySum = [];
       payRoll.forEach(element => {
-        services.user.cashandbankss(element.ecode, function(err, netPayDetail) {
+        services.user.cashandbankss(element.ecode,element.unit_name , element.date , function(err, netPayDetail) {
           if (err) {
             console.log(err);
             //  req.log.error({
@@ -9002,6 +9002,7 @@ function cashandbank(req, res, next) {
                 ebankname: payRoll[i].ebankname,
                 ebankbranch: "-",
                 date: payRoll[i].date,
+                paymode: payRoll[i].paymode,
                 net_pay: Math.round(netPaySum[j].net_pay)
               };
               let check = 1;
