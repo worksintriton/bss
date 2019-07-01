@@ -7400,6 +7400,20 @@ user.gettotalpayss = function(unit_name, resultCallback) {
       console.log("ERROR:", error);
     });
 };
+
+user.proftaxs = function(companyName,Start,End, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any('select * FROM public."payroll_manual_entry" WHERE "company_name"=($1) and date >= ($2) and date <= ($3) order by date', [companyName,Start,End])
+    .then(data => {
+      resultCallback(null, data);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
 user.getgetform36bpayrollmanualentrys = function(userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'

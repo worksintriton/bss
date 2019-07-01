@@ -652,6 +652,7 @@ addRoute("/reports/getloanandoutstanding", "GET", [
 ]);
 addRoute("/reports/getform36b", "POST", [middleware.getform36b]);
 addRoute("/reports/gettotalpay", "POST", [middleware.gettotalpay]);
+addRoute("/reports/proftax", "POST", [middleware.proftax]);
 
 // bulk upload
 addRoute("/bulkupload/bulkuploadformat", "POST", [middleware.bulkuploadformat]);

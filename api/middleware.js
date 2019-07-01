@@ -8939,21 +8939,26 @@ function cashandbank(req, res, next) {
       console.log(payRoll.length);
       var netPaySum = [];
       payRoll.forEach(element => {
-        services.user.cashandbankss(element.ecode,element.unit_name , element.date , function(err, netPayDetail) {
-          if (err) {
-            console.log(err);
-            //  req.log.error({
-            //      error: err
-            //  }, "Error while getting available users by mobiles");
-            //  return res.json(utils.errors["500"]);
+        services.user.cashandbankss(
+          element.ecode,
+          element.unit_name,
+          element.date,
+          function(err, netPayDetail) {
+            if (err) {
+              console.log(err);
+              //  req.log.error({
+              //      error: err
+              //  }, "Error while getting available users by mobiles");
+              //  return res.json(utils.errors["500"]);
+            }
+            // console.log(result)
+            netPaySum.push(netPayDetail);
+            console.log(netPaySum.length);
+            if (payRoll.length == netPaySum.length) {
+              waterfallCallback(null, payRoll, netPaySum);
+            }
           }
-          // console.log(result)
-          netPaySum.push(netPayDetail);
-          console.log(netPaySum.length);
-          if (payRoll.length == netPaySum.length) {
-            waterfallCallback(null, payRoll, netPaySum);
-          }
-        });
+        );
       });
     },
     function(payRoll, netPaySum, waterfallCallback) {
@@ -9746,6 +9751,79 @@ function gettotalpay(req, res, next) {
   ]);
 }
 
+function proftax(req, res, next) {
+  console.log(req.body);
+  async.waterfall([
+    function(waterfallCallback) {
+      if (req.body.cycle == "first") {
+        var start = req.body.year + "-" + "01";
+        var end = req.body.year + "-" + "06";
+        services.user.proftaxs(req.body.companyName, start, end, function(
+          err,
+          result
+        ) {
+          if (err) {
+            req.log.error(
+              {
+                error: err
+              },
+              "Error while getting available users by mobiles"
+            );
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, result);
+        });
+      } else if (req.body.cycle == "second") {
+        var start = req.body.year + "-" + "07";
+        var end = req.body.year + "-" + "12";
+        services.user.proftaxs(req.body.companyName, start, end, function(
+          err,
+          result
+        ) {
+          if (err) {
+            req.log.error(
+              {
+                error: err
+              },
+              "Error while getting available users by mobiles"
+            );
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, result);
+        });
+      } else if (req.body.cycle == "full") {
+        var start = req.body.year + "-" + "01";
+        var end = req.body.year + "-" + "12";
+        services.user.proftaxs(req.body.companyName, start, end, function(
+          err,
+          result
+        ) {
+          if (err) {
+            req.log.error(
+              {
+                error: err
+              },
+              "Error while getting available users by mobiles"
+            );
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, result);
+        });
+      }
+    },
+    function(mydata, waterfallCallback) {
+      return res.json(
+        _.merge(
+          {
+            data: mydata
+          },
+          utils.errors["200"]
+        )
+      );
+    }
+  ]);
+}
+
 function bulkuploadformat(req, res, next) {
   console.log(req.body);
   async.waterfall([
@@ -9961,22 +10039,23 @@ function fetch_payment_entry(req, res, next) {
     },
     function(req, siteDetails, waterfallCallback) {
       console.log(siteDetails);
-      services.user.fetch_payment_entryss(req.body,siteDetails[0].title, function(
-        err,
-        payment_entry
-      ) {
-        if (err) {
-          console.log(err);
-          // req.log.error({
-          //     error: err
-          // }, "Error while getting available users by mobiles");
-          return res.json(utils.errors["500"]);
+      services.user.fetch_payment_entryss(
+        req.body,
+        siteDetails[0].title,
+        function(err, payment_entry) {
+          if (err) {
+            console.log(err);
+            // req.log.error({
+            //     error: err
+            // }, "Error while getting available users by mobiles");
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, siteDetails, payment_entry);
         }
-        waterfallCallback(null, siteDetails, payment_entry);
-      });
+      );
     },
 
-    function(siteDetails,payment_entry, waterfallCallback) {
+    function(siteDetails, payment_entry, waterfallCallback) {
       payment_entry.forEach(function(element) {
         siteDetails.forEach(function(element1) {
           if (element.site_billing_name == element1.unit_name) {
@@ -10577,6 +10656,7 @@ exports.getDesignation = getDesignation;
 exports.getloanandoutstanding = getloanandoutstanding;
 exports.getform36b = getform36b;
 exports.gettotalpay = gettotalpay;
+exports.proftax = proftax;
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

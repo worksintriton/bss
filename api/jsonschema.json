@@ -509,6 +509,35 @@
       }
     }
   },
+  "/reports/proftax": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string"
+          },
+          "year": {
+            "type": "string"
+          },
+          "cycle": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": ["companyName"],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {
+            "companyName": "should have required property companyName"
+          },
+          "properties": {
+            "companyName": "companyName must be string"
+          }
+        }
+      }
+    }
+  },
   "/advance/carryForward": {
     "GET": {
       "body": {
