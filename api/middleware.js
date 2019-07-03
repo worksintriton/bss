@@ -9756,8 +9756,8 @@ function proftax(req, res, next) {
   async.waterfall([
     function(waterfallCallback) {
       if (req.body.cycle == "first") {
-        var start = req.body.year + "-" + "01";
-        var end = req.body.year + "-" + "06";
+        var start = req.body.startyear + "-" + "04";
+        var end = req.body.startyear + "-" + "09";
         services.user.proftaxs(req.body.companyName, start, end, function(
           err,
           result
@@ -9774,8 +9774,8 @@ function proftax(req, res, next) {
           waterfallCallback(null, result);
         });
       } else if (req.body.cycle == "second") {
-        var start = req.body.year + "-" + "07";
-        var end = req.body.year + "-" + "12";
+        var start = req.body.startyear + "-" + "10";
+        var end = req.body.endyear + "-" + "03";
         services.user.proftaxs(req.body.companyName, start, end, function(
           err,
           result
@@ -9792,8 +9792,8 @@ function proftax(req, res, next) {
           waterfallCallback(null, result);
         });
       } else if (req.body.cycle == "full") {
-        var start = req.body.year + "-" + "01";
-        var end = req.body.year + "-" + "12";
+        var start = req.body.startyear + "-" + "04";
+        var end = req.body.endyear + "-" + "03";
         services.user.proftaxs(req.body.companyName, start, end, function(
           err,
           result
@@ -9823,7 +9823,101 @@ function proftax(req, res, next) {
     }
   ]);
 }
-
+function payslip(req, res, next) {
+  console.log(req.body);
+  async.waterfall([
+    function(waterfallCallback) {
+      services.user.getpayslip(req.body, function(err, payroll) {
+        if (err) {
+          console.log(err);
+          // req.log.error(
+          //   {
+          //     error: err
+          //   },
+          //   "Error while getting available users by mobiles"
+          // );
+          // return res.json(utils.errors["500"]);
+        }
+        waterfallCallback(null, payroll);
+      });
+    },
+    function(payroll, waterfallCallback) {
+      var employee = [];
+      payroll.forEach(element => {
+        services.user.getpayslips(element.ecode, function(err, detail) {
+          if (err) {
+            console.log(err);
+            // req.log.error(
+            //   {
+            //     error: err
+            //   },
+            //   "Error while getting available users by mobiles"
+            // );
+            // return res.json(utils.errors["500"]);
+          }
+          if (payroll.length == employee.length) {
+            waterfallCallback(null, payroll, employee);
+          }
+        });
+      });
+    },
+    function(payroll, employee, waterfallCallback) {
+      var mydata = [];
+      payroll.forEach(pay => {
+        employee.forEach(emp => {
+          if (payroll.ecode == employee.ecode) {
+            let a = {
+              ecode: payroll.ecode,
+              ename: payroll.ename,
+              etype: payroll.etype,
+              unit_name: payroll.unit_name,
+              present: payroll.present,
+              ebankname: payroll.ebankname,
+              eifsc: employee.a_c,
+              company_name: payroll.company_name,
+              basic: payroll.basic,
+              da: payroll.da,
+              hra: payroll.hra,
+              trv_ex: payroll.trv_ex,
+              others: payroll.others,
+              pf: payroll.pf,
+              esi: payroll.esi,
+              pr_tax: payroll.pr_tax,
+              advance: payroll.advance,
+              loan: payroll.loan,
+              uniform: payroll.uniform,
+              mess: payroll.mess,
+              rent: payroll.rent,
+              atm: payroll.atm,
+              phone: payroll.phone,
+              gross: payroll.gross,
+              total_dec: payroll.total_dec,
+              net_pay: payroll.net_pay,
+              pfno: employee.pf2,
+              uanno: employee.uan,
+              esino: employee.esi
+            };
+            mydata.push(a);
+          }
+        });
+      });
+      if (payroll.length == mydata.length) {
+        waterfallCallback(null, mydata);
+      }
+    },
+    function(mydata, waterfallCallback) {
+      console.log(mydata);
+      return res.json(
+        _.merge(
+          {
+            data: mydata
+          },
+          utils.errors["200"]
+        )
+      );
+    }
+  ]);
+}
 function bulkuploadformat(req, res, next) {
   console.log(req.body);
   async.waterfall([
@@ -10657,6 +10751,7 @@ exports.getloanandoutstanding = getloanandoutstanding;
 exports.getform36b = getform36b;
 exports.gettotalpay = gettotalpay;
 exports.proftax = proftax;
+exports.payslip = payslip;
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

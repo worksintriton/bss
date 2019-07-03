@@ -517,7 +517,10 @@
           "companyName": {
             "type": "string"
           },
-          "year": {
+          "startyear": {
+            "type": "string"
+          },
+          "endyear": {
             "type": "string"
           },
           "cycle": {
@@ -533,6 +536,29 @@
           },
           "properties": {
             "companyName": "companyName must be string"
+          }
+        }
+      }
+    }
+  },
+  "/reports/payslip": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": ["date"],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {
+            "date": "should have required property date"
+          },
+          "properties": {
+            "date": "date must be string"
           }
         }
       }

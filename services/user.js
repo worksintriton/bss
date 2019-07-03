@@ -7126,7 +7126,9 @@ user.getemployeedetails1 = function(userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
-    .any('SELECT * FROM public.employeedetails where "company_name"= ($1)   ', [userInput.companyName])
+    .any('SELECT * FROM public.employeedetails where "company_name"= ($1)   ', [
+      userInput.companyName
+    ])
     .then(data => {
       resultCallback(null, data);
     })
@@ -7401,13 +7403,48 @@ user.gettotalpayss = function(unit_name, resultCallback) {
     });
 };
 
-user.proftaxs = function(companyName,Start,End, resultCallback) {
+user.proftaxs = function(companyName, Start, End, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
-    .any('select * FROM public."payroll_manual_entry" WHERE "company_name"=($1) and date >= ($2) and date <= ($3) order by date', [companyName,Start,End])
+    .any(
+      'select * FROM public."payroll_manual_entry" WHERE "company_name"=($1) and date >= ($2) and date <= ($3) order by date',
+      [companyName, Start, End]
+    )
     .then(data => {
       resultCallback(null, data);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+user.getpayslip = function(userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any(
+      'select * FROM public."payroll_manual_entry" WHERE "date"=($1) order by date',
+      [userInput.date]
+    )
+    .then(data => {
+      resultCallback(null, data);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+user.getpayslips = function(ecode, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any(
+      'select * FROM public."employeedetails" WHERE "ecode"=($1) order by ecode',
+      [ecode]
+    )
+    .then(data => {
+      resultCallback(null, data[0]);
     })
     .catch(error => {
       resultCallback(error, null);
