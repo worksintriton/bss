@@ -8990,12 +8990,12 @@ function cashandbank(req, res, next) {
       for (let i = 0; i < payRoll.length; i++) {
         for (let j = 0; j < netPaySum.length; j++) {
           for (let k = 0; k < employeeData.length; k++) {
-            if (payRoll[i].ecode == netPaySum[j].ecode) {
+            if (
+              payRoll[i].ecode == netPaySum[j].ecode &&
+              payRoll[i].ecode == employeeData[k].ecode
+            ) {
               if (payRoll[i].eac == null || payRoll[i].eac == "") {
                 payRoll[i].eac = "Cash";
-              }
-              if (payRoll[i].eifsc == "undefined") {
-                payRoll[i].eifsc = employeeData[k].ifsc;
               }
               var a = {
                 company_name: payRoll[i].company_name,
@@ -9003,7 +9003,7 @@ function cashandbank(req, res, next) {
                 ecode: payRoll[i].ecode,
                 ename: payRoll[i].ename,
                 eac: payRoll[i].eac,
-                eifsc: payRoll[i].eifsc,
+                eifsc: employeeData[k].ifsc,
                 ebankname: payRoll[i].ebankname,
                 ebankbranch: "-",
                 date: payRoll[i].date,
