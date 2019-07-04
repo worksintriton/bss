@@ -4953,8 +4953,8 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.advance_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.advance_id, "0"]
                 )
                 .then(advanceStatus => {
                   console.log(advanceStatus);
@@ -5032,8 +5032,8 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.loan_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.loan_id, "0"]
                 )
                 .then(loanStatus => {
                   console.log(loanStatus);
@@ -5111,8 +5111,8 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.uniform_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.uniform_id, "0"]
                 )
                 .then(uniformStatus => {
                   console.log(uniformStatus);
@@ -5190,8 +5190,8 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.mess_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.mess_id, "0"]
                 )
                 .then(messStatus => {
                   console.log(messStatus);
@@ -5269,8 +5269,8 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.rent_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.rent_id, "0"]
                 )
                 .then(rentStatus => {
                   console.log(rentStatus);
@@ -5348,8 +5348,8 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.atmcard_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.atmcard_id, "0"]
                 )
                 .then(atmStatus => {
                   console.log(atmStatus);
@@ -5427,8 +5427,8 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.phone_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.phone_id, "0"]
                 )
                 .then(phoneStatus => {
                   console.log(phoneStatus);
@@ -5506,8 +5506,8 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.others_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.others_id, "0"]
                 )
                 .then(otherStatus => {
                   console.log(otherStatus);
@@ -5658,8 +5658,8 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.advance_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.advance_id, "0"]
                 )
                 .then(advanceStatus => {
                   console.log(advanceStatus);
@@ -5737,8 +5737,8 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.loan_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.loan_id, "0"]
                 )
                 .then(loanStatus => {
                   console.log(loanStatus);
@@ -5816,8 +5816,8 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.uniform_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.uniform_id, "0"]
                 )
                 .then(uniformStatus => {
                   console.log(uniformStatus);
@@ -5895,8 +5895,8 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
               console.log("Paid");
               executor
                 .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.mess_id]
+                  "UPDATE  public.advance SET status=$1 and pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                  ["Paid", +data.mess_id, "0"]
                 )
                 .then(messStatus => {
                   console.log(messStatus);
