@@ -344,16 +344,27 @@
     }
   },
   "/reports/getemployeevoucher": {
-    "GET": {
+    "POST": {
       "body": {
         "type": "object",
-        "properties": {},
-        "additionalProperties": false,
-        "required": [],
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": ["date"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
-          "required": {},
-          "properties": {}
+          "required": {
+            "date": "should have required property date"
+          },
+          "properties": {
+            "date": "date must be string"
+          }
         }
       }
     }

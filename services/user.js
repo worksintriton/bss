@@ -4003,8 +4003,13 @@ user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
         console.log("test2");
         executor
           .one(
-            'UPDATE public.advance SET  pamount=$1 WHERE  "id"= $2  and cdate=$3 RETURNING *',
-            [+data[0].pamount + +amount, data[0].id, data[0].cdate]
+            'UPDATE public.advance SET  pamount=$1, pbalanceamount=$4 WHERE  "id"= $2  and cdate=$3 RETURNING *',
+            [
+              Math.round(+data[0].pamount + +amount),
+              data[0].id,
+              data[0].cdate,
+              Math.round(+data[0].pbalanceamount + +amount)
+            ]
           )
           .then(data1 => {
             console.log("test3");
@@ -4054,8 +4059,8 @@ user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
               userInput.employee_id,
               userInput.employee_name,
               userInput.bank,
-              amount,
-              userInput.pbalanceamount,
+              Math.round(amount),
+              Math.round(amount),
               userInput.pinstalment,
               userInput.ppendinginstalment,
               userInput.dfullcash,
@@ -4944,7 +4949,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
           .then(advanceDetail => {
             console.log(advanceDetail);
-            if (data.advance == advanceDetail.pamount) {
+            if (data.advance == advanceDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -4979,11 +4984,11 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.advance < advanceDetail.pamount) {
+            } else if (data.advance < advanceDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [advanceDetail.pamount - data.advance, +data.advance_id]
                 )
                 .then(advanceStatus1 => {
@@ -5023,7 +5028,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
           .then(loanDetail => {
             console.log(loanDetail);
-            if (data.loan == loanDetail.pamount) {
+            if (data.loan == loanDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5058,11 +5063,11 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.loan < loanDetail.pamount) {
+            } else if (data.loan < loanDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [loanDetail.pamount - data.loan, +data.loan_id]
                 )
                 .then(loanStatus1 => {
@@ -5102,7 +5107,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
           .then(uniformDetail => {
             console.log(uniformDetail);
-            if (data.uniform == uniformDetail.pamount) {
+            if (data.uniform == uniformDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5137,11 +5142,11 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.uniform < uniformDetail.pamount) {
+            } else if (data.uniform < uniformDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [uniformDetail.pamount - data.uniform, +data.uniform_id]
                 )
                 .then(uniformStatus1 => {
@@ -5181,7 +5186,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
           .then(messDetail => {
             console.log(messDetail);
-            if (data.mess == messDetail.pamount) {
+            if (data.mess == messDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5216,11 +5221,11 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.mess < messDetail.pamount) {
+            } else if (data.mess < messDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [messDetail.pamount - data.mess, +data.mess_id]
                 )
                 .then(messStatus1 => {
@@ -5260,7 +5265,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
           .then(rentDetail => {
             console.log(rentDetail);
-            if (data.rent == rentDetail.pamount) {
+            if (data.rent == rentDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5295,11 +5300,11 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.rent < rentDetail.pamount) {
+            } else if (data.rent < rentDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [rentDetail.pamount - data.rent, +data.rent_id]
                 )
                 .then(rentStatus1 => {
@@ -5339,7 +5344,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
           .then(atmDetail => {
             console.log(atmDetail);
-            if (data.atm == atmDetail.pamount) {
+            if (data.atm == atmDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5374,11 +5379,11 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.atm < atmDetail.pamount) {
+            } else if (data.atm < atmDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [atmDetail.pamount - data.atm, +data.atmcard_id]
                 )
                 .then(atmStatus1 => {
@@ -5418,7 +5423,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
           .then(phoneDetail => {
             console.log(phoneDetail);
-            if (data.phone == phoneDetail.pamount) {
+            if (data.phone == phoneDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5453,11 +5458,11 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.phone < phoneDetail.pamount) {
+            } else if (data.phone < phoneDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [phoneDetail.pamount - data.phone, +data.phone_id]
                 )
                 .then(phoneStatus1 => {
@@ -5497,7 +5502,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.others_id])
           .then(otherDetail => {
             console.log(otherDetail);
-            if (data.others == otherDetail.pamount) {
+            if (data.others == otherDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5532,11 +5537,11 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.others < otherDetail.pamount) {
+            } else if (data.others < otherDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [otherDetail.pamount - data.others, +data.others_id]
                 )
                 .then(otherStatus1 => {
@@ -5649,7 +5654,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
           .then(advanceDetail => {
             console.log(advanceDetail);
-            if (data.advance == advanceDetail.pamount) {
+            if (data.advance == advanceDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5684,11 +5689,11 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.advance < advanceDetail.pamount) {
+            } else if (data.advance < advanceDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [advanceDetail.pamount - data.advance, +data.advance_id]
                 )
                 .then(advanceStatus1 => {
@@ -5728,7 +5733,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
           .then(loanDetail => {
             console.log(loanDetail);
-            if (data.loan == loanDetail.pamount) {
+            if (data.loan == loanDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5763,11 +5768,11 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.loan < loanDetail.pamount) {
+            } else if (data.loan < loanDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [loanDetail.pamount - data.loan, +data.loan_id]
                 )
                 .then(loanStatus1 => {
@@ -5807,7 +5812,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
           .then(uniformDetail => {
             console.log(uniformDetail);
-            if (data.uniform == uniformDetail.pamount) {
+            if (data.uniform == uniformDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5842,11 +5847,11 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.uniform < uniformDetail.pamount) {
+            } else if (data.uniform < uniformDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [uniformDetail.pamount - data.uniform, +data.uniform_id]
                 )
                 .then(uniformStatus1 => {
@@ -5886,7 +5891,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
           .then(messDetail => {
             console.log(messDetail);
-            if (data.mess == messDetail.pamount) {
+            if (data.mess == messDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -5921,11 +5926,11 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.mess < messDetail.pamount) {
+            } else if (data.mess < messDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [messDetail.pamount - data.mess, +data.mess_id]
                 )
                 .then(messStatus1 => {
@@ -5965,7 +5970,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
           .then(rentDetail => {
             console.log(rentDetail);
-            if (data.rent == rentDetail.pamount) {
+            if (data.rent == rentDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -6000,11 +6005,11 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.rent < rentDetail.pamount) {
+            } else if (data.rent < rentDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [rentDetail.pamount - data.rent, +data.rent_id]
                 )
                 .then(rentStatus1 => {
@@ -6044,7 +6049,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
           .then(atmDetail => {
             console.log(atmDetail);
-            if (data.atm == atmDetail.pamount) {
+            if (data.atm == atmDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -6079,11 +6084,11 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.atm < atmDetail.pamount) {
+            } else if (data.atm < atmDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [atmDetail.pamount - data.atm, +data.atmcard_id]
                 )
                 .then(atmStatus1 => {
@@ -6123,7 +6128,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
           .then(phoneDetail => {
             console.log(phoneDetail);
-            if (data.phone == phoneDetail.pamount) {
+            if (data.phone == phoneDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -6158,11 +6163,11 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.phone < phoneDetail.pamount) {
+            } else if (data.phone < phoneDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [phoneDetail.pamount - data.phone, +data.phone_id]
                 )
                 .then(phoneStatus1 => {
@@ -6202,7 +6207,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
           .one("select * from public.advance  WHERE id=$1", [+data.others_id])
           .then(otherDetail => {
             console.log(otherDetail);
-            if (data.others == otherDetail.pamount) {
+            if (data.others == otherDetail.pbalanceamount) {
               console.log("Paid");
               executor
                 .one(
@@ -6237,11 +6242,11 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                     ]
                   );
                 });
-            } else if (data.others < otherDetail.pamount) {
+            } else if (data.others < otherDetail.pbalanceamount) {
               console.log("Pending");
               executor
                 .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [otherDetail.pamount - data.others, +data.others_id]
                 )
                 .then(otherStatus1 => {
@@ -7231,11 +7236,14 @@ user.cashandbanksss = function(ecode, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getemployeevoucher1 = function(title, resultCallback) {
+user.getemployeevoucher1 = function(userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
-    .any('SELECT * FROM public.advance ORDER BY "employee_id"', [])
+    .any(
+      'SELECT * FROM public.advance where cdate=$1 and status=$2 ORDER BY "ddate"',
+      [userInput.date, userInput.status]
+    )
     .then(data => {
       if (data.length == 0) {
         var a = {};
