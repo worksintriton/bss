@@ -8896,7 +8896,7 @@ function getunitmaster(req, res, next) {
 function getwagesheet(req, res, next) {
   async.waterfall([
     function(waterfallCallback) {
-      services.user.getwagesheet1("data", function(err, result) {
+      services.user.getwagesheet1(req.body, function(err, payroll) {
         if (err) {
           console.log(err);
           //  req.log.error({
@@ -8904,11 +8904,46 @@ function getwagesheet(req, res, next) {
           //  }, "Error while getting available users by mobiles");
           //  return res.json(utils.errors["500"]);
         }
-        console.log(result);
-        waterfallCallback(null, result);
+        waterfallCallback(null, payroll);
       });
     },
-    function(mydata, waterfallCallback) {
+    function(payroll, waterfallCallback) {
+      var edata = [];
+      payroll.forEach(element => {
+        services.user.getwagesheet12(element.ecode, function(err, result) {
+          if (err) {
+            console.log(err);
+            //  req.log.error({
+            //      error: err
+            //  }, "Error while getting available users by mobiles");
+            //  return res.json(utils.errors["500"]);
+          }
+          edata.push(result);
+          if (payroll.length == edata.length) {
+            waterfallCallback(null, payroll, edata);
+          }
+        });
+      });
+    },
+    function(payroll, edata, waterfallCallback) {
+      var mydata = [];
+      payroll.forEach(pay => {
+        edata.forEach(empdata => {
+          if (pay.ecode == empdata.ecode) {
+            var a = {
+              company_name: pay.company_name,
+              unit_name: pay.unit_name,
+              esino: empdata.esic_no,
+              ecode: pay.ecode,
+              total_duties: pay.total_duties,
+              gross: pay.gross,
+              designation: pay.designation,
+              esi: pay.esi
+            };
+            mydata.push(a);
+          }
+        });
+      });
       return res.json(
         _.merge(
           {
@@ -9918,6 +9953,113 @@ function payslip(req, res, next) {
     }
   ]);
 }
+function recovery(req, res, next) {
+  async.waterfall([
+    function(waterfallCallback) {
+      services.user.getrecovery(req.body, function(err, payroll) {
+        if (err) {
+          console.log(err);
+          // req.log.error(
+          //   {
+          //     error: err
+          //   },
+          //   "Error while getting available users by mobiles"
+          // );
+          // return res.json(utils.errors["500"]);
+        }
+        waterfallCallback(null, payroll);
+      });
+    },
+    function(payroll, waterfallCallback) {
+      var empcode = [];
+      payroll.forEach(element => {
+        services.user.getrecoverys(element.ecode, function(err, result) {
+          if (err) {
+            console.log(err);
+            // req.log.error(
+            //   {
+            //     error: err
+            //   },
+            //   "Error while getting available users by mobiles"
+            // );
+            // return res.json(utils.errors["500"]);
+          }
+          empcode.push(result);
+          if (payroll.length == empcode.length) {
+            waterfallCallback(null, payroll, empcode);
+          }
+        });
+      });
+    },
+    function(payroll, empcode, waterfallCallback) {
+      var mydata = [];
+      payroll.forEach(pay => {
+        empcode.forEach(code => {
+          if (pay.ecode == code.ecode) {
+            var advance = 0;
+            var loan = 0;
+            var uniform = 0;
+            var mess = 0;
+            var rent = 0;
+            var atm = 0;
+            var phone = 0;
+            var others = 0;
+            if (pay.advance_type == "Advance") {
+              advance = advance + +pay.amount;
+            } else if (pay.advance_type == "Loan") {
+              loan = loan + +pay.amount;
+            } else if (pay.advance_type == "Uniform") {
+              uniform = uniform + +pay.amount;
+            } else if (pay.advance_type == "Mess") {
+              mess = mess + +pay.amount;
+            } else if (pay.advance_type == "Rent") {
+              rent = rent + +pay.amount;
+            } else if (pay.advance_type == "ATM Card") {
+              atm = atm + +pay.amount;
+            } else if (pay.advance_type == "Phone") {
+              phone = phone + +pay.amount;
+            } else if (pay.advance_type == "Others") {
+              others = others + +pay.amount;
+            }
+            var a = {
+              ecode: pay.ecode,
+              ename: code.Name,
+              advance: advance,
+              loan: loan,
+              uniform: uniform,
+              mess: mess,
+              rent: rent,
+              atm: atm,
+              phone: phone,
+              others: others,
+              total:
+                advance + loan + uniform + mess + rent + atm + phone + others
+            };
+            let check = 1;
+            for (let b = 0; b < mydata.length; b++) {
+              if (mydata[b].ecode == pay.ecode) {
+                check = 0;
+              } else {
+                check = 1;
+              }
+            }
+            if (check == 1) {
+              mydata.push(a);
+            }
+          }
+        });
+      });
+      return res.json(
+        _.merge(
+          {
+            data: mydata
+          },
+          utils.errors["200"]
+        )
+      );
+    }
+  ]);
+}
 function bulkuploadformat(req, res, next) {
   console.log(req.body);
   async.waterfall([
@@ -10752,6 +10894,7 @@ exports.getform36b = getform36b;
 exports.gettotalpay = gettotalpay;
 exports.proftax = proftax;
 exports.payslip = payslip;
+exports.recovery = recovery;
 
 exports.bulkuploadformat = bulkuploadformat;
 exports.manual_unit_rate = manual_unit_rate;

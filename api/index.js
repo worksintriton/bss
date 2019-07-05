@@ -640,7 +640,7 @@ addRoute("/reports/getemployeedetails", "POST", [
   middleware.getemployeedetails
 ]);
 addRoute("/reports/getunitmaster", "GET", [middleware.getunitmaster]);
-addRoute("/reports/getwagesheet", "GET", [middleware.getwagesheet]);
+addRoute("/reports/getwagesheet", "POST", [middleware.getwagesheet]);
 addRoute("/reports/cashandbank", "POST", [middleware.cashandbank]);
 addRoute("/reports/getemployeevoucher", "POST", [
   middleware.getemployeevoucher
@@ -656,6 +656,7 @@ addRoute("/reports/getform36b", "POST", [middleware.getform36b]);
 addRoute("/reports/gettotalpay", "POST", [middleware.gettotalpay]);
 addRoute("/reports/proftax", "POST", [middleware.proftax]);
 addRoute("/reports/payslip", "POST", [middleware.payslip]);
+addRoute("/reports/recovery", "POST", [middleware.recovery]);
 
 // bulk upload
 addRoute("/bulkupload/bulkuploadformat", "POST", [middleware.bulkuploadformat]);

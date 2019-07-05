@@ -3758,7 +3758,7 @@ user.fetchsitedpayments = function(
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
-      'SELECT site_name, SUM (basic) AS basic, SUM (da) AS da, SUM (addhours) AS addhours, SUM (other) AS other, SUM (leave) AS leave, SUM (bouns) AS bouns, SUM (weekly) AS weekly, SUM (gross) AS gross, SUM (epf) AS epf, SUM (esi) AS esi, SUM (net) AS net from public."salary_details" WHERE "site_id"=($1) and date >= ($2)  and date <= ($3)   GROUP BY site_name;',
+      'SELECT site_name, SUM (basic) AS basic, SUM (da) AS da, SUM (addhours) AS addhours, SUM (other) AS other, SUM (leave) AS leave, SUM (bouns) AS bouns, SUM (weekly) AS weekly, SUM (gross) AS gross, SUM (epf) AS epf, SUM (esi) AS esi, SUM (net) AS net from public."salary_details" WHERE "site_id"=($1) and date >= ($2)  and date <= ($3)   GROUP BY site_name',
       [site_id, start_date, end_date]
     )
     .then(data => {
@@ -7178,13 +7178,28 @@ user.getunitmaster2 = function(id, resultCallback) {
     });
 };
 user.getwagesheet1 = function(userInput, resultCallback) {
-  console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
-    .any("SELECT * FROM public.payroll_manual_entry", [])
+    .any(
+      'SELECT * FROM public.payroll_manual_entry where "company_name"=($1) and "date"=($2) ',
+      [userInput.companyName, userInput.date]
+    )
     .then(data => {
       resultCallback(null, data);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+user.getwagesheet12 = function(ecode, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any("select ecode,esic_no from employeedetails where ecode=($1)", [ecode])
+    .then(data => {
+      resultCallback(null, data[0]);
     })
     .catch(error => {
       resultCallback(error, null);
@@ -7449,6 +7464,38 @@ user.getpayslips = function(ecode, resultCallback) {
   executor
     .any(
       'select * FROM public."employeedetails" WHERE "ecode"=($1) order by ecode',
+      [ecode]
+    )
+    .then(data => {
+      resultCallback(null, data[0]);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+user.getrecovery = function(userInput, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any(
+      'select employee_id as ecode, advance_type, pamount as amount FROM public."advance"  WHERE "cdate"=($1) and status=($2) order by employee_id',
+      [userInput.date, "Paid"]
+    )
+    .then(data => {
+      resultCallback(null, data);
+    })
+    .catch(error => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+user.getrecoverys = function(ecode, resultCallback) {
+  var executor = db.getdaata.getdb();
+  //\''+userInput.appartment_ukey+'\'
+  executor
+    .any(
+      'select ecode, "Name"  FROM public."employeedetails"  WHERE "ecode"=($1)',
       [ecode]
     )
     .then(data => {

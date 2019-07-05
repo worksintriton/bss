@@ -299,16 +299,27 @@
     }
   },
   "/reports/getwagesheet": {
-    "GET": {
+    "POST": {
       "body": {
         "type": "object",
-        "properties": {},
-        "additionalProperties": false,
-        "required": [],
+        "properties": {
+          "companyName": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": ["companyName"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
-          "required": {},
-          "properties": {}
+          "required": {
+            "companyName": "should have required property companyName"
+          },
+          "properties": {
+            "companyName": "companyName must be string"
+          }
         }
       }
     }
@@ -553,6 +564,29 @@
     }
   },
   "/reports/payslip": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": ["date"],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {
+            "date": "should have required property date"
+          },
+          "properties": {
+            "date": "date must be string"
+          }
+        }
+      }
+    }
+  },
+  "/reports/recovery": {
     "POST": {
       "body": {
         "type": "object",
