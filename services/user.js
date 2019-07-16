@@ -4135,7 +4135,7 @@ user.advanceaddss = function(userInput, date, amount, resultCallback) {
         userInput.Employee_Name,
         userInput.account_number,
         amount,
-        0,
+        amount,
         userInput.Installment,
         0,
         "-",
