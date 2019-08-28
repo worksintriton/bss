@@ -4905,7 +4905,10 @@
           "fcontact5": {
             "type": "string"
           },
-          "age": {
+          "mother_tongue_state": {
+            "type": "string"
+          },
+          "mother_tongue_state": {
             "type": "string"
           }
         },
@@ -5567,6 +5570,12 @@
             "type": "string"
           },
           "RecOfIntRemarks": {
+            "type": "string"
+          },
+          "mother_tongue": {
+            "type": "string"
+          },
+          "mother_tongue_state": {
             "type": "string"
           }
         },
