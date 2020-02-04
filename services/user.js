@@ -19,7 +19,7 @@ user.createusers = function(userInput, resultCallback) {
         //eruthuchuna
         var string = {
           message: "This Email_id already exits!",
-          status: "falied"
+          status: "failed"
         };
         resultCallback(null, string);
       } else {
@@ -327,9 +327,11 @@ user.AddemployeeC = function(userInput, resultCallback) {
               userInput.material_status,
               userInput.Edq,
               userInput.nationality,
-              userInput.languages,
+              userInput.languages, 
+              userInput.work_exp,
               userInput.date_joining,
-              userInput.driving_licence,
+              userInput.driving_licence,         
+    
               userInput.Email_ID,
               userInput.Mobile_No,
               userInput.Name,
@@ -340,8 +342,10 @@ user.AddemployeeC = function(userInput, resultCallback) {
               userInput.Address,
               userInput.attach,
               userInput.qrcode,
+
               userInput.workstatus,
               userInput.resigned,
+              
               userInput.createdtime,
               userInput.contact,
               userInput.ifsc,
@@ -441,7 +445,7 @@ user.AddemployeeC = function(userInput, resultCallback) {
               userInput.prom_in1,
               userInput.prom_in_mobile_no,
               userInput.prom_in_mobile_no1,
-              userInput.work_exp,
+              
               userInput.chest,
               userInput.area,
               userInput.fcontact1,
@@ -497,7 +501,7 @@ user.createclient = function(userInput, resultCallback) {
       } else {
         executor
           .one(
-            'INSERT INTO public."client_management"(login,password,company_name,company_type,address,billing_address)VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
+            'INSERT INTO public."client_management"(login,password,company_name,company_type,address, )VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
             [
               userInput.login,
               userInput.password,

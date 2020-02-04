@@ -170,7 +170,7 @@ attendance.assigningemployees = function (userInput, resultCallback) {
                  [userInput.client_id,
                  userInput.client_name,
                  userInput.employee_id,
-                  userInput.employee_name,
+                 userInput.employee_name,
                  userInput.date
                  ])
                .then(data => {
