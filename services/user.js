@@ -6,20 +6,20 @@ var _ = require("lodash"),
 
 function user() {}
 
-user.createusers = function(userInput, resultCallback) {
+user.createusers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.usermanage WHERE "Email_id"=($1) ', [
-      userInput.Email_id
+      userInput.Email_id,
     ])
-    .then(data => {
+    .then((data) => {
       console.log(data.length);
       if (data.length == 1) {
         //eruthuchuna
         var string = {
           message: "This Email_id already exits!",
-          status: "failed"
+          status: "failed",
         };
         resultCallback(null, string);
       } else {
@@ -34,22 +34,22 @@ user.createusers = function(userInput, resultCallback) {
               userInput.Phone_number,
               userInput.Email_id,
               userInput.Password,
-              userInput.Add_by
+              userInput.Add_by,
             ]
           )
-          .then(data => {
+          .then((data) => {
             console.log("1");
             resultCallback(null, data);
           });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.confignumbers = function(userInput, resultCallback) {
+user.confignumbers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\
 
@@ -62,21 +62,21 @@ user.confignumbers = function(userInput, resultCallback) {
         userInput.Ambulance_alert,
         userInput.Police_alert,
         userInput.temp,
-        userInput.bsscontrol
+        userInput.bsscontrol,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log("1");
       resultCallback(null, data);
     })
 
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateemployee1s = function(userInput, resultCallback) {
+user.updateemployee1s = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\
   executor
@@ -173,38 +173,38 @@ user.updateemployee1s = function(userInput, resultCallback) {
         userInput.RecOfIntRemarks,
 
         userInput.mother_tongue,
-        userInput.mother_tongue_state
+        userInput.mother_tongue_state,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log("1");
       resultCallback(null, data);
     })
 
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateqrs = function(userInput, resultCallback) {
+user.updateqrs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   executor
     .one(
       'UPDATE public.employeedetails  SET "qrcode"=($2)  WHERE "Empid" = ($1)  RETURNING *',
       [userInput.empid, userInput.qrcode]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, {});
       console.log("ERROR:", error);
     });
 };
 
-user.Changepasswords = function(userInput, resultCallback) {
+user.Changepasswords = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\
 
@@ -213,106 +213,106 @@ user.Changepasswords = function(userInput, resultCallback) {
       'UPDATE public."employeedetails" SET  "Password"=$1 WHERE  "id" = $2 RETURNING *',
       [userInput.Password, userInput.id]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.getsconfignumbers = function(userInput, resultCallback) {
+user.getsconfignumbers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.configurenumber", [userInput.client_ID])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
 
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.selectclient = function(userInput, resultCallback) {
+user.selectclient = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.client_management", [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
 
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.selectsite = function(userInput, resultCallback) {
+user.selectsite = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.clientsite", [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
 
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.selectusers = function(userInput, resultCallback) {
+user.selectusers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.usermanage", [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
 
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.selectcontract = function(date, resultCallback) {
+user.selectcontract = function (date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("select * from public.contract_page where contract_end_date = ($1) ", [
-      date
+      date,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
 
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.AddemployeeC = function(userInput, resultCallback) {
+user.AddemployeeC = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails WHERE "Mobile_No"=($1) ', [
-      userInput.Mobile_No
+      userInput.Mobile_No,
     ])
-    .then(data => {
+    .then((data) => {
       console.log(data.length);
       if (data.length == 1) {
         //eruthuchuna
         var string = {
           message: "This Mobile No already exits!",
-          status: "falied"
+          status: "falied",
         };
         resultCallback(null, string);
       } else {
@@ -327,11 +327,11 @@ user.AddemployeeC = function(userInput, resultCallback) {
               userInput.material_status,
               userInput.Edq,
               userInput.nationality,
-              userInput.languages, 
+              userInput.languages,
               userInput.work_exp,
               userInput.date_joining,
-              userInput.driving_licence,         
-    
+              userInput.driving_licence,
+
               userInput.Email_ID,
               userInput.Mobile_No,
               userInput.Name,
@@ -345,7 +345,7 @@ user.AddemployeeC = function(userInput, resultCallback) {
 
               userInput.workstatus,
               userInput.resigned,
-              
+
               userInput.createdtime,
               userInput.contact,
               userInput.ifsc,
@@ -445,7 +445,7 @@ user.AddemployeeC = function(userInput, resultCallback) {
               userInput.prom_in1,
               userInput.prom_in_mobile_no,
               userInput.prom_in_mobile_no1,
-              
+
               userInput.chest,
               userInput.area,
               userInput.fcontact1,
@@ -453,21 +453,21 @@ user.AddemployeeC = function(userInput, resultCallback) {
               userInput.fcontact3,
               userInput.fcontact4,
               userInput.fcontact5,
-              userInput.mother_tongue_state
+              userInput.mother_tongue_state,
             ]
           )
-          .then(data => {
+          .then((data) => {
             resultCallback(null, data);
           });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateempid = function(userInput, mydata, resultCallback) {
+user.updateempid = function (userInput, mydata, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
@@ -476,24 +476,24 @@ user.updateempid = function(userInput, mydata, resultCallback) {
       'UPDATE public."employeedetails" SET  "Empid"=$1   WHERE  "id" = $2 RETURNING *',
       [mydata + "-" + userInput.id, userInput.id]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.createclient = function(userInput, resultCallback) {
+user.createclient = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public."client_management" WHERE "login"= $1 ', [
-      userInput.login
+      userInput.login,
     ])
-    .then(data => {
+    .then((data) => {
       if (data.length == 1) {
         //eruthuchuna
         var data = "Account already Exists";
@@ -508,22 +508,22 @@ user.createclient = function(userInput, resultCallback) {
               userInput.company_name,
               userInput.company_type,
               userInput.address,
-              userInput.billing_address
+              userInput.billing_address,
             ]
           )
-          .then(data => {
+          .then((data) => {
             console.log(data);
             resultCallback(null, data);
           });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateclient = function(userInput, resultCallback) {
+user.updateclient = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -536,38 +536,38 @@ user.updateclient = function(userInput, resultCallback) {
         userInput.company_name,
         userInput.company_type,
         userInput.address,
-        userInput.billing_address
+        userInput.billing_address,
       ]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
 
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteemployees = function(userInput, resultCallback) {
+user.deleteemployees = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."employeedetails" WHERE "id"=($1) ', [
-      userInput.empid
+      userInput.empid,
     ])
 
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 //updateemployees///
-user.updateemployees = function(userInput, resultCallback) {
+user.updateemployees = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   executor
     .one(
@@ -699,14 +699,14 @@ user.updateemployees = function(userInput, resultCallback) {
         userInput.fcontact3,
         userInput.fcontact4,
         userInput.fcontact5,
-        userInput.age
+        userInput.age,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, {});
       console.log("ERROR:", error);
     });
@@ -730,7 +730,7 @@ user.updateemployees = function(userInput, resultCallback) {
 // };
 
 //updateuser///
-user.updateuser = function(userInput, resultCallback) {
+user.updateuser = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   executor
     .one(
@@ -743,14 +743,14 @@ user.updateuser = function(userInput, resultCallback) {
         userInput.Phone_number,
         userInput.Password,
         userInput.Add_by,
-        userInput.user_id
+        userInput.user_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, {});
       console.log("ERROR:", error);
     });
@@ -758,40 +758,40 @@ user.updateuser = function(userInput, resultCallback) {
 
 //////list////////
 //clientlist
-user.clientlists = function(userInput, resultCallback) {
+user.clientlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public."client_management"')
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchclients = function(userInput, resultCallback) {
+user.fetchclients = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public."client_management"  WHERE "id"=($1) ', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 //EmployeeList
-user.employeelists = function(userInput, resultCallback) {
+user.employeelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -799,85 +799,85 @@ user.employeelists = function(userInput, resultCallback) {
       'SELECT * FROM public.employeedetails  where "company_name"=($1) ORDER BY "Name" ASC',
       [userInput.company_name]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 //Employeelist uniform undeliverd
-user.uniformundelivered = function(userInput, resultCallback) {
+user.uniformundelivered = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails ORDER BY "Name" ASC')
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 //userList//
-user.userlists = function(userInput, resultCallback) {
+user.userlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.usermanage")
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 //empid//
-user.employeeids = function(userInput, resultCallback) {
+user.employeeids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails WHERE "id"=($1) ', [
-      userInput.employee_id
+      userInput.employee_id,
     ])
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employeeids11 = function(userInput, resultCallback) {
+user.employeeids11 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails WHERE "ecode"=($1) ', [
-      userInput.employee_id
+      userInput.employee_id,
     ])
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employeeidss = function(userInput, resultCallback) {
+user.employeeidss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
@@ -886,18 +886,18 @@ user.employeeidss = function(userInput, resultCallback) {
       'SELECT "id","Name","Date_of_birth","Email_ID","Address","Mobile_No","employee_type" FROM public.employeedetails WHERE "id"=($1) ',
       [userInput.employee_id]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 //add  FAQ//
-user.addquestion = function(userInput, resultCallback) {
+user.addquestion = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -905,17 +905,17 @@ user.addquestion = function(userInput, resultCallback) {
       'INSERT INTO public."faq"( "questions", "answers","date")VALUES ($1,$2,$3) RETURNING *',
       [userInput.questions, userInput.answers, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatequestion = function(userInput, resultCallback) {
+user.updatequestion = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -923,17 +923,17 @@ user.updatequestion = function(userInput, resultCallback) {
       'UPDATE public."faq" SET  "questions"=$1, "answers"=$2 ,"date"=$4   WHERE  "faq_id" = $3 RETURNING *',
       [userInput.questions, userInput.answers, userInput.faq_id, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateresign = function(userInput, resultCallback) {
+user.updateresign = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -941,160 +941,160 @@ user.updateresign = function(userInput, resultCallback) {
       'UPDATE public."employeedetails" SET  "resigned"=$1   WHERE  "Empid" = $2 RETURNING *',
       [userInput.resigned, userInput.Empid]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletequestion = function(userInput, resultCallback) {
+user.deletequestion = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."faq" WHERE "faq_id"=($1) ', [userInput.faq_id])
-    .then(data => {
+    .then((data) => {
       var data = "Deleted";
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.Question_ids = function(userInput, resultCallback) {
+user.Question_ids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT *  FROM public."faq" WHERE "faq_id"=($1) ', [userInput.faq_id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.Questionlists = function(userInput, resultCallback) {
+user.Questionlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT *  FROM public."faq" ', [userInput.Employee_id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employeeids1 = function(userInput, resultCallback) {
+user.employeeids1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails WHERE "empid"=($1) ', [
-      userInput.empid
+      userInput.empid,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.clientids = function(userInput, resultCallback) {
+user.clientids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public."client_management" WHERE "id"=($1) ', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.site_details = function(userInput, resultCallback) {
+user.site_details = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" WHERE "client_id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.userids = function(userInput, resultCallback) {
+user.userids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.usermanage WHERE "user_id"=($1) ', [
-      userInput.userid
+      userInput.userid,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteclients = function(userInput, resultCallback) {
+user.deleteclients = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."client_management" WHERE "id"=($1) ', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteusers = function(userInput, resultCallback) {
+user.deleteusers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public.usermanage WHERE "user_id"=($1) ', [
-      userInput.userid
+      userInput.userid,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.addqrweb = function(userInput, resultCallback) {
+user.addqrweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1109,93 +1109,93 @@ user.addqrweb = function(userInput, resultCallback) {
         userInput.qrdata,
         userInput.client_ID,
         userInput.client_place,
-        userInput.date
+        userInput.date,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.qrlistweb = function(userInput, resultCallback) {
+user.qrlistweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.qrcode", [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteqrweb = function(userInput, resultCallback) {
+user.deleteqrweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public.qrcode WHERE "id"=($1) ', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteallqrweb = function(userInput, resultCallback) {
+user.deleteallqrweb = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("Delete  FROM public.qrcode", [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.Forgotpasswordwebs = function(userInput, resultCallback) {
+user.Forgotpasswordwebs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("select *  FROM public.qrcode", [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.checkusers = function(userInput, resultCallback) {
+user.checkusers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT "Password" FROM public.usermanage WHERE "Email_id"=($1) ', [
-      userInput.Email_id
+      userInput.Email_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.Updateemployee_ids = function(userInput, resultCallback) {
+user.Updateemployee_ids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1203,17 +1203,17 @@ user.Updateemployee_ids = function(userInput, resultCallback) {
       'UPDATE public."faq" SET  "employee_id"=$1    WHERE  "id" = $2 RETURNING *',
       [userInput.id, userInput.employee_id]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.addassigns = function(userInput, resultCallback) {
+user.addassigns = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1221,7 +1221,7 @@ user.addassigns = function(userInput, resultCallback) {
       'select *  FROM public.assign WHERE "client_id"=($1) and "employee_id"=($2) and "date"=($3)',
       [userInput.client_id, userInput.employee_id, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       if (data.length == 1) {
         var data = "This Employee Already assigned in That Date";
         resultCallback(null, data);
@@ -1234,53 +1234,53 @@ user.addassigns = function(userInput, resultCallback) {
               userInput.employee_id,
               userInput.date,
               userInput.Employee_name,
-              userInput.Client_Name
+              userInput.Client_Name,
             ]
           )
-          .then(data => {
+          .then((data) => {
             var data = "Employee Added Successfully";
             resultCallback(null, data);
           })
-          .catch(error => {
+          .catch((error) => {
             resultCallback(error, null);
             console.log("ERROR:", error);
           });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listassigns = function(userInput, resultCallback) {
+user.listassigns = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.assign WHERE "client_id"=($1) ', [
-      userInput.client_id
+      userInput.client_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteassigns = function(userInput, resultCallback) {
+user.deleteassigns = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."assign" WHERE "assign_id"=($1) ', [
-      userInput.assign_id
+      userInput.assign_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -1288,7 +1288,7 @@ user.deleteassigns = function(userInput, resultCallback) {
 
 ///sms///
 
-user.addsmss = function(userInput, resultCallback) {
+user.addsmss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1296,46 +1296,46 @@ user.addsmss = function(userInput, resultCallback) {
       'INSERT INTO public."sms"("sms","updatetime")VALUES ($1,$2) RETURNING *',
       [userInput.sms, userInput.updatedtime]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listsmss = function(userInput, resultCallback) {
+user.listsmss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.sms ", [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletesmss = function(userInput, resultCallback) {
+user.deletesmss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."sms" WHERE "id"=($1) ', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.createfeedbacks = function(userInput, resultCallback) {
+user.createfeedbacks = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1348,66 +1348,66 @@ user.createfeedbacks = function(userInput, resultCallback) {
         userInput.posted_on,
         userInput.posted_by,
         userInput.image,
-        userInput.company_name
+        userInput.company_name,
       ]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.feedbacklists = function(userInput, resultCallback) {
+user.feedbacklists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."feedback"', [userInput.posted_by])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listmyfeedbacks = function(userInput, resultCallback) {
+user.listmyfeedbacks = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."feedback" WHERE "posted_by"=($1)', [
-      userInput.posted_by
+      userInput.posted_by,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchfeedbacks = function(userInput, resultCallback) {
+user.fetchfeedbacks = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."feedback" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.createattachs = function(userInput, resultCallback) {
+user.createattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1415,48 +1415,48 @@ user.createattachs = function(userInput, resultCallback) {
       'INSERT INTO public."attachment" ("Emp_id",title,path) VALUES ($1,$2,$3) RETURNING *',
       [userInput.Emp_id, userInput.title, userInput.path]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listattachs = function(userInput, resultCallback) {
+user.listattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."attachment"', [userInput.posted_by])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.mylistattachs = function(userInput, resultCallback) {
+user.mylistattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."attachment" WHERE "Emp_id"=($1)', [
-      userInput.Emp_id
+      userInput.Emp_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.mylistattachss = function(userInput, resultCallback) {
+user.mylistattachss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
@@ -1465,25 +1465,25 @@ user.mylistattachss = function(userInput, resultCallback) {
       'select "path" FROM public."attachment" WHERE "Emp_id"=($1) And "title" = ($2)',
       [userInput.employee_id, "photo"]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchattachs = function(userInput, resultCallback) {
+user.fetchattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."attachment" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -1491,7 +1491,7 @@ user.fetchattachs = function(userInput, resultCallback) {
 
 /////
 
-user.addclientattachs = function(userInput, resultCallback) {
+user.addclientattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1499,82 +1499,82 @@ user.addclientattachs = function(userInput, resultCallback) {
       'INSERT INTO public."client_attachment" ("site_id",title,path) VALUES ($1,$2,$3) RETURNING *',
       [userInput.site_id, userInput.title, userInput.path]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listclientattachs = function(userInput, resultCallback) {
+user.listclientattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."client_attachment"', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.mylistclientattachs = function(userInput, resultCallback) {
+user.mylistclientattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."client_attachment" WHERE "site_id"=($1)', [
-      userInput.site_id
+      userInput.site_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchclientattachs = function(userInput, resultCallback) {
+user.fetchclientattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."client_attachment" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletclientattachs = function(userInput, resultCallback) {
+user.deletclientattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('delete  FROM public."client_attachment" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.newclientsites = function(userInput, resultCallback) {
+user.newclientsites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1599,36 +1599,36 @@ user.newclientsites = function(userInput, resultCallback) {
         userInput.sitelogin,
         userInput.sitepassword,
         userInput.sitelogin,
-        userInput.billing_address
+        userInput.billing_address,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.sitelists = function(userInput, resultCallback) {
+user.sitelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" where "company_name"=($1)', [
-      userInput.company_name
+      userInput.company_name,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateclientsites = function(userInput, resultCallback) {
+user.updateclientsites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1653,34 +1653,34 @@ user.updateclientsites = function(userInput, resultCallback) {
         userInput.company_name,
         userInput.sitelogin,
         userInput.sitepassword,
-        userInput.billing_address
+        userInput.billing_address,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletclientsites = function(userInput, resultCallback) {
+user.deletclientsites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete  FROM public."clientsite" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.sitestatuss = function(userInput, resultCallback) {
+user.sitestatuss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1688,31 +1688,31 @@ user.sitestatuss = function(userInput, resultCallback) {
       'UPDATE public."clientsite" SET  "status"=$2   WHERE  "id" = $1 RETURNING *',
       [userInput.id, userInput.status]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchsites = function(userInput, resultCallback) {
+user.fetchsites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchcompanysites = function(userInput, resultCallback) {
+user.fetchcompanysites = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1720,31 +1720,31 @@ user.fetchcompanysites = function(userInput, resultCallback) {
       'select * FROM public."clientsite" WHERE "company_name"=($1) ORDER BY "title" ASC',
       [userInput.company_name]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.fetchemployeeids = function(userInput, resultCallback) {
+user.fetchemployeeids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" WHERE "ecode"=($1)', [
-      userInput.employee_code
+      userInput.employee_code,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchcompanysitess = function(userInput, resultCallback) {
+user.fetchcompanysitess = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1752,17 +1752,17 @@ user.fetchcompanysitess = function(userInput, resultCallback) {
       'select * FROM public."clientsite" WHERE "company_name"=($1) ORDER BY "title" ASC',
       [userInput.company_name]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 /////contract/////
 
-user.newclientcontracts = function(userInput, resultCallback) {
+user.newclientcontracts = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1775,36 +1775,36 @@ user.newclientcontracts = function(userInput, resultCallback) {
         userInput.contract_type,
         userInput.last_revision_date,
         userInput.status,
-        userInput.invoice_cycle
+        userInput.invoice_cycle,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.contractlists = function(userInput, resultCallback) {
+user.contractlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."contract_page" WHERE "site_id"=($1)', [
-      userInput.site_id
+      userInput.site_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateclientcontracts = function(userInput, resultCallback) {
+user.updateclientcontracts = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1818,34 +1818,34 @@ user.updateclientcontracts = function(userInput, resultCallback) {
         userInput.contract_type,
         userInput.last_revision_date,
         userInput.status,
-        userInput.invoice_cycle
+        userInput.invoice_cycle,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletclientcontracts = function(userInput, resultCallback) {
+user.deletclientcontracts = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete  FROM public."contract_page" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.contractestatuss = function(userInput, resultCallback) {
+user.contractestatuss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1853,25 +1853,25 @@ user.contractestatuss = function(userInput, resultCallback) {
       'UPDATE public."contract_page" SET  "status"=$2   WHERE  "id" = $1 RETURNING *',
       [userInput.id, userInput.status]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchcontracts = function(userInput, resultCallback) {
+user.fetchcontracts = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."contract_page" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -1879,7 +1879,7 @@ user.fetchcontracts = function(userInput, resultCallback) {
 
 ////payment/////
 
-user.payadds = function(userInput, resultCallback) {
+user.payadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1922,20 +1922,20 @@ user.payadds = function(userInput, resultCallback) {
         0,
         0,
         0,
-        0
+        0,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.payupdates = function(userInput, resultCallback) {
+user.payupdates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -1978,91 +1978,91 @@ user.payupdates = function(userInput, resultCallback) {
         userInput.eweekly_off,
         userInput.eagency_charges,
         userInput.esubtotal,
-        userInput.erounded_off
+        userInput.erounded_off,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateamounts = function(userInput, resultCallback) {
+user.updateamounts = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .one("UPDATE public.payment SET  rounded_off=$2 WHERE id=$1 RETURNING *", [
       userInput.id,
-      userInput.amount
+      userInput.amount,
     ])
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.payfetchs = function(userInput, resultCallback) {
+user.payfetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.paydeletes = function(userInput, resultCallback) {
+user.paydeletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."payment" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.paylists = function(userInput, resultCallback) {
+user.paylists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment" WHERE "site_id"=($1)', [
-      userInput.site_id
+      userInput.site_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.payment_details = function(userInput, resultCallback) {
+user.payment_details = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment"  ', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -2070,7 +2070,7 @@ user.payment_details = function(userInput, resultCallback) {
 
 /////sfafd/////
 
-user.employee_payadds = function(userInput, resultCallback) {
+user.employee_payadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2096,20 +2096,20 @@ user.employee_payadds = function(userInput, resultCallback) {
         0,
         0,
         0,
-        userInput.id
+        userInput.id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employee_payupdates = function(userInput, resultCallback) {
+user.employee_payupdates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2135,91 +2135,91 @@ user.employee_payupdates = function(userInput, resultCallback) {
         userInput.weekly_off,
         userInput.agency_charges,
         userInput.subtotal,
-        userInput.rounded_off
+        userInput.rounded_off,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employee_payfetchs = function(userInput, resultCallback) {
+user.employee_payfetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_payment" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employee_paydeletes = function(userInput, resultCallback) {
+user.employee_paydeletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."employee_payment" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employee_paylists = function(userInput, resultCallback) {
+user.employee_paylists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_payment" WHERE "site_id"=($1)', [
-      userInput.site_id
+      userInput.site_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employee_payment_details = function(userInput, resultCallback) {
+user.employee_payment_details = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_payment"  ', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.requirement_details = function(userInput, resultCallback) {
+user.requirement_details = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."requirement" ', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -2227,7 +2227,7 @@ user.requirement_details = function(userInput, resultCallback) {
 
 ////requirment/////
 
-user.reqadds = function(userInput, resultCallback) {
+user.reqadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2239,74 +2239,74 @@ user.reqadds = function(userInput, resultCallback) {
         userInput.amount,
         userInput.hrs,
         userInput.no_of_employee,
-        userInput.total_amount
+        userInput.total_amount,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.reqlists = function(userInput, resultCallback) {
+user.reqlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."requirement" WHERE "site_id"=($1)', [
-      userInput.site_id
+      userInput.site_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.reqdeletes = function(userInput, resultCallback) {
+user.reqdeletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('delete FROM public."requirement" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
 
       executor
         .any('delete FROM public."payment" WHERE "id"=($1)', [userInput.id])
-        .then(data => {
+        .then((data) => {
           resultCallback(null, data);
         })
-        .catch(error => {
+        .catch((error) => {
           resultCallback(error, null);
           console.log("ERROR:", error);
         });
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.reqfetchs = function(userInput, resultCallback) {
+user.reqfetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."requirement" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.requpdates = function(userInput, resultCallback) {
+user.requpdates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2319,20 +2319,20 @@ user.requpdates = function(userInput, resultCallback) {
         userInput.amount,
         userInput.hrs,
         userInput.no_of_employee,
-        userInput.total_amount
+        userInput.total_amount,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.payementupdate = function(userInput, resultCallback) {
+user.payementupdate = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2375,14 +2375,14 @@ user.payementupdate = function(userInput, resultCallback) {
         0,
         0,
         0,
-        0
+        0,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -2390,7 +2390,7 @@ user.payementupdate = function(userInput, resultCallback) {
 
 ////uniform/////
 
-user.uniformadds = function(userInput, resultCallback) {
+user.uniformadds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2403,20 +2403,20 @@ user.uniformadds = function(userInput, resultCallback) {
         userInput.rate,
         userInput.remarks,
         userInput.total_amount,
-        "not_received"
+        "not_received",
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.uniformupdates = function(userInput, resultCallback) {
+user.uniformupdates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2429,64 +2429,64 @@ user.uniformupdates = function(userInput, resultCallback) {
         userInput.au,
         userInput.rate,
         userInput.remarks,
-        userInput.status
+        userInput.status,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.uniformfetchs = function(userInput, resultCallback) {
+user.uniformfetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."uniform" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.uniformdeletes = function(userInput, resultCallback) {
+user.uniformdeletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."uniform" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.uniformlists = function(userInput, resultCallback) {
+user.uniformlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."uniform" WHERE "employee_id"=($1)', [
-      userInput.employee_id
+      userInput.employee_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deliverds = function(userInput, resultCallback) {
+user.deliverds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
@@ -2495,16 +2495,16 @@ user.deliverds = function(userInput, resultCallback) {
       'SELECT * FROM public.employeedetails where id in ( select CAST ("employee_id" AS INTEGER) from public.uniform where "status" = $1 ) ORDER BY "Name" ASC',
       ["received"]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.undeliverds = function(userInput, resultCallback) {
+user.undeliverds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
@@ -2513,25 +2513,25 @@ user.undeliverds = function(userInput, resultCallback) {
       'SELECT * FROM public.employeedetails where id in ( select CAST ("employee_id" AS INTEGER) from public.uniform where "status" = $1 ) ORDER BY "Name" ASC',
       ["not_received"]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteattachs = function(userInput, resultCallback) {
+user.deleteattachs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."attachment" WHERE "id"=($1) ', [userInput.id])
 
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -2539,25 +2539,25 @@ user.deleteattachs = function(userInput, resultCallback) {
 
 ///master Id////
 
-user.additem = function(userInput, resultCallback) {
+user.additem = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .one("INSERT INTO public.items(items,rates)VALUES ( $1, $2) RETURNING *", [
       userInput.items,
-      userInput.rates
+      userInput.rates,
     ])
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateitem = function(userInput, resultCallback) {
+user.updateitem = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2565,53 +2565,53 @@ user.updateitem = function(userInput, resultCallback) {
       "UPDATE public.items SET  items=$2, rates=$3  WHERE id=$1 RETURNING *",
       [userInput.id, userInput.items, userInput.rates]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchitem = function(userInput, resultCallback) {
+user.fetchitem = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."items" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.itemsdelete = function(userInput, resultCallback) {
+user.itemsdelete = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."items" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.itemslist = function(userInput, resultCallback) {
+user.itemslist = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."items"', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -2619,7 +2619,7 @@ user.itemslist = function(userInput, resultCallback) {
 
 ///Employee adding////
 
-user.addemptypes = function(userInput, resultCallback) {
+user.addemptypes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2627,17 +2627,17 @@ user.addemptypes = function(userInput, resultCallback) {
       "INSERT INTO public.employee_type(employee_type)VALUES ($1) RETURNING *",
       [userInput.employee_type]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateemptypes = function(userInput, resultCallback) {
+user.updateemptypes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2645,53 +2645,53 @@ user.updateemptypes = function(userInput, resultCallback) {
       "UPDATE public.employee_type SET  employee_type=$2   WHERE id=$1 RETURNING *",
       [userInput.id, userInput.employee_type]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchemptypes = function(userInput, resultCallback) {
+user.fetchemptypes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.emptypedeletes = function(userInput, resultCallback) {
+user.emptypedeletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.emptypelists = function(userInput, resultCallback) {
+user.emptypelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_type"', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -2699,7 +2699,7 @@ user.emptypelists = function(userInput, resultCallback) {
 
 ///Employee adding////
 
-user.addfinanaces = function(userInput, resultCallback) {
+user.addfinanaces = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2710,20 +2710,20 @@ user.addfinanaces = function(userInput, resultCallback) {
         userInput.descriptions,
         userInput.date,
         userInput.type,
-        userInput.total_amount
+        userInput.total_amount,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatefinanaces = function(userInput, resultCallback) {
+user.updatefinanaces = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2735,67 +2735,67 @@ user.updatefinanaces = function(userInput, resultCallback) {
         userInput.descriptions,
         userInput.date,
         userInput.type,
-        userInput.total_amount
+        userInput.total_amount,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchfinanaces = function(userInput, resultCallback) {
+user.fetchfinanaces = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."fianance_management" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.finanacedeletes = function(userInput, resultCallback) {
+user.finanacedeletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."fianance_management" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       executor
         .any(
           'Delete FROM public."finanace_documents" WHERE "finance_id"=($1)',
           [userInput.id]
         )
-        .then(data => {
+        .then((data) => {
           resultCallback(null, data);
         });
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.finanacelists = function(userInput, resultCallback) {
+user.finanacelists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."fianance_management"', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -2803,7 +2803,7 @@ user.finanacelists = function(userInput, resultCallback) {
 
 ///Quality checking////
 
-user.addqualitys = function(userInput, resultCallback) {
+user.addqualitys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2832,20 +2832,20 @@ user.addqualitys = function(userInput, resultCallback) {
         userInput.client_name,
         userInput.client_contact,
         userInput.mail_id,
-        userInput.Remarks_by_cod
+        userInput.Remarks_by_cod,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatequalitys = function(userInput, resultCallback) {
+user.updatequalitys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2875,56 +2875,56 @@ user.updatequalitys = function(userInput, resultCallback) {
         userInput.client_name,
         userInput.client_contact,
         userInput.mail_id,
-        userInput.Remarks_by_cod
+        userInput.Remarks_by_cod,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchqualitys = function(userInput, resultCallback) {
+user.fetchqualitys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletequalitys = function(userInput, resultCallback) {
+user.deletequalitys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listqualitys = function(userInput, resultCallback) {
+user.listqualitys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."qualitycheck"', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -2932,7 +2932,7 @@ user.listqualitys = function(userInput, resultCallback) {
 
 ///Quality table checking////
 
-user.addqualitytables = function(userInput, resultCallback) {
+user.addqualitytables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2949,20 +2949,20 @@ user.addqualitytables = function(userInput, resultCallback) {
         userInput.fg,
         userInput.gm,
         userInput.total,
-        userInput.quality_id
+        userInput.quality_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatequalitytables = function(userInput, resultCallback) {
+user.updatequalitytables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -2980,62 +2980,62 @@ user.updatequalitytables = function(userInput, resultCallback) {
         userInput.fg,
         userInput.gm,
         userInput.total,
-        userInput.quality_id
+        userInput.quality_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchqualitytables = function(userInput, resultCallback) {
+user.fetchqualitytables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."qualitychecklist" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletequalitytables = function(userInput, resultCallback) {
+user.deletequalitytables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."qualitychecklist" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listqualitytables = function(userInput, resultCallback) {
+user.listqualitytables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."qualitychecklist" WHERE "quality_id"=($1)', [
-      userInput.quality_id
+      userInput.quality_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -3043,7 +3043,7 @@ user.listqualitytables = function(userInput, resultCallback) {
 
 ///Training Report////
 
-user.addtrainingreports = function(userInput, resultCallback) {
+user.addtrainingreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3061,20 +3061,20 @@ user.addtrainingreports = function(userInput, resultCallback) {
         userInput.tname,
         userInput.tsign,
         userInput.asoname,
-        userInput.asosign
+        userInput.asosign,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatetrainingreports = function(userInput, resultCallback) {
+user.updatetrainingreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3093,65 +3093,65 @@ user.updatetrainingreports = function(userInput, resultCallback) {
         userInput.tname,
         userInput.tsign,
         userInput.asoname,
-        userInput.asosign
+        userInput.asosign,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchtrainingreports = function(userInput, resultCallback) {
+user.fetchtrainingreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."training_report" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletetrainingreports = function(userInput, resultCallback) {
+user.deletetrainingreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."training_report" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listtrainingreports = function(userInput, resultCallback) {
+user.listtrainingreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."training_report"', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 ///Training table////
-user.addtrainingreporttables = function(userInput, resultCallback) {
+user.addtrainingreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3163,20 +3163,20 @@ user.addtrainingreporttables = function(userInput, resultCallback) {
         userInput.name,
         userInput.signature,
         userInput.remarks_by_trainer,
-        userInput.report_id
+        userInput.report_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatetrainingreporttables = function(userInput, resultCallback) {
+user.updatetrainingreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3189,52 +3189,52 @@ user.updatetrainingreporttables = function(userInput, resultCallback) {
         userInput.name,
         userInput.signature,
         userInput.remarks_by_trainer,
-        userInput.report_id
+        userInput.report_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchtrainingreporttables = function(userInput, resultCallback) {
+user.fetchtrainingreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."training_report_table" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletetrainingreporttables = function(userInput, resultCallback) {
+user.deletetrainingreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."training_report_table" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listtrainingreporttables = function(userInput, resultCallback) {
+user.listtrainingreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3242,17 +3242,17 @@ user.listtrainingreporttables = function(userInput, resultCallback) {
       'select * FROM public."training_report_table" WHERE "report_id"=($1)',
       [userInput.report_id]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 ///night  check report////
-user.addnightreports = function(userInput, resultCallback) {
+user.addnightreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3266,20 +3266,20 @@ user.addnightreports = function(userInput, resultCallback) {
         userInput.visit_time_to,
         userInput.shift_rank,
         userInput.shift_auth,
-        userInput.shift_present
+        userInput.shift_present,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatenightreports = function(userInput, resultCallback) {
+user.updatenightreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3294,62 +3294,62 @@ user.updatenightreports = function(userInput, resultCallback) {
         userInput.visit_time_to,
         userInput.shift_rank,
         userInput.shift_auth,
-        userInput.shift_present
+        userInput.shift_present,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchnightreports = function(userInput, resultCallback) {
+user.fetchnightreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."night_check" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletenightreports = function(userInput, resultCallback) {
+user.deletenightreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."night_check" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listnightreports = function(userInput, resultCallback) {
+user.listnightreports = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."night_check"', [userInput.report_id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateprofilephotos = function(userInput, resultCallback) {
+user.updateprofilephotos = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3357,17 +3357,17 @@ user.updateprofilephotos = function(userInput, resultCallback) {
       'Update  public."attachment" SET  "title" = $2 where "Emp_id"= $1  RETURNING *',
       [userInput.id, userInput.photo]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 ///night table////
-user.addnightreporttables = function(userInput, resultCallback) {
+user.addnightreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3380,20 +3380,20 @@ user.addnightreporttables = function(userInput, resultCallback) {
         userInput.post,
         userInput.observation,
         userInput.sign,
-        userInput.night_id
+        userInput.night_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatenightreporttables = function(userInput, resultCallback) {
+user.updatenightreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3407,36 +3407,36 @@ user.updatenightreporttables = function(userInput, resultCallback) {
         userInput.post,
         userInput.observation,
         userInput.sign,
-        userInput.night_id
+        userInput.night_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchnightreporttables = function(userInput, resultCallback) {
+user.fetchnightreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."night_check_table" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.addnotificationss = function(userInput, date, resultCallback) {
+user.addnotificationss = function (userInput, date, resultCallback) {
   var executor = db.getdaata.getdb();
 
   executor
@@ -3444,7 +3444,7 @@ user.addnotificationss = function(userInput, date, resultCallback) {
       'select * FROM public."notifications" WHERE "contract_id"=($1) and "date"=($2) ',
       ["" + userInput.contract_id, "" + date]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data.length);
       if (data.length > 0) {
         resultCallback(null, data);
@@ -3465,58 +3465,58 @@ user.addnotificationss = function(userInput, date, resultCallback) {
               userInput.user_id,
               userInput.status,
               userInput.contract_id,
-              date
+              date,
             ]
           )
-          .then(data => {
+          .then((data) => {
             console.log(data);
             resultCallback(null, data);
           })
-          .catch(error => {
+          .catch((error) => {
             resultCallback(error, null);
             console.log("ERROR:", error);
           });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletenightreporttables = function(userInput, resultCallback) {
+user.deletenightreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."night_check_table" WHERE "id"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listnightreporttables = function(userInput, resultCallback) {
+user.listnightreporttables = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."night_check_table" WHERE "night_id"=($1)', [
-      userInput.night_id
+      userInput.night_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.notificationcounts = function(userInput, resultCallback) {
+user.notificationcounts = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3524,32 +3524,32 @@ user.notificationcounts = function(userInput, resultCallback) {
       'select count(*) FROM public."notifications" WHERE "user_id"=($1) And "status"=($2) ',
       [userInput.user_id, "New"]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.listofnotifications = function(userInput, resultCallback) {
+user.listofnotifications = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."notifications" WHERE "user_id"=($1)', [
-      userInput.user_id
+      userInput.user_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatenotifications = function(userInput, resultCallback) {
+user.updatenotifications = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3557,16 +3557,16 @@ user.updatenotifications = function(userInput, resultCallback) {
       'Update  public."notifications" SET "id"=$1 , "status"=$2  WHERE "id"=($1)',
       [userInput.id, "Readed"]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.assignemployeeadds = function(userInput, resultCallback) {
+user.assignemployeeadds = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
@@ -3585,20 +3585,20 @@ user.assignemployeeadds = function(userInput, resultCallback) {
         userInput.site_name,
         +userInput.contract_id,
         userInput.employee_type,
-        userInput.hrs
+        userInput.hrs,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.attendancechecks = function(userInput, resultCallback) {
+user.attendancechecks = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
@@ -3608,50 +3608,50 @@ user.attendancechecks = function(userInput, resultCallback) {
       [
         userInput.employee_id,
         userInput.contract_id,
-        userInput.date + " 00:00:00-07"
+        userInput.date + " 00:00:00-07",
       ]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
       console.log(data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchpaymentdetails = function(userInput, resultCallback) {
+user.fetchpaymentdetails = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment" WHERE "site_id"=($1)', [
-      userInput.contract_id
+      userInput.contract_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.paymentstructure = function(userInput, resultCallback) {
+user.paymentstructure = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.insertdata = function(userInput, resultCallback) {
+user.insertdata = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
@@ -3681,20 +3681,20 @@ user.insertdata = function(userInput, resultCallback) {
         userInput[0].net,
         userInput[0].timein,
         userInput[0].timeout,
-        userInput[0].duration
+        userInput[0].duration,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.clientinsertdata = function(userInput, resultCallback) {
+user.clientinsertdata = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
@@ -3726,20 +3726,20 @@ user.clientinsertdata = function(userInput, resultCallback) {
         userInput[0].net,
         userInput[0].timein,
         userInput[0].timeout,
-        userInput[0].duration
+        userInput[0].duration,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchdetailss = function(userInput, resultCallback) {
+user.fetchdetailss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3747,16 +3747,16 @@ user.fetchdetailss = function(userInput, resultCallback) {
       'select * FROM public."attendancemark" WHERE "employee_id"=($1) and date >= ($2) and date <= ($3) ',
       [userInput.employee_id, userInput.start_date, userInput.end_date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchsitedpayments = function(
+user.fetchsitedpayments = function (
   site_id,
   start_date,
   end_date,
@@ -3769,16 +3769,16 @@ user.fetchsitedpayments = function(
       'SELECT site_name, SUM (basic) AS basic, SUM (da) AS da, SUM (addhours) AS addhours, SUM (other) AS other, SUM (leave) AS leave, SUM (bouns) AS bouns, SUM (weekly) AS weekly, SUM (gross) AS gross, SUM (epf) AS epf, SUM (esi) AS esi, SUM (net) AS net from public."salary_details" WHERE "site_id"=($1) and date >= ($2)  and date <= ($3)   GROUP BY site_name',
       [site_id, start_date, end_date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchsitepaymentssss = function(site_id, start_date, resultCallback) {
+user.fetchsitepaymentssss = function (site_id, start_date, resultCallback) {
   console.log("in" + site_id, start_date);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
@@ -3787,16 +3787,16 @@ user.fetchsitepaymentssss = function(site_id, start_date, resultCallback) {
       'SELECT * from public."salary_details" WHERE "site_name"=($1) and "date" = ($2)',
       ["TRITON", start_date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.checkemployees = function(userInput, resultCallback) {
+user.checkemployees = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3804,32 +3804,32 @@ user.checkemployees = function(userInput, resultCallback) {
       'select * from public."employeedetails" where id in (select cast("employee_id" as integer)from public."assignemployee" where "employee_type"= $1 and "date">= $2 and "date"<= $3)',
       [userInput.employee_id, userInput.start_date, userInput.end_date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.selectemployee = function(userInput, resultCallback) {
+user.selectemployee = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" WHERE "employee_type"=($1)', [
-      userInput.employee_type
+      userInput.employee_type,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.clientfetchlists = function(userInput, resultCallback) {
+user.clientfetchlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
 
@@ -3838,16 +3838,16 @@ user.clientfetchlists = function(userInput, resultCallback) {
       'select * from public."employeedetails" where id in (select cast("employee_id" as integer)from public."assignemployee" where "site_id"=$1 and "date">=$2 and "date"<= $3) ',
       [userInput.site_id, userInput.start_date, userInput.end_date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.employeetfetchlists = function(userInput, resultCallback) {
+user.employeetfetchlists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
 
@@ -3856,25 +3856,25 @@ user.employeetfetchlists = function(userInput, resultCallback) {
       'select * from public."attendancemark"  where  "date">=$1 and "date"<= $2) ',
       [userInput.start_date, userInput.end_date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.assignlistss = function(userInput, resultCallback) {
+user.assignlistss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
 
   executor
     .any('select * from public."assignemployee" ', [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -3882,7 +3882,7 @@ user.assignlistss = function(userInput, resultCallback) {
 
 //Add company/////
 
-user.addcompanys = function(userInput, resultCallback) {
+user.addcompanys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3900,20 +3900,20 @@ user.addcompanys = function(userInput, resultCallback) {
         userInput.company_pan_no,
         userInput.company_cin_no,
         userInput.company_pf_code_no,
-        userInput.company_esi_code_no
+        userInput.company_esi_code_no,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updatecompanys = function(userInput, resultCallback) {
+user.updatecompanys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -3932,56 +3932,56 @@ user.updatecompanys = function(userInput, resultCallback) {
         userInput.company_pan_no,
         userInput.company_cin_no,
         userInput.company_pf_code_no,
-        userInput.company_esi_code_no
+        userInput.company_esi_code_no,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deletecompanys = function(userInput, resultCallback) {
+user.deletecompanys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."company" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchcompanys = function(userInput, resultCallback) {
+user.fetchcompanys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."company" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.companylistss = function(userInput, resultCallback) {
+user.companylistss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."company"', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
@@ -3989,7 +3989,7 @@ user.companylistss = function(userInput, resultCallback) {
 
 ///add advance/////
 
-user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
+user.advanceaddsss = function (userInput, date, amount, date1, resultCallback) {
   console.log("test1");
   console.log(userInput);
   var executor = db.getdaata.getdb();
@@ -4002,10 +4002,10 @@ user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
         userInput.company_name,
         userInput.advance_type,
         date1,
-        userInput.employee_name
+        userInput.employee_name,
       ]
     )
-    .then(data => {
+    .then((data) => {
       if (data.length > 0) {
         console.log("update");
         console.log("test2");
@@ -4016,10 +4016,10 @@ user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
               Math.round(+data[0].pamount + +amount),
               data[0].id,
               data[0].cdate,
-              Math.round(+data[0].pbalanceamount + +amount)
+              Math.round(+data[0].pbalanceamount + +amount),
             ]
           )
-          .then(data1 => {
+          .then((data1) => {
             console.log("test3");
             // resultCallback(null, data1);
             executor
@@ -4045,14 +4045,14 @@ user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
                   data1.status,
                   data1.loan_number,
                   data1.cdate,
-                  data1.id
+                  data1.id,
                 ]
               )
-              .then(historyys => {
+              .then((historyys) => {
                 resultCallback(null, historyys);
               });
           })
-          .catch(error => {
+          .catch((error) => {
             resultCallback(error, null);
             console.log("ERROR:", error);
           });
@@ -4082,10 +4082,10 @@ user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
               userInput.site,
               "Pending",
               userInput.loan_number,
-              date1
+              date1,
             ]
           )
-          .then(data2 => {
+          .then((data2) => {
             console.log("test5");
             // resultCallback(null, data2);
             executor
@@ -4111,14 +4111,14 @@ user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
                   data2.status,
                   data2.loan_number,
                   data2.cdate,
-                  data2.id
+                  data2.id,
                 ]
               )
-              .then(historyy => {
+              .then((historyy) => {
                 resultCallback(null, historyy);
               });
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
             // resultCallback(error, null);
             // console.log("ERROR:", error);
@@ -4126,13 +4126,13 @@ user.advanceaddsss = function(userInput, date, amount, date1, resultCallback) {
       }
       //  resultCallback(null,'result' );
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.advanceaddss = function(userInput, date, amount, resultCallback) {
+user.advanceaddss = function (userInput, date, amount, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4157,20 +4157,20 @@ user.advanceaddss = function(userInput, date, amount, resultCallback) {
         userInput.site,
         "Pending",
         userInput.loan_number,
-        userInput.ifsc
+        userInput.ifsc,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.advancefetchs = function(userInput, resultCallback) {
+user.advancefetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4178,16 +4178,16 @@ user.advancefetchs = function(userInput, resultCallback) {
       'select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "company_name"=($3) ORDER BY "ddate" ASC',
       [userInput.employee_id, userInput.advance_type, userInput.company_name]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.monthlyfetchs = function(userInput, resultCallback) {
+user.monthlyfetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4195,16 +4195,16 @@ user.monthlyfetchs = function(userInput, resultCallback) {
       'select * FROM public."advance" WHERE "employee_id"=($1) and ddate >= ($2) and ddate <= ($3)',
       [userInput.employee_id, userInput.start_date, userInput.end_date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.monthlyfetchs1 = function(userInput, resultCallback) {
+user.monthlyfetchs1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4212,106 +4212,106 @@ user.monthlyfetchs1 = function(userInput, resultCallback) {
       'select * FROM public."advance" WHERE "employee_id"=($1) and "status"=($2)',
       [userInput.employee_id, "Pending"]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchloan_numbers = function(userInput, resultCallback) {
+user.fetchloan_numbers = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select max(loan_number) from public."advance"', [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchloan_numbers1 = function(userInput, resultCallback) {
+user.fetchloan_numbers1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select max(id) from public."employeedetails"', [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteinstalments = function(userInput, resultCallback) {
+user.deleteinstalments = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."advance" WHERE "id"=($1)', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchadvances = function(userInput, resultCallback) {
+user.fetchadvances = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select *  FROM public."advance" WHERE "loan_number"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchadvances2 = function(userInput, resultCallback) {
+user.fetchadvances2 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select *  FROM public."advance" WHERE "company_name"=($1) and ', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.deleteadvances = function(userInput, resultCallback) {
+user.deleteadvances = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."advance" WHERE "loan_number"=($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateadvances = function(userInput, resultCallback) {
+user.updateadvances = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4335,10 +4335,10 @@ user.updateadvances = function(userInput, resultCallback) {
         userInput.company_name,
         userInput.site,
         userInput.loan_number,
-        userInput.id
+        userInput.id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       executor.one(
         'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
         [
@@ -4360,19 +4360,19 @@ user.updateadvances = function(userInput, resultCallback) {
           data.site,
           data.status,
           data.loan_number,
-          data.id
+          data.id,
         ]
       );
 
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.updateoneinstalments = function(userInput, resultCallback) {
+user.updateoneinstalments = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4383,10 +4383,10 @@ user.updateoneinstalments = function(userInput, resultCallback) {
         userInput.date,
         userInput.amount,
         userInput.dpaytype,
-        userInput.status
+        userInput.status,
       ]
     )
-    .then(data => {
+    .then((data) => {
       executor.one(
         'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
         [
@@ -4408,37 +4408,37 @@ user.updateoneinstalments = function(userInput, resultCallback) {
           data.site,
           data.status,
           data.loan_number,
-          data.id
+          data.id,
         ]
       );
 
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchsitedetail = function(userInput, resultCallback) {
+user.fetchsitedetail = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" where company_name=($1)', [
-      userInput.company_name
+      userInput.company_name,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.addemployeebulkuploads = function(userInput, dob, doj, resultCallback) {
+user.addemployeebulkuploads = function (userInput, dob, doj, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
@@ -4466,51 +4466,51 @@ user.addemployeebulkuploads = function(userInput, dob, doj, resultCallback) {
         userInput.ECODE,
         userInput.Uname,
         userInput.CCODE,
-        userInput.id
+        userInput.id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.efetchsitedetailss = function(userInput, resultCallback) {
+user.efetchsitedetailss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
 
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite"', [userInput.id])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.searchecodes = function(userInput, resultCallback) {
+user.searchecodes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" where "ecode"=($1)', [
-      userInput.ecode
+      userInput.ecode,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.addsalaryprocesss = function(userInput, resultCallback) {
+user.addsalaryprocesss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4550,36 +4550,36 @@ user.addsalaryprocesss = function(userInput, resultCallback) {
         userInput.date,
         userInput.additional_duty,
         userInput.duty_amount,
-        userInput.total_amount
+        userInput.total_amount,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.salaryprocesstatuss = function(userInput, resultCallback) {
+user.salaryprocesstatuss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."salary_details" where "date"= ($1)', [
-      userInput.date
+      userInput.date,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.addclientbulks = function(userInput, resultCallback) {
+user.addclientbulks = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
@@ -4602,21 +4602,21 @@ user.addclientbulks = function(userInput, resultCallback) {
         userInput.AreaName,
         userInput.DutyType,
         userInput.UPHONE,
-        userInput.company
+        userInput.company,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
 // manualentry
-user.manual_entry_unit_adds = function(userInput, resultCallback) {
+user.manual_entry_unit_adds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
@@ -4652,19 +4652,19 @@ user.manual_entry_unit_adds = function(userInput, resultCallback) {
         userInput.prtax_da,
         userInput.prtax_hra,
         userInput.prtax_trv,
-        userInput.prtax_cover
+        userInput.prtax_cover,
       ]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_unit_updates = function(userInput, resultCallback) {
+user.manual_entry_unit_updates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
@@ -4701,36 +4701,36 @@ user.manual_entry_unit_updates = function(userInput, resultCallback) {
         userInput.prtax_da,
         userInput.prtax_hra,
         userInput.prtax_trv,
-        userInput.prtax_cover
+        userInput.prtax_cover,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_unit_deletes = function(userInput, resultCallback) {
+user.manual_entry_unit_deletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."payroll_manual_unit_entry" where "id"= ($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_unit_lists = function(userInput, resultCallback) {
+user.manual_entry_unit_lists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4738,32 +4738,32 @@ user.manual_entry_unit_lists = function(userInput, resultCallback) {
       'select * FROM public."payroll_manual_unit_entry" where "unit_code"=($1)',
       [userInput.id]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_unit_fetchs = function(userInput, resultCallback) {
+user.manual_entry_unit_fetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_unit_entry" where "id"= ($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_rate_adds = function(userInput, resultCallback) {
+user.manual_entry_rate_adds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
@@ -4787,20 +4787,20 @@ user.manual_entry_rate_adds = function(userInput, resultCallback) {
         userInput.esi,
         userInput.dec,
         userInput.total,
-        userInput.unit_id
+        userInput.unit_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_rate_updatess = function(userInput, resultCallback) {
+user.manual_entry_rate_updatess = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4824,36 +4824,36 @@ user.manual_entry_rate_updatess = function(userInput, resultCallback) {
         userInput.esi,
         userInput.dec,
         userInput.total,
-        userInput.unit_id
+        userInput.unit_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_rate_deletes = function(userInput, resultCallback) {
+user.manual_entry_rate_deletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."payroll_manual_unit_rate" where "id"= ($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_rate_lists = function(userInput, resultCallback) {
+user.manual_entry_rate_lists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4861,32 +4861,32 @@ user.manual_entry_rate_lists = function(userInput, resultCallback) {
       'select * FROM public."payroll_manual_unit_rate" where "unit_id"= ($1)   ',
       ["" + userInput.id]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_rate_fetchs = function(userInput, resultCallback) {
+user.manual_entry_rate_fetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_unit_rate" where "id"= ($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_emp_adds = function(userInput, resultCallback) {
+user.manual_entry_emp_adds = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
@@ -4945,17 +4945,17 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
         userInput.rent_id,
         userInput.atmcard_id,
         userInput.others_id,
-        userInput.phone_id
+        userInput.phone_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       console.log(+data.advance_id);
       if (+data.advance_id == 0) {
       } else if (+data.advance_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
-          .then(advanceDetail => {
+          .then((advanceDetail) => {
             console.log(advanceDetail);
             if (data.advance == advanceDetail.pbalanceamount) {
               console.log("Paid");
@@ -4964,7 +4964,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.advance_id, "0"]
                 )
-                .then(advanceStatus => {
+                .then((advanceStatus) => {
                   console.log(advanceStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -4988,7 +4988,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       advanceStatus.status,
                       advanceStatus.loan_number,
                       advanceStatus.cdate,
-                      advanceStatus.id
+                      advanceStatus.id,
                     ]
                   );
                 });
@@ -4999,7 +4999,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [advanceDetail.pamount - data.advance, +data.advance_id]
                 )
-                .then(advanceStatus1 => {
+                .then((advanceStatus1) => {
                   console.log(advanceStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5023,7 +5023,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       advanceStatus1.status,
                       advanceStatus1.loan_number,
                       advanceStatus1.cdate,
-                      advanceStatus1.id
+                      advanceStatus1.id,
                     ]
                   );
                 });
@@ -5034,7 +5034,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
       } else if (+data.loan_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
-          .then(loanDetail => {
+          .then((loanDetail) => {
             console.log(loanDetail);
             if (data.loan == loanDetail.pbalanceamount) {
               console.log("Paid");
@@ -5043,7 +5043,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.loan_id, "0"]
                 )
-                .then(loanStatus => {
+                .then((loanStatus) => {
                   console.log(loanStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5067,7 +5067,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       loanStatus.status,
                       loanStatus.loan_number,
                       loanStatus.cdate,
-                      loanStatus.id
+                      loanStatus.id,
                     ]
                   );
                 });
@@ -5078,7 +5078,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [loanDetail.pamount - data.loan, +data.loan_id]
                 )
-                .then(loanStatus1 => {
+                .then((loanStatus1) => {
                   console.log(loanStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5102,7 +5102,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       loanStatus1.status,
                       loanStatus1.loan_number,
                       loanStatus1.cdate,
-                      loanStatus1.id
+                      loanStatus1.id,
                     ]
                   );
                 });
@@ -5113,7 +5113,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
       } else if (+data.uniform_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
-          .then(uniformDetail => {
+          .then((uniformDetail) => {
             console.log(uniformDetail);
             if (data.uniform == uniformDetail.pbalanceamount) {
               console.log("Paid");
@@ -5122,7 +5122,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.uniform_id, "0"]
                 )
-                .then(uniformStatus => {
+                .then((uniformStatus) => {
                   console.log(uniformStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5146,7 +5146,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       uniformStatus.status,
                       uniformStatus.loan_number,
                       uniformStatus.cdate,
-                      uniformStatus.id
+                      uniformStatus.id,
                     ]
                   );
                 });
@@ -5157,7 +5157,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [uniformDetail.pamount - data.uniform, +data.uniform_id]
                 )
-                .then(uniformStatus1 => {
+                .then((uniformStatus1) => {
                   console.log(uniformStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5181,7 +5181,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       uniformStatus1.status,
                       uniformStatus1.loan_number,
                       uniformStatus1.cdate,
-                      uniformStatus1.id
+                      uniformStatus1.id,
                     ]
                   );
                 });
@@ -5192,7 +5192,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
       } else if (+data.mess_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
-          .then(messDetail => {
+          .then((messDetail) => {
             console.log(messDetail);
             if (data.mess == messDetail.pbalanceamount) {
               console.log("Paid");
@@ -5201,7 +5201,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.mess_id, "0"]
                 )
-                .then(messStatus => {
+                .then((messStatus) => {
                   console.log(messStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5225,7 +5225,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       messStatus.status,
                       messStatus.loan_number,
                       messStatus.cdate,
-                      messStatus.id
+                      messStatus.id,
                     ]
                   );
                 });
@@ -5236,7 +5236,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [messDetail.pamount - data.mess, +data.mess_id]
                 )
-                .then(messStatus1 => {
+                .then((messStatus1) => {
                   console.log(messStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5260,7 +5260,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       messStatus1.status,
                       messStatus1.loan_number,
                       messStatus1.cdate,
-                      messStatus1.id
+                      messStatus1.id,
                     ]
                   );
                 });
@@ -5271,7 +5271,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
       } else if (+data.rent_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
-          .then(rentDetail => {
+          .then((rentDetail) => {
             console.log(rentDetail);
             if (data.rent == rentDetail.pbalanceamount) {
               console.log("Paid");
@@ -5280,7 +5280,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.rent_id, "0"]
                 )
-                .then(rentStatus => {
+                .then((rentStatus) => {
                   console.log(rentStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5304,7 +5304,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       rentStatus.status,
                       rentStatus.loan_number,
                       rentStatus.cdate,
-                      rentStatus.id
+                      rentStatus.id,
                     ]
                   );
                 });
@@ -5315,7 +5315,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [rentDetail.pamount - data.rent, +data.rent_id]
                 )
-                .then(rentStatus1 => {
+                .then((rentStatus1) => {
                   console.log(rentStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5339,7 +5339,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       rentStatus1.status,
                       rentStatus1.loan_number,
                       rentStatus1.cdate,
-                      rentStatus1.id
+                      rentStatus1.id,
                     ]
                   );
                 });
@@ -5350,7 +5350,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
       } else if (+data.atmcard_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
-          .then(atmDetail => {
+          .then((atmDetail) => {
             console.log(atmDetail);
             if (data.atm == atmDetail.pbalanceamount) {
               console.log("Paid");
@@ -5359,7 +5359,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.atmcard_id, "0"]
                 )
-                .then(atmStatus => {
+                .then((atmStatus) => {
                   console.log(atmStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5383,7 +5383,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       atmStatus.status,
                       atmStatus.loan_number,
                       atmStatus.cdate,
-                      atmStatus.id
+                      atmStatus.id,
                     ]
                   );
                 });
@@ -5394,7 +5394,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [atmDetail.pamount - data.atm, +data.atmcard_id]
                 )
-                .then(atmStatus1 => {
+                .then((atmStatus1) => {
                   console.log(atmStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5418,7 +5418,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       atmStatus1.status,
                       atmStatus1.loan_number,
                       atmStatus1.cdate,
-                      atmStatus1.id
+                      atmStatus1.id,
                     ]
                   );
                 });
@@ -5429,7 +5429,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
       } else if (+data.phone_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
-          .then(phoneDetail => {
+          .then((phoneDetail) => {
             console.log(phoneDetail);
             if (data.phone == phoneDetail.pbalanceamount) {
               console.log("Paid");
@@ -5438,7 +5438,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.phone_id, "0"]
                 )
-                .then(phoneStatus => {
+                .then((phoneStatus) => {
                   console.log(phoneStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5462,7 +5462,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       phoneStatus.status,
                       phoneStatus.loan_number,
                       phoneStatus.cdate,
-                      phoneStatus.id
+                      phoneStatus.id,
                     ]
                   );
                 });
@@ -5473,7 +5473,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [phoneDetail.pamount - data.phone, +data.phone_id]
                 )
-                .then(phoneStatus1 => {
+                .then((phoneStatus1) => {
                   console.log(phoneStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5497,7 +5497,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       phoneStatus1.status,
                       phoneStatus1.loan_number,
                       phoneStatus1.cdate,
-                      phoneStatus1.id
+                      phoneStatus1.id,
                     ]
                   );
                 });
@@ -5508,7 +5508,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
       } else if (+data.others_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.others_id])
-          .then(otherDetail => {
+          .then((otherDetail) => {
             console.log(otherDetail);
             if (data.others == otherDetail.pbalanceamount) {
               console.log("Paid");
@@ -5517,7 +5517,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.others_id, "0"]
                 )
-                .then(otherStatus => {
+                .then((otherStatus) => {
                   console.log(otherStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5541,7 +5541,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       otherStatus.status,
                       otherStatus.loan_number,
                       otherStatus.cdate,
-                      otherStatus.id
+                      otherStatus.id,
                     ]
                   );
                 });
@@ -5552,7 +5552,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [otherDetail.pamount - data.others, +data.others_id]
                 )
-                .then(otherStatus1 => {
+                .then((otherStatus1) => {
                   console.log(otherStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5576,7 +5576,7 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
                       otherStatus1.status,
                       otherStatus1.loan_number,
                       otherStatus1.cdate,
-                      otherStatus1.id
+                      otherStatus1.id,
                     ]
                   );
                 });
@@ -5585,13 +5585,13 @@ user.manual_entry_emp_adds = function(userInput, resultCallback) {
       }
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_emp_updates = function(userInput, resultCallback) {
+user.manual_entry_emp_updates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -5650,17 +5650,17 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
         userInput.atmcard_id,
         userInput.others_id,
         userInput.phone_id,
-        userInput.id
+        userInput.id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       console.log(+data.advance_id);
       if (+data.advance_id == 0) {
       } else if (+data.advance_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
-          .then(advanceDetail => {
+          .then((advanceDetail) => {
             console.log(advanceDetail);
             if (data.advance == advanceDetail.pbalanceamount) {
               console.log("Paid");
@@ -5669,7 +5669,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.advance_id, "0"]
                 )
-                .then(advanceStatus => {
+                .then((advanceStatus) => {
                   console.log(advanceStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5693,7 +5693,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       advanceStatus.status,
                       advanceStatus.loan_number,
                       advanceStatus.cdate,
-                      advanceStatus.id
+                      advanceStatus.id,
                     ]
                   );
                 });
@@ -5704,7 +5704,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [advanceDetail.pamount - data.advance, +data.advance_id]
                 )
-                .then(advanceStatus1 => {
+                .then((advanceStatus1) => {
                   console.log(advanceStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5728,7 +5728,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       advanceStatus1.status,
                       advanceStatus1.loan_number,
                       advanceStatus1.cdate,
-                      advanceStatus1.id
+                      advanceStatus1.id,
                     ]
                   );
                 });
@@ -5739,7 +5739,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
       } else if (+data.loan_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
-          .then(loanDetail => {
+          .then((loanDetail) => {
             console.log(loanDetail);
             if (data.loan == loanDetail.pbalanceamount) {
               console.log("Paid");
@@ -5748,7 +5748,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.loan_id, "0"]
                 )
-                .then(loanStatus => {
+                .then((loanStatus) => {
                   console.log(loanStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5772,7 +5772,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       loanStatus.status,
                       loanStatus.loan_number,
                       loanStatus.cdate,
-                      loanStatus.id
+                      loanStatus.id,
                     ]
                   );
                 });
@@ -5783,7 +5783,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [loanDetail.pamount - data.loan, +data.loan_id]
                 )
-                .then(loanStatus1 => {
+                .then((loanStatus1) => {
                   console.log(loanStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5807,7 +5807,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       loanStatus1.status,
                       loanStatus1.loan_number,
                       loanStatus1.cdate,
-                      loanStatus1.id
+                      loanStatus1.id,
                     ]
                   );
                 });
@@ -5818,7 +5818,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
       } else if (+data.uniform_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
-          .then(uniformDetail => {
+          .then((uniformDetail) => {
             console.log(uniformDetail);
             if (data.uniform == uniformDetail.pbalanceamount) {
               console.log("Paid");
@@ -5827,7 +5827,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.uniform_id, "0"]
                 )
-                .then(uniformStatus => {
+                .then((uniformStatus) => {
                   console.log(uniformStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5851,7 +5851,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       uniformStatus.status,
                       uniformStatus.loan_number,
                       uniformStatus.cdate,
-                      uniformStatus.id
+                      uniformStatus.id,
                     ]
                   );
                 });
@@ -5862,7 +5862,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [uniformDetail.pamount - data.uniform, +data.uniform_id]
                 )
-                .then(uniformStatus1 => {
+                .then((uniformStatus1) => {
                   console.log(uniformStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5886,7 +5886,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       uniformStatus1.status,
                       uniformStatus1.loan_number,
                       uniformStatus1.cdate,
-                      uniformStatus1.id
+                      uniformStatus1.id,
                     ]
                   );
                 });
@@ -5897,7 +5897,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
       } else if (+data.mess_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
-          .then(messDetail => {
+          .then((messDetail) => {
             console.log(messDetail);
             if (data.mess == messDetail.pbalanceamount) {
               console.log("Paid");
@@ -5906,7 +5906,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.mess_id, "0"]
                 )
-                .then(messStatus => {
+                .then((messStatus) => {
                   console.log(messStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5930,7 +5930,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       messStatus.status,
                       messStatus.loan_number,
                       messStatus.cdate,
-                      messStatus.id
+                      messStatus.id,
                     ]
                   );
                 });
@@ -5941,7 +5941,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [messDetail.pamount - data.mess, +data.mess_id]
                 )
-                .then(messStatus1 => {
+                .then((messStatus1) => {
                   console.log(messStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -5965,7 +5965,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       messStatus1.status,
                       messStatus1.loan_number,
                       messStatus1.cdate,
-                      messStatus1.id
+                      messStatus1.id,
                     ]
                   );
                 });
@@ -5976,7 +5976,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
       } else if (+data.rent_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
-          .then(rentDetail => {
+          .then((rentDetail) => {
             console.log(rentDetail);
             if (data.rent == rentDetail.pbalanceamount) {
               console.log("Paid");
@@ -5985,7 +5985,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.rent_id, "0"]
                 )
-                .then(rentStatus => {
+                .then((rentStatus) => {
                   console.log(rentStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6009,7 +6009,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       rentStatus.status,
                       rentStatus.loan_number,
                       rentStatus.cdate,
-                      rentStatus.id
+                      rentStatus.id,
                     ]
                   );
                 });
@@ -6020,7 +6020,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [rentDetail.pamount - data.rent, +data.rent_id]
                 )
-                .then(rentStatus1 => {
+                .then((rentStatus1) => {
                   console.log(rentStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6044,7 +6044,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       rentStatus1.status,
                       rentStatus1.loan_number,
                       rentStatus1.cdate,
-                      rentStatus1.id
+                      rentStatus1.id,
                     ]
                   );
                 });
@@ -6055,7 +6055,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
       } else if (+data.atmcard_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
-          .then(atmDetail => {
+          .then((atmDetail) => {
             console.log(atmDetail);
             if (data.atm == atmDetail.pbalanceamount) {
               console.log("Paid");
@@ -6064,7 +6064,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.atmcard_id, "0"]
                 )
-                .then(atmStatus => {
+                .then((atmStatus) => {
                   console.log(atmStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6088,7 +6088,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       atmStatus.status,
                       atmStatus.loan_number,
                       atmStatus.cdate,
-                      atmStatus.id
+                      atmStatus.id,
                     ]
                   );
                 });
@@ -6099,7 +6099,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [atmDetail.pamount - data.atm, +data.atmcard_id]
                 )
-                .then(atmStatus1 => {
+                .then((atmStatus1) => {
                   console.log(atmStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6123,7 +6123,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       atmStatus1.status,
                       atmStatus1.loan_number,
                       atmStatus1.cdate,
-                      atmStatus1.id
+                      atmStatus1.id,
                     ]
                   );
                 });
@@ -6134,7 +6134,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
       } else if (+data.phone_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
-          .then(phoneDetail => {
+          .then((phoneDetail) => {
             console.log(phoneDetail);
             if (data.phone == phoneDetail.pbalanceamount) {
               console.log("Paid");
@@ -6143,7 +6143,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.phone_id, "0"]
                 )
-                .then(phoneStatus => {
+                .then((phoneStatus) => {
                   console.log(phoneStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6167,7 +6167,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       phoneStatus.status,
                       phoneStatus.loan_number,
                       phoneStatus.cdate,
-                      phoneStatus.id
+                      phoneStatus.id,
                     ]
                   );
                 });
@@ -6178,7 +6178,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [phoneDetail.pamount - data.phone, +data.phone_id]
                 )
-                .then(phoneStatus1 => {
+                .then((phoneStatus1) => {
                   console.log(phoneStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6202,7 +6202,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       phoneStatus1.status,
                       phoneStatus1.loan_number,
                       phoneStatus1.cdate,
-                      phoneStatus1.id
+                      phoneStatus1.id,
                     ]
                   );
                 });
@@ -6213,7 +6213,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
       } else if (+data.others_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.others_id])
-          .then(otherDetail => {
+          .then((otherDetail) => {
             console.log(otherDetail);
             if (data.others == otherDetail.pbalanceamount) {
               console.log("Paid");
@@ -6222,7 +6222,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
                   ["Paid", +data.others_id, "0"]
                 )
-                .then(otherStatus => {
+                .then((otherStatus) => {
                   console.log(otherStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6246,7 +6246,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       otherStatus.status,
                       otherStatus.loan_number,
                       otherStatus.cdate,
-                      otherStatus.id
+                      otherStatus.id,
                     ]
                   );
                 });
@@ -6257,7 +6257,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
                   [otherDetail.pamount - data.others, +data.others_id]
                 )
-                .then(otherStatus1 => {
+                .then((otherStatus1) => {
                   console.log(otherStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6281,7 +6281,7 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
                       otherStatus1.status,
                       otherStatus1.loan_number,
                       otherStatus1.cdate,
-                      otherStatus1.id
+                      otherStatus1.id,
                     ]
                   );
                 });
@@ -6290,13 +6290,13 @@ user.manual_entry_emp_updates = function(userInput, resultCallback) {
       }
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_rate_updates = function(userInput, resultCallback) {
+user.manual_entry_rate_updates = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -6354,17 +6354,17 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
         userInput.rent_id,
         userInput.atmcard_id,
         userInput.others_id,
-        userInput.phone_id
+        userInput.phone_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       console.log(+data.advance_id);
       if (+data.advance_id == 0) {
       } else if (+data.advance_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
-          .then(advanceDetail => {
+          .then((advanceDetail) => {
             console.log(advanceDetail);
             if (data.advance == advanceDetail.pamount) {
               console.log("Paid");
@@ -6373,7 +6373,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
                   ["Paid", +data.advance_id]
                 )
-                .then(advanceStatus => {
+                .then((advanceStatus) => {
                   console.log(advanceStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6397,7 +6397,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       advanceStatus.status,
                       advanceStatus.loan_number,
                       advanceStatus.cdate,
-                      advanceStatus.id
+                      advanceStatus.id,
                     ]
                   );
                 });
@@ -6408,7 +6408,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
                   [advanceDetail.pamount - data.advance, +data.advance_id]
                 )
-                .then(advanceStatus1 => {
+                .then((advanceStatus1) => {
                   console.log(advanceStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6432,7 +6432,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       advanceStatus1.status,
                       advanceStatus1.loan_number,
                       advanceStatus1.cdate,
-                      advanceStatus1.id
+                      advanceStatus1.id,
                     ]
                   );
                 });
@@ -6443,7 +6443,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
       } else if (+data.loan_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
-          .then(loanDetail => {
+          .then((loanDetail) => {
             console.log(loanDetail);
             if (data.loan == loanDetail.pamount) {
               console.log("Paid");
@@ -6452,7 +6452,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
                   ["Paid", +data.loan_id]
                 )
-                .then(loanStatus => {
+                .then((loanStatus) => {
                   console.log(loanStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6476,7 +6476,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       loanStatus.status,
                       loanStatus.loan_number,
                       loanStatus.cdate,
-                      loanStatus.id
+                      loanStatus.id,
                     ]
                   );
                 });
@@ -6487,7 +6487,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
                   [loanDetail.pamount - data.loan, +data.loan_id]
                 )
-                .then(loanStatus1 => {
+                .then((loanStatus1) => {
                   console.log(loanStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6511,7 +6511,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       loanStatus1.status,
                       loanStatus1.loan_number,
                       loanStatus1.cdate,
-                      loanStatus1.id
+                      loanStatus1.id,
                     ]
                   );
                 });
@@ -6522,7 +6522,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
       } else if (+data.uniform_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
-          .then(uniformDetail => {
+          .then((uniformDetail) => {
             console.log(uniformDetail);
             if (data.uniform == uniformDetail.pamount) {
               console.log("Paid");
@@ -6531,7 +6531,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
                   ["Paid", +data.uniform_id]
                 )
-                .then(uniformStatus => {
+                .then((uniformStatus) => {
                   console.log(uniformStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6555,7 +6555,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       uniformStatus.status,
                       uniformStatus.loan_number,
                       uniformStatus.cdate,
-                      uniformStatus.id
+                      uniformStatus.id,
                     ]
                   );
                 });
@@ -6566,7 +6566,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
                   [uniformDetail.pamount - data.uniform, +data.uniform_id]
                 )
-                .then(uniformStatus1 => {
+                .then((uniformStatus1) => {
                   console.log(uniformStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6590,7 +6590,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       uniformStatus1.status,
                       uniformStatus1.loan_number,
                       uniformStatus1.cdate,
-                      uniformStatus1.id
+                      uniformStatus1.id,
                     ]
                   );
                 });
@@ -6601,7 +6601,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
       } else if (+data.mess_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
-          .then(messDetail => {
+          .then((messDetail) => {
             console.log(messDetail);
             if (data.mess == messDetail.pamount) {
               console.log("Paid");
@@ -6610,7 +6610,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
                   ["Paid", +data.mess_id]
                 )
-                .then(messStatus => {
+                .then((messStatus) => {
                   console.log(messStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6634,7 +6634,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       messStatus.status,
                       messStatus.loan_number,
                       messStatus.cdate,
-                      messStatus.id
+                      messStatus.id,
                     ]
                   );
                 });
@@ -6645,7 +6645,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
                   [messDetail.pamount - data.mess, +data.mess_id]
                 )
-                .then(messStatus1 => {
+                .then((messStatus1) => {
                   console.log(messStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6669,7 +6669,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       messStatus1.status,
                       messStatus1.loan_number,
                       messStatus1.cdate,
-                      messStatus1.id
+                      messStatus1.id,
                     ]
                   );
                 });
@@ -6680,7 +6680,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
       } else if (+data.rent_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
-          .then(rentDetail => {
+          .then((rentDetail) => {
             console.log(rentDetail);
             if (data.rent == rentDetail.pamount) {
               console.log("Paid");
@@ -6689,7 +6689,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
                   ["Paid", +data.rent_id]
                 )
-                .then(rentStatus => {
+                .then((rentStatus) => {
                   console.log(rentStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6713,7 +6713,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       rentStatus.status,
                       rentStatus.loan_number,
                       rentStatus.cdate,
-                      rentStatus.id
+                      rentStatus.id,
                     ]
                   );
                 });
@@ -6724,7 +6724,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
                   [rentDetail.pamount - data.rent, +data.rent_id]
                 )
-                .then(rentStatus1 => {
+                .then((rentStatus1) => {
                   console.log(rentStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6748,7 +6748,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       rentStatus1.status,
                       rentStatus1.loan_number,
                       rentStatus1.cdate,
-                      rentStatus1.id
+                      rentStatus1.id,
                     ]
                   );
                 });
@@ -6759,7 +6759,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
       } else if (+data.atmcard_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
-          .then(atmDetail => {
+          .then((atmDetail) => {
             console.log(atmDetail);
             if (data.atm == atmDetail.pamount) {
               console.log("Paid");
@@ -6768,7 +6768,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
                   ["Paid", +data.atmcard_id]
                 )
-                .then(atmStatus => {
+                .then((atmStatus) => {
                   console.log(atmStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6792,7 +6792,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       atmStatus.status,
                       atmStatus.loan_number,
                       atmStatus.cdate,
-                      atmStatus.id
+                      atmStatus.id,
                     ]
                   );
                 });
@@ -6803,7 +6803,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
                   [atmDetail.pamount - data.atm, +data.atmcard_id]
                 )
-                .then(atmStatus1 => {
+                .then((atmStatus1) => {
                   console.log(atmStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6827,7 +6827,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       atmStatus1.status,
                       atmStatus1.loan_number,
                       atmStatus1.cdate,
-                      atmStatus1.id
+                      atmStatus1.id,
                     ]
                   );
                 });
@@ -6838,7 +6838,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
       } else if (+data.phone_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
-          .then(phoneDetail => {
+          .then((phoneDetail) => {
             console.log(phoneDetail);
             if (data.phone == phoneDetail.pamount) {
               console.log("Paid");
@@ -6847,7 +6847,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
                   ["Paid", +data.phone_id]
                 )
-                .then(phoneStatus => {
+                .then((phoneStatus) => {
                   console.log(phoneStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6871,7 +6871,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       phoneStatus.status,
                       phoneStatus.loan_number,
                       phoneStatus.cdate,
-                      phoneStatus.id
+                      phoneStatus.id,
                     ]
                   );
                 });
@@ -6882,7 +6882,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
                   [phoneDetail.pamount - data.phone, +data.phone_id]
                 )
-                .then(phoneStatus1 => {
+                .then((phoneStatus1) => {
                   console.log(phoneStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6906,7 +6906,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       phoneStatus1.status,
                       phoneStatus1.loan_number,
                       phoneStatus1.cdate,
-                      phoneStatus1.id
+                      phoneStatus1.id,
                     ]
                   );
                 });
@@ -6917,7 +6917,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
       } else if (+data.others_id > 0) {
         executor
           .one("select * from public.advance  WHERE id=$1", [+data.others_id])
-          .then(otherDetail => {
+          .then((otherDetail) => {
             console.log(otherDetail);
             if (data.others == otherDetail.pamount) {
               console.log("Paid");
@@ -6926,7 +6926,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
                   ["Paid", +data.others_id]
                 )
-                .then(otherStatus => {
+                .then((otherStatus) => {
                   console.log(otherStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6950,7 +6950,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       otherStatus.status,
                       otherStatus.loan_number,
                       otherStatus.cdate,
-                      otherStatus.id
+                      otherStatus.id,
                     ]
                   );
                 });
@@ -6961,7 +6961,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                   "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
                   [otherDetail.pamount - data.others, +data.others_id]
                 )
-                .then(otherStatus1 => {
+                .then((otherStatus1) => {
                   console.log(otherStatus1);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -6985,7 +6985,7 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
                       otherStatus1.status,
                       otherStatus1.loan_number,
                       otherStatus1.cdate,
-                      otherStatus1.id
+                      otherStatus1.id,
                     ]
                   );
                 });
@@ -6994,29 +6994,29 @@ user.manual_entry_rate_updates = function(userInput, resultCallback) {
       }
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_emp_deletes = function(userInput, resultCallback) {
+user.manual_entry_emp_deletes = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."payroll_manual_entry" where "id"= ($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_emp_lists = function(userInput, resultCallback) {
+user.manual_entry_emp_lists = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7024,16 +7024,16 @@ user.manual_entry_emp_lists = function(userInput, resultCallback) {
       'SELECT * FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)',
       [userInput.unit_name, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_emp_lists1 = function(userInput, resultCallback) {
+user.manual_entry_emp_lists1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
 
@@ -7042,16 +7042,16 @@ user.manual_entry_emp_lists1 = function(userInput, resultCallback) {
       'SELECT designation, SUM (present) AS present ,COUNT(designation) as strength ,SUM (add_duties) AS add_duties, SUM (total_duties) AS total_duties FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)  GROUP BY "designation" ',
       [userInput.unit_name, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_emp_fetchs = function(userInput, resultCallback) {
+user.manual_entry_emp_fetchs = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7059,32 +7059,32 @@ user.manual_entry_emp_fetchs = function(userInput, resultCallback) {
       'select * FROM public."payroll_manual_entry" where "ecode"= ($1) and "date" = ($2)   ',
       [userInput.ecode, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_emp_fetch_ids = function(userInput, resultCallback) {
+user.manual_entry_emp_fetch_ids = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_entry" where "id"= ($1)', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_emp_lists1 = function(userInput, resultCallback) {
+user.manual_entry_emp_lists1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7092,16 +7092,16 @@ user.manual_entry_emp_lists1 = function(userInput, resultCallback) {
       'SELECT designation, SUM (present) AS present ,COUNT(designation) as strength ,SUM (add_duties) AS add_duties, SUM (total_duties) AS total_duties FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)  GROUP BY "designation" ',
       [userInput.unit_name, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.getreportssssss1 = function(userInput, resultCallback) {
+user.getreportssssss1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7109,16 +7109,16 @@ user.getreportssssss1 = function(userInput, resultCallback) {
       'SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  GROUP BY "unit_name" ',
       []
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.getreportssssssall1 = function(userInput, resultCallback) {
+user.getreportssssssall1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7126,45 +7126,45 @@ user.getreportssssssall1 = function(userInput, resultCallback) {
       'SELECT * FROM  public."payroll_manual_entry"  ORDER BY "unit_name" ',
       []
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.getemployeedetails1 = function(userInput, resultCallback) {
+user.getemployeedetails1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails where "company_name"= ($1)   ', [
-      userInput.companyName
+      userInput.companyName,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getunitmasterss = function(element, resultCallback) {
+user.getunitmasterss = function (element, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_unit_entry"  ', [])
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getunitmaster2 = function(id, resultCallback) {
+user.getunitmaster2 = function (id, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7172,7 +7172,7 @@ user.getunitmaster2 = function(id, resultCallback) {
       'select * FROM public."payroll_manual_unit_rate" where "unit_id"= ($1)   ',
       ["" + id]
     )
-    .then(data => {
+    .then((data) => {
       if (data.length == 0) {
         var a = {};
         resultCallback(null, a);
@@ -7180,12 +7180,12 @@ user.getunitmaster2 = function(id, resultCallback) {
         resultCallback(null, data[0]);
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getwagesheet1 = function(userInput, resultCallback) {
+user.getwagesheet1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7193,28 +7193,28 @@ user.getwagesheet1 = function(userInput, resultCallback) {
       'SELECT * FROM public.payroll_manual_entry where "company_name"=($1) and "date"=($2) ',
       [userInput.companyName, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getwagesheet12 = function(ecode, resultCallback) {
+user.getwagesheet12 = function (ecode, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("select ecode,esic_no from employeedetails where ecode=($1)", [ecode])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data[0]);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.cashandbanks = function(userInput, resultCallback) {
+user.cashandbanks = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7222,15 +7222,15 @@ user.cashandbanks = function(userInput, resultCallback) {
       'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2  and paymode=$3',
       [userInput.companyName, userInput.date, userInput.paymode]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.cashandbankss = function(ecode, unit_name, date, resultCallback) {
+user.cashandbankss = function (ecode, unit_name, date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7238,28 +7238,28 @@ user.cashandbankss = function(ecode, unit_name, date, resultCallback) {
       'SELECT ecode, SUM (net_pay) AS net_pay FROM public."payroll_manual_entry" where "ecode"=$1 and unit_name=$2 and date=$3 GROUP BY ecode',
       [ecode, unit_name, date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data[0]);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.cashandbanksss = function(ecode, resultCallback) {
+user.cashandbanksss = function (ecode, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [ecode])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data[0]);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getemployeevoucher1 = function(userInput, resultCallback) {
+user.getemployeevoucher1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7267,7 +7267,7 @@ user.getemployeevoucher1 = function(userInput, resultCallback) {
       'SELECT * FROM public.advance where cdate=$1 and status=$2 ORDER BY "ddate"',
       [userInput.date, userInput.status]
     )
-    .then(data => {
+    .then((data) => {
       if (data.length == 0) {
         var a = {};
         resultCallback(null, a);
@@ -7275,27 +7275,27 @@ user.getemployeevoucher1 = function(userInput, resultCallback) {
         resultCallback(null, data);
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getemployeevoucher2 = function(employee_id, resultCallback) {
+user.getemployeevoucher2 = function (employee_id, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [
-      employee_id
+      employee_id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getproftaxform1 = function(userInput, resultCallback) {
+user.getproftaxform1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7303,94 +7303,94 @@ user.getproftaxform1 = function(userInput, resultCallback) {
       'SELECT ecode, ename ,SUM (total_duties) AS total_duties, SUM (gross) AS gross, SUM (pr_tax) AS pr_tax FROM  public."payroll_manual_entry"  where "unit_name"=($1)  GROUP BY "ecode" , "ename" ',
       [userInput.title]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getwageslip1 = function(userInput, resultCallback) {
+user.getwageslip1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.payroll_manual_entry where "id"= ($1) ', [
-      userInput.id
+      userInput.id,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getsiteDetails = function(userInput, resultCallback) {
+user.getsiteDetails = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_entry" WHERE "date"=($1)', [
-      userInput.date
+      userInput.date,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.getEmployeeDetail = function(ecode, resultCallback) {
+user.getEmployeeDetail = function (ecode, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" WHERE "ecode"=($1)', [ecode])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data[0]);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getDesignationss = function(title, resultCallback) {
+user.getDesignationss = function (title, resultCallback) {
   console.log(title);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_entry" ', [])
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getloanandoutstandings = function(userInput, resultCallback) {
+user.getloanandoutstandings = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_entry"', [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getloanandoutstandingss = function(unit_name, resultCallback) {
+user.getloanandoutstandingss = function (unit_name, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" where "title"=($1) ', [unit_name])
-    .then(data => {
+    .then((data) => {
       if (data.length == 0) {
         var a = {};
         resultCallback(null, a);
@@ -7398,13 +7398,13 @@ user.getloanandoutstandingss = function(unit_name, resultCallback) {
         resultCallback(null, data[0]);
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.gettotalpays = function(userInput, resultCallback) {
+user.gettotalpays = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7412,29 +7412,29 @@ user.gettotalpays = function(userInput, resultCallback) {
       'SELECT unit_name,"date",company_name,SUM (gross) AS gross , SUM (pf) AS pf , SUM (esi) AS esi, SUM (pr_tax) AS pr_tax ,SUM (advance) AS advance , SUM (loan) AS loan , SUM (uniform) AS uniform, SUM (mess) AS mess ,SUM (rent) AS rent , SUM (atm) AS atm , SUM ("others") AS "others", SUM (total_dec) AS total_dec , SUM (net_pay) AS net_pay  FROM payroll_manual_entry where "company_name"=($1) and "date"=($2) GROUP BY unit_name ,"date",company_name',
       [userInput.companyName, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.gettotalpayss = function(unit_name, resultCallback) {
+user.gettotalpayss = function (unit_name, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" where title=$1', [unit_name])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data[0]);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.proftaxs = function(companyName, Start, End, resultCallback) {
+user.proftaxs = function (companyName, Start, End, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7442,15 +7442,15 @@ user.proftaxs = function(companyName, Start, End, resultCallback) {
       'select * FROM public."payroll_manual_entry" WHERE "company_name"=($1) and date >= ($2) and date <= ($3) order by date',
       [companyName, Start, End]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getpayslip = function(userInput, resultCallback) {
+user.getpayslip = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7458,15 +7458,15 @@ user.getpayslip = function(userInput, resultCallback) {
       'select * FROM public."payroll_manual_entry" WHERE "date"=($1) order by date',
       [userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getpayslips = function(ecode, resultCallback) {
+user.getpayslips = function (ecode, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7474,15 +7474,15 @@ user.getpayslips = function(ecode, resultCallback) {
       'select * FROM public."employeedetails" WHERE "ecode"=($1) order by ecode',
       [ecode]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data[0]);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getrecovery = function(userInput, resultCallback) {
+user.getrecovery = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7490,15 +7490,15 @@ user.getrecovery = function(userInput, resultCallback) {
       'select employee_id as ecode, advance_type, pamount as amount FROM public."advance"  WHERE "cdate"=($1) and status=($2) order by employee_id',
       [userInput.date, "Paid"]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getrecoverys = function(ecode, resultCallback) {
+user.getrecoverys = function (ecode, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7506,15 +7506,15 @@ user.getrecoverys = function(ecode, resultCallback) {
       'select ecode, "Name"  FROM public."employeedetails"  WHERE "ecode"=($1)',
       [ecode]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data[0]);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getgetform36bpayrollmanualentrys = function(userInput, resultCallback) {
+user.getgetform36bpayrollmanualentrys = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7522,20 +7522,20 @@ user.getgetform36bpayrollmanualentrys = function(userInput, resultCallback) {
       'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2',
       [userInput.companyName, userInput.date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.getgetform36bemployeedetails = function(ecode, resultCallback) {
+user.getgetform36bemployeedetails = function (ecode, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" WHERE ecode=($1) ', [ecode])
-    .then(data => {
+    .then((data) => {
       if (data.length == 0) {
         var a = {};
         resultCallback(null, a);
@@ -7543,12 +7543,12 @@ user.getgetform36bemployeedetails = function(ecode, resultCallback) {
         resultCallback(null, data[0]);
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.bulkuploadformats = function(userInput, dob, doj, dor, resultCallback) {
+user.bulkuploadformats = function (userInput, dob, doj, dor, resultCallback) {
   console.log(userInput, dob, doj);
   var executor = db.getdaata.getdb();
   console.log(userInput);
@@ -7588,19 +7588,19 @@ user.bulkuploadformats = function(userInput, dob, doj, dor, resultCallback) {
         userInput.IFSC_CODE,
         userInput.UCODE,
         userInput.CCODE,
-        userInput.ID
+        userInput.ID,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.manual_unit_rates = function(userInput, resultCallback) {
+user.manual_unit_rates = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   console.log(userInput);
@@ -7625,19 +7625,19 @@ user.manual_unit_rates = function(userInput, resultCallback) {
         userInput.esi,
         userInput.dec,
         userInput.total,
-        userInput.unit_id
+        userInput.unit_id,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.unit_master_salary_detailss = function(userInput, resultCallback) {
+user.unit_master_salary_detailss = function (userInput, resultCallback) {
   console.log(userInput);
   var executor = db.getdaata.getdb();
   console.log(userInput);
@@ -7669,20 +7669,20 @@ user.unit_master_salary_detailss = function(userInput, resultCallback) {
         userInput.esi_protax,
         userInput.salary_type_amount,
         userInput.day_month_date,
-        userInput.pf_amount_amount
+        userInput.pf_amount_amount,
       ]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.gettingreportsall1 = function(unit_name, date, resultCallback) {
+user.gettingreportsall1 = function (unit_name, date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7690,16 +7690,16 @@ user.gettingreportsall1 = function(unit_name, date, resultCallback) {
       'SELECT * FROM  public."payroll_manual_entry" where "date"=($2) and "unit_name"=($1) ORDER BY "unit_name" ASC',
       [unit_name, date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.gettingreportsall12 = function(unit_name, date, resultCallback) {
+user.gettingreportsall12 = function (unit_name, date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7707,16 +7707,16 @@ user.gettingreportsall12 = function(unit_name, date, resultCallback) {
       'SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewdays) AS ewdays, SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec,SUM (add_amount) AS add_amount, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  where "date"=($2) and "unit_name"=($1) GROUP BY "unit_name" ',
       [unit_name, date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.gettingreportsall13 = function(unit_name, date, type, resultCallback) {
+user.gettingreportsall13 = function (unit_name, date, type, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7724,16 +7724,16 @@ user.gettingreportsall13 = function(unit_name, date, type, resultCallback) {
       'SELECT * FROM  public."payroll_manual_entry" where "date"=($2) and "unit_name"=($1) and "payment_type"=($3) ORDER BY "unit_name" ASC',
       [unit_name, date, type]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.manual_entry_unit_list_id = function(userInput, resultCallback) {
+user.manual_entry_unit_list_id = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7741,30 +7741,30 @@ user.manual_entry_unit_list_id = function(userInput, resultCallback) {
       'select * FROM public."payroll_manual_unit_rate" where "unit_id"=($1) and "rank"=($2)',
       [userInput.unit_id, userInput.rank]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.fetch_clientsss = function(userInput, resultCallback) {
+user.fetch_clientsss = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" WHERE "sitelogin"=($1)', [
-      userInput.unit_code
+      userInput.unit_code,
     ])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
-user.fetch_payment_entryss = function(userInput, unit_name, resultCallback) {
+user.fetch_payment_entryss = function (userInput, unit_name, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7772,39 +7772,39 @@ user.fetch_payment_entryss = function(userInput, unit_name, resultCallback) {
       'select * FROM public."payroll_manual_entry" WHERE "designation"=($1) and "ecode"=($2) and "date"=($3) and "unit_name"=($4)',
       [userInput.designation, userInput.ecode, userInput.date, unit_name]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data.length);
       if (data.length > 0) {
         resultCallback(null, data);
       } else if (data.length === 0) {
         let a = {
-          message: "null"
+          message: "null",
         };
         data.push(a);
         resultCallback(null, data);
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.fetchunit_numbers1 = function(userInput, resultCallback) {
+user.fetchunit_numbers1 = function (userInput, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select max(id) from public."clientsite"', [])
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.carryForwards = function(c_date, resultCallback) {
+user.carryForwards = function (c_date, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7812,16 +7812,16 @@ user.carryForwards = function(c_date, resultCallback) {
       'select * FROM public."advance" WHERE "status"=($1) and "cdate"=($2)',
       ["Pending", c_date]
     )
-    .then(data => {
+    .then((data) => {
       resultCallback(null, data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.carryForwardss = function(
+user.carryForwardss = function (
   employee_id,
   advance_type,
   carry_date,
@@ -7834,7 +7834,7 @@ user.carryForwardss = function(
       'select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)',
       [employee_id, advance_type, "Pending", carry_date]
     )
-    .then(data => {
+    .then((data) => {
       if (data.length == 0) {
         let a = {};
         resultCallback(null, a);
@@ -7842,13 +7842,13 @@ user.carryForwardss = function(
         resultCallback(null, data[0]);
       }
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.carryForwardUpdate = function(
+user.carryForwardUpdate = function (
   employee_id,
   advance_type,
   carry_date,
@@ -7868,7 +7868,7 @@ user.carryForwardUpdate = function(
     "09",
     "10",
     "11",
-    "12"
+    "12",
   ];
   var cm = months[completedate.getMonth() + 1];
   var ycm = y + "-" + cm;
@@ -7879,14 +7879,14 @@ user.carryForwardUpdate = function(
       'select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)',
       [employee_id, advance_type, "Pending", carry_date]
     )
-    .then(data => {
+    .then((data) => {
       console.log(data);
       executor
         .any(
           'select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)',
           [data[0].employee_id, data[0].advance_type, "Pending", ycm]
         )
-        .then(update => {
+        .then((update) => {
           console.log(update);
           executor
             .any(
@@ -7895,10 +7895,10 @@ user.carryForwardUpdate = function(
                 update[0].pamount + data[0].pamount,
                 update[0].employee_id,
                 update[0].advance_type,
-                update[0].cdate
+                update[0].cdate,
               ]
             )
-            .then(updatedNextMonth => {
+            .then((updatedNextMonth) => {
               executor.one(
                 'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
                 [
@@ -7921,7 +7921,7 @@ user.carryForwardUpdate = function(
                   updatedNextMonth.status,
                   updatedNextMonth.loan_number,
                   updatedNextMonth.cdate,
-                  updatedNextMonth.id
+                  updatedNextMonth.id,
                 ]
               );
               // console.log(updatedNextMonth);
@@ -7932,10 +7932,10 @@ user.carryForwardUpdate = function(
                     "Carry Forward" + " " + ycm,
                     data[0].employee_id,
                     data[0].advance_type,
-                    data[0].cdate
+                    data[0].cdate,
                   ]
                 )
-                .then(updatedLastMonthStatus => {
+                .then((updatedLastMonthStatus) => {
                   // console.log(updatedLastMonthStatus);
                   executor.one(
                     'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
@@ -7959,36 +7959,36 @@ user.carryForwardUpdate = function(
                       updatedLastMonthStatus.status,
                       updatedLastMonthStatus.loan_number,
                       updatedLastMonthStatus.cdate,
-                      updatedLastMonthStatus.id
+                      updatedLastMonthStatus.id,
                     ]
                   );
                   // resultCallback(null,data);
                 })
-                .catch(error => {
+                .catch((error) => {
                   resultCallback(error, null);
                   console.log("ERROR:", error);
                 });
               // resultCallback(null,data);
             })
-            .catch(error => {
+            .catch((error) => {
               resultCallback(error, null);
               console.log("ERROR:", error);
             });
           // resultCallback(null,data);
         })
-        .catch(error => {
+        .catch((error) => {
           resultCallback(error, null);
           console.log("ERROR:", error);
         });
       // resultCallback(null,data);
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
 
-user.carryForwardInsert = function(input, ddate, cdate, resultCallback) {
+user.carryForwardInsert = function (input, ddate, cdate, resultCallback) {
   var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -8013,10 +8013,10 @@ user.carryForwardInsert = function(input, ddate, cdate, resultCallback) {
         input.site,
         "Pending",
         input.loan_number,
-        cdate
+        cdate,
       ]
     )
-    .then(data => {
+    .then((data) => {
       executor.one(
         'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
         [
@@ -8039,11 +8039,11 @@ user.carryForwardInsert = function(input, ddate, cdate, resultCallback) {
           data.status,
           data.loan_number,
           data.cdate,
-          data.id
+          data.id,
         ]
       );
     })
-    .catch(error => {
+    .catch((error) => {
       resultCallback(error, null);
       console.log("ERROR:", error);
     });
