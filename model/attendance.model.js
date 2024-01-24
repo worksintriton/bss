@@ -4,9 +4,9 @@ const objectId = mongoose.Types.ObjectId;
 const attendanceSchema = new mongoose.Schema({
   employee_id: { type: String },
   name: { type: String },
-  time_in: { type: String },
+  time_in: { type: Date },
   status: { type: String },
-  date: { type: String },
+  date: { type: Date },
   check: { type: String },
 });
 attendanceSchema.plugin(timestamps);

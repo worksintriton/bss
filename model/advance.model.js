@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const timestamps = require("mongoose-timestamp");
-const objectId = mongoose.Types.ObjectId;
 const advanceSchema = new mongoose.Schema({
   employee_id: { type: String },
   employee_name: { type: String },

@@ -15,28 +15,31 @@ app.use(express.static(__dirname));
 app.set("view engine", "ejs");
 app.use(fileUpload());
 
-
 app.use(function (req, res, next) {
   /*var err = new Error('Not Found');
    err.status = 404;
    next(err);*/
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
 
   // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
 
-//  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  //  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
   // Pass to next layer of middleware
   next();
 });
-
-
 
 function addRoute(path, method, middlewares) {
   var handlers = [].concat(middlewares);
@@ -49,7 +52,7 @@ function addRoute1(path, method, middlewares) {}
 app.use("*", [
   cors(),
   middleware.passport.initialize(),
-  middleware.passport.session()
+  middleware.passport.session(),
 ]);
 app.options("*", cors());
 
@@ -65,21 +68,21 @@ addRoute("/authentication/employee_id1", "POST", [middleware.employee_id1]);
 addRoute("/authentication/updateemployee", "POST", [middleware.updateemployee]);
 addRoute("/authentication/Changepassword", "POST", [middleware.Changepassword]);
 addRoute("/authentication/Updateemployee_id", "POST", [
-  middleware.Updateemployee_id
+  middleware.Updateemployee_id,
 ]);
 addRoute("/authentication/updateqr", "POST", [middleware.updateqr]);
 addRoute("/authentication/updateemployee1", "POST", [
-  middleware.updateemployee1
+  middleware.updateemployee1,
 ]);
 addRoute("/authentication/efetchsitedetails", "GET", [
-  middleware.efetchsitedetails
+  middleware.efetchsitedetails,
 ]);
 
 addRoute("/authentication/fetchemployee_id", "POST", [
-  middleware.fetchemployee_id
+  middleware.fetchemployee_id,
 ]);
 addRoute("/authentication/updateprofilephoto", "POST", [
-  middleware.updateprofilephoto
+  middleware.updateprofilephoto,
 ]);
 
 /*Add User*/
@@ -92,13 +95,13 @@ addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 /*Add Configure*/
 addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
 addRoute("/authentication/getconfignumber", "POST", [
-  middleware.getconfignumber
+  middleware.getconfignumber,
 ]);
 
 /*Add training*/
 addRoute("/authentication/training", "POST", [middleware.training]);
 addRoute("/authentication/traininglessons", "POST", [
-  middleware.traininglessons
+  middleware.traininglessons,
 ]);
 addRoute("/authentication/trainingvideos", "POST", [middleware.trainingvideos]);
 addRoute("/authentication/traininglist", "POST", [middleware.traininglist]);
@@ -107,7 +110,7 @@ addRoute("/authentication/traininglist", "POST", [middleware.traininglist]);
 addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
 addRoute("/authentication/Trackinglist", "POST", [middleware.Trackinglist]);
 addRoute("/authentication/deleteTrackinglist", "POST", [
-  middleware.deleteTrackinglist
+  middleware.deleteTrackinglist,
 ]);
 addRoute("/authentication/Trackingperson", "POST", [middleware.Trackingperson]);
 
@@ -116,14 +119,14 @@ addRoute("/authentication/Tracking", "POST", [middleware.Tracking]);
 
 /*AssignEmployee*/
 addRoute("/assigningemployee/assignemployeeadd", "POST", [
-  middleware.assignemployeeadd
+  middleware.assignemployeeadd,
 ]);
 addRoute("/assigningemployee/assignlists", "POST", [middleware.assignlists]);
 addRoute("/assigningemployee/clientfetchlist", "POST", [
-  middleware.clientfetchlist
+  middleware.clientfetchlist,
 ]);
 addRoute("/assigningemployee/employeetfetchlist", "POST", [
-  middleware.employeetfetchlist
+  middleware.employeetfetchlist,
 ]);
 
 /*Attendance Mark*/
@@ -131,7 +134,7 @@ addRoute("/Attendance/Attendancecheck", "POST", [middleware.Attendancecheck]);
 addRoute("/Attendance/fetchdetails", "POST", [middleware.fetchdetails]);
 addRoute("/employeecheck/checkemployee", "POST", [middleware.checkemployee]);
 addRoute("/Attendance/manualAttendancecheck", "POST", [
-  middleware.manualAttendancecheck
+  middleware.manualAttendancecheck,
 ]);
 
 /*EMI Voucher*/
@@ -144,7 +147,7 @@ addRoute("/advance/deleteadvance", "POST", [middleware.deleteadvance]);
 addRoute("/advance/fetchadvance", "POST", [middleware.fetchadvance]);
 addRoute("/advance/updateadvance", "POST", [middleware.updateadvance]);
 addRoute("/advance/updateoneinstalment", "POST", [
-  middleware.updateoneinstalment
+  middleware.updateoneinstalment,
 ]);
 
 addRoute("/advance/fetchadvance2", "POST", [middleware.fetchadvance2]);
@@ -161,88 +164,88 @@ addRoute("/payroll/fetchsitedpayment", "POST", [middleware.fetchsitedpayment]);
 ///working////
 
 addRoute("/payroll/fetchsitepaymentss", "POST", [
-  middleware.fetchsitepaymentss
+  middleware.fetchsitepaymentss,
 ]);
 
 addRoute("/payroll/fetchsitepaymentss2", "POST", [
-  middleware.fetchsitepaymentss2
+  middleware.fetchsitepaymentss2,
 ]);
 
 addRoute("/payroll/fetchsitepaymentss3", "POST", [
-  middleware.fetchsitepaymentss3
+  middleware.fetchsitepaymentss3,
 ]);
 
 addRoute("/payroll/addsalaryprocess", "POST", [middleware.addsalaryprocess]);
 addRoute("/payroll/salaryprocesstatus", "POST", [
-  middleware.salaryprocesstatus
+  middleware.salaryprocesstatus,
 ]);
 
 /*Manualentry*/
 
 addRoute("/manual_entry/manual_entry_unit_add", "POST", [
-  middleware.manual_entry_unit_add
+  middleware.manual_entry_unit_add,
 ]);
 addRoute("/manual_entry/manual_entry_unit_update", "POST", [
-  middleware.manual_entry_unit_update
+  middleware.manual_entry_unit_update,
 ]);
 addRoute("/manual_entry/manual_entry_unit_delete", "POST", [
-  middleware.manual_entry_unit_delete
+  middleware.manual_entry_unit_delete,
 ]);
 addRoute("/manual_entry/manual_entry_unit_list", "POST", [
-  middleware.manual_entry_unit_list
+  middleware.manual_entry_unit_list,
 ]);
 addRoute("/manual_entry/manual_entry_unit_fetch", "POST", [
-  middleware.manual_entry_unit_fetch
+  middleware.manual_entry_unit_fetch,
 ]);
 
 addRoute("/manual_entry/manual_entry_rate_add", "POST", [
-  middleware.manual_entry_rate_add
+  middleware.manual_entry_rate_add,
 ]);
 addRoute("/manual_entry/manual_entry_rate_update", "POST", [
-  middleware.manual_entry_rate_update
+  middleware.manual_entry_rate_update,
 ]);
 addRoute("/manual_entry/manual_entry_rate_delete", "POST", [
-  middleware.manual_entry_rate_delete
+  middleware.manual_entry_rate_delete,
 ]);
 addRoute("/manual_entry/manual_entry_rate_list", "POST", [
-  middleware.manual_entry_rate_list
+  middleware.manual_entry_rate_list,
 ]);
 addRoute("/manual_entry/manual_entry_rate_fetch", "POST", [
-  middleware.manual_entry_rate_fetch
+  middleware.manual_entry_rate_fetch,
 ]);
 
 addRoute("/manual_entry/manual_entry_emp_add", "POST", [
-  middleware.manual_entry_emp_add
+  middleware.manual_entry_emp_add,
 ]);
 addRoute("/manual_entry/manual_entry_emp_update", "POST", [
-  middleware.manual_entry_emp_update
+  middleware.manual_entry_emp_update,
 ]);
 
 addRoute("/manual_entry/manual_entry_emp_delete", "POST", [
-  middleware.manual_entry_emp_delete
+  middleware.manual_entry_emp_delete,
 ]);
 
 addRoute("/manual_entry/manual_entry_emp_list", "POST", [
-  middleware.manual_entry_emp_list
+  middleware.manual_entry_emp_list,
 ]);
 addRoute("/manual_entry/manual_entry_emp_list1", "POST", [
-  middleware.manual_entry_emp_list1
+  middleware.manual_entry_emp_list1,
 ]);
 addRoute("/manual_entry/manual_entry_emp_fetch", "POST", [
-  middleware.manual_entry_emp_fetch
+  middleware.manual_entry_emp_fetch,
 ]);
 
 addRoute("/manual_entry/manual_entry_emp_fetch_id", "POST", [
-  middleware.manual_entry_emp_fetch_id
+  middleware.manual_entry_emp_fetch_id,
 ]);
 
 // karthikeyan update employee payment details list
 addRoute("/manual_entry/manual_entry_unit_list_id", "POST", [
-  middleware.manual_entry_unit_list_id
+  middleware.manual_entry_unit_list_id,
 ]);
 
 addRoute("/manual_entry/fetch_payment_entry", "POST", [
-  middleware.fetch_payment_entry
+  middleware.fetch_payment_entry,
 ]);
 
 /*Employee Api's*/
@@ -252,7 +255,7 @@ addRoute("/authentication/updateEmpProfile", "POST", [middleware_emp.signin]);
 /*Issue Tracking*/
 addRoute("/issue/create", "POST", [
   middleware_emp.validateEmployee,
-  middleware.create_issue
+  middleware.create_issue,
 ]);
 addRoute("/issue/updateissues", "POST", [middleware.updateissues]);
 addRoute("/issue/taken_by", "POST", [middleware.taken_by]);
@@ -278,12 +281,12 @@ addRoute("/attachment/deleteattach", "POST", [middleware.deleteattach]);
 
 /*issues Attachment*/
 addRoute("/issue/createAttachment", "POST", [
-  middleware.create_issue_attachment
+  middleware.create_issue_attachment,
 ]);
 addRoute("/issue/listallissues", "POST", [middleware.list_issue]);
 addRoute("/issue/listmyissues", "POST", [
   middleware_emp.validateEmployee,
-  middleware.list_my_issue
+  middleware.list_my_issue,
 ]);
 addRoute("/issue/listissues", "POST", [middleware.listissues]);
 
@@ -294,68 +297,68 @@ addRoute("/PointTracking/ss", "POST", [middleware.employee_fetchpoints]);
 
 /*PointTrackMap*/
 addRoute("/mapTracking/updatePointTrackMap", "POST", [
-  middleware.updatePointTrackMap
+  middleware.updatePointTrackMap,
 ]);
 addRoute("/mapTracking/DeletePointTrackMap", "POST", [
-  middleware.DeletePointTrackMap
+  middleware.DeletePointTrackMap,
 ]);
 addRoute("/mapTracking/PointTrackMaplist", "POST", [
-  middleware.PointTrackMaplist
+  middleware.PointTrackMaplist,
 ]);
 
 /*PointTrackMapSpots*/
 addRoute("/mapTracking/PointTrackMapSpot", "POST", [
-  middleware.PointTrackMapSpot
+  middleware.PointTrackMapSpot,
 ]);
 addRoute("/mapTracking/updatePointTrackMapSpot", "POST", [
-  middleware.updatePointTrackMapSpot
+  middleware.updatePointTrackMapSpot,
 ]);
 addRoute("/mapTracking/DeletePointTrackMapSpot", "POST", [
-  middleware.DeletePointTrackMapSpot
+  middleware.DeletePointTrackMapSpot,
 ]);
 addRoute("/mapTracking/PointTrackMapSpotlist", "POST", [
-  middleware.PointTrackMapSpotlist
+  middleware.PointTrackMapSpotlist,
 ]);
 addRoute("/mapTracking/FetchMapSpot", "POST", [middleware.FetchMapSpot]);
 
 /*PointTracRecords*/
 addRoute("/mapTracking/PointTrackMapRecords", "POST", [
-  middleware.PointTrackMapRecords
+  middleware.PointTrackMapRecords,
 ]);
 addRoute("/mapTracking/updatePointTrackMapRecords", "POST", [
-  middleware.updatePointTrackMapRecords
+  middleware.updatePointTrackMapRecords,
 ]);
 addRoute("/mapTracking/DeletePointTrackMapRecords", "POST", [
-  middleware.DeletePointTrackMapRecords
+  middleware.DeletePointTrackMapRecords,
 ]);
 addRoute("/mapTracking/PointTrackMapRecordslist", "POST", [
-  middleware.PointTrackMapRecordslist
+  middleware.PointTrackMapRecordslist,
 ]);
 
 /*PointTracRecordsSpots*/
 addRoute("/mapTracking/PointTrackRecordsSpot", "POST", [
-  middleware.PointTrackRecordsSpot
+  middleware.PointTrackRecordsSpot,
 ]);
 addRoute("/mapTracking/updatePointTrackRecordsSpot", "POST", [
-  middleware.updatePointTrackRecordsSpot
+  middleware.updatePointTrackRecordsSpot,
 ]);
 addRoute("/mapTracking/DeletePointTrackRecordsSpot", "POST", [
-  middleware.DeletePointTrackRecordsSpot
+  middleware.DeletePointTrackRecordsSpot,
 ]);
 addRoute("/mapTracking/PointTrackRecordsSpotlist", "POST", [
-  middleware.PointTrackRecordsSpotlist
+  middleware.PointTrackRecordsSpotlist,
 ]);
 addRoute("/mapTracking/FetchMapSpotrecord", "POST", [
-  middleware.FetchMapSpotrecord
+  middleware.FetchMapSpotrecord,
 ]);
 
 /*Add FAQ*/
 addRoute("/authentication/addquestions", "POST", [middleware.addquestions]);
 addRoute("/authentication/updatequestions", "POST", [
-  middleware.updatequestions
+  middleware.updatequestions,
 ]);
 addRoute("/authentication/deletequestions", "POST", [
-  middleware.deletequestions
+  middleware.deletequestions,
 ]);
 addRoute("/authentication/Question_id", "POST", [middleware.Question_id]);
 addRoute("/authentication/Questionlist", "POST", [middleware.Questionlist]);
@@ -372,7 +375,7 @@ addRoute("/mapTracking/addmapuser", "POST", [middleware.addmapuser]);
 addRoute("/mapTracking/addmapuserlist", "POST", [middleware.addmapuserlist]);
 addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete]);
 addRoute("/mapTracking/fetchmapuserpoints", "POST", [
-  middleware.fetchmapuserpoints
+  middleware.fetchmapuserpoints,
 ]);
 
 /*QR Code */
@@ -394,7 +397,7 @@ addRoute("/employee/Weeklyreort", "POST", [middleware.Weeklyreort]);
 
 /*Forgotpassword */
 addRoute("/authentication/Forgotpasswordweb", "POST", [
-  middleware.Forgotpasswordweb
+  middleware.Forgotpasswordweb,
 ]);
 addRoute("/authentication/checkuser", "POST", [middleware.checkuser]);
 
@@ -416,7 +419,7 @@ addRoute("/authentication/resigned", "POST", [middleware.resigned]);
 addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
 
 /*Create Client site */
-addRoute("/client/newclientsite", "POST", [middleware.newclientsite]);
+addRoute("/client/newclientsite", "POST", [middleware.newclientsite]); 
 addRoute("/client/sitelist", "POST", [middleware.sitelist]);
 addRoute("/client/updateclientsite", "POST", [middleware.updateclientsite]);
 addRoute("/client/deletclientsite", "POST", [middleware.deletclientsite]);
@@ -432,10 +435,10 @@ addRoute("/company/fetchemployeeid", "POST", [middleware.fetchemployeeid]);
 addRoute("/client/newclientcontract", "POST", [middleware.newclientcontract]);
 addRoute("/client/contractlist", "POST", [middleware.contractlist]);
 addRoute("/client/updateclientcontract", "POST", [
-  middleware.updateclientcontract
+  middleware.updateclientcontract,
 ]);
 addRoute("/client/deletclientcontract", "POST", [
-  middleware.deletclientcontract
+  middleware.deletclientcontract,
 ]);
 addRoute("/client/contractestatus", "POST", [middleware.contractestatus]);
 addRoute("/client/fetchcontract", "POST", [middleware.fetchcontract]);
@@ -450,19 +453,19 @@ addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 addRoute("/upload/file", "POST", [middleware.uploadingfile]);
 
 addRoute("/employee_tracking/fetchemployees", "GET", [
-  middleware.fetchemployees
+  middleware.fetchemployees,
 ]);
 addRoute("/employee_tracking/fetchTrackinglist", "POST", [
-  middleware.fetchTrackinglist
+  middleware.fetchTrackinglist,
 ]);
 addRoute("/employee_tracking/fetchtrackdate", "POST", [
-  middleware.fetchtrackdate
+  middleware.fetchtrackdate,
 ]);
 addRoute("/employee_tracking/fetchtracksingledate", "POST", [
-  middleware.fetchtracksingledate
+  middleware.fetchtracksingledate,
 ]);
 addRoute("/employee_tracking/deleteEmployeeTracking", "POST", [
-  middleware.deleteEmployeeTracking
+  middleware.deleteEmployeeTracking,
 ]);
 
 /*payment process*/
@@ -476,10 +479,10 @@ addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
 // addRoute("/payment/employee_payadd", "POST", [middleware.employee_payadd]);
 addRoute("/payment/employee_paylist", "POST", [middleware.employee_paylist]);
 addRoute("/payment/employee_paydelete", "POST", [
-  middleware.employee_paydelete
+  middleware.employee_paydelete,
 ]);
 addRoute("/payment/employee_payupdate", "POST", [
-  middleware.employee_payupdate
+  middleware.employee_payupdate,
 ]);
 addRoute("/paymentemployee_/payfetch", "POST", [middleware.employee_payfetch]);
 
@@ -517,72 +520,72 @@ addRoute("/quality/addqualitytable", "POST", [middleware.addqualitytable]);
 addRoute("/quality/listqualitytable", "POST", [middleware.listqualitytable]);
 addRoute("/quality/fetchqualitytable", "POST", [middleware.fetchqualitytable]);
 addRoute("/quality/deletequalitytable", "POST", [
-  middleware.deletequalitytable
+  middleware.deletequalitytable,
 ]);
 addRoute("/quality/updatequalitytable", "POST", [
-  middleware.updatequalitytable
+  middleware.updatequalitytable,
 ]);
 
 /*Training Report*/
 addRoute("/training/addtrainingreport", "POST", [middleware.addtrainingreport]);
 addRoute("/training/listtrainingreport", "POST", [
-  middleware.listtrainingreport
+  middleware.listtrainingreport,
 ]);
 addRoute("/training/fetchtrainingreport", "POST", [
-  middleware.fetchtrainingreport
+  middleware.fetchtrainingreport,
 ]);
 addRoute("/training/deletetrainingreport", "POST", [
-  middleware.deletetrainingreport
+  middleware.deletetrainingreport,
 ]);
 addRoute("/training/updatetrainingreport", "POST", [
-  middleware.updatetrainingreport
+  middleware.updatetrainingreport,
 ]);
 
 /*Training table Report*/
 addRoute("/training/addtrainingreporttable", "POST", [
-  middleware.addtrainingreporttable
+  middleware.addtrainingreporttable,
 ]);
 addRoute("/training/listtrainingreporttable", "POST", [
-  middleware.listtrainingreporttable
+  middleware.listtrainingreporttable,
 ]);
 addRoute("/training/fetchtrainingreporttable", "POST", [
-  middleware.fetchtrainingreporttable
+  middleware.fetchtrainingreporttable,
 ]);
 addRoute("/training/deletetrainingreporttable", "POST", [
-  middleware.deletetrainingreporttable
+  middleware.deletetrainingreporttable,
 ]);
 addRoute("/training/updatetrainingreporttable", "POST", [
-  middleware.updatetrainingreporttable
+  middleware.updatetrainingreporttable,
 ]);
 
 /*night check Report*/
 addRoute("/night_check/addnightreport", "POST", [middleware.addnightreport]);
 addRoute("/night_check/listnightreport", "POST", [middleware.listnightreport]);
 addRoute("/night_check/fetchnightreport", "POST", [
-  middleware.fetchnightreport
+  middleware.fetchnightreport,
 ]);
 addRoute("/night_check/deletenightreport", "POST", [
-  middleware.deletenightreport
+  middleware.deletenightreport,
 ]);
 addRoute("/night_check/updatenightreport", "POST", [
-  middleware.updatenightreport
+  middleware.updatenightreport,
 ]);
 
 /*night check table Report*/
 addRoute("/night_check/addnightreporttable", "POST", [
-  middleware.addnightreporttable
+  middleware.addnightreporttable,
 ]);
 addRoute("/night_check/listnightreporttable", "POST", [
-  middleware.listnightreporttable
+  middleware.listnightreporttable,
 ]);
 addRoute("/night_check/fetchnightreporttable", "POST", [
-  middleware.fetchnightreporttable
+  middleware.fetchnightreporttable,
 ]);
 addRoute("/night_check/deletenightreporttable", "POST", [
-  middleware.deletenightreporttable
+  middleware.deletenightreporttable,
 ]);
 addRoute("/night_check/updatenightreporttable", "POST", [
-  middleware.updatenightreporttable
+  middleware.updatenightreporttable,
 ]);
 
 /*payment process*/
@@ -594,13 +597,13 @@ addRoute("/payment/payfetch", "POST", [middleware.payfetch]);
 
 addRoute("/notification/addnotification", "POST", [middleware.addnotification]);
 addRoute("/notification/notificationcount", "POST", [
-  middleware.notificationcount
+  middleware.notificationcount,
 ]);
 addRoute("/notification/updatenotification", "POST", [
-  middleware.updatenotification
+  middleware.updatenotification,
 ]);
 addRoute("/notification/listofnotification", "POST", [
-  middleware.listofnotification
+  middleware.listofnotification,
 ]);
 
 /*uniforms process*/
@@ -660,20 +663,20 @@ addRoute("/reports/getreportssssssall", "GET", [middleware.getreportssssssall]);
 addRoute("/advance/fetchunit_number1", "POST", [middleware.fetchunit_number1]);
 
 addRoute("/reports/getemployeedetails", "POST", [
-  middleware.getemployeedetails
+  middleware.getemployeedetails,
 ]);
 addRoute("/reports/getunitmaster", "GET", [middleware.getunitmaster]);
 addRoute("/reports/getwagesheet", "POST", [middleware.getwagesheet]);
 addRoute("/reports/cashandbank", "POST", [middleware.cashandbank]);
 addRoute("/reports/getemployeevoucher", "POST", [
-  middleware.getemployeevoucher
+  middleware.getemployeevoucher,
 ]);
 addRoute("/reports/getproftaxform", "POST", [middleware.getproftaxform]);
 addRoute("/reports/getwageslip", "POST", [middleware.getwageslip]);
 addRoute("/reports/getpfecr", "POST", [middleware.getpfecr]);
 addRoute("/reports/getDesignation", "GET", [middleware.getDesignation]);
 addRoute("/reports/getloanandoutstanding", "GET", [
-  middleware.getloanandoutstanding
+  middleware.getloanandoutstanding,
 ]);
 addRoute("/reports/getform36b", "POST", [middleware.getform36b]);
 addRoute("/reports/gettotalpay", "POST", [middleware.gettotalpay]);
@@ -684,13 +687,14 @@ addRoute("/reports/recovery", "POST", [middleware.recovery]);
 // bulk upload
 addRoute("/bulkupload/bulkuploadformat", "POST", [middleware.bulkuploadformat]);
 addRoute("/bulkupload/bulkupload_manual_unit_rate", "POST", [
-  middleware.manual_unit_rate
+  middleware.manual_unit_rate,
 ]);
 addRoute("/bulkupload/bulkupload_unit_master_salary_details", "POST", [
-  middleware.unit_master_salary_details
+  middleware.unit_master_salary_details,
 ]);
 
 addRoute("/advance/carryForward", "GET", [middleware.carryForward]);
+
 // report ========================================
 
 app.use(router);

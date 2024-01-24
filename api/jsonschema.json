@@ -1664,7 +1664,7 @@
         "type": "object",
         "properties": {
           "userid": {
-            "type": "number"
+            "type": "string"
           }
         },
         "additionalProperties": false,
@@ -2528,7 +2528,7 @@
             "type": "string"
           },
           "user_id": {
-            "type": "number"
+            "type": "string"
           }
         },
         "additionalProperties": true,
@@ -6236,7 +6236,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "string"
           },
           "client_id": {
             "type": "string"
@@ -6314,7 +6314,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "string"
           }
         },
         "additionalProperties": true,
@@ -6455,7 +6455,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "string"
           },
           "site_id": {
             "type": "string"
@@ -6500,7 +6500,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "string"
           }
         },
         "additionalProperties": true,

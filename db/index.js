@@ -1,10 +1,9 @@
-"use strict";
+// "use strict";
 
-var connection = require("./connection");
-function init() {
-    connection.getConnection(); // initializing connection
-}
+// var connection = require("./connection");
+// function init() {
+//     connection.getConnection(); // initializing connection
+// }
 
-
-exports.init = init;
-exports.getdaata = connection;
+// exports.init = init;
+// exports.getdaata = connection;
