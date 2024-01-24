@@ -4,18 +4,16 @@ var _ = require("lodash"),
   db = require("../db"),
   async = require("async");
 
-function user() {}
+const model = require("../model/index");
 
-user.createusers = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('SELECT * FROM public.usermanage WHERE "Email_id"=($1) ', [
-      userInput.Email_id,
-    ])
-    .then((data) => {
-      console.log(data.length);
-      if (data.length == 1) {
+async function user() {}
+
+user.createusers = async function (userInput, resultCallback) {
+  await model.usermanage
+    .findOne({ Email_id: userInput.Email_id })
+
+    .then(async (data) => {
+      if (data?.Email_id.length) {
         //eruthuchuna
         var string = {
           message: "This Email_id already exits!",
@@ -24,19 +22,17 @@ user.createusers = function (userInput, resultCallback) {
         resultCallback(null, string);
       } else {
         console.log("2");
-        executor
-          .one(
-            'INSERT INTO public.usermanage( "Name", "Designation","Level","Phone_number","Email_id", "Password", "Add_by" )VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
-            [
-              userInput.Name,
-              userInput.Designation,
-              userInput.Level,
-              userInput.Phone_number,
-              userInput.Email_id,
-              userInput.Password,
-              userInput.Add_by,
-            ]
-          )
+        await model.usermanage
+          .create({
+            Name: userInput.Name,
+            Designation: userInput.Designation,
+            Level: userInput.Level,
+            Phone_number: userInput.Phone_number,
+            Email_id: userInput.Email_id,
+            Password: userInput.Password,
+            Add_by: userInput.Add_by,
+          })
+
           .then((data) => {
             console.log("1");
             resultCallback(null, data);
@@ -49,8 +45,7 @@ user.createusers = function (userInput, resultCallback) {
     });
 };
 
-user.confignumbers = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.confignumbers = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\
 
   executor
@@ -76,8 +71,7 @@ user.confignumbers = function (userInput, resultCallback) {
     });
 };
 
-user.updateemployee1s = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateemployee1s = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\
   executor
     .any(
@@ -187,8 +181,7 @@ user.updateemployee1s = function (userInput, resultCallback) {
     });
 };
 
-user.updateqrs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateqrs = async function (userInput, resultCallback) {
   executor
     .one(
       'UPDATE public.employeedetails  SET "qrcode"=($2)  WHERE "Empid" = ($1)  RETURNING *',
@@ -204,8 +197,7 @@ user.updateqrs = function (userInput, resultCallback) {
     });
 };
 
-user.Changepasswords = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.Changepasswords = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\
 
   executor
@@ -222,8 +214,7 @@ user.Changepasswords = function (userInput, resultCallback) {
     });
 };
 
-user.getsconfignumbers = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getsconfignumbers = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.configurenumber", [userInput.client_ID])
@@ -237,8 +228,7 @@ user.getsconfignumbers = function (userInput, resultCallback) {
     });
 };
 
-user.selectclient = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.selectclient = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.client_management", [])
@@ -252,8 +242,7 @@ user.selectclient = function (userInput, resultCallback) {
     });
 };
 
-user.selectsite = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.selectsite = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.clientsite", [])
@@ -267,8 +256,7 @@ user.selectsite = function (userInput, resultCallback) {
     });
 };
 
-user.selectusers = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.selectusers = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.usermanage", [])
@@ -282,8 +270,7 @@ user.selectusers = function (userInput, resultCallback) {
     });
 };
 
-user.selectcontract = function (date, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.selectcontract = async function (date, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("select * from public.contract_page where contract_end_date = ($1) ", [
@@ -299,14 +286,11 @@ user.selectcontract = function (date, resultCallback) {
     });
 };
 
-user.AddemployeeC = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('SELECT * FROM public.employeedetails WHERE "Mobile_No"=($1) ', [
-      userInput.Mobile_No,
-    ])
-    .then((data) => {
+user.AddemployeeC = async function (userInput, resultCallback) {
+  await model.employeedetails
+    .findOne({ Mobile_No: userInput.Mobile_No })
+
+    .then(async (data) => {
       console.log(data.length);
       if (data.length == 1) {
         //eruthuchuna
@@ -317,145 +301,143 @@ user.AddemployeeC = function (userInput, resultCallback) {
         resultCallback(null, string);
       } else {
         console.log("2");
-        executor
-          .one(
-            'INSERT INTO public.employeedetails(employee_type, father_name, gender, material_status, "Edq", nationality,work_exp, languages, date_joining, driving_licence, "Email_ID", "Mobile_No", "Name", "Date_of_birth", "Password", aadhar_card, voter_id, "Address", attach, qrcode, workstatus, resigned, createdtime, contact, ifsc, "a_c", bankname, account, prom_in, pan, weight, height, "mother_tongue", permentaddress,fname1,fsex1,frelationship1,fdateofbirth1,fage1,foccupation1,faadharcard1,fname2,fsex2,frelationship2,fdateofbirth2,fage2,foccupation2,faadharcard2,fname3,fsex3,frelationship3,fdateofbirth3,fage3,foccupation3,faadharcard3,fname4,fsex4,frelationship4,fdateofbirth4,fage4,foccupation4,faadharcard4,fname5,fsex5,frelationship5,fdateofbirth5,fage5,foccupation5,faadharcard5,nname1,nsex1,nrelationship1,ndateofbirth1,nage1,noccupation1,naadharcard1,nname2,nsex2,nrelationship2,ndateofbirth2,nage2,noccupation2,naadharcard2,nname3,nsex3,nrelationship3,ndateofbirth3,nage3,noccupation3,naadharcard3,nname4,nsex4,nrelationship4,ndateofbirth4,nage4,noccupation4,naadharcard4,nname5,nsex5,nrelationship5,ndateofbirth5,nage5,noccupation5,naadharcard5,age,site_name,company_name,esi,pf1,pf2,pf3,uan,ecode,id,pf_action,esi_action,prof_action,work_status_action,prom_in1,prom_in_mobile_no,prom_in_mobile_no1,chest,area,fcontact1,fcontact2,fcontact3,fcontact4,fcontact5,mother_tongue_state)VALUES ($1, $2 , $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61,$62,$63,$64,$65,$66,$67,$68,$69,$70,$71,$72,$73,$74,$75,$76,$77,$78,$79,$80,$81,$82,$83,$84,$85,$86,$87,$88,$89,$90,$91,$92,$93,$94,$95,$96,$97,$98,$99,$100,$101,$102,$103,$104,$105,$106,$107,$108,$109,$110,$111,$112,$113,$114,$115,$116,$117,$118,$119,$120,$121,$122,$123,$124,$125,$126,$127,$128,$129)RETURNING *',
-            [
-              userInput.employee_type,
-              userInput.father_name,
-              userInput.gender,
-              userInput.material_status,
-              userInput.Edq,
-              userInput.nationality,
-              userInput.languages,
-              userInput.work_exp,
-              userInput.date_joining,
-              userInput.driving_licence,
+        await model.employeedetails
+          .create({
+            employee_type: userInput.employee_type,
+            father_name: userInput.father_name,
+            gender: userInput.gender,
+            material_status: userInput.material_status,
+            Edq: userInput.Edq,
+            nationality: userInput.nationality,
+            languages: userInput.languages,
+            work_exp: userInput.work_exp,
+            date_joining: userInput.date_joining,
+            driving_licence: userInput.driving_licence,
 
-              userInput.Email_ID,
-              userInput.Mobile_No,
-              userInput.Name,
-              userInput.Date_of_birth,
-              userInput.Password,
-              userInput.aadhar_card,
-              userInput.voter_id,
-              userInput.Address,
-              userInput.attach,
-              userInput.qrcode,
+            Email_ID: userInput.Email_ID,
+            Mobile_No: userInput.Mobile_No,
+            Name: userInput.Name,
+            Date_of_birth: userInput.Date_of_birth,
+            Password: userInput.Password,
+            aadhar_card: userInput.aadhar_card,
+            voter_id: userInput.voter_id,
+            Address: userInput.Address,
+            attach: userInput.attach,
+            qrcode: userInput.qrcode,
 
-              userInput.workstatus,
-              userInput.resigned,
+            workstatus: userInput.workstatus,
+            resigned: userInput.resigned,
 
-              userInput.createdtime,
-              userInput.contact,
-              userInput.ifsc,
-              userInput.a_c,
-              userInput.bankname,
-              userInput.account,
-              userInput.prom_in,
-              userInput.pan,
-              userInput.weight,
-              userInput.height,
-              userInput.mother_tongue,
-              userInput.permentaddress,
-              userInput.fname1,
-              userInput.fsex1,
-              userInput.frelationship1,
-              userInput.fdateofbirth1,
-              userInput.fage1,
-              userInput.foccupation1,
-              userInput.faadharcard1,
-              userInput.fname2,
-              userInput.fsex2,
-              userInput.frelationship2,
-              userInput.fdateofbirth2,
-              userInput.fage2,
-              userInput.foccupation2,
-              userInput.faadharcard2,
-              userInput.fname3,
-              userInput.fsex3,
-              userInput.frelationship3,
-              userInput.fdateofbirth3,
-              userInput.fage3,
-              userInput.foccupation3,
-              userInput.faadharcard3,
-              userInput.fname4,
-              userInput.fsex4,
-              userInput.frelationship4,
-              userInput.fdateofbirth4,
-              userInput.fage4,
-              userInput.foccupation4,
-              userInput.faadharcard4,
-              userInput.fname5,
-              userInput.fsex5,
-              userInput.frelationship5,
-              userInput.fdateofbirth5,
-              userInput.fage5,
-              userInput.foccupation5,
-              userInput.faadharcard5,
-              userInput.nname1,
-              userInput.nsex1,
-              userInput.nrelationship1,
-              userInput.ndateofbirth1,
-              userInput.nage1,
-              userInput.noccupation1,
-              userInput.naadharcard1,
-              userInput.nname2,
-              userInput.nsex2,
-              userInput.nrelationship2,
-              userInput.ndateofbirth2,
-              userInput.nage2,
-              userInput.noccupation2,
-              userInput.naadharcard2,
-              userInput.nname3,
-              userInput.nsex3,
-              userInput.nrelationship3,
-              userInput.ndateofbirth3,
-              userInput.nage3,
-              userInput.noccupation3,
-              userInput.naadharcard3,
-              userInput.nname4,
-              userInput.nsex4,
-              userInput.nrelationship4,
-              userInput.ndateofbirth4,
-              userInput.nage4,
-              userInput.noccupation4,
-              userInput.naadharcard4,
-              userInput.nname5,
-              userInput.nsex5,
-              userInput.nrelationship5,
-              userInput.ndateofbirth5,
-              userInput.nage5,
-              userInput.noccupation5,
-              userInput.naadharcard5,
-              userInput.age,
-              userInput.site_name,
-              userInput.company_name,
-              userInput.esi,
-              userInput.pf1,
-              userInput.pf2,
-              userInput.pf3,
-              userInput.uan,
-              userInput.ecode,
-              userInput.id,
-              userInput.pf_action,
-              userInput.esi_action,
-              userInput.prof_action,
-              userInput.work_status_action,
-              userInput.prom_in1,
-              userInput.prom_in_mobile_no,
-              userInput.prom_in_mobile_no1,
+            createdtime: userInput.createdtime,
+            contact: userInput.contact,
+            ifsc: userInput.ifsc,
+            a_c: userInput.a_c,
+            bankname: userInput.bankname,
+            account: userInput.account,
+            prom_in: userInput.prom_in,
+            pan: userInput.pan,
+            weight: userInput.weight,
+            height: userInput.height,
+            mother_tongue: userInput.mother_tongue,
+            permentaddress: userInput.permentaddress,
+            fname1: userInput.fname1,
+            fsex1: userInput.fsex1,
+            frelationship1: userInput.frelationship1,
+            fdateofbirth1: userInput.fdateofbirth1,
+            fage1: userInput.fage1,
+            foccupation1: userInput.foccupation1,
+            faadharcard1: userInput.faadharcard1,
+            fname2: userInput.fname2,
+            fsex2: userInput.fsex2,
+            frelationship2: userInput.frelationship2,
+            fdateofbirth2: userInput.fdateofbirth2,
+            fage2: userInput.fage2,
+            foccupation2: userInput.foccupation2,
+            faadharcard2: userInput.faadharcard2,
+            fname3: userInput.fname3,
+            fsex3: userInput.fsex3,
+            frelationship3: userInput.frelationship3,
+            fdateofbirth3: userInput.fdateofbirth3,
+            fage3: userInput.fage3,
+            foccupation3: userInput.foccupation3,
+            faadharcard3: userInput.faadharcard3,
+            fname4: userInput.fname4,
+            fsex4: userInput.fsex4,
+            frelationship4: userInput.frelationship4,
+            fdateofbirth4: userInput.fdateofbirth4,
+            fage4: userInput.fage4,
+            foccupation4: userInput.foccupation4,
+            faadharcard4: userInput.faadharcard4,
+            fname5: userInput.fname5,
+            fsex5: userInput.fsex5,
+            frelationship5: userInput.frelationship5,
+            fdateofbirth5: userInput.fdateofbirth5,
+            fage5: userInput.fage5,
+            foccupation5: userInput.foccupation5,
+            faadharcard5: userInput.faadharcard5,
+            nname1: userInput.nname1,
+            nsex1: userInput.nsex1,
+            nrelationship1: userInput.nrelationship1,
+            ndateofbirth1: userInput.ndateofbirth1,
+            nage1: userInput.nage1,
+            noccupation1: userInput.noccupation1,
+            naadharcard1: userInput.naadharcard1,
+            nname2: userInput.nname2,
+            nsex2: userInput.nsex2,
+            nrelationship2: userInput.nrelationship2,
+            ndateofbirth2: userInput.ndateofbirth2,
+            nage2: userInput.nage2,
+            noccupation2: userInput.noccupation2,
+            naadharcard2: userInput.naadharcard2,
+            nname3: userInput.nname3,
+            nsex3: userInput.nsex3,
+            nrelationship3: userInput.nrelationship3,
+            ndateofbirth3: userInput.ndateofbirth3,
+            nage3: userInput.nage3,
+            noccupation3: userInput.noccupation3,
+            naadharcard3: userInput.naadharcard3,
+            nname4: userInput.nname4,
+            nsex4: userInput.nsex4,
+            nrelationship4: userInput.nrelationship4,
+            ndateofbirth4: userInput.ndateofbirth4,
+            nage4: userInput.nage4,
+            noccupation4: userInput.noccupation4,
+            naadharcard4: userInput.naadharcard4,
+            nname5: userInput.nname5,
+            nsex5: userInput.nsex5,
+            nrelationship5: userInput.nrelationship5,
+            ndateofbirth5: userInput.ndateofbirth5,
+            nage5: userInput.nage5,
+            noccupation5: userInput.noccupation5,
+            naadharcard5: userInput.naadharcard5,
+            age: userInput.age,
+            site_name: userInput.site_name,
+            company_name: userInput.company_name,
+            esi: userInput.esi,
+            pf1: userInput.pf1,
+            pf2: userInput.pf2,
+            pf3: userInput.pf3,
+            uan: userInput.uan,
+            ecode: userInput.ecode,
+            id: userInput.id,
+            pf_action: userInput.pf_action,
+            esi_action: userInput.esi_action,
+            prof_action: userInput.prof_action,
+            work_status_action: userInput.work_status_action,
+            prom_in1: userInput.prom_in1,
+            prom_in_mobile_no: userInput.prom_in_mobile_no,
+            prom_in_mobile_no1: userInput.prom_in_mobile_no1,
 
-              userInput.chest,
-              userInput.area,
-              userInput.fcontact1,
-              userInput.fcontact2,
-              userInput.fcontact3,
-              userInput.fcontact4,
-              userInput.fcontact5,
-              userInput.mother_tongue_state,
-            ]
-          )
+            chest: userInput.chest,
+            area: userInput.area,
+            fcontact1: userInput.fcontact1,
+            fcontact2: userInput.fcontact2,
+            fcontact3: userInput.fcontact3,
+            fcontact4: userInput.fcontact4,
+            fcontact5: userInput.fcontact5,
+            mother_tongue_state: userInput.mother_tongue_state,
+          })
+
           .then((data) => {
             resultCallback(null, data);
           });
@@ -467,9 +449,9 @@ user.AddemployeeC = function (userInput, resultCallback) {
     });
 };
 
-user.updateempid = function (userInput, mydata, resultCallback) {
+user.updateempid = async function (userInput, mydata, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -486,8 +468,7 @@ user.updateempid = function (userInput, mydata, resultCallback) {
     });
 };
 
-user.createclient = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.createclient = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public."client_management" WHERE "login"= $1 ', [
@@ -523,8 +504,7 @@ user.createclient = function (userInput, resultCallback) {
     });
 };
 
-user.updateclient = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateclient = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -549,8 +529,7 @@ user.updateclient = function (userInput, resultCallback) {
     });
 };
 
-user.deleteemployees = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deleteemployees = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."employeedetails" WHERE "id"=($1) ', [
@@ -567,8 +546,7 @@ user.deleteemployees = function (userInput, resultCallback) {
 };
 
 //updateemployees///
-user.updateemployees = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateemployees = async function (userInput, resultCallback) {
   executor
     .one(
       'UPDATE public.employeedetails SET employee_type = ($2), father_name = ($3), gender= ($4), material_status= ($5), "Edq"= ($6), nationality= ($7), languages= ($8), date_joining= ($9), driving_licence= ($10), "Email_ID"= ($11), "Mobile_No"= ($12), "Name"= ($13), "Date_of_birth"= ($14), "Password"= ($15), aadhar_card= ($16), voter_id= ($17), "Address"= ($18), attach= ($19), qrcode= ($20), workstatus = ($21), resigned= ($22), createdtime= ($23), contact= ($24), ifsc= ($25), "a_c"= ($26), bankname= ($27), account= ($28), prom_in= ($29), pan= ($30), weight = ($31), height= ($32), "mother_tongue"= ($33), permentaddress= ($34),fname1= ($35),fsex1= ($36),frelationship1= ($37),fdateofbirth1= ($38),fage1= ($39),foccupation1= ($40),faadharcard1= ($41),fname2= ($42),fsex2= ($43),frelationship2= ($44),fdateofbirth2= ($45),fage2= ($46),foccupation2= ($47),faadharcard2= ($48),fname3= ($49),fsex3= ($50),frelationship3= ($51),fdateofbirth3= ($52),fage3= ($53),foccupation3= ($54),faadharcard3= ($55),fname4= ($56),fsex4= ($57),frelationship4= ($58),fdateofbirth4= ($59),fage4= ($60),foccupation4= ($61),faadharcard4= ($62),fname5= ($63),fsex5= ($64),frelationship5= ($65),fdateofbirth5= ($66),fage5= ($67),foccupation5= ($68),faadharcard5= ($69),nname1= ($70),nsex1= ($71),nrelationship1= ($72),ndateofbirth1= ($73),nage1= ($74),noccupation1= ($75),naadharcard1= ($76),nname2= ($77),nsex2= ($78),nrelationship2= ($79),ndateofbirth2= ($80),nage2= ($81),noccupation2= ($82),naadharcard2= ($83),nname3= ($84),nsex3= ($85),nrelationship3= ($86),ndateofbirth3= ($87),nage3= ($88),noccupation3= ($89),naadharcard3= ($90),nname4= ($91),nsex4= ($92),nrelationship4= ($93),ndateofbirth4= ($94),nage4= ($95),noccupation4= ($96),naadharcard4= ($97),nname5= ($98),nsex5= ($99),nrelationship5= ($100),ndateofbirth5= ($101),nage5= ($102),noccupation5= ($103),naadharcard5= ($104),site_name = ($105) , company_name = ($106) ,esi = ($107), pf1 = ($108), pf2= ($109), pf3=($110) , uan = ($111), pf_action=($112), esi_action=($113), prof_action=($114), work_status_action=($115),prom_in1=($116),prom_in_mobile_no=($117),prom_in_mobile_no1=($118),work_exp=($119),chest=($120),area=($121),fcontact1=($122),fcontact2=($123),fcontact3=($124),fcontact4=($125),fcontact5=($126),age=($127) WHERE  id=($1) RETURNING *',
@@ -713,8 +691,8 @@ user.updateemployees = function (userInput, resultCallback) {
 };
 
 //updateemployees///
-// user.updateemployees = function (userInput , resultCallback) {
-//   var executor = db.getdaata.getdb();
+// user.updateemployees = async function (userInput , resultCallback) {
+//
 //       executor.one('UPDATE public.employeedetails SET photo = ($2)  WHERE  id=($1) RETURNING *',
 // [               userInput.id,
 //                 userInput.photo
@@ -730,22 +708,15 @@ user.updateemployees = function (userInput, resultCallback) {
 // };
 
 //updateuser///
-user.updateuser = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .one(
-      'UPDATE public.usermanage  SET "Name"=($2),"Designation"=($3),"Level"=($4),"Phone_number"=($5),"Password"=($6),"Add_by"=($7) ,"Email_id" = ($1) WHERE "user_id" = ($8)  RETURNING *',
-      [
-        userInput.Email_id,
-        userInput.Name,
-        userInput.Designation,
-        userInput.Level,
-        userInput.Phone_number,
-        userInput.Password,
-        userInput.Add_by,
-        userInput.user_id,
-      ]
+user.updateuser = async function (userInput, resultCallback) {
+  await model.usermanage
+    .findOneAndUpdate(
+      { _id: userInput.user_id },
+      {
+        ...userInput,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -758,9 +729,7 @@ user.updateuser = function (userInput, resultCallback) {
 
 //////list////////
 //clientlist
-user.clientlists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.clientlists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public."client_management"')
@@ -773,9 +742,7 @@ user.clientlists = function (userInput, resultCallback) {
     });
 };
 
-user.fetchclients = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.fetchclients = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public."client_management"  WHERE "id"=($1) ', [
@@ -791,8 +758,7 @@ user.fetchclients = function (userInput, resultCallback) {
 };
 
 //EmployeeList
-user.employeelists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.employeelists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -809,9 +775,7 @@ user.employeelists = function (userInput, resultCallback) {
 };
 
 //Employeelist uniform undeliverd
-user.uniformundelivered = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.uniformundelivered = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails ORDER BY "Name" ASC')
@@ -825,12 +789,11 @@ user.uniformundelivered = function (userInput, resultCallback) {
 };
 
 //userList//
-user.userlists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.userlists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any("SELECT * FROM public.usermanage")
+  await model.usermanage
+    .find({})
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -841,9 +804,7 @@ user.userlists = function (userInput, resultCallback) {
 };
 
 //empid//
-user.employeeids = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.employeeids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails WHERE "id"=($1) ', [
@@ -859,9 +820,7 @@ user.employeeids = function (userInput, resultCallback) {
     });
 };
 
-user.employeeids11 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.employeeids11 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails WHERE "ecode"=($1) ', [
@@ -877,9 +836,7 @@ user.employeeids11 = function (userInput, resultCallback) {
     });
 };
 
-user.employeeidss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.employeeidss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -897,8 +854,7 @@ user.employeeidss = function (userInput, resultCallback) {
 };
 
 //add  FAQ//
-user.addquestion = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addquestion = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -915,8 +871,7 @@ user.addquestion = function (userInput, resultCallback) {
     });
 };
 
-user.updatequestion = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatequestion = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -933,8 +888,7 @@ user.updatequestion = function (userInput, resultCallback) {
     });
 };
 
-user.updateresign = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateresign = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -951,8 +905,7 @@ user.updateresign = function (userInput, resultCallback) {
     });
 };
 
-user.deletequestion = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletequestion = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."faq" WHERE "faq_id"=($1) ', [userInput.faq_id])
@@ -966,8 +919,7 @@ user.deletequestion = function (userInput, resultCallback) {
     });
 };
 
-user.Question_ids = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.Question_ids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT *  FROM public."faq" WHERE "faq_id"=($1) ', [userInput.faq_id])
@@ -980,8 +932,7 @@ user.Question_ids = function (userInput, resultCallback) {
     });
 };
 
-user.Questionlists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.Questionlists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT *  FROM public."faq" ', [userInput.Employee_id])
@@ -994,9 +945,7 @@ user.Questionlists = function (userInput, resultCallback) {
     });
 };
 
-user.employeeids1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.employeeids1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails WHERE "empid"=($1) ', [
@@ -1010,9 +959,7 @@ user.employeeids1 = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.clientids = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.clientids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public."client_management" WHERE "id"=($1) ', [
@@ -1028,8 +975,7 @@ user.clientids = function (userInput, resultCallback) {
     });
 };
 
-user.site_details = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.site_details = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" WHERE "client_id"=($1)', [
@@ -1044,14 +990,11 @@ user.site_details = function (userInput, resultCallback) {
     });
 };
 
-user.userids = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.userids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('SELECT * FROM public.usermanage WHERE "user_id"=($1) ', [
-      userInput.userid,
-    ])
+  await model.usermanage
+    .findOne({ _id: userInput.userid })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1061,9 +1004,7 @@ user.userids = function (userInput, resultCallback) {
     });
 };
 
-user.deleteclients = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.deleteclients = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."client_management" WHERE "id"=($1) ', [
@@ -1078,14 +1019,11 @@ user.deleteclients = function (userInput, resultCallback) {
     });
 };
 
-user.deleteusers = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.deleteusers = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('Delete FROM public.usermanage WHERE "user_id"=($1) ', [
-      userInput.userid,
-    ])
+  await model.usermanage
+    .deleteOne({ _id: userInput.userid })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1094,8 +1032,7 @@ user.deleteusers = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.addqrweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addqrweb = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -1122,8 +1059,7 @@ user.addqrweb = function (userInput, resultCallback) {
     });
 };
 
-user.qrlistweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.qrlistweb = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.qrcode", [userInput.id])
@@ -1136,9 +1072,7 @@ user.qrlistweb = function (userInput, resultCallback) {
     });
 };
 
-user.deleteqrweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.deleteqrweb = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public.qrcode WHERE "id"=($1) ', [userInput.id])
@@ -1151,8 +1085,7 @@ user.deleteqrweb = function (userInput, resultCallback) {
     });
 };
 
-user.deleteallqrweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deleteallqrweb = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("Delete  FROM public.qrcode", [])
@@ -1165,8 +1098,7 @@ user.deleteallqrweb = function (userInput, resultCallback) {
     });
 };
 
-user.Forgotpasswordwebs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.Forgotpasswordwebs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("select *  FROM public.qrcode", [])
@@ -1179,8 +1111,7 @@ user.Forgotpasswordwebs = function (userInput, resultCallback) {
     });
 };
 
-user.checkusers = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.checkusers = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT "Password" FROM public.usermanage WHERE "Email_id"=($1) ', [
@@ -1195,8 +1126,7 @@ user.checkusers = function (userInput, resultCallback) {
     });
 };
 
-user.Updateemployee_ids = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.Updateemployee_ids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -1213,8 +1143,7 @@ user.Updateemployee_ids = function (userInput, resultCallback) {
     });
 };
 
-user.addassigns = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addassigns = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -1253,8 +1182,7 @@ user.addassigns = function (userInput, resultCallback) {
     });
 };
 
-user.listassigns = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listassigns = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.assign WHERE "client_id"=($1) ', [
@@ -1269,9 +1197,7 @@ user.listassigns = function (userInput, resultCallback) {
     });
 };
 
-user.deleteassigns = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.deleteassigns = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."assign" WHERE "assign_id"=($1) ', [
@@ -1288,8 +1214,7 @@ user.deleteassigns = function (userInput, resultCallback) {
 
 ///sms///
 
-user.addsmss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addsmss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -1306,8 +1231,7 @@ user.addsmss = function (userInput, resultCallback) {
     });
 };
 
-user.listsmss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listsmss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("SELECT * FROM public.sms ", [])
@@ -1320,9 +1244,7 @@ user.listsmss = function (userInput, resultCallback) {
     });
 };
 
-user.deletesmss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.deletesmss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."sms" WHERE "id"=($1) ', [userInput.id])
@@ -1335,8 +1257,7 @@ user.deletesmss = function (userInput, resultCallback) {
     });
 };
 
-user.createfeedbacks = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.createfeedbacks = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -1360,9 +1281,7 @@ user.createfeedbacks = function (userInput, resultCallback) {
     });
 };
 
-user.feedbacklists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.feedbacklists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."feedback"', [userInput.posted_by])
@@ -1375,9 +1294,7 @@ user.feedbacklists = function (userInput, resultCallback) {
     });
 };
 
-user.listmyfeedbacks = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.listmyfeedbacks = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."feedback" WHERE "posted_by"=($1)', [
@@ -1392,9 +1309,7 @@ user.listmyfeedbacks = function (userInput, resultCallback) {
     });
 };
 
-user.fetchfeedbacks = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.fetchfeedbacks = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."feedback" WHERE "id"=($1)', [userInput.id])
@@ -1407,8 +1322,7 @@ user.fetchfeedbacks = function (userInput, resultCallback) {
     });
 };
 
-user.createattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.createattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -1424,9 +1338,7 @@ user.createattachs = function (userInput, resultCallback) {
     });
 };
 
-user.listattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.listattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."attachment"', [userInput.posted_by])
@@ -1439,9 +1351,7 @@ user.listattachs = function (userInput, resultCallback) {
     });
 };
 
-user.mylistattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.mylistattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."attachment" WHERE "Emp_id"=($1)', [
@@ -1456,9 +1366,7 @@ user.mylistattachs = function (userInput, resultCallback) {
     });
 };
 
-user.mylistattachss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.mylistattachss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -1474,9 +1382,7 @@ user.mylistattachss = function (userInput, resultCallback) {
     });
 };
 
-user.fetchattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.fetchattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."attachment" WHERE "id"=($1)', [userInput.id])
@@ -1491,14 +1397,15 @@ user.fetchattachs = function (userInput, resultCallback) {
 
 /////
 
-user.addclientattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addclientattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any(
-      'INSERT INTO public."client_attachment" ("site_id",title,path) VALUES ($1,$2,$3) RETURNING *',
-      [userInput.site_id, userInput.title, userInput.path]
-    )
+  await model.clientattachment
+    .create({
+      site_id: userInput.site_id,
+      title: userInput.title,
+      path: userInput.path,
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1508,12 +1415,11 @@ user.addclientattachs = function (userInput, resultCallback) {
     });
 };
 
-user.listclientattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.listclientattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."client_attachment"', [userInput.id])
+  await model.clientattachment
+    .find({ site_id: userInput.site_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1523,14 +1429,10 @@ user.listclientattachs = function (userInput, resultCallback) {
     });
 };
 
-user.mylistclientattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.mylistclientattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."client_attachment" WHERE "site_id"=($1)', [
-      userInput.site_id,
-    ])
+  await model.clientattachment
+    .find({ site_id: userInput.site_id })
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1540,14 +1442,11 @@ user.mylistclientattachs = function (userInput, resultCallback) {
     });
 };
 
-user.fetchclientattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.fetchclientattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."client_attachment" WHERE "id"=($1)', [
-      userInput.id,
-    ])
+  await model.clientattachment
+    .findOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1557,14 +1456,10 @@ user.fetchclientattachs = function (userInput, resultCallback) {
     });
 };
 
-user.deletclientattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.deletclientattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('delete  FROM public."client_attachment" WHERE "id"=($1)', [
-      userInput.id,
-    ])
+  await model.clientattachment
+    .deleteOne({ _id: userInput.id })
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1574,33 +1469,61 @@ user.deletclientattachs = function (userInput, resultCallback) {
     });
 };
 
-user.newclientsites = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.newclientsites = async function (userInput, resultCallback) {
+  await model.clientsite
+    .create({
+      client_id: userInput.client_id,
+      title: userInput.title,
+      description: userInput.description,
+      address: userInput.address,
+      contactperson1: userInput.contactperson1,
+      contactnumber1: userInput.contactnumber1,
+      contactemail1: userInput.contactemail1,
+      contactperson2: userInput.contactperson2,
+      contactnumber2: userInput.contactnumber2,
+      contactemail2: userInput.contactemail2,
+      contactperson3: userInput.contactperson3,
+      contactnumber3: userInput.contactnumber3,
+      contactemail3: userInput.contactemail3,
+      status: userInput.status,
+      company_name: userInput.company_name,
+      sitelogin: userInput.sitelogin,
+      sitepassword: userInput.sitepassword,
+      sitelogin: userInput.sitelogin,
+      billing_address: userInput.billing_address,
+    })
+
+    .then((data) => {
+      console.log(data);
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+
+user.sitelists = async function (userInput, resultCallback) {
+  await model.clientsite
+    .find({ company_name: userInput.company_name })
+
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+
+user.updateclientsites = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      'INSERT INTO public."clientsite"(client_id,title,description,address,contactperson1,contactnumber1,contactemail1,contactperson2,contactnumber2,contactemail2,contactperson3,contactnumber3,contactemail3,status,company_name,sitelogin,sitepassword,billing_address)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *',
-      [
-        userInput.client_id,
-        userInput.title,
-        userInput.description,
-        userInput.address,
-        userInput.contactperson1,
-        userInput.contactnumber1,
-        userInput.contactemail1,
-        userInput.contactperson2,
-        userInput.contactnumber2,
-        userInput.contactemail2,
-        userInput.contactperson3,
-        userInput.contactnumber3,
-        userInput.contactemail3,
-        userInput.status,
-        userInput.company_name,
-        userInput.sitelogin,
-        userInput.sitepassword,
-        userInput.sitelogin,
-        userInput.billing_address,
-      ]
+  await model.clientsite
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        ...userInput,
+      }
     )
     .then((data) => {
       console.log(data);
@@ -1612,13 +1535,11 @@ user.newclientsites = function (userInput, resultCallback) {
     });
 };
 
-user.sitelists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletclientsites = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."clientsite" where "company_name"=($1)', [
-      userInput.company_name,
-    ])
+  await model.clientsite
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1628,34 +1549,10 @@ user.sitelists = function (userInput, resultCallback) {
     });
 };
 
-user.updateclientsites = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.sitestatuss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      'UPDATE public."clientsite" SET  "client_id"=$2, "title"=$3,"description"=$4,"address"=$5,"contactperson1"=$6,"contactnumber1"=$7,"contactemail1"=$8,"contactperson2"=$9,"contactnumber2"=$10,"contactemail2"=$11,"contactperson3"=$12,"contactnumber3"=$13,"contactemail3"=$14,"status"=$15 , "company_name"=$16 , "sitelogin"=$17, "sitepassword"=$18,"billing_address"=$19 WHERE  "id" = $1 RETURNING *',
-      [
-        userInput.id,
-        userInput.client_id,
-        userInput.title,
-        userInput.description,
-        userInput.address,
-        userInput.contactperson1,
-        userInput.contactnumber1,
-        userInput.contactemail1,
-        userInput.contactperson2,
-        userInput.contactnumber2,
-        userInput.contactemail2,
-        userInput.contactperson3,
-        userInput.contactnumber3,
-        userInput.contactemail3,
-        userInput.status,
-        userInput.company_name,
-        userInput.sitelogin,
-        userInput.sitepassword,
-        userInput.billing_address,
-      ]
-    )
+  await model.clientsite
+    .findOneAndUpdate({ _id: userInput.id }, { status: userInput.status })
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1666,11 +1563,10 @@ user.updateclientsites = function (userInput, resultCallback) {
     });
 };
 
-user.deletclientsites = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchsites = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('Delete  FROM public."clientsite" WHERE "id"=($1)', [userInput.id])
+  await model.clientsite
+    .findOne({ _id: userInput.id })
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1680,40 +1576,7 @@ user.deletclientsites = function (userInput, resultCallback) {
     });
 };
 
-user.sitestatuss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      'UPDATE public."clientsite" SET  "status"=$2   WHERE  "id" = $1 RETURNING *',
-      [userInput.id, userInput.status]
-    )
-    .then((data) => {
-      console.log(data);
-      resultCallback(null, data);
-    })
-    .catch((error) => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
-    });
-};
-
-user.fetchsites = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."clientsite" WHERE "id"=($1)', [userInput.id])
-    .then((data) => {
-      resultCallback(null, data);
-    })
-    .catch((error) => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
-    });
-};
-
-user.fetchcompanysites = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchcompanysites = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -1728,8 +1591,7 @@ user.fetchcompanysites = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.fetchemployeeids = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchemployeeids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" WHERE "ecode"=($1)', [
@@ -1744,8 +1606,7 @@ user.fetchemployeeids = function (userInput, resultCallback) {
     });
 };
 
-user.fetchcompanysitess = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchcompanysitess = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -1762,22 +1623,19 @@ user.fetchcompanysitess = function (userInput, resultCallback) {
 };
 /////contract/////
 
-user.newclientcontracts = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.newclientcontracts = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      'INSERT INTO public."contract_page"(site_id,contract_start_date,contract_end_date,contract_type,last_revision_date,status,invoice_cycle)VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-      [
-        userInput.site_id,
-        userInput.contract_start_date,
-        userInput.contract_end_date,
-        userInput.contract_type,
-        userInput.last_revision_date,
-        userInput.status,
-        userInput.invoice_cycle,
-      ]
-    )
+  await model.contractpage
+    .create({
+      site_id: userInput.site_id,
+      contract_start_date: userInput.contract_start_date,
+      contract_end_date: userInput.contract_end_date,
+      contract_type: userInput.contract_type,
+      last_revision_date: userInput.last_revision_date,
+      status: userInput.status,
+      invoice_cycle: userInput.invoice_cycle,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1788,13 +1646,10 @@ user.newclientcontracts = function (userInput, resultCallback) {
     });
 };
 
-user.contractlists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.contractlists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."contract_page" WHERE "site_id"=($1)', [
-      userInput.site_id,
-    ])
+  await model.contractpage
+    .find({ site_id: userInput.site_id })
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1804,23 +1659,16 @@ user.contractlists = function (userInput, resultCallback) {
     });
 };
 
-user.updateclientcontracts = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateclientcontracts = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      'UPDATE public."contract_page" SET  "site_id"=$2, "contract_start_date"=$3,"contract_end_date"=$4,"contract_type"=$5,"last_revision_date"=$6,"status"=$7,"invoice_cycle"=$8 WHERE  "id" = $1 RETURNING *',
-      [
-        userInput.id,
-        userInput.site_id,
-        userInput.contract_start_date,
-        userInput.contract_end_date,
-        userInput.contract_type,
-        userInput.last_revision_date,
-        userInput.status,
-        userInput.invoice_cycle,
-      ]
+  await model.contractpage
+    .findOneAndUpdate(
+      { _id: userInput.id, site_id: userInput.site_id },
+      {
+        ...userInput,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1831,11 +1679,11 @@ user.updateclientcontracts = function (userInput, resultCallback) {
     });
 };
 
-user.deletclientcontracts = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletclientcontracts = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('Delete  FROM public."contract_page" WHERE "id"=($1)', [userInput.id])
+  await model.contractpage
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1845,14 +1693,11 @@ user.deletclientcontracts = function (userInput, resultCallback) {
     });
 };
 
-user.contractestatuss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.contractestatuss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      'UPDATE public."contract_page" SET  "status"=$2   WHERE  "id" = $1 RETURNING *',
-      [userInput.id, userInput.status]
-    )
+  await model.contractpage
+    .findOneAndUpdate({ _id: userInput.id }, { status: userInput.status })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1863,11 +1708,11 @@ user.contractestatuss = function (userInput, resultCallback) {
     });
 };
 
-user.fetchcontracts = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchcontracts = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."contract_page" WHERE "id"=($1)', [userInput.id])
+  await model.contractpage
+    .findOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1879,8 +1724,7 @@ user.fetchcontracts = function (userInput, resultCallback) {
 
 ////payment/////
 
-user.payadds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.payadds = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -1935,8 +1779,7 @@ user.payadds = function (userInput, resultCallback) {
     });
 };
 
-user.payupdates = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.payupdates = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -1991,8 +1834,7 @@ user.payupdates = function (userInput, resultCallback) {
     });
 };
 
-user.updateamounts = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateamounts = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one("UPDATE public.payment SET  rounded_off=$2 WHERE id=$1 RETURNING *", [
@@ -2009,8 +1851,7 @@ user.updateamounts = function (userInput, resultCallback) {
     });
 };
 
-user.payfetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.payfetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
@@ -2023,8 +1864,7 @@ user.payfetchs = function (userInput, resultCallback) {
     });
 };
 
-user.paydeletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.paydeletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."payment" WHERE "id"=($1)', [userInput.id])
@@ -2037,8 +1877,7 @@ user.paydeletes = function (userInput, resultCallback) {
     });
 };
 
-user.paylists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.paylists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment" WHERE "site_id"=($1)', [
@@ -2053,9 +1892,9 @@ user.paylists = function (userInput, resultCallback) {
     });
 };
 
-user.payment_details = function (userInput, resultCallback) {
+user.payment_details = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment"  ', [userInput.id])
@@ -2070,8 +1909,7 @@ user.payment_details = function (userInput, resultCallback) {
 
 /////sfafd/////
 
-user.employee_payadds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.employee_payadds = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2109,8 +1947,7 @@ user.employee_payadds = function (userInput, resultCallback) {
     });
 };
 
-user.employee_payupdates = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.employee_payupdates = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2148,8 +1985,7 @@ user.employee_payupdates = function (userInput, resultCallback) {
     });
 };
 
-user.employee_payfetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.employee_payfetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_payment" WHERE "id"=($1)', [
@@ -2164,8 +2000,7 @@ user.employee_payfetchs = function (userInput, resultCallback) {
     });
 };
 
-user.employee_paydeletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.employee_paydeletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."employee_payment" WHERE "id"=($1)', [
@@ -2180,8 +2015,7 @@ user.employee_paydeletes = function (userInput, resultCallback) {
     });
 };
 
-user.employee_paylists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.employee_paylists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_payment" WHERE "site_id"=($1)', [
@@ -2196,9 +2030,9 @@ user.employee_paylists = function (userInput, resultCallback) {
     });
 };
 
-user.employee_payment_details = function (userInput, resultCallback) {
+user.employee_payment_details = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_payment"  ', [userInput.id])
@@ -2211,8 +2045,7 @@ user.employee_payment_details = function (userInput, resultCallback) {
     });
 };
 
-user.requirement_details = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.requirement_details = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."requirement" ', [userInput.id])
@@ -2227,8 +2060,7 @@ user.requirement_details = function (userInput, resultCallback) {
 
 ////requirment/////
 
-user.reqadds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.reqadds = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2252,8 +2084,7 @@ user.reqadds = function (userInput, resultCallback) {
     });
 };
 
-user.reqlists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.reqlists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."requirement" WHERE "site_id"=($1)', [
@@ -2268,8 +2099,7 @@ user.reqlists = function (userInput, resultCallback) {
     });
 };
 
-user.reqdeletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.reqdeletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('delete FROM public."requirement" WHERE "id"=($1)', [userInput.id])
@@ -2292,8 +2122,7 @@ user.reqdeletes = function (userInput, resultCallback) {
     });
 };
 
-user.reqfetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.reqfetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."requirement" WHERE "id"=($1)', [userInput.id])
@@ -2306,8 +2135,7 @@ user.reqfetchs = function (userInput, resultCallback) {
     });
 };
 
-user.requpdates = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.requpdates = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2332,8 +2160,7 @@ user.requpdates = function (userInput, resultCallback) {
     });
 };
 
-user.payementupdate = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.payementupdate = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2390,8 +2217,7 @@ user.payementupdate = function (userInput, resultCallback) {
 
 ////uniform/////
 
-user.uniformadds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.uniformadds = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2416,8 +2242,7 @@ user.uniformadds = function (userInput, resultCallback) {
     });
 };
 
-user.uniformupdates = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.uniformupdates = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2442,8 +2267,7 @@ user.uniformupdates = function (userInput, resultCallback) {
     });
 };
 
-user.uniformfetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.uniformfetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."uniform" WHERE "id"=($1)', [userInput.id])
@@ -2456,8 +2280,7 @@ user.uniformfetchs = function (userInput, resultCallback) {
     });
 };
 
-user.uniformdeletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.uniformdeletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."uniform" WHERE "id"=($1)', [userInput.id])
@@ -2470,8 +2293,7 @@ user.uniformdeletes = function (userInput, resultCallback) {
     });
 };
 
-user.uniformlists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.uniformlists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."uniform" WHERE "employee_id"=($1)', [
@@ -2486,9 +2308,7 @@ user.uniformlists = function (userInput, resultCallback) {
     });
 };
 
-user.deliverds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.deliverds = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -2504,9 +2324,7 @@ user.deliverds = function (userInput, resultCallback) {
     });
 };
 
-user.undeliverds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.undeliverds = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -2522,8 +2340,7 @@ user.undeliverds = function (userInput, resultCallback) {
     });
 };
 
-user.deleteattachs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deleteattachs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."attachment" WHERE "id"=($1) ', [userInput.id])
@@ -2539,8 +2356,7 @@ user.deleteattachs = function (userInput, resultCallback) {
 
 ///master Id////
 
-user.additem = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.additem = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one("INSERT INTO public.items(items,rates)VALUES ( $1, $2) RETURNING *", [
@@ -2557,8 +2373,7 @@ user.additem = function (userInput, resultCallback) {
     });
 };
 
-user.updateitem = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateitem = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2575,8 +2390,7 @@ user.updateitem = function (userInput, resultCallback) {
     });
 };
 
-user.fetchitem = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchitem = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."items" WHERE "id"=($1)', [userInput.id])
@@ -2589,8 +2403,7 @@ user.fetchitem = function (userInput, resultCallback) {
     });
 };
 
-user.itemsdelete = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.itemsdelete = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."items" WHERE "id"=($1)', [userInput.id])
@@ -2603,8 +2416,7 @@ user.itemsdelete = function (userInput, resultCallback) {
     });
 };
 
-user.itemslist = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.itemslist = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."items"', [userInput.id])
@@ -2619,8 +2431,7 @@ user.itemslist = function (userInput, resultCallback) {
 
 ///Employee adding////
 
-user.addemptypes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addemptypes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2637,8 +2448,7 @@ user.addemptypes = function (userInput, resultCallback) {
     });
 };
 
-user.updateemptypes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateemptypes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2655,8 +2465,7 @@ user.updateemptypes = function (userInput, resultCallback) {
     });
 };
 
-user.fetchemptypes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchemptypes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
@@ -2669,8 +2478,7 @@ user.fetchemptypes = function (userInput, resultCallback) {
     });
 };
 
-user.emptypedeletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.emptypedeletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
@@ -2683,8 +2491,7 @@ user.emptypedeletes = function (userInput, resultCallback) {
     });
 };
 
-user.emptypelists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.emptypelists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employee_type"', [userInput.id])
@@ -2699,8 +2506,7 @@ user.emptypelists = function (userInput, resultCallback) {
 
 ///Employee adding////
 
-user.addfinanaces = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addfinanaces = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2723,8 +2529,7 @@ user.addfinanaces = function (userInput, resultCallback) {
     });
 };
 
-user.updatefinanaces = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatefinanaces = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2748,8 +2553,7 @@ user.updatefinanaces = function (userInput, resultCallback) {
     });
 };
 
-user.fetchfinanaces = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchfinanaces = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."fianance_management" WHERE "id"=($1)', [
@@ -2764,8 +2568,7 @@ user.fetchfinanaces = function (userInput, resultCallback) {
     });
 };
 
-user.finanacedeletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.finanacedeletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."fianance_management" WHERE "id"=($1)', [
@@ -2787,8 +2590,7 @@ user.finanacedeletes = function (userInput, resultCallback) {
     });
 };
 
-user.finanacelists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.finanacelists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."fianance_management"', [userInput.id])
@@ -2803,8 +2605,7 @@ user.finanacelists = function (userInput, resultCallback) {
 
 ///Quality checking////
 
-user.addqualitys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addqualitys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2845,8 +2646,7 @@ user.addqualitys = function (userInput, resultCallback) {
     });
 };
 
-user.updatequalitys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatequalitys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2888,8 +2688,7 @@ user.updatequalitys = function (userInput, resultCallback) {
     });
 };
 
-user.fetchqualitys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchqualitys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
@@ -2902,8 +2701,7 @@ user.fetchqualitys = function (userInput, resultCallback) {
     });
 };
 
-user.deletequalitys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletequalitys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
@@ -2916,8 +2714,7 @@ user.deletequalitys = function (userInput, resultCallback) {
     });
 };
 
-user.listqualitys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listqualitys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."qualitycheck"', [userInput.id])
@@ -2932,8 +2729,7 @@ user.listqualitys = function (userInput, resultCallback) {
 
 ///Quality table checking////
 
-user.addqualitytables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addqualitytables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2962,8 +2758,7 @@ user.addqualitytables = function (userInput, resultCallback) {
     });
 };
 
-user.updatequalitytables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatequalitytables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -2993,8 +2788,7 @@ user.updatequalitytables = function (userInput, resultCallback) {
     });
 };
 
-user.fetchqualitytables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchqualitytables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."qualitychecklist" WHERE "id"=($1)', [
@@ -3009,8 +2803,7 @@ user.fetchqualitytables = function (userInput, resultCallback) {
     });
 };
 
-user.deletequalitytables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletequalitytables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."qualitychecklist" WHERE "id"=($1)', [
@@ -3025,8 +2818,7 @@ user.deletequalitytables = function (userInput, resultCallback) {
     });
 };
 
-user.listqualitytables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listqualitytables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."qualitychecklist" WHERE "quality_id"=($1)', [
@@ -3043,8 +2835,7 @@ user.listqualitytables = function (userInput, resultCallback) {
 
 ///Training Report////
 
-user.addtrainingreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addtrainingreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3074,8 +2865,7 @@ user.addtrainingreports = function (userInput, resultCallback) {
     });
 };
 
-user.updatetrainingreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatetrainingreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3106,8 +2896,7 @@ user.updatetrainingreports = function (userInput, resultCallback) {
     });
 };
 
-user.fetchtrainingreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchtrainingreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."training_report" WHERE "id"=($1)', [
@@ -3122,8 +2911,7 @@ user.fetchtrainingreports = function (userInput, resultCallback) {
     });
 };
 
-user.deletetrainingreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletetrainingreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."training_report" WHERE "id"=($1)', [userInput.id])
@@ -3136,8 +2924,7 @@ user.deletetrainingreports = function (userInput, resultCallback) {
     });
 };
 
-user.listtrainingreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listtrainingreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."training_report"', [userInput.id])
@@ -3151,8 +2938,7 @@ user.listtrainingreports = function (userInput, resultCallback) {
 };
 
 ///Training table////
-user.addtrainingreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addtrainingreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3176,8 +2962,7 @@ user.addtrainingreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.updatetrainingreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatetrainingreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3202,8 +2987,7 @@ user.updatetrainingreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.fetchtrainingreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchtrainingreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."training_report_table" WHERE "id"=($1)', [
@@ -3218,8 +3002,7 @@ user.fetchtrainingreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.deletetrainingreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletetrainingreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."training_report_table" WHERE "id"=($1)', [
@@ -3234,8 +3017,7 @@ user.deletetrainingreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.listtrainingreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listtrainingreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3252,8 +3034,7 @@ user.listtrainingreporttables = function (userInput, resultCallback) {
 };
 
 ///night  check report////
-user.addnightreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addnightreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3279,8 +3060,7 @@ user.addnightreports = function (userInput, resultCallback) {
     });
 };
 
-user.updatenightreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatenightreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3307,8 +3087,7 @@ user.updatenightreports = function (userInput, resultCallback) {
     });
 };
 
-user.fetchnightreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchnightreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."night_check" WHERE "id"=($1)', [userInput.id])
@@ -3321,8 +3100,7 @@ user.fetchnightreports = function (userInput, resultCallback) {
     });
 };
 
-user.deletenightreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletenightreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."night_check" WHERE "id"=($1)', [userInput.id])
@@ -3335,8 +3113,7 @@ user.deletenightreports = function (userInput, resultCallback) {
     });
 };
 
-user.listnightreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listnightreports = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."night_check"', [userInput.report_id])
@@ -3349,8 +3126,7 @@ user.listnightreports = function (userInput, resultCallback) {
     });
 };
 
-user.updateprofilephotos = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateprofilephotos = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3367,8 +3143,7 @@ user.updateprofilephotos = function (userInput, resultCallback) {
 };
 
 ///night table////
-user.addnightreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addnightreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3393,8 +3168,7 @@ user.addnightreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.updatenightreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatenightreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3420,8 +3194,7 @@ user.updatenightreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.fetchnightreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchnightreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."night_check_table" WHERE "id"=($1)', [
@@ -3436,9 +3209,7 @@ user.fetchnightreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.addnotificationss = function (userInput, date, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.addnotificationss = async function (userInput, date, resultCallback) {
   executor
     .any(
       'select * FROM public."notifications" WHERE "contract_id"=($1) and "date"=($2) ',
@@ -3484,8 +3255,7 @@ user.addnotificationss = function (userInput, date, resultCallback) {
     });
 };
 
-user.deletenightreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletenightreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."night_check_table" WHERE "id"=($1)', [
@@ -3500,8 +3270,7 @@ user.deletenightreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.listnightreporttables = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listnightreporttables = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."night_check_table" WHERE "night_id"=($1)', [
@@ -3516,8 +3285,7 @@ user.listnightreporttables = function (userInput, resultCallback) {
     });
 };
 
-user.notificationcounts = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.notificationcounts = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3533,8 +3301,7 @@ user.notificationcounts = function (userInput, resultCallback) {
     });
 };
 
-user.listofnotifications = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.listofnotifications = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."notifications" WHERE "user_id"=($1)', [
@@ -3549,8 +3316,7 @@ user.listofnotifications = function (userInput, resultCallback) {
     });
 };
 
-user.updatenotifications = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatenotifications = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3566,9 +3332,9 @@ user.updatenotifications = function (userInput, resultCallback) {
     });
 };
 
-user.assignemployeeadds = function (userInput, resultCallback) {
+user.assignemployeeadds = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3598,9 +3364,7 @@ user.assignemployeeadds = function (userInput, resultCallback) {
     });
 };
 
-user.attendancechecks = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.attendancechecks = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3621,8 +3385,7 @@ user.attendancechecks = function (userInput, resultCallback) {
     });
 };
 
-user.fetchpaymentdetails = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchpaymentdetails = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment" WHERE "site_id"=($1)', [
@@ -3637,8 +3400,7 @@ user.fetchpaymentdetails = function (userInput, resultCallback) {
     });
 };
 
-user.paymentstructure = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.paymentstructure = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
@@ -3651,9 +3413,9 @@ user.paymentstructure = function (userInput, resultCallback) {
     });
 };
 
-user.insertdata = function (userInput, resultCallback) {
+user.insertdata = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3694,9 +3456,9 @@ user.insertdata = function (userInput, resultCallback) {
     });
 };
 
-user.clientinsertdata = function (userInput, resultCallback) {
+user.clientinsertdata = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3739,8 +3501,7 @@ user.clientinsertdata = function (userInput, resultCallback) {
     });
 };
 
-user.fetchdetailss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchdetailss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3756,13 +3517,12 @@ user.fetchdetailss = function (userInput, resultCallback) {
     });
 };
 
-user.fetchsitedpayments = function (
+user.fetchsitedpayments = async function (
   site_id,
   start_date,
   end_date,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3778,9 +3538,13 @@ user.fetchsitedpayments = function (
     });
 };
 
-user.fetchsitepaymentssss = function (site_id, start_date, resultCallback) {
+user.fetchsitepaymentssss = async function (
+  site_id,
+  start_date,
+  resultCallback
+) {
   console.log("in" + site_id, start_date);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3796,8 +3560,7 @@ user.fetchsitepaymentssss = function (site_id, start_date, resultCallback) {
     });
 };
 
-user.checkemployees = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.checkemployees = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -3813,8 +3576,7 @@ user.checkemployees = function (userInput, resultCallback) {
     });
 };
 
-user.selectemployee = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.selectemployee = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" WHERE "employee_type"=($1)', [
@@ -3829,8 +3591,7 @@ user.selectemployee = function (userInput, resultCallback) {
     });
 };
 
-user.clientfetchlists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.clientfetchlists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
 
   executor
@@ -3847,8 +3608,7 @@ user.clientfetchlists = function (userInput, resultCallback) {
     });
 };
 
-user.employeetfetchlists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.employeetfetchlists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
 
   executor
@@ -3865,8 +3625,7 @@ user.employeetfetchlists = function (userInput, resultCallback) {
     });
 };
 
-user.assignlistss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.assignlistss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
 
   executor
@@ -3882,8 +3641,7 @@ user.assignlistss = function (userInput, resultCallback) {
 
 //Add company/////
 
-user.addcompanys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addcompanys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3913,8 +3671,7 @@ user.addcompanys = function (userInput, resultCallback) {
     });
 };
 
-user.updatecompanys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updatecompanys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -3945,8 +3702,7 @@ user.updatecompanys = function (userInput, resultCallback) {
     });
 };
 
-user.deletecompanys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deletecompanys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."company" WHERE "id"=($1)', [userInput.id])
@@ -3959,8 +3715,7 @@ user.deletecompanys = function (userInput, resultCallback) {
     });
 };
 
-user.fetchcompanys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchcompanys = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."company" WHERE "id"=($1)', [userInput.id])
@@ -3973,8 +3728,7 @@ user.fetchcompanys = function (userInput, resultCallback) {
     });
 };
 
-user.companylistss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.companylistss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."company"', [userInput.id])
@@ -3989,10 +3743,16 @@ user.companylistss = function (userInput, resultCallback) {
 
 ///add advance/////
 
-user.advanceaddsss = function (userInput, date, amount, date1, resultCallback) {
+user.advanceaddsss = async function (
+  userInput,
+  date,
+  amount,
+  date1,
+  resultCallback
+) {
   console.log("test1");
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -4132,8 +3892,7 @@ user.advanceaddsss = function (userInput, date, amount, date1, resultCallback) {
     });
 };
 
-user.advanceaddss = function (userInput, date, amount, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.advanceaddss = async function (userInput, date, amount, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -4170,8 +3929,7 @@ user.advanceaddss = function (userInput, date, amount, resultCallback) {
     });
 };
 
-user.advancefetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.advancefetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -4187,8 +3945,7 @@ user.advancefetchs = function (userInput, resultCallback) {
     });
 };
 
-user.monthlyfetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.monthlyfetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -4204,8 +3961,7 @@ user.monthlyfetchs = function (userInput, resultCallback) {
     });
 };
 
-user.monthlyfetchs1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.monthlyfetchs1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -4221,8 +3977,7 @@ user.monthlyfetchs1 = function (userInput, resultCallback) {
     });
 };
 
-user.fetchloan_numbers = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchloan_numbers = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select max(loan_number) from public."advance"', [])
@@ -4235,8 +3990,7 @@ user.fetchloan_numbers = function (userInput, resultCallback) {
     });
 };
 
-user.fetchloan_numbers1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchloan_numbers1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select max(id) from public."employeedetails"', [])
@@ -4249,8 +4003,7 @@ user.fetchloan_numbers1 = function (userInput, resultCallback) {
     });
 };
 
-user.deleteinstalments = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deleteinstalments = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."advance" WHERE "id"=($1)', [userInput.id])
@@ -4263,8 +4016,7 @@ user.deleteinstalments = function (userInput, resultCallback) {
     });
 };
 
-user.fetchadvances = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchadvances = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select *  FROM public."advance" WHERE "loan_number"=($1)', [
@@ -4279,8 +4031,7 @@ user.fetchadvances = function (userInput, resultCallback) {
     });
 };
 
-user.fetchadvances2 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchadvances2 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select *  FROM public."advance" WHERE "company_name"=($1) and ', [
@@ -4295,8 +4046,7 @@ user.fetchadvances2 = function (userInput, resultCallback) {
     });
 };
 
-user.deleteadvances = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.deleteadvances = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."advance" WHERE "loan_number"=($1)', [
@@ -4311,8 +4061,7 @@ user.deleteadvances = function (userInput, resultCallback) {
     });
 };
 
-user.updateadvances = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateadvances = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -4372,8 +4121,7 @@ user.updateadvances = function (userInput, resultCallback) {
     });
 };
 
-user.updateoneinstalments = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.updateoneinstalments = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -4421,9 +4169,7 @@ user.updateoneinstalments = function (userInput, resultCallback) {
     });
 };
 
-user.fetchsitedetail = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.fetchsitedetail = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" where company_name=($1)', [
@@ -4438,8 +4184,12 @@ user.fetchsitedetail = function (userInput, resultCallback) {
     });
 };
 
-user.addemployeebulkuploads = function (userInput, dob, doj, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addemployeebulkuploads = async function (
+  userInput,
+  dob,
+  doj,
+  resultCallback
+) {
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4479,9 +4229,7 @@ user.addemployeebulkuploads = function (userInput, dob, doj, resultCallback) {
     });
 };
 
-user.efetchsitedetailss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-
+user.efetchsitedetailss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite"', [userInput.id])
@@ -4494,8 +4242,7 @@ user.efetchsitedetailss = function (userInput, resultCallback) {
     });
 };
 
-user.searchecodes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.searchecodes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" where "ecode"=($1)', [
@@ -4510,8 +4257,7 @@ user.searchecodes = function (userInput, resultCallback) {
     });
 };
 
-user.addsalaryprocesss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addsalaryprocesss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -4563,8 +4309,7 @@ user.addsalaryprocesss = function (userInput, resultCallback) {
     });
 };
 
-user.salaryprocesstatuss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.salaryprocesstatuss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."salary_details" where "date"= ($1)', [
@@ -4579,32 +4324,28 @@ user.salaryprocesstatuss = function (userInput, resultCallback) {
     });
 };
 
-user.addclientbulks = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.addclientbulks = async function (userInput, resultCallback) {
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      "INSERT INTO public.clientsite(sitelogin,sitepassword,title,site_billing_name,address,billing_address_2,upin,udistrict,ustate,esi_flag,unit_flag,area_code,area_name,duty_type,contactnumber1,company_name)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *",
-      [
-        userInput.login,
-        userInput.password,
-        userInput.site_name,
-        userInput.site_billing_name,
-        userInput.address,
-        userInput.address_2,
-        userInput.UPIN,
-        userInput.UDISTRICT,
-        userInput.USTATE,
-        userInput.ESI_FLAG,
-        userInput.UNIT_FLAG,
-        userInput.AreaCode,
-        userInput.AreaName,
-        userInput.DutyType,
-        userInput.UPHONE,
-        userInput.company,
-      ]
-    )
+  await model.clientsite
+    .create({
+      login: userInput.login,
+      password: userInput.password,
+      site_name: userInput.site_name,
+      site_billing_name: userInput.site_billing_name,
+      address: userInput.address,
+      address_2: userInput.address_2,
+      UPIN: userInput.UPIN,
+      UDISTRICT: userInput.UDISTRICT,
+      USTATE: userInput.USTATE,
+      ESI_FLAG: userInput.ESI_FLAG,
+      UNIT_FLAG: userInput.UNIT_FLAG,
+      AreaCode: userInput.AreaCode,
+      AreaName: userInput.AreaName,
+      DutyType: userInput.DutyType,
+      UPHONE: userInput.UPHONE,
+      company: userInput.company,
+    })
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -4616,8 +4357,7 @@ user.addclientbulks = function (userInput, resultCallback) {
 };
 
 // manualentry
-user.manual_entry_unit_adds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_unit_adds = async function (userInput, resultCallback) {
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4664,8 +4404,7 @@ user.manual_entry_unit_adds = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_unit_updates = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_unit_updates = async function (userInput, resultCallback) {
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4714,8 +4453,7 @@ user.manual_entry_unit_updates = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_unit_deletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_unit_deletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."payroll_manual_unit_entry" where "id"= ($1)', [
@@ -4730,8 +4468,7 @@ user.manual_entry_unit_deletes = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_unit_lists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_unit_lists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -4747,8 +4484,7 @@ user.manual_entry_unit_lists = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_unit_fetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_unit_fetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_unit_entry" where "id"= ($1)', [
@@ -4763,8 +4499,7 @@ user.manual_entry_unit_fetchs = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_rate_adds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_rate_adds = async function (userInput, resultCallback) {
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -4800,8 +4535,7 @@ user.manual_entry_rate_adds = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_rate_updatess = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_rate_updatess = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -4837,8 +4571,7 @@ user.manual_entry_rate_updatess = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_rate_deletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_rate_deletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."payroll_manual_unit_rate" where "id"= ($1)', [
@@ -4853,8 +4586,7 @@ user.manual_entry_rate_deletes = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_rate_lists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_rate_lists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -4870,8 +4602,7 @@ user.manual_entry_rate_lists = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_rate_fetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_rate_fetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_unit_rate" where "id"= ($1)', [
@@ -4886,8 +4617,7 @@ user.manual_entry_rate_fetchs = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_emp_adds = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_emp_adds = async function (userInput, resultCallback) {
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -5591,8 +5321,7 @@ user.manual_entry_emp_adds = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_emp_updates = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_emp_updates = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -6296,8 +6025,7 @@ user.manual_entry_emp_updates = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_rate_updates = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_rate_updates = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(
@@ -7000,8 +6728,7 @@ user.manual_entry_rate_updates = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_emp_deletes = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_emp_deletes = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('Delete FROM public."payroll_manual_entry" where "id"= ($1)', [
@@ -7016,8 +6743,7 @@ user.manual_entry_emp_deletes = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_emp_lists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_emp_lists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7033,8 +6759,7 @@ user.manual_entry_emp_lists = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_emp_lists1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_emp_lists1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
 
   executor
@@ -7051,8 +6776,7 @@ user.manual_entry_emp_lists1 = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_emp_fetchs = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_emp_fetchs = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7068,8 +6792,7 @@ user.manual_entry_emp_fetchs = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_emp_fetch_ids = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_emp_fetch_ids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_entry" where "id"= ($1)', [
@@ -7084,8 +6807,7 @@ user.manual_entry_emp_fetch_ids = function (userInput, resultCallback) {
     });
 };
 
-user.manual_entry_emp_lists1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_emp_lists1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7101,8 +6823,7 @@ user.manual_entry_emp_lists1 = function (userInput, resultCallback) {
     });
 };
 
-user.getreportssssss1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getreportssssss1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7118,8 +6839,7 @@ user.getreportssssss1 = function (userInput, resultCallback) {
     });
 };
 
-user.getreportssssssall1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getreportssssssall1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7135,8 +6855,7 @@ user.getreportssssssall1 = function (userInput, resultCallback) {
     });
 };
 
-user.getemployeedetails1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getemployeedetails1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails where "company_name"= ($1)   ', [
@@ -7150,8 +6869,7 @@ user.getemployeedetails1 = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getunitmasterss = function (element, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getunitmasterss = async function (element, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_unit_entry"  ', [])
@@ -7164,8 +6882,7 @@ user.getunitmasterss = function (element, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getunitmaster2 = function (id, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getunitmaster2 = async function (id, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7185,8 +6902,7 @@ user.getunitmaster2 = function (id, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getwagesheet1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getwagesheet1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7201,8 +6917,7 @@ user.getwagesheet1 = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getwagesheet12 = function (ecode, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getwagesheet12 = async function (ecode, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any("select ecode,esic_no from employeedetails where ecode=($1)", [ecode])
@@ -7214,8 +6929,7 @@ user.getwagesheet12 = function (ecode, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.cashandbanks = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.cashandbanks = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7230,8 +6944,7 @@ user.cashandbanks = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.cashandbankss = function (ecode, unit_name, date, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.cashandbankss = async function (ecode, unit_name, date, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7246,8 +6959,7 @@ user.cashandbankss = function (ecode, unit_name, date, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.cashandbanksss = function (ecode, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.cashandbanksss = async function (ecode, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [ecode])
@@ -7259,8 +6971,7 @@ user.cashandbanksss = function (ecode, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getemployeevoucher1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getemployeevoucher1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7280,8 +6991,7 @@ user.getemployeevoucher1 = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getemployeevoucher2 = function (employee_id, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getemployeevoucher2 = async function (employee_id, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [
@@ -7295,8 +7005,7 @@ user.getemployeevoucher2 = function (employee_id, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getproftaxform1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getproftaxform1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7311,8 +7020,7 @@ user.getproftaxform1 = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getwageslip1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getwageslip1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('SELECT * FROM public.payroll_manual_entry where "id"= ($1) ', [
@@ -7326,9 +7034,9 @@ user.getwageslip1 = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getsiteDetails = function (userInput, resultCallback) {
+user.getsiteDetails = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_entry" WHERE "date"=($1)', [
@@ -7343,8 +7051,7 @@ user.getsiteDetails = function (userInput, resultCallback) {
     });
 };
 
-user.getEmployeeDetail = function (ecode, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getEmployeeDetail = async function (ecode, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" WHERE "ecode"=($1)', [ecode])
@@ -7356,9 +7063,9 @@ user.getEmployeeDetail = function (ecode, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getDesignationss = function (title, resultCallback) {
+user.getDesignationss = async function (title, resultCallback) {
   console.log(title);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_entry" ', [])
@@ -7371,9 +7078,9 @@ user.getDesignationss = function (title, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getloanandoutstandings = function (userInput, resultCallback) {
+user.getloanandoutstandings = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."payroll_manual_entry"', [])
@@ -7385,8 +7092,7 @@ user.getloanandoutstandings = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getloanandoutstandingss = function (unit_name, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getloanandoutstandingss = async function (unit_name, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" where "title"=($1) ', [unit_name])
@@ -7404,8 +7110,7 @@ user.getloanandoutstandingss = function (unit_name, resultCallback) {
     });
 };
 
-user.gettotalpays = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.gettotalpays = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7420,8 +7125,7 @@ user.gettotalpays = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.gettotalpayss = function (unit_name, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.gettotalpayss = async function (unit_name, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" where title=$1', [unit_name])
@@ -7434,8 +7138,7 @@ user.gettotalpayss = function (unit_name, resultCallback) {
     });
 };
 
-user.proftaxs = function (companyName, Start, End, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.proftaxs = async function (companyName, Start, End, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7450,8 +7153,7 @@ user.proftaxs = function (companyName, Start, End, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getpayslip = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getpayslip = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7466,8 +7168,7 @@ user.getpayslip = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getpayslips = function (ecode, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getpayslips = async function (ecode, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7482,8 +7183,7 @@ user.getpayslips = function (ecode, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getrecovery = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getrecovery = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7498,8 +7198,7 @@ user.getrecovery = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getrecoverys = function (ecode, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getrecoverys = async function (ecode, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7514,8 +7213,10 @@ user.getrecoverys = function (ecode, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getgetform36bpayrollmanualentrys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getgetform36bpayrollmanualentrys = async function (
+  userInput,
+  resultCallback
+) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7530,8 +7231,7 @@ user.getgetform36bpayrollmanualentrys = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.getgetform36bemployeedetails = function (ecode, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.getgetform36bemployeedetails = async function (ecode, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."employeedetails" WHERE ecode=($1) ', [ecode])
@@ -7548,9 +7248,15 @@ user.getgetform36bemployeedetails = function (ecode, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.bulkuploadformats = function (userInput, dob, doj, dor, resultCallback) {
+user.bulkuploadformats = async function (
+  userInput,
+  dob,
+  doj,
+  dor,
+  resultCallback
+) {
   console.log(userInput, dob, doj);
-  var executor = db.getdaata.getdb();
+
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7600,9 +7306,9 @@ user.bulkuploadformats = function (userInput, dob, doj, dor, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.manual_unit_rates = function (userInput, resultCallback) {
+user.manual_unit_rates = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7637,9 +7343,9 @@ user.manual_unit_rates = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.unit_master_salary_detailss = function (userInput, resultCallback) {
+user.unit_master_salary_detailss = async function (userInput, resultCallback) {
   console.log(userInput);
-  var executor = db.getdaata.getdb();
+
   console.log(userInput);
   //\''+userInput.appartment_ukey+'\'
   executor
@@ -7682,8 +7388,7 @@ user.unit_master_salary_detailss = function (userInput, resultCallback) {
     });
 };
 
-user.gettingreportsall1 = function (unit_name, date, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.gettingreportsall1 = async function (unit_name, date, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7699,8 +7404,7 @@ user.gettingreportsall1 = function (unit_name, date, resultCallback) {
     });
 };
 
-user.gettingreportsall12 = function (unit_name, date, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.gettingreportsall12 = async function (unit_name, date, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7716,8 +7420,12 @@ user.gettingreportsall12 = function (unit_name, date, resultCallback) {
     });
 };
 
-user.gettingreportsall13 = function (unit_name, date, type, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.gettingreportsall13 = async function (
+  unit_name,
+  date,
+  type,
+  resultCallback
+) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7733,8 +7441,7 @@ user.gettingreportsall13 = function (unit_name, date, type, resultCallback) {
     });
 };
 
-user.manual_entry_unit_list_id = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.manual_entry_unit_list_id = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7749,8 +7456,7 @@ user.manual_entry_unit_list_id = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.fetch_clientsss = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetch_clientsss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select * FROM public."clientsite" WHERE "sitelogin"=($1)', [
@@ -7764,8 +7470,11 @@ user.fetch_clientsss = function (userInput, resultCallback) {
       console.log("ERROR:", error);
     });
 };
-user.fetch_payment_entryss = function (userInput, unit_name, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetch_payment_entryss = async function (
+  userInput,
+  unit_name,
+  resultCallback
+) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7790,8 +7499,7 @@ user.fetch_payment_entryss = function (userInput, unit_name, resultCallback) {
     });
 };
 
-user.fetchunit_numbers1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.fetchunit_numbers1 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any('select max(id) from public."clientsite"', [])
@@ -7804,8 +7512,7 @@ user.fetchunit_numbers1 = function (userInput, resultCallback) {
     });
 };
 
-user.carryForwards = function (c_date, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.carryForwards = async function (c_date, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7821,13 +7528,12 @@ user.carryForwards = function (c_date, resultCallback) {
     });
 };
 
-user.carryForwardss = function (
+user.carryForwardss = async function (
   employee_id,
   advance_type,
   carry_date,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7848,7 +7554,7 @@ user.carryForwardss = function (
     });
 };
 
-user.carryForwardUpdate = function (
+user.carryForwardUpdate = async function (
   employee_id,
   advance_type,
   carry_date,
@@ -7872,7 +7578,7 @@ user.carryForwardUpdate = function (
   ];
   var cm = months[completedate.getMonth() + 1];
   var ycm = y + "-" + cm;
-  var executor = db.getdaata.getdb();
+
   //\''+userInput.appartment_ukey+'\'
   executor
     .any(
@@ -7988,8 +7694,7 @@ user.carryForwardUpdate = function (
     });
 };
 
-user.carryForwardInsert = function (input, ddate, cdate, resultCallback) {
-  var executor = db.getdaata.getdb();
+user.carryForwardInsert = async function (input, ddate, cdate, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
   executor
     .one(

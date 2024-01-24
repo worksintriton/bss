@@ -4,7 +4,7 @@
   "description": "Flat Services Management",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -43,11 +43,13 @@
     "lodash": "^4.17.21",
     "moment": "^2.23.0",
     "mongoose": "^8.1.0",
+    "mongoose-timestamp": "^0.6.0",
     "multer": "^1.3.1",
     "mustache": "^2.3.0",
     "node-datetime": "^2.1.2",
     "nodemailer": "^4.6.7",
     "passport": "^0.4.0",
+    "path": "^0.12.7",
     "pg-monitor": "^1.0.0",
     "pg-promise": "^8.4.6",
     "play-sound": "^1.1.2",
@@ -61,6 +63,6 @@
   },
   "devDependencies": {
     "claudia": "^5.1.0",
-    "nodemon": "^1.18.8"
+    "nodemon": "^1.19.4"
   }
 }
