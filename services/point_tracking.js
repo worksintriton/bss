@@ -3,30 +3,27 @@
 var _ = require("lodash"),
   db = require("../db"),
   async = require("async");
-
+const model = require("../model/index");
 function point_tracking() {}
 
-point_tracking.PointTrackMaps = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .one(
-      'INSERT INTO public."PointTrackMap"("title","description","totaltime","totalmeters","startlat","startlon","endlat","endlon","isactive","createdby","createdtime","updatedby","updatedtime")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)RETURNING *',
-      [
-        userInput.title,
-        userInput.description,
-        userInput.totaltime,
-        userInput.totalmeters,
-        userInput.startlat,
-        userInput.startlon,
-        userInput.endlat,
-        userInput.endlon,
-        userInput.isactive,
-        userInput.createdby,
-        userInput.createdtime,
-        userInput.updatedby,
-        userInput.updatedtime,
-      ]
-    )
+point_tracking.PointTrackMaps = async function (userInput, resultCallback) {
+  await model.pointtrackmap
+    .create({
+      title: userInput.title,
+      description: userInput.description,
+      totaltime: userInput.totaltime,
+      totalmeters: userInput.totalmeters,
+      startlat: userInput.startlat,
+      startlon: userInput.startlon,
+      endlat: userInput.endlat,
+      endlon: userInput.endlon,
+      isactive: userInput.isactive,
+      createdby: userInput.createdby,
+      createdtime: userInput.createdtime,
+      updatedby: userInput.updatedby,
+      updatedtime: userInput.updatedtime,
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -34,35 +31,13 @@ point_tracking.PointTrackMaps = function (userInput, resultCallback) {
       resultCallback(null, error);
     });
 };
-point_tracking.updatePointTrackMapmobile = function (
+point_tracking.updatePointTrackMapmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any(
-      'UPDATE public."PointTrackMap" SET title=($2), description=($3), totaltime=($4), totalmeters=($5), createdby=($6), createdtime=($7), updatedby=($8), updatedtime=($9), "Emp_id"=($10), "Employee_Name"=($11), status=($12), notification_title = ($13) , startlat = ($14), startlon = ($15), endlat = ($16), endlon = ($17) , isactive = ($18)  WHERE  ukey=($1) RETURNING *',
-      [
-        userInput.ukey,
-        userInput.title,
-        userInput.description,
-        userInput.totaltime,
-        userInput.totalmeters,
-        userInput.createdby,
-        userInput.createdtime,
-        userInput.updatedby,
-        userInput.updatedtime,
-        userInput.Emp_id,
-        userInput.Employee_Name,
-        userInput.status,
-        userInput.notification_title,
-        userInput.startlat,
-        userInput.startlon,
-        userInput.endlat,
-        userInput.endlon,
-        userInput.isactive,
-      ]
-    )
+  await model.pointtrackmap
+    .updateOne({ _id: userInput.ukey }, { ...userInput })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -71,15 +46,13 @@ point_tracking.updatePointTrackMapmobile = function (
     });
 };
 
-point_tracking.DeletePointTrackMapmobile = function (
+point_tracking.DeletePointTrackMapmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('Delete from public."PointTrackMap" where "ukey"=($1)', [
-      userInput.ukey,
-    ])
+  await model.pointtrackmap
+    .deleteOne({ _id: userInput.ukey })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -88,10 +61,13 @@ point_tracking.DeletePointTrackMapmobile = function (
     });
 };
 
-point_tracking.PointTrackMaplistmobile = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('select * from public."PointTrackMap" ', [userInput.ukey])
+point_tracking.PointTrackMaplistmobile = async function (
+  userInput,
+  resultCallback
+) {
+  await model.pointtrackmap
+    .find({})
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -102,34 +78,30 @@ point_tracking.PointTrackMaplistmobile = function (userInput, resultCallback) {
 
 // records //
 
-point_tracking.PointTrackMapRecordsmobile = function (
+point_tracking.PointTrackMapRecordsmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
+  await model.pointtrackrecords
+    .create({
+      title: userInput.title,
+      description: userInput.description,
+      createdby: userInput.createdby,
+      createdtime: userInput.createdtime,
+      updatedby: userInput.updatedby,
+      updatedtime: userInput.updatedtime,
+      totaltime: userInput.totaltime,
+      totalmeters: userInput.totalmeters,
+      PointTrackMaprefid: userInput.PointTrackMaprefid,
+      startlat: userInput.startlat,
+      startlon: userInput.startlon,
+      endlat: userInput.endlat,
+      endlon: userInput.endlon,
+      isactive: userInput.isactive,
+      starttime: userInput.starttime,
+      endtime: userInput.endtime,
+    })
 
-  executor
-    .one(
-      'INSERT INTO public."PointTrackRecords"( "title", "description", "createdby", "createdtime", "updatedby", "updatedtime", "totaltime", "totalmeters", "PointTrackMaprefid", "startlat", "startlon", "endlat", "endlon", "isactive", "starttime", "endtime") VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING * ',
-      [
-        userInput.title,
-        userInput.description,
-        userInput.createdby,
-        userInput.createdtime,
-        userInput.updatedby,
-        userInput.updatedtime,
-        userInput.totaltime,
-        userInput.totalmeters,
-        userInput.PointTrackMaprefid,
-        userInput.startlat,
-        userInput.startlon,
-        userInput.endlat,
-        userInput.endlon,
-        userInput.isactive,
-        userInput.starttime,
-        userInput.endtime,
-      ]
-    )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -137,34 +109,13 @@ point_tracking.PointTrackMapRecordsmobile = function (
       resultCallback(null, error);
     });
 };
-point_tracking.updatePointTrackMapRecordsmobile = function (
+point_tracking.updatePointTrackMapRecordsmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any(
-      'UPDATE public."PointTrackRecords" SET  "title"=($2), description=($3), totaltime=($4), totalmeters=($5), startlat=($6), startlon=($7), endlat=($8), endlon=($9), isactive=($10), createdby=($11), createdtime=($12), updatedby=($13), updatedtime=($14), "PointTrackMaprefid"=($15), starttime=($16), endtime=($17) WHERE "ukey"= ($1) RETURNING *',
-      [
-        userInput.ukey,
-        userInput.title,
-        userInput.description,
-        userInput.totaltime,
-        userInput.totalmeters,
-        userInput.startlat,
-        userInput.startlon,
-        userInput.endlat,
-        userInput.endlon,
-        userInput.isactive,
-        userInput.createdby,
-        userInput.createdtime,
-        userInput.updatedby,
-        userInput.updatedtime,
-        userInput.PointTrackMaprefid,
-        userInput.starttime,
-        userInput.endtime,
-      ]
-    )
+  await model.pointtrackrecords
+    .updateOne({ _id: userInput.ukey }, { ...userInput })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -173,16 +124,13 @@ point_tracking.updatePointTrackMapRecordsmobile = function (
     });
 };
 
-point_tracking.DeletePointTrackMapRecordsmobile = function (
+point_tracking.DeletePointTrackMapRecordsmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any(
-      'Delete from public."PointTrackRecords" where "PointTrackMaprefid"=($1)',
-      [userInput.PointTrackMaprefid]
-    )
+  await model.pointtrackrecords
+    .deleteOne({ PointTrackMaprefid: userInput.PointTrackMaprefid })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -191,16 +139,13 @@ point_tracking.DeletePointTrackMapRecordsmobile = function (
     });
 };
 
-point_tracking.PointTrackMapRecordslistmobile = function (
+point_tracking.PointTrackMapRecordslistmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any(
-      'select * from public."PointTrackRecords" where "PointTrackMaprefid"=($1) ',
-      [userInput.PointTrackMaprefid]
-    )
+  await model.pointtrackrecords
+    .findOne({ PointTrackMaprefid: userInput.PointTrackMaprefid })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -209,31 +154,28 @@ point_tracking.PointTrackMapRecordslistmobile = function (
     });
 };
 
-point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .one(
-      'INSERT INTO public."PointTrackMapSpots"("position","PointTrackMaprefid","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)RETURNING *',
-      [
-        userInput.position,
-        userInput.PointTrackMaprefid,
-        userInput.title,
-        userInput.description,
-        userInput.lat,
-        userInput.lon,
-        userInput.accepteddistinmeter,
-        userInput.isactive,
-        userInput.createdby,
-        userInput.createdtime,
-        userInput.updatedby,
-        userInput.updatedtime,
-        userInput.marked_time,
-        userInput.marked_lat,
-        userInput.marked_lon,
-        userInput.marked_by,
-        userInput.is_marked,
-      ]
-    )
+point_tracking.PointTrackMapSpots = async function (userInput, resultCallback) {
+  await model.pointtrackmapspot
+    .create({
+      position: userInput.position,
+      PointTrackMaprefid: userInput.PointTrackMaprefid,
+      title: userInput.title,
+      description: userInput.description,
+      lat: userInput.lat,
+      lon: userInput.lon,
+      accepteddistinmeter: userInput.accepteddistinmeter,
+      isactive: userInput.isactive,
+      createdby: userInput.createdby,
+      createdtime: userInput.createdtime,
+      updatedby: userInput.updatedby,
+      updatedtime: userInput.updatedtime,
+      marked_time: userInput.marked_time,
+      marked_lat: userInput.marked_lat,
+      marked_lon: userInput.marked_lon,
+      marked_by: userInput.marked_by,
+      is_marked: userInput.is_marked,
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -242,35 +184,13 @@ point_tracking.PointTrackMapSpots = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.updatePointTrackMapSpotmobile = function (
+point_tracking.updatePointTrackMapSpotmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .one(
-      ' UPDATE public."PointTrackMapSpots" SET "position"=($2) , title=($3) , description=($4) , lat=($5) , lon=($6) , accepteddistinmeter=($7) , isactive=($8) , createdby=($9) , createdtime=($10) , updatedby=($11) , updatedtime=($12) , marked_time=($13) , marked_lat=($14) , marked_lon=($15) , marked_by=($16) , is_marked=($17) , "PointTrackMaprefid" = ($18)   WHERE id =($1) RETURNING * ',
-      [
-        userInput.id,
-        userInput.position,
-        userInput.title,
-        userInput.description,
-        userInput.lat,
-        userInput.lon,
-        userInput.accepteddistinmeter,
-        userInput.isactive,
-        userInput.createdby,
-        userInput.createdtime,
-        userInput.updatedby,
-        userInput.updatedtime,
-        userInput.marked_time,
-        userInput.marked_lat,
-        userInput.marked_lon,
-        userInput.marked_by,
-        userInput.is_marked,
-        userInput.PointTrackMaprefid,
-      ]
-    )
+  await model.pointtrackmapspot
+    .updateOne({ _id: userInput.id }, { ...userInput })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -279,15 +199,13 @@ point_tracking.updatePointTrackMapSpotmobile = function (
     });
 };
 
-point_tracking.DeletePointTrackMapSpotmobile = function (
+point_tracking.DeletePointTrackMapSpotmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('Delete from public."PointTrackMapSpots" where "id"=($1)', [
-      userInput.pointtrackmapid,
-    ])
+  await model.pointtrackmapspot
+    .deleteOne({ pointtrackmapid: userInput.pointtrackmapid })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -296,16 +214,13 @@ point_tracking.DeletePointTrackMapSpotmobile = function (
     });
 };
 
-point_tracking.PointTrackMapSpotlistmobile = function (
+point_tracking.PointTrackMapSpotlistmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any(
-      'select * from public."PointTrackMapSpots" where "PointTrackMaprefid"=($1) ',
-      [userInput.PointTrackMaprefid]
-    )
+  await model.pointtrackmapspot
+    .find({ PointTrackMaprefid: userInput.PointTrackMaprefid })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -314,12 +229,10 @@ point_tracking.PointTrackMapSpotlistmobile = function (
     });
 };
 
-point_tracking.FetchMapSpotmobile = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('select * from public."PointTrackMapSpots" where "id"=($1) ', [
-      userInput.id,
-    ])
+point_tracking.FetchMapSpotmobile = async function (userInput, resultCallback) {
+  await model.pointtrackmapspot
+    .find({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -328,22 +241,19 @@ point_tracking.FetchMapSpotmobile = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.Addpointsweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .one(
-      'INSERT INTO public."PointTrackMap"("Emp_id","Employee_Name","createdtime","description","title","updatedtime","status","notification_title")VALUES($1,$2,$3,$4,$5,$6,$7,$8)RETURNING *',
-      [
-        userInput.Emp_id,
-        userInput.Employee_Name,
-        userInput.createdtime,
-        userInput.description,
-        userInput.title,
-        userInput.updatedtime,
-        userInput.status,
-        "create map",
-      ]
-    )
+point_tracking.Addpointsweb = async function (userInput, resultCallback) {
+  await model.pointtrackmap
+    .create({
+      Emp_id: userInput.Emp_id,
+      Employee_Name: userInput.Employee_Name,
+      createdtime: userInput.createdtime,
+      description: userInput.description,
+      title: userInput.title,
+      updatedtime: userInput.updatedtime,
+      status: userInput.status,
+      notification_title: "create map",
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -352,20 +262,10 @@ point_tracking.Addpointsweb = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.pointsupdateweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any(
-      ' update public."PointTrackMap"  set   "Employee_Name" = ($2) , "description"= ($3),"title" = ($4),"updatedtime" = ($5),"status" = ($6) where  "ukey" = ($1) RETURNING *',
-      [
-        userInput.ukey,
-        userInput.Employee_Name,
-        userInput.description,
-        userInput.title,
-        userInput.updatedtime,
-        userInput.status,
-      ]
-    )
+point_tracking.pointsupdateweb = async function (userInput, resultCallback) {
+  await model.pointtrackmap
+    .updateOne({ _id: userInput.ukey }, { ...userInput })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -374,10 +274,10 @@ point_tracking.pointsupdateweb = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.pointslistweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('select * from public."PointTrackMap"', [userInput.Employee_id])
+point_tracking.pointslistweb = async function (userInput, resultCallback) {
+  await model.pointtrackmap
+    .find({ Employee_id: userInput.Employee_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -386,12 +286,10 @@ point_tracking.pointslistweb = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.deletepointsweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('Delete FROM public."PointTrackMap" WHERE "ukey"=($1)', [
-      userInput.ukey,
-    ])
+point_tracking.deletepointsweb = async function (userInput, resultCallback) {
+  await model.pointtrackmap
+    .deleteOne({ _id: userInput.ukey })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -400,12 +298,10 @@ point_tracking.deletepointsweb = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.fetchpointsweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('select * from public."PointTrackMap" where "ukey"=($1)', [
-      userInput.ukey,
-    ])
+point_tracking.fetchpointsweb = async function (userInput, resultCallback) {
+  await model.pointtrackmap
+    .find({ _id: userInput.ukey })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -414,15 +310,13 @@ point_tracking.fetchpointsweb = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.employee_fetchpointsmobile = function (
+point_tracking.employee_fetchpointsmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('select * from public."PointTrackMap" where "Emp_id"=($1)', [
-      userInput.Emp_id,
-    ])
+  await model.pointtrackmap
+    .find({ Emp_id: userInput.Emp_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -431,8 +325,9 @@ point_tracking.employee_fetchpointsmobile = function (
     });
 };
 
-point_tracking.fetchemployeess = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+//! need to check the below one
+
+point_tracking.fetchemployeess = async function (userInput, resultCallback) {
   executor
     .any(
       'select * from public."employeedetails" where id in (select cast("Employee_id" as integer)from public."employee_track")',
@@ -446,10 +341,12 @@ point_tracking.fetchemployeess = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.deleteEmployeeTrackings = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('DELETE FROM public.employeedetails WHERE "id"=($1)', [userInput.id])
+point_tracking.deleteEmployeeTrackings = async function (
+  userInput,
+  resultCallback
+) {
+  await model.employeedetails
+    .deleteOne({ _id: userInput.id })
     .then((data) => {
       resultCallback(null, data);
     })
@@ -458,13 +355,10 @@ point_tracking.deleteEmployeeTrackings = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.fetchTrackinglists = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any(
-      'select * from public."employee_track" where "Employee_id"=($1) ORDER BY "updated_at" ASC',
-      [userInput.Employee_id]
-    )
+point_tracking.fetchTrackinglists = async function (userInput, resultCallback) {
+  await model.employeetrack
+    .find({ Employee_id: userInput.Employee_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -474,34 +368,31 @@ point_tracking.fetchTrackinglists = function (userInput, resultCallback) {
 };
 
 /*adshfjkhas*/
-point_tracking.PointTrackRecordsSpotmobile = function (
+point_tracking.PointTrackRecordsSpotmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .one(
-      'INSERT INTO public."pointtrackrecordsspots"("PointTrackRecordsid","position","title","description","lat","lon","accepteddistinmeter","isactive","createdby","createdtime","updatedby","updatedtime","marked_time","marked_lat","marked_lon","marked_by","is_marked")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)RETURNING *',
-      [
-        userInput.PointTrackRecordsid,
-        userInput.position,
-        userInput.title,
-        userInput.description,
-        userInput.lat,
-        userInput.lon,
-        userInput.accepteddistinmeter,
-        userInput.isactive,
-        userInput.createdby,
-        userInput.createdtime,
-        userInput.updatedby,
-        userInput.updatedtime,
-        userInput.marked_time,
-        userInput.marked_lat,
-        userInput.marked_lon,
-        userInput.marked_by,
-        userInput.is_marked,
-      ]
-    )
+  await model.pointtrackrecordsspot
+    .create({
+      PointTrackRecordsid: userInput.PointTrackRecordsid,
+      position: userInput.position,
+      title: userInput.title,
+      description: userInput.description,
+      lat: userInput.lat,
+      lon: userInput.lon,
+      accepteddistinmeter: userInput.accepteddistinmeter,
+      isactive: userInput.isactive,
+      createdby: userInput.createdby,
+      createdtime: userInput.createdtime,
+      updatedby: userInput.updatedby,
+      updatedtime: userInput.updatedtime,
+      marked_time: userInput.marked_time,
+      marked_lat: userInput.marked_lat,
+      marked_lon: userInput.marked_lon,
+      marked_by: userInput.marked_by,
+      is_marked: userInput.is_marked,
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -510,35 +401,13 @@ point_tracking.PointTrackRecordsSpotmobile = function (
     });
 };
 
-point_tracking.updatePointTrackRecordsSpotmobile = function (
+point_tracking.updatePointTrackRecordsSpotmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .one(
-      ' UPDATE public."pointtrackrecordsspots" SET "position"=($2) , title=($3) , description=($4) , lat=($5) , lon=($6) , accepteddistinmeter=($7) , isactive=($8) , createdby=($9) , createdtime=($10) , updatedby=($11) , updatedtime=($12) , marked_time=($13) , marked_lat=($14) , marked_lon=($15) , marked_by=($16) , is_marked=($17) , "PointTrackRecordsid"=($18)  WHERE id=($1) RETURNING * ',
-      [
-        userInput.id,
-        userInput.position,
-        userInput.title,
-        userInput.description,
-        userInput.lat,
-        userInput.lon,
-        userInput.accepteddistinmeter,
-        userInput.isactive,
-        userInput.createdby,
-        userInput.createdtime,
-        userInput.updatedby,
-        userInput.updatedtime,
-        userInput.marked_time,
-        userInput.marked_lat,
-        userInput.marked_lon,
-        userInput.marked_by,
-        userInput.is_marked,
-        userInput.PointTrackRecordsid,
-      ]
-    )
+  await model.pointtrackrecordsspot
+    .updateOne({ _id: userInput.id }, { ...userInput })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -547,15 +416,13 @@ point_tracking.updatePointTrackRecordsSpotmobile = function (
     });
 };
 
-point_tracking.DeletePointTrackRecordsSpotmobile = function (
+point_tracking.DeletePointTrackRecordsSpotmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('Delete from public."pointtrackrecordsspots" where "id"=($1)', [
-      userInput.id,
-    ])
+  await model.pointtrackrecordsspot
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -564,16 +431,13 @@ point_tracking.DeletePointTrackRecordsSpotmobile = function (
     });
 };
 
-point_tracking.PointTrackRecordsSpotlistmobile = function (
+point_tracking.PointTrackRecordsSpotlistmobile = async function (
   userInput,
   resultCallback
 ) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any(
-      'select * from public."pointtrackrecordsspots" where "PointTrackRecordsid" = ($1)',
-      [userInput.PointTrackRecordsid]
-    )
+  await model.pointtrackrecordsspot
+    .find({ PointTrackRecordsid: userInput.PointTrackRecordsid })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -582,12 +446,13 @@ point_tracking.PointTrackRecordsSpotlistmobile = function (
     });
 };
 
-point_tracking.FetchMapSpotrecordmobile = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('select * from public."pointtrackrecordsspots" where "id" = ($1)', [
-      userInput.id,
-    ])
+point_tracking.FetchMapSpotrecordmobile = async function (
+  userInput,
+  resultCallback
+) {
+  await model.pointtrackrecordsspot
+    .find({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -596,25 +461,22 @@ point_tracking.FetchMapSpotrecordmobile = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.addmapuseweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .one(
-      'INSERT INTO public."Mapusers"("Emp_id","Employee_name","Map_id","gender","contact_no","Email_id","Client_place","Address","title","status","notification_title")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)RETURNING *',
-      [
-        userInput.Emp_id,
-        userInput.Employee_name,
-        userInput.Map_id,
-        userInput.gender,
-        userInput.contact_no,
-        userInput.Email_id,
-        userInput.Client_place,
-        userInput.Address,
-        userInput.Client_place,
-        "Open",
-        "create map",
-      ]
-    )
+point_tracking.addmapuseweb = async function (userInput, resultCallback) {
+  await model.mapusers
+    .create({
+      Emp_id: userInput.Emp_id,
+      Employee_name: userInput.Employee_name,
+      Map_id: userInput.Map_id,
+      gender: userInput.gender,
+      contact_no: userInput.contact_no,
+      Email_id: userInput.Email_id,
+      Client_place: userInput.Client_place,
+      Address: userInput.Address,
+      Client_place: userInput.Client_place,
+      status: "Open",
+      notification_title: "create map",
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -623,12 +485,10 @@ point_tracking.addmapuseweb = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.addmapuserlistweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('select * from public."Mapusers" WHERE "Map_id"=($1)', [
-      userInput.Map_id,
-    ])
+point_tracking.addmapuserlistweb = async function (userInput, resultCallback) {
+  await model.mapusers
+    .find({ Map_id: userInput.Map_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -637,12 +497,10 @@ point_tracking.addmapuserlistweb = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.mapuserdeleteweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('Delete from public."Mapusers" WHERE "Emp_id"=($1) ', [
-      userInput.Emp_id,
-    ])
+point_tracking.mapuserdeleteweb = async function (userInput, resultCallback) {
+  await model.mapusers
+    .deleteOne({ Emp_id: userInput.Emp_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -651,12 +509,13 @@ point_tracking.mapuserdeleteweb = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.fetchmapuserpointsweb1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor
-    .any('Select * from public."PointTrackMap" WHERE "Emp_id"=($1) ', [
-      userInput.Emp_id,
-    ])
+point_tracking.fetchmapuserpointsweb1 = async function (
+  userInput,
+  resultCallback
+) {
+  await model.pointtrackmap
+    .find({ Emp_id: userInput.Emp_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -665,16 +524,12 @@ point_tracking.fetchmapuserpointsweb1 = function (userInput, resultCallback) {
     });
 };
 
-point_tracking.fetchmapuserpointsweb2 = function (userInput, resultCallback) {
-  // var executor = db.getdaata.getdb();
-  // executor.any('Select * from public."Mapusers" WHERE "Emp_id"=($1) ',[userInput.Emp_id])
-  //                .then(data => {
-  //                   resultCallback(null,data);
-  //                })
-  //                .catch(error => {
-  //                   resultCallback(null,error );
-  //               })
-  var executor = db.getdaata.getdb();
+//! need to check below
+
+point_tracking.fetchmapuserpointsweb2 = async function (
+  userInput,
+  resultCallback
+) {
   executor
     .any(
       'Select * from public."PointTrackMap" WHERE ukey in (Select CAST ("Map_id"  AS INTEGER) from public."Mapusers" WHERE "Emp_id"=($1)) ',

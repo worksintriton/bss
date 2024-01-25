@@ -37,7 +37,7 @@ const payrollmanualunitrate = require("./payrollmanualunitrate.model");
 const pointtrackmap = require("./pointtrackmap.model");
 const pointtrackmapspot = require("./pointtrackmapspot.model");
 const pointtrackrecordsspot = require("./pointtrackrecordsspot.model");
-const ponttrackrecords = require("./ponttrackrecords.model");
+const pointtrackrecords = require("./pointtrackrecords.model");
 const qrcode = require("./qrcode.model");
 const qualitycheck = require("./qualitycheck.model");
 const qualitychecklist = require("./qualitychecklist.model");
@@ -90,7 +90,7 @@ module.exports = {
   pointtrackmap,
   pointtrackmapspot,
   pointtrackrecordsspot,
-  ponttrackrecords,
+  pointtrackrecords,
   qrcode,
   qualitycheck,
   qualitychecklist,

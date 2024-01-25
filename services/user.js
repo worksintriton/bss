@@ -73,103 +73,9 @@ user.confignumbers = async function (userInput, resultCallback) {
 
 user.updateemployee1s = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\
-  executor
-    .any(
-      'UPDATE public.employeedetails SET  "personmark"=$2, "nameorg"=$3, "position"=$4, "servicef"=$5 ,"servicet"=$6 ,"lastsalary"=$7,"reasonlev"=$8,"nomiename1"=$9,"nomieaddress1"=$10,"nomiedate1"=$11,"nomiefund1"=$12,"nomiemirror1"=$13,"nomiename2"=$14,"nomieaddress2"=$15,"nomiedate2"=$16,"nomiefund2"=$17,"nomiemirror2"=$18,"nomiename3"=$19,"nomieaddress3"=$20,"nomiedate3"=$21,"nomiefund3"=$22,"nomiemirror3"=$23,"nomiename4"=$24,"nomieaddress4"=$25,"nomiedate4"=$26,"nomiefund4"=$27,"nomiemirror4"=$28,"nomiename5"=$29,"nomieaddress5"=$30,"nomiedate5"=$31,"nomiefund5"=$32,"nomiemirror5"=$33, "nomierelation1"=$34, "nomierelation2"=$35, "nomierelation3"=$36, "nomierelation4"=$37, "nomierelation5"=$38  , "epf_no"=$39, "esic_no"=$40, "sponsored_by"=$41, "rank"=$42, "sponname"=$43, "Sponregion"=$44, "remarks"=$45, "language1"=$46, "language2"=$47, "language3"=$48, "language4"=$49, "language5"=$50, "lanstate1"=$51, "lanstate2"=$52, "lanstate3"=$53, "lanstate4"=$54, "lanstate5"=$55, "personmark1"=$56, "Spectacles"=$57, "RightEyePower"=$58, "LeftEyePower"=$59, "School_CollegeName"=$60, "School_CollegeAddress"=$61, "HigherClassStudied"=$62, "StudiedYear"=$63, "StudiedResultStatus"=$64, "TC_No"=$65, "TC_Type"=$66, "MarkSheet_of"=$67, "MarkSheet_of_Type"=$68, "Games"=$69, "Hobbies"=$70, "RecOfIntWrittenWork"=$71, "RecOfIntAppearance"=$72, "RecOfIntFirstImperssion"=$73, "RecOfIntResult"=$74, "RecOfIntDesignationEntry"=$75, "RecOfIntToBePostedTo"=$76, "RecOfIntRemarks"=$77, "mother_tongue"=$78, "mother_tongue_state"=$79   WHERE  "id" = $1 RETURNING *',
-      [
-        userInput.Emp_id,
-        userInput.personmark,
-        userInput.nameorg,
-        userInput.position,
-        userInput.servicef,
-        userInput.servicet,
-        userInput.lastsalary,
-        userInput.reasonlev,
+  await model.employeedetails
+    .findOneAndUpdate({ _id: userInput.Emp_id }, { ...userInput })
 
-        userInput.nomiename1,
-        userInput.nomieaddress1,
-        userInput.nomiedate1,
-        userInput.nomiefund1,
-        userInput.nomiemirror1,
-
-        userInput.nomiename2,
-        userInput.nomieaddress2,
-        userInput.nomiedate2,
-        userInput.nomiefund2,
-        userInput.nomiemirror2,
-
-        userInput.nomiename3,
-        userInput.nomieaddress3,
-        userInput.nomiedate3,
-        userInput.nomiefund3,
-        userInput.nomiemirror3,
-
-        userInput.nomiename4,
-        userInput.nomieaddress4,
-        userInput.nomiedate4,
-        userInput.nomiefund4,
-        userInput.nomiemirror4,
-
-        userInput.nomiename5,
-        userInput.nomieaddress5,
-        userInput.nomiedate5,
-        userInput.nomiefund5,
-        userInput.nomiemirror5,
-
-        userInput.nomierelation1,
-        userInput.nomierelation2,
-        userInput.nomierelation3,
-        userInput.nomierelation4,
-        userInput.nomierelation5,
-
-        userInput.epf_no,
-        userInput.esic_no,
-        userInput.sponsored_by,
-        userInput.rank,
-        userInput.sponname,
-        userInput.Sponregion,
-        userInput.remarks,
-
-        userInput.language1,
-        userInput.language2,
-        userInput.language3,
-        userInput.language4,
-        userInput.language5,
-        userInput.lanstate1,
-        userInput.lanstate2,
-        userInput.lanstate3,
-        userInput.lanstate4,
-        userInput.lanstate5,
-
-        userInput.personmark1,
-
-        userInput.Spectacles,
-        userInput.RightEyePower,
-        userInput.LeftEyePower,
-        userInput.School_CollegeName,
-        userInput.School_CollegeAddress,
-        userInput.HigherClassStudied,
-        userInput.StudiedYear,
-        userInput.StudiedResultStatus,
-
-        userInput.TC_No,
-        userInput.TC_Type,
-        userInput.MarkSheet_of,
-        userInput.MarkSheet_of_Type,
-        userInput.Games,
-        userInput.Hobbies,
-        userInput.RecOfIntWrittenWork,
-        userInput.RecOfIntAppearance,
-        userInput.RecOfIntFirstImperssion,
-        userInput.RecOfIntResult,
-        userInput.RecOfIntDesignationEntry,
-        userInput.RecOfIntToBePostedTo,
-        userInput.RecOfIntRemarks,
-
-        userInput.mother_tongue,
-        userInput.mother_tongue_state,
-      ]
-    )
     .then((data) => {
       console.log("1");
       resultCallback(null, data);
@@ -182,11 +88,9 @@ user.updateemployee1s = async function (userInput, resultCallback) {
 };
 
 user.updateqrs = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'UPDATE public.employeedetails  SET "qrcode"=($2)  WHERE "Empid" = ($1)  RETURNING *',
-      [userInput.empid, userInput.qrcode]
-    )
+  await model.employeedetails
+    .updateOne({ _id: userInput.empid }, { qrcode: userInput.qrcode })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -199,12 +103,9 @@ user.updateqrs = async function (userInput, resultCallback) {
 
 user.Changepasswords = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\
+  await model
+    .updateOne({ _id: userInput.id }, { Password: userInput.Password })
 
-  executor
-    .one(
-      'UPDATE public."employeedetails" SET  "Password"=$1 WHERE  "id" = $2 RETURNING *',
-      [userInput.Password, userInput.id]
-    )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -289,11 +190,8 @@ user.selectcontract = async function (date, resultCallback) {
 user.AddemployeeC = async function (userInput, resultCallback) {
   await model.employeedetails
     .findOne({ Mobile_No: userInput.Mobile_No })
-
     .then(async (data) => {
-      console.log(data.length);
-      if (data.length == 1) {
-        //eruthuchuna
+      if (data?.length == 1) {
         var string = {
           message: "This Mobile No already exits!",
           status: "falied",
@@ -440,6 +338,10 @@ user.AddemployeeC = async function (userInput, resultCallback) {
 
           .then((data) => {
             resultCallback(null, data);
+          })
+          .catch((error) => {
+            resultCallback(error, null);
+            console.log("ERROR:", error);
           });
       }
     })
@@ -450,13 +352,10 @@ user.AddemployeeC = async function (userInput, resultCallback) {
 };
 
 user.updateempid = async function (userInput, mydata, resultCallback) {
-  console.log(userInput);
-
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      'UPDATE public."employeedetails" SET  "Empid"=$1   WHERE  "id" = $2 RETURNING *',
-      [mydata + "-" + userInput.id, userInput.id]
+  await model.employeedetails
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      { Empid: `${mydata + "-" + userInput.id}` }
     )
     .then((data) => {
       console.log(data);
@@ -531,10 +430,8 @@ user.updateclient = async function (userInput, resultCallback) {
 
 user.deleteemployees = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('Delete FROM public."employeedetails" WHERE "id"=($1) ', [
-      userInput.empid,
-    ])
+  await model.employeedetails
+    .deleteOne({ _id: userInput.id })
 
     .then((data) => {
       resultCallback(null, data);
@@ -547,138 +444,12 @@ user.deleteemployees = async function (userInput, resultCallback) {
 
 //updateemployees///
 user.updateemployees = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'UPDATE public.employeedetails SET employee_type = ($2), father_name = ($3), gender= ($4), material_status= ($5), "Edq"= ($6), nationality= ($7), languages= ($8), date_joining= ($9), driving_licence= ($10), "Email_ID"= ($11), "Mobile_No"= ($12), "Name"= ($13), "Date_of_birth"= ($14), "Password"= ($15), aadhar_card= ($16), voter_id= ($17), "Address"= ($18), attach= ($19), qrcode= ($20), workstatus = ($21), resigned= ($22), createdtime= ($23), contact= ($24), ifsc= ($25), "a_c"= ($26), bankname= ($27), account= ($28), prom_in= ($29), pan= ($30), weight = ($31), height= ($32), "mother_tongue"= ($33), permentaddress= ($34),fname1= ($35),fsex1= ($36),frelationship1= ($37),fdateofbirth1= ($38),fage1= ($39),foccupation1= ($40),faadharcard1= ($41),fname2= ($42),fsex2= ($43),frelationship2= ($44),fdateofbirth2= ($45),fage2= ($46),foccupation2= ($47),faadharcard2= ($48),fname3= ($49),fsex3= ($50),frelationship3= ($51),fdateofbirth3= ($52),fage3= ($53),foccupation3= ($54),faadharcard3= ($55),fname4= ($56),fsex4= ($57),frelationship4= ($58),fdateofbirth4= ($59),fage4= ($60),foccupation4= ($61),faadharcard4= ($62),fname5= ($63),fsex5= ($64),frelationship5= ($65),fdateofbirth5= ($66),fage5= ($67),foccupation5= ($68),faadharcard5= ($69),nname1= ($70),nsex1= ($71),nrelationship1= ($72),ndateofbirth1= ($73),nage1= ($74),noccupation1= ($75),naadharcard1= ($76),nname2= ($77),nsex2= ($78),nrelationship2= ($79),ndateofbirth2= ($80),nage2= ($81),noccupation2= ($82),naadharcard2= ($83),nname3= ($84),nsex3= ($85),nrelationship3= ($86),ndateofbirth3= ($87),nage3= ($88),noccupation3= ($89),naadharcard3= ($90),nname4= ($91),nsex4= ($92),nrelationship4= ($93),ndateofbirth4= ($94),nage4= ($95),noccupation4= ($96),naadharcard4= ($97),nname5= ($98),nsex5= ($99),nrelationship5= ($100),ndateofbirth5= ($101),nage5= ($102),noccupation5= ($103),naadharcard5= ($104),site_name = ($105) , company_name = ($106) ,esi = ($107), pf1 = ($108), pf2= ($109), pf3=($110) , uan = ($111), pf_action=($112), esi_action=($113), prof_action=($114), work_status_action=($115),prom_in1=($116),prom_in_mobile_no=($117),prom_in_mobile_no1=($118),work_exp=($119),chest=($120),area=($121),fcontact1=($122),fcontact2=($123),fcontact3=($124),fcontact4=($125),fcontact5=($126),age=($127) WHERE  id=($1) RETURNING *',
-      [
-        userInput.id,
-        userInput.employee_type,
-        userInput.father_name,
-        userInput.gender,
-        userInput.material_status,
-        userInput.Edq,
-        userInput.nationality,
-        userInput.languages,
-        userInput.date_joining,
-        userInput.driving_licence,
-        userInput.Email_ID,
-        userInput.Mobile_No,
-        userInput.Name,
-        userInput.Date_of_birth,
-        userInput.Password,
-        userInput.aadhar_card,
-        userInput.voter_id,
-        userInput.Address,
-        userInput.attach,
-        userInput.qrcode,
-        userInput.workstatus,
-        userInput.resigned,
-        userInput.createdtime,
-        userInput.contact,
-        userInput.ifsc,
-        userInput.a_c,
-        userInput.bankname,
-        userInput.account,
-        userInput.prom_in,
-        userInput.pan,
-        userInput.weight,
-        userInput.height,
-        userInput.mother_tongue,
-        userInput.permentaddress,
-        userInput.fname1,
-        userInput.fsex1,
-        userInput.frelationship1,
-        userInput.fdateofbirth1,
-        userInput.fage1,
-        userInput.foccupation1,
-        userInput.faadharcard1,
-        userInput.fname2,
-        userInput.fsex2,
-        userInput.frelationship2,
-        userInput.fdateofbirth2,
-        userInput.fage2,
-        userInput.foccupation2,
-        userInput.faadharcard2,
-        userInput.fname3,
-        userInput.fsex3,
-        userInput.frelationship3,
-        userInput.fdateofbirth3,
-        userInput.fage3,
-        userInput.foccupation3,
-        userInput.faadharcard3,
-        userInput.fname4,
-        userInput.fsex4,
-        userInput.frelationship4,
-        userInput.fdateofbirth4,
-        userInput.fage4,
-        userInput.foccupation4,
-        userInput.faadharcard4,
-        userInput.fname5,
-        userInput.fsex5,
-        userInput.frelationship5,
-        userInput.fdateofbirth5,
-        userInput.fage5,
-        userInput.foccupation5,
-        userInput.faadharcard5,
-        userInput.nname1,
-        userInput.nsex1,
-        userInput.nrelationship1,
-        userInput.ndateofbirth1,
-        userInput.nage1,
-        userInput.noccupation1,
-        userInput.naadharcard1,
-        userInput.nname2,
-        userInput.nsex2,
-        userInput.nrelationship2,
-        userInput.ndateofbirth2,
-        userInput.nage2,
-        userInput.noccupation2,
-        userInput.naadharcard2,
-        userInput.nname3,
-        userInput.nsex3,
-        userInput.nrelationship3,
-        userInput.ndateofbirth3,
-        userInput.nage3,
-        userInput.noccupation3,
-        userInput.naadharcard3,
-        userInput.nname4,
-        userInput.nsex4,
-        userInput.nrelationship4,
-        userInput.ndateofbirth4,
-        userInput.nage4,
-        userInput.noccupation4,
-        userInput.naadharcard4,
-        userInput.nname5,
-        userInput.nsex5,
-        userInput.nrelationship5,
-        userInput.ndateofbirth5,
-        userInput.nage5,
-        userInput.noccupation5,
-        userInput.naadharcard5,
-        userInput.site_name,
-        userInput.company_name,
-        userInput.esi,
-        userInput.pf1,
-        userInput.pf2,
-        userInput.pf3,
-        userInput.uan,
-        userInput.pf_action,
-        userInput.esi_action,
-        userInput.prof_action,
-        userInput.work_status_action,
-        userInput.prom_in1,
-        userInput.prom_in_mobile_no,
-        userInput.prom_in_mobile_no1,
-        userInput.work_exp,
-        userInput.chest,
-        userInput.area,
-        userInput.fcontact1,
-        userInput.fcontact2,
-        userInput.fcontact3,
-        userInput.fcontact4,
-        userInput.fcontact5,
-        userInput.age,
-      ]
+  await model.employeedetails
+    .updateOne(
+      { _id: userInput.id },
+      {
+        ...userInput,
+      }
     )
     .then((data) => {
       console.log(data);
@@ -760,11 +531,9 @@ user.fetchclients = async function (userInput, resultCallback) {
 //EmployeeList
 user.employeelists = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any(
-      'SELECT * FROM public.employeedetails  where "company_name"=($1) ORDER BY "Name" ASC',
-      [userInput.company_name]
-    )
+  await model.employeedetails
+    .find({ company_name: userInput.company_name })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -806,10 +575,9 @@ user.userlists = async function (userInput, resultCallback) {
 //empid//
 user.employeeids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('SELECT * FROM public.employeedetails WHERE "id"=($1) ', [
-      userInput.employee_id,
-    ])
+  await model.employeedetails
+    .findOne({ id: userInput.employee_id })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -822,10 +590,9 @@ user.employeeids = async function (userInput, resultCallback) {
 
 user.employeeids11 = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('SELECT * FROM public.employeedetails WHERE "ecode"=($1) ', [
-      userInput.employee_id,
-    ])
+  await model.employeedetails
+    .findOne({ ecode: userInput.ecode })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -838,11 +605,20 @@ user.employeeids11 = async function (userInput, resultCallback) {
 
 user.employeeidss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any(
-      'SELECT "id","Name","Date_of_birth","Email_ID","Address","Mobile_No","employee_type" FROM public.employeedetails WHERE "id"=($1) ',
-      [userInput.employee_id]
+  await model.employeedetails
+    .findOne(
+      { id: userInput.employee_id },
+      {
+        id: 1,
+        Name: 1,
+        Date_of_birth: 1,
+        Email_ID: 1,
+        Address: 1,
+        Mobile_No: 1,
+        employee_type: 1,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1128,11 +904,9 @@ user.checkusers = async function (userInput, resultCallback) {
 
 user.Updateemployee_ids = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .one(
-      'UPDATE public."faq" SET  "employee_id"=$1    WHERE  "id" = $2 RETURNING *',
-      [userInput.id, userInput.employee_id]
-    )
+  await model.employeedetails
+    .updateOne({ _id: userInput.id }, { employee_id: userInput.employee_id })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3128,11 +2902,9 @@ user.listnightreports = async function (userInput, resultCallback) {
 
 user.updateprofilephotos = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any(
-      'Update  public."attachment" SET  "title" = $2 where "Emp_id"= $1  RETURNING *',
-      [userInput.id, userInput.photo]
-    )
+  await model.attachment
+    .findOneAndUpdate({ title: userInput.photo }, { Emp_id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -4231,8 +4003,9 @@ user.addemployeebulkuploads = async function (
 
 user.efetchsitedetailss = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('select * FROM public."clientsite"', [userInput.id])
+  await model.clientsite
+    .find({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })

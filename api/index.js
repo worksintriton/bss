@@ -60,6 +60,8 @@ app.options("*", cors());
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
 
 /*Add Employee*/
+
+/*
 addRoute("/authentication/addemployee", "POST", [middleware.addemployee]);
 addRoute("/authentication/employeelist", "POST", [middleware.employeelist]);
 addRoute("/authentication/deleteemployee", "POST", [middleware.deleteemployee]);
@@ -84,13 +86,17 @@ addRoute("/authentication/fetchemployee_id", "POST", [
 addRoute("/authentication/updateprofilephoto", "POST", [
   middleware.updateprofilephoto,
 ]);
+*/
 
 /*Add User*/
+
+/*
 addRoute("/authentication/addusers", "POST", [middleware.addusers]);
 addRoute("/authentication/userid", "POST", [middleware.userid]);
 addRoute("/authentication/updateusers", "POST", [middleware.updateusers]);
 addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
+*/
 
 /*Add Configure*/
 addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
@@ -419,7 +425,7 @@ addRoute("/authentication/resigned", "POST", [middleware.resigned]);
 addRoute("/authentication/Clientlogin", "POST", [middleware.Clientlogin]);
 
 /*Create Client site */
-addRoute("/client/newclientsite", "POST", [middleware.newclientsite]); 
+addRoute("/client/newclientsite", "POST", [middleware.newclientsite]);
 addRoute("/client/sitelist", "POST", [middleware.sitelist]);
 addRoute("/client/updateclientsite", "POST", [middleware.updateclientsite]);
 addRoute("/client/deletclientsite", "POST", [middleware.deletclientsite]);
