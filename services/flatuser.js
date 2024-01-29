@@ -5,12 +5,12 @@ var _ = require("lodash"),
   async = require("async");
 
 function flatuser() {}
+const model = require("../model/index");
 
-flatuser.getuser_details = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any("SELECT * FROM public.user WHERE user_id=($1) ", [userInput.user_id])
+flatuser.getuser_details = async function (userInput, resultCallback) {
+  await model.user
+    .find({ user_id: userInput.user_id })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -21,14 +21,11 @@ flatuser.getuser_details = function (userInput, resultCallback) {
     });
 };
 
-flatuser.add = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('SELECT * FROM public.user WHERE "email_id"=($1) ', [
-      userInput.email_id,
-    ])
-    .then((data) => {
+flatuser.add = async function (userInput, resultCallback) {
+  await model
+    .user.findOne({ email_id: userInput.email_id })
+
+    .then(async (data) => {
       if (data.length > 0) {
         //eruthuchuna
         var string = {
@@ -38,27 +35,25 @@ flatuser.add = function (userInput, resultCallback) {
         resultCallback(null, string);
       } else {
         console.log("2");
-        executor.none(
-          "INSERT INTO public.user (flat_no, block_name, user_name, user_phone, password, email_id,owner_tent,type,appartment_name) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9);",
-          [
-            userInput.flat_no,
-            userInput.block_name,
-            userInput.user_name,
-            userInput.user_phone,
-            userInput.password,
+        await model.user.create({
+          flat_no: userInput.flat_no,
+          block_name: userInput.block_name,
+          user_name: userInput.user_name,
+          user_phone: userInput.user_phone,
+          password: userInput.password,
+          email_id: userInput.email_id,
+          owner_tent: userInput.owner_tent,
+          type: userInput.type,
+          appartment_name: userInput.appartment_name,
+        });
+        //! need to check (there is no table for user_login)
+        executor
+          .any('SELECT * FROM public.user_login WHERE "email_id"=($1) ', [
             userInput.email_id,
-            userInput.owner_tent,
-            userInput.type,
-            userInput.appartment_name,
-          ]
-        ),
-          executor
-            .any('SELECT * FROM public.user_login WHERE "email_id"=($1) ', [
-              userInput.email_id,
-            ])
-            .then((data) => {
-              resultCallback(null, data);
-            });
+          ])
+          .then((data) => {
+            resultCallback(null, data);
+          });
       }
     })
     .catch((error) => {

@@ -10,6 +10,7 @@ const nightCheckSchema = new mongoose.Schema({
   shift_rank: { type: String },
   shift_auth: { type: String },
   shift_present: { type: String },
+  report_id: { type: String },
 });
 nightCheckSchema.plugin(timestamps);
 mongoose.model("night_check", nightCheckSchema);

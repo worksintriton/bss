@@ -325,14 +325,24 @@ point_tracking.employee_fetchpointsmobile = async function (
     });
 };
 
-//! need to check the below one
-
 point_tracking.fetchemployeess = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * from public."employeedetails" where id in (select cast("Employee_id" as integer)from public."employee_track")',
-      []
-    )
+  await model.employeedetails
+    .aggregate([
+      {
+        $lookup: {
+          from: "employee_track",
+          localField: "_id",
+          foreignField: "Employee_id",
+          as: "data",
+        },
+      },
+      {
+        $unwind: {
+          path: "$data",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+    ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -472,7 +482,6 @@ point_tracking.addmapuseweb = async function (userInput, resultCallback) {
       Email_id: userInput.Email_id,
       Client_place: userInput.Client_place,
       Address: userInput.Address,
-      Client_place: userInput.Client_place,
       status: "Open",
       notification_title: "create map",
     })
@@ -524,17 +533,32 @@ point_tracking.fetchmapuserpointsweb1 = async function (
     });
 };
 
-//! need to check below
-
 point_tracking.fetchmapuserpointsweb2 = async function (
   userInput,
   resultCallback
 ) {
-  executor
-    .any(
-      'Select * from public."PointTrackMap" WHERE ukey in (Select CAST ("Map_id"  AS INTEGER) from public."Mapusers" WHERE "Emp_id"=($1)) ',
-      [userInput.Emp_id]
-    )
+  await model.pointtrackmap
+    .aggregate([
+      {
+        $lookup: {
+          from: "map_users",
+          localField: "_id",
+          foreignField: "Map_id",
+          as: "point_track",
+        },
+      },
+      {
+        $unwind: {
+          path: "$point_track",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          Emp_id: userInput.Emp_id,
+        },
+      },
+    ])
     .then((data) => {
       resultCallback(null, data);
     })

@@ -4,7 +4,7 @@ const objectId = mongoose.Types.ObjectId;
 const mapUsersSchema = new mongoose.Schema({
   Emp_id: { type: String },
   Employee_name: { type: String },
-  Map_id: { type: String },
+  Map_id: { type: objectId },
   gender: { type: String },
   contact_no: { type: String },
   Email_id: { type: String },

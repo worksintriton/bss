@@ -1,360 +1,383 @@
-
 "use strict";
 
 var _ = require("lodash"),
-        db = require("../db"),
-        async = require("async");
+  db = require("../db"),
+  async = require("async");
 
 function issues() {}
 
+const model = require("../model/index");
+const { mode } = require("crypto-js");
 
-issues.createIssue = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.issue_master("complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on","photo1","photo2","photo3","photo4" )VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)RETURNING *',
-                 [ 
-                 userInput.complaint_from,
-                 userInput.user_id,
-                 userInput.complaint_type,
-                 userInput.title,
-                 userInput.description,
-                 userInput.status,
-                 userInput.posted_on,
-                 userInput.photo1,
-                 userInput.photo2,
-                 userInput.photo3,
-                 userInput.photo4
-                 ])
-                 .then(data => {
-                    resultCallback(null,true, data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,false, error );
-                })
+issues.createIssue = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .create({
+      complaint_from: userInput.complaint_from,
+      user_id: userInput.user_id,
+      complaint_type: userInput.complaint_type,
+      title: userInput.title,
+      description: userInput.description,
+      status: userInput.status,
+      posted_on: userInput.posted_on,
+      photo1: userInput.photo1,
+      photo2: userInput.photo2,
+      photo3: userInput.photo3,
+      photo4: userInput.photo4,
+    })
+
+    .then((data) => {
+      resultCallback(null, true, data);
+    })
+    .catch((error) => {
+      resultCallback(null, false, error);
+    });
 };
 
+issues.createIssue1 = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .create({
+      complaint_from: userInput.complaint_from,
+      LoginKey: userInput.LoginKey,
+      complaint_type: userInput.complaint_type,
+      title: userInput.title,
+      description: userInput.description,
+      status: userInput.status,
+      posted_on: userInput.posted_on,
+    })
 
-issues.createIssue1 = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.issue_master("complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on" )VALUES($1,$2,$3,$4,$5,$6,$7)RETURNING *',
-                 [ 
-                 userInput.complaint_from,
-                 userInput.LoginKey,
-                 userInput.complaint_type,
-                 userInput.title,
-                 userInput.description,
-                 userInput.status,
-                 userInput.posted_on
-                 ])
-                 .then(data => {
-                    resultCallback(null,true, data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,false, error );
-                })
-
-
+    .then((data) => {
+      resultCallback(null, true, data);
+    })
+    .catch((error) => {
+      resultCallback(null, false, error);
+    });
 };
 
-issues.createIssuehistory = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.issues_history("complaint_id", "complaint_from", "poster_id", "complaint_type", "title", "description", "status", "posted_on","updated_at","moved_by","moved_to","taken_by","photo1","photo2","photo3","photo4")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)RETURNING *',
-                 [
-                 userInput.complaint_id, 
-                 userInput.complaint_from,
-                 userInput.poster_id,
-                 userInput.complaint_type,
-                 userInput.title,
-                 userInput.description,
-                 userInput.status,
-                 userInput.posted_on,
-                 userInput.updated_at,
-                 userInput.moved_by,
-                 userInput.moved_to,
-                 userInput.taken_by,
-                 userInput.photo1,
-                 userInput.photo2,
-                 userInput.photo3,
-                 userInput.photo4
-                 ])
-                 .then(data => {
-                    resultCallback(null,data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,error );
-                })
+issues.createIssuehistory = async function (userInput, resultCallback) {
+  await model.issuehistory
+    .create({
+      complaint_id: userInput.complaint_id,
+      complaint_from: userInput.complaint_from,
+      poster_id: userInput.poster_id,
+      complaint_type: userInput.complaint_type,
+      title: userInput.title,
+      description: userInput.description,
+      status: userInput.status,
+      posted_on: userInput.posted_on,
+      updated_at: userInput.updated_at,
+      moved_by: userInput.moved_by,
+      moved_to: userInput.moved_to,
+      taken_by: userInput.taken_by,
+      photo1: userInput.photo1,
+      photo2: userInput.photo2,
+      photo3: userInput.photo3,
+      photo4: userInput.photo4,
+    })
 
-
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(null, error);
+    });
 };
 
-issues.updateissue = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  
-  executor.one('UPDATE public.issue_master SET "status"= $2, "moved_by"= $3, "moved_to"= $4 ,"updated_at" = $5 WHERE "complaint_id" = $1 RETURNING *',
-                 [ 
-                 userInput.complaint_id,
-                 userInput.status,
-                 userInput.moved_by,
-                 userInput.moved_to,
-                 userInput.updated_at
-                 ])
-                 .then(data => {
-                    resultCallback(null,true, data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,false, error );
-                })
+issues.updateissue = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .findOneAndUpdate(
+      { complaint_id: userInput.complaint_id },
+      {
+        status: userInput.status,
+        moved_by: userInput.moved_by,
+        moved_to: userInput.moved_to,
+      }
+    )
+
+    .then((data) => {
+      resultCallback(null, true, data);
+    })
+    .catch((error) => {
+      resultCallback(null, false, error);
+    });
 };
 
+issues.taken_bys = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .findOneAndUpdate(
+      { complaint_id: userInput.complaint_id },
+      { taken_by: userInput.taken_by }
+    )
 
-
-issues.taken_bys = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  console.log(userInput)
-  executor.one('UPDATE public.issue_master SET "taken_by"= $2 ,"updated_at" = $3  WHERE "complaint_id" = $1 RETURNING *',
-                 [ 
-                 userInput.complaint_id,
-                 userInput.taken_by,
-                 userInput.updated_at
-                 ])
-                 .then(data => {
-                    resultCallback(null,true, data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,false, error );
-                })
-
-
+    .then((data) => {
+      resultCallback(null, true, data);
+    })
+    .catch((error) => {
+      resultCallback(null, false, error);
+    });
 };
 
-issues.reports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  executor.one('INSERT INTO public.issues_history("complaint_id", "title", "description", "status","updated_at","taken_by","photo1","photo2","photo3","photo4")VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)RETURNING *',
-                 [
-                 userInput.complaint_id, 
-                 userInput.title,
-                 userInput.description,
-                 userInput.status,
-                 userInput.updated_at,
-                 userInput.taken_by,
-                 userInput.photo1,
-                 userInput.photo2,
-                 userInput.photo3,
-                 userInput.photo4,
-                 ])
-                 .then(data => {
-                    resultCallback(null,true, data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,false, error);
-                })
+issues.reports = async function (userInput, resultCallback) {
+  await model.issuehistory
+    .create({
+      complaint_id: userInput.complaint_id,
+      title: userInput.title,
+      description: userInput.description,
+      status: userInput.status,
+      updated_at: userInput.updated_at,
+      taken_by: userInput.taken_by,
+      photo1: userInput.photo1,
+      photo2: userInput.photo2,
+      photo3: userInput.photo3,
+      photo4: userInput.photo4,
+    })
 
-
+    .then((data) => {
+      resultCallback(null, true, data);
+    })
+    .catch((error) => {
+      resultCallback(null, false, error);
+    });
 };
 
+issues.updateissuecomplaint = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .findOneAndUpdate(
+      { complaint_id: userInput.complaint_id },
+      { status: userInput.status }
+    )
 
-issues.updateissuecomplaint = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  
-  executor.one('UPDATE public.issue_master SET "status"= $2 WHERE "complaint_id" = $1 RETURNING *',
-                 [ 
-                 userInput.complaint_id,
-                 userInput.status
-                 ])
-                 .then(data => {
-                    resultCallback(null,true, data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,false, error );
-                })
+    .then((data) => {
+      resultCallback(null, true, data);
+    })
+    .catch((error) => {
+      resultCallback(null, false, error);
+    });
 };
 
+issues.reportupdate = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .findOneAndUpdate(
+      { complaint_id: userInput.complaint_id },
+      {
+        status: userInput.status,
 
-issues.reportupdate = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+        taken_by: userInput.taken_by,
+      }
+    )
 
-  executor.one('UPDATE public.issue_master SET "status"= $2, "updated_at" = $3 , "taken_by" = $4 WHERE "complaint_id" = $1 RETURNING *',
-                 [ 
-                 userInput.complaint_id,
-                 userInput.status,
-                 userInput.updated_at,
-                 userInput.taken_by
-                 ])
-                 .then(data => {
-                    resultCallback(null,true, data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,false, error );
-                })
+    .then((data) => {
+      resultCallback(null, true, data);
+    })
+    .catch((error) => {
+      resultCallback(null, false, error);
+    });
 };
 
+issues.createIssueAttachment = async function (
+  basepath,
+  filename,
+  issue_id,
+  resultCallback
+) {
+  await model.issueattachment
+    .create({
+      basepath: basepath,
+      filename: filename,
+      issue_id: issue_id,
+      is_Deleted: false,
+    })
 
-issues.createIssueAttachment = function (basepath, filename, issue_id, resultCallback) {
-  var executor = db.getdaata.getdb();
-  
-  executor.one('INSERT INTO public.issue_attachments(basepath, filename, issue_id, "is_Deleted")VALUES($1,$2,$3,$4)RETURNING *',
-                 [ 
-                 basepath,
-                 filename,
-                 issue_id,
-                 false
-                 ])
-                 .then(data => {
-                    resultCallback(null,true, data);
-                 })
-                 .catch(error => {
-                    resultCallback(null,false, error );
-                })
-
-
+    .then((data) => {
+      resultCallback(null, true, data);
+    })
+    .catch((error) => {
+      resultCallback(null, false, error);
+    });
 };
 
+issues.listIssues = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .find({})
 
+    // executor.any('SELECT * FROM public."issue_master" ',[userInput.E_mail_ID])
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+    });
+};
 
-
-issues.listIssues = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issue_master" ',[userInput.E_mail_ID])
-        .then(data => {
-            resultCallback(null,data );
+issues.clearissues = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .deleteOne({ complaint_id: userInput.complaint_id })
+    .then(async (data) => {
+      await model.issuehistory
+        .deleteOne({ complaint_id: userInput.complaint_id })
+        .then((data) => {
+          resultCallback(null, data);
         })
-        .catch(error => {
-            resultCallback(error,null );
-            
-        }) 
-};
-
-
-issues.clearissues = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('Delete  FROM public."issue_master" where "complaint_id"=$1',[userInput.complaint_id])
-        .then(data => {
-    executor.any('Delete  FROM public."issues_history" where  "complaint_id"=$1 ',[userInput.complaint_id])
-        .then(data => {
-            resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,null );
-        }) 
-
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            
-        }) 
-};
-
-
-issues.issuedetail = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issue_master" where "complaint_id"=$1',[userInput.complaint_id])
-        .then(data => {
-            resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            
-        }) 
-};
-
-issues.issuetracks = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issues_history" where "complaint_id"=$1',[userInput.complaint_id])
-        .then(data => {
-            resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,null );
-            
-        }) 
-};
-
-issues.listIssueAttachment = function (issueid, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issue_attachments" where issue_id in ( select id FROM public."issue_master" where "status" != ($1) )',["closed"])
-        .then(data => {
-            resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,[] );
-            
-        }) 
-};
-
-issues.listMyIssues = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issue_master" where "poster_id" = ($1)',[""+userInput.user_id])
-        .then(data => {
-            resultCallback(null,data);
-        })
-        .catch(error => {
-            resultCallback(error,null);
-        }) 
-};
-
-
-issues.listissuess = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issue_master" ',[userInput.LoginKey])
-        .then(data => {
-            resultCallback(null,data);
-        })
-        .catch(error => {
-            resultCallback(error,null);
-        }) 
-};
-
-
-issues.listmyIssueAttachments = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issue_attachments" ',[userInput.LoginKey])
-        .then(data => {
-            resultCallback(null,data);
-        })
-        .catch(error => {
-            resultCallback(error,null);
-        }) 
-};
-
-
-issues.listissuess1 = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issue_master" where "poster_id" = ($1)',[userInput.LoginKey])
-        .then(data => {
-            resultCallback(null,data);
-        })
-        .catch(error => {
-            resultCallback(error,null);
-        }) 
-};
-
-
-
-
-
-issues.listmyIssueAttachment = function (userInput, resultCallback) {
-var executor = db.getdaata.getdb();
-    executor.any('SELECT * FROM public."issue_attachments" where issue_id in ( select id FROM public."issue_master" where "poster_id" = ($1) )',[""+userInput.user_id])
-        .then(data => {
-            resultCallback(null,data );
-        })
-        .catch(error => {
-            resultCallback(error,[] );
-            
-        }) 
-};
-
-issues.issuecounts = function (userInput , resultCallback) {
-  var executor = db.getdaata.getdb(); 
-       executor.any('SELECT count(*)  FROM public."issue_master" WHERE status = ($1)  UNION ALL SELECT count(*)  FROM public."issue_master" WHERE status = ($2)   UNION ALL SELECT count(*)  FROM public."issue_master" WHERE status = ($3)   UNION ALL SELECT count(*)  FROM public."issue_master" ',['open','Inprogress','completed'])
-       .then(data => {
-        console.log(data)
-        resultCallback(null,data);
-        })
-        .catch(error => {
-          resultCallback(error,{} );
-          console.log('ERROR:', error);
+        .catch((error) => {
+          resultCallback(error, null);
         });
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+    });
 };
 
+issues.issuedetail = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .findOne({ complaint_id: userInput.complaint_id })
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+    });
+};
+
+issues.issuetracks = async function (userInput, resultCallback) {
+  await model.issuehistory
+    .findOne({ complaint_id: userInput.complaint_id })
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+    });
+};
+
+issues.listIssueAttachment = async function (issueid, resultCallback) {
+  await model.issueattachment
+    .aggregate([
+      {
+        $lookup: {
+          from: "issue_master",
+          localField: "issue_id",
+          foreignField: "_id",
+          as: "result",
+        },
+      },
+      {
+        $unwind: {
+          path: "$result",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          "result.status": {
+            $ne: "closed",
+          },
+        },
+      },
+    ])
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, []);
+    });
+};
+
+issues.listMyIssues = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .find({ poster_id: userInput.user_id })
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+    });
+};
+
+issues.listissuess = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .find({})
+    // executor.any('SELECT * FROM public."issue_master" ',[userInput.LoginKey])
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+    });
+};
+
+issues.listmyIssueAttachments = async function (userInput, resultCallback) {
+  await model.issueattachment
+    .find({})
+    // executor.any('SELECT * FROM public."issue_attachments" ',[userInput.LoginKey])
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+    });
+};
+
+issues.listissuess1 = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .find({ poster_id: userInput.LoginKey })
+    // executor.any('SELECT * FROM public."issue_master" where "poster_id" = ($1)',[userInput.LoginKey])
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+    });
+};
+
+issues.listmyIssueAttachment = async function (userInput, resultCallback) {
+  await model.issueattachment
+    .aggregate([
+      {
+        $lookup: {
+          from: "issue_master",
+          localField: "issue_id",
+          foreignField: "_id",
+          as: "record",
+        },
+      },
+      {
+        $unwind: {
+          path: "$record",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          poster_id: userInput.user_id,
+        },
+      },
+    ])
+
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, []);
+    });
+};
+
+issues.issuecounts = async function (userInput, resultCallback) {
+  await model.issuemaster
+    .aggregate([
+      {
+        _id: "$status",
+        count: {
+          $sum: 1,
+        },
+      },
+    ])
+    .then((data) => {
+      console.log(data);
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, {});
+      console.log("ERROR:", error);
+    });
+};
 
 module.exports = issues;

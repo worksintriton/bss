@@ -6,6 +6,7 @@ const trainingVideosSchema = new mongoose.Schema({
   descriptions: { type: String },
   video_url: { type: String },
   videos_id: { type: String },
+  Emp_id:{type:objectId}
 });
 trainingVideosSchema.plugin(timestamps);
 mongoose.model("training_videos", trainingVideosSchema);

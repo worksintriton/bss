@@ -6,39 +6,37 @@ var _ = require("lodash"),
 
 function attendance() {}
 
-attendance.MarkAttendancemob = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+const model = require("../model/index");
+attendance.MarkAttendancemob = async function (userInput, resultCallback) {
+  await model.attendance
+    .find({ employee_id: userInput.id, check: "Out", date: userInput.date })
 
-  executor
-    .any(
-      'SELECT * FROM public."attendance"  where "employee_id"=$1 and "check"=$2  and "date"=$3  ',
-      [userInput.id, "Out", userInput.date]
-    )
-    .then((data) => {
+    .then(async (data) => {
       console.log(data);
       if (data.length == 1) {
         var data = "You are already Singed-Out";
         resultCallback(null, data);
       } else {
-        executor
-          .any(
-            'SELECT * FROM public.attendance where "employee_id"=$1 and "check"=$2  and "date"=$3 ',
-            [userInput.id, "In", userInput.date]
-          )
-          .then((data) => {
+        await model.attendance
+          .find({
+            employee_id: userInput.id,
+            check: "In",
+            date: userInput.date,
+          })
+
+          .then(async (data) => {
             if (data.length < 1) {
-              executor
-                .one(
-                  'INSERT INTO public."attendance"("employee_id","name","time_in","status","date","check")VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
-                  [
-                    userInput.id,
-                    userInput.Name,
-                    userInput.time,
-                    "Present",
-                    userInput.date,
-                    "In",
-                  ]
-                )
+              await model.attendance
+                .create({
+                  employee_id: userInput.id,
+                  check: "Out",
+                  date: userInput.date,
+                  Name: userInput.Name,
+                  time: userInput.time,
+                  check: "In",
+                  status: "Present",
+                })
+
                 .then((data) => {
                   console.log(data);
                   resultCallback(null, data);
@@ -48,17 +46,27 @@ attendance.MarkAttendancemob = function (userInput, resultCallback) {
                   console.log("ERROR:", error);
                 });
             } else {
-              executor
-                .one(
-                  'UPDATE public."attendance" SET  "time_out"= $2 , "check"=$4   WHERE  "employee_id" = $1  and "date"= $3  RETURNING *',
-                  [userInput.id, userInput.time, userInput.date, "Out"]
+              await model.attendance
+                .findOneAndUpdate(
+                  { employee_id: userInput.id, date: userInput.date },
+                  { time: userInput.time, check: "Out" }
                 )
-                .then((data) => {
-                  executor
-                    .one(
-                      'UPDATE public.attendance  SET  "work_duration"= "time_out" - "time_in" where "employee_id"=$1 and "check"=$2  and "date"=$3 RETURNING * ',
-                      [userInput.id, "Out", userInput.date]
+                .then(async (data) => {
+                  await model.attendance
+                    .findOneAndUpdate(
+                      {
+                        employee_id: userInput.id,
+                        check: "Out",
+                        date: userInput.date,
+                      },
+                      { ...userInput }
                     )
+                    //! need to check "work_duration"= "time_out" - "time_in"
+                    // executor
+                    //   .one(
+                    //     'UPDATE public.attendance  SET  "work_duration"= "time_out" - "time_in" where "employee_id"=$1 and "check"=$2  and "date"=$3 RETURNING * ',
+                    //     [, "Out", ]
+                    //   )
                     .then((data) => {
                       resultCallback(null, data);
                     })
@@ -81,15 +89,15 @@ attendance.MarkAttendancemob = function (userInput, resultCallback) {
     });
 };
 
-attendance.Weeklystatusweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+attendance.Weeklystatusweb = async function (userInput, resultCallback) {
+  await model.attendance
+    .find({
+      date: {
+        $gte: new Date(userInput.start_date),
+        $lte: new Date(userInput.end_date),
+      },
+    })
 
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any(
-      'SELECT * FROM public."attendance" WHERE  "date" >= $1  AND "date" < $2 ',
-      [userInput.start_date, userInput.end_date]
-    )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -99,15 +107,15 @@ attendance.Weeklystatusweb = function (userInput, resultCallback) {
     });
 };
 
-attendance.Weeklyreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
+attendance.Weeklyreports = async function (userInput, resultCallback) {
+  await model.employeedetails
+    .find({
+      date_joining: {
+        $gte: new Date(userInput.start_date),
+        $lte: new Date(userInput.end_date),
+      },
+    })
 
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any(
-      'SELECT * FROM public."employeedetails" WHERE  "date_joining" >= $1  AND "date_joining" < $2 ',
-      [userInput.start_date, userInput.end_date]
-    )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -117,11 +125,9 @@ attendance.Weeklyreports = function (userInput, resultCallback) {
     });
 };
 
-attendance.Allstatusweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any("SELECT * FROM public.attendance", [userInput.id])
+attendance.Allstatusweb = async function (userInput, resultCallback) {
+  await model.attendance
+    .find({})
     .then((data) => {
       resultCallback(null, data);
     })
@@ -131,11 +137,9 @@ attendance.Allstatusweb = function (userInput, resultCallback) {
     });
 };
 
-attendance.dailystatusweb = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('SELECT * FROM public.attendance WHERE "date"= $1', [userInput.date])
+attendance.dailystatusweb = async function (userInput, resultCallback) {
+  await model.attendance
+    .find({ data: userInput.date })
     .then((data) => {
       resultCallback(null, data);
     })
@@ -145,13 +149,10 @@ attendance.dailystatusweb = function (userInput, resultCallback) {
     });
 };
 
-attendance.dailyreports = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any('SELECT * FROM public.employeedetails WHERE "date_joining"= $1', [
-      userInput.date,
-    ])
+attendance.dailyreports = async function (userInput, resultCallback) {
+  await model.employeedetails
+    .find({ date_joining: userInput.date })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -161,30 +162,27 @@ attendance.dailyreports = function (userInput, resultCallback) {
     });
 };
 
-attendance.assigningemployees = function (userInput, resultCallback) {
-  var executor = db.getdaata.getdb();
-  //\''+userInput.appartment_ukey+'\'
-  executor
-    .any(
-      'SELECT * FROM public.assignemployee WHERE "employee_id"= $1 and "date"=$2 ',
-      [userInput.employee_id, userInput.date]
-    )
-    .then((data) => {
+attendance.assigningemployees = async function (userInput, resultCallback) {
+  await model.assignemployee
+    .find({
+      employee_id: userInput.employee_id,
+      date: userInput.date,
+    })
+
+    .then(async (data) => {
       if (data.length == 1) {
         var data = "already assigned";
         resultCallback(null, data);
       } else {
-        executor
-          .one(
-            'INSERT INTO public."assignemployee"("client_id","client_name","employee_id","employee_name","date")VALUES ($1,$2,$3,$4,$5) RETURNING *',
-            [
-              userInput.client_id,
-              userInput.client_name,
-              userInput.employee_id,
-              userInput.employee_name,
-              userInput.date,
-            ]
-          )
+        await model.assigneEmployee
+          .create({
+            client_id: userInput.client_id,
+            client_name: userInput.client_name,
+            employee_id: userInput.employee_id,
+            employee_name: userInput.employee_name,
+            date: userInput.date,
+          })
+
           .then((data) => {
             console.log(data);
             var data = "assigned successfully";

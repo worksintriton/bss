@@ -131,7 +131,6 @@ const employeeDetailsSchema = new mongoose.Schema({
   fcontact4: { type: Number },
   fcontact5: { type: Number },
   mother_tongue_state: { type: String },
-  Emp_id: { type: String }, //! this key is not in previous model
 });
 employeeDetailsSchema.plugin(timestamps);
 mongoose.model("employee_details", employeeDetailsSchema);
