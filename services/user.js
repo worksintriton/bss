@@ -533,8 +533,10 @@ user.employeelists = async function (userInput, resultCallback) {
 
 //Employeelist uniform undeliverd
 user.uniformundelivered = async function (userInput, resultCallback) {
-  executor
-    .any('SELECT * FROM public.employeedetails ORDER BY "Name" ASC')
+  await model.employeedetails
+    .find({}, {}, { sort: { Name: 1 } })
+    // executor
+    //   .any('SELECT * FROM public.employeedetails ORDER BY "Name" ASC')
     .then((data) => {
       resultCallback(null, data);
     })
@@ -614,11 +616,13 @@ user.employeeidss = async function (userInput, resultCallback) {
 
 //add  FAQ//
 user.addquestion = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'INSERT INTO public."faq"( "questions", "answers","date")VALUES ($1,$2,$3) RETURNING *',
-      [userInput.questions, userInput.answers, userInput.date]
-    )
+  await model.faq
+    .create({
+      questions: userInput.questions,
+      answers: userInput.answers,
+      date: userInput.date,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -630,11 +634,16 @@ user.addquestion = async function (userInput, resultCallback) {
 };
 
 user.updatequestion = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'UPDATE public."faq" SET  "questions"=$1, "answers"=$2 ,"date"=$4   WHERE  "faq_id" = $3 RETURNING *',
-      [userInput.questions, userInput.answers, userInput.faq_id, userInput.date]
+  await model.faq
+    .findOneAndUpdate(
+      { faq_id: userInput.faq_id },
+      {
+        questions: userInput.questions,
+        answers: userInput.answers,
+        date: userInput.date,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -646,11 +655,12 @@ user.updatequestion = async function (userInput, resultCallback) {
 };
 
 user.updateresign = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'UPDATE public."employeedetails" SET  "resigned"=$1   WHERE  "Empid" = $2 RETURNING *',
-      [userInput.resigned, userInput.Empid]
+  await model.employeedetails
+    .findOneAndUpdate(
+      { Empid: userInput.Empid },
+      { resigned: userInput.resigned }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -662,8 +672,9 @@ user.updateresign = async function (userInput, resultCallback) {
 };
 
 user.deletequestion = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."faq" WHERE "faq_id"=($1) ', [userInput.faq_id])
+  await model.faq
+    .deleteOne({ faq_id: userInput.faq_id })
+
     .then((data) => {
       var data = "Deleted";
       resultCallback(null, data);
@@ -675,8 +686,9 @@ user.deletequestion = async function (userInput, resultCallback) {
 };
 
 user.Question_ids = async function (userInput, resultCallback) {
-  executor
-    .any('SELECT *  FROM public."faq" WHERE "faq_id"=($1) ', [userInput.faq_id])
+  await model.faq
+    .find({ faq_id: userInput.faq_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -687,8 +699,10 @@ user.Question_ids = async function (userInput, resultCallback) {
 };
 
 user.Questionlists = async function (userInput, resultCallback) {
-  executor
-    .any('SELECT *  FROM public."faq" ', [userInput.Employee_id])
+  await model.faq
+    .find({})
+    // executor
+    //   .any('SELECT *  FROM public."faq" ', [userInput.Employee_id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -699,10 +713,9 @@ user.Questionlists = async function (userInput, resultCallback) {
 };
 
 user.employeeids1 = async function (userInput, resultCallback) {
-  executor
-    .any('SELECT * FROM public.employeedetails WHERE "empid"=($1) ', [
-      userInput.empid,
-    ])
+  await model.employeedetails
+    .find({ empid: userInput.empid })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -712,10 +725,9 @@ user.employeeids1 = async function (userInput, resultCallback) {
     });
 };
 user.clientids = async function (userInput, resultCallback) {
-  executor
-    .any('SELECT * FROM public."client_management" WHERE "id"=($1) ', [
-      userInput.id,
-    ])
+  await model.clientmanagement
+    .find({ _id: userInput.id })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -753,10 +765,9 @@ user.userids = async function (userInput, resultCallback) {
 };
 
 user.deleteclients = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."client_management" WHERE "id"=($1) ', [
-      userInput.id,
-    ])
+  await model.clientmanagement
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -779,21 +790,19 @@ user.deleteusers = async function (userInput, resultCallback) {
     });
 };
 user.addqrweb = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'INSERT INTO public."qrcode"( "Empolyee_id", "Name" , "Email_ID", "Mobile_No", "created", "qrdata","client_ID","client_place","date")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *',
-      [
-        userInput.Empolyee_id,
-        userInput.Name,
-        userInput.Email_ID,
-        userInput.Mobile_No,
-        userInput.created,
-        userInput.qrdata,
-        userInput.client_ID,
-        userInput.client_place,
-        userInput.date,
-      ]
-    )
+  await model.qrcode
+    .create({
+      Empolyee_id: userInput.Empolyee_id,
+      Name: userInput.Name,
+      Email_ID: userInput.Email_ID,
+      Mobile_No: userInput.Mobile_No,
+      created: userInput.created,
+      qrdata: userInput.qrdata,
+      client_ID: userInput.client_ID,
+      client_place: userInput.client_place,
+      date: userInput.date,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -805,8 +814,10 @@ user.addqrweb = async function (userInput, resultCallback) {
 };
 
 user.qrlistweb = async function (userInput, resultCallback) {
-  executor
-    .any("SELECT * FROM public.qrcode", [userInput.id])
+  await model.qrcode
+    .find({})
+    // executor
+    //   .any("SELECT * FROM public.qrcode", [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -817,8 +828,9 @@ user.qrlistweb = async function (userInput, resultCallback) {
 };
 
 user.deleteqrweb = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public.qrcode WHERE "id"=($1) ', [userInput.id])
+  await model.qrcode
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1049,11 +1061,17 @@ user.fetchfeedbacks = async function (userInput, resultCallback) {
 };
 
 user.createattachs = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'INSERT INTO public."attachment" ("Emp_id",title,path) VALUES ($1,$2,$3) RETURNING *',
-      [userInput.Emp_id, userInput.title, userInput.path]
-    )
+  await model.attachment
+    .create({
+      Emp_id: userInput.Emp_id,
+      title: userInput.title,
+      path: userInput.path,
+    })
+    // executor
+    //   .any(
+    //     'INSERT INTO public."attachment" ("Emp_id",title,path) VALUES ($1,$2,$3) RETURNING *',
+    //     [userInput.Emp_id, userInput.title, userInput.path]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1064,8 +1082,10 @@ user.createattachs = async function (userInput, resultCallback) {
 };
 
 user.listattachs = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."attachment"', [userInput.posted_by])
+  await model.attachment
+    .find({})
+    // executor
+    //   .any('select * FROM public."attachment"', [userInput.posted_by])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1076,10 +1096,12 @@ user.listattachs = async function (userInput, resultCallback) {
 };
 
 user.mylistattachs = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."attachment" WHERE "Emp_id"=($1)', [
-      userInput.Emp_id,
-    ])
+  await model.attachment
+    .find({ Emp_id: userInput.Emp_id })
+    // executor
+    //   .any('select * FROM public."attachment" WHERE "Emp_id"=($1)', [
+    //     userInput.Emp_id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1090,11 +1112,14 @@ user.mylistattachs = async function (userInput, resultCallback) {
 };
 
 user.mylistattachss = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select "path" FROM public."attachment" WHERE "Emp_id"=($1) And "title" = ($2)',
-      [userInput.employee_id, "photo"]
-    )
+  //! need to check "path"
+  await model.attachment
+    .find({ Emp_id: userInput.employee_id, title: "photo" })
+    // executor
+    //   .any(
+    //     'select "path" FROM public."attachment" WHERE "Emp_id"=($1) And "title" = ($2)',
+    //     [userInput.employee_id, "photo"]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1105,8 +1130,10 @@ user.mylistattachss = async function (userInput, resultCallback) {
 };
 
 user.fetchattachs = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."attachment" WHERE "id"=($1)', [userInput.id])
+  await model.attachment
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."attachment" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1301,10 +1328,9 @@ user.fetchcompanysites = async function (userInput, resultCallback) {
     });
 };
 user.fetchemployeeids = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."employeedetails" WHERE "ecode"=($1)', [
-      userInput.employee_code,
-    ])
+  await model.employeedetails
+    .find({ ecode: userInput.employee_code })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1424,49 +1450,47 @@ user.fetchcontracts = async function (userInput, resultCallback) {
 ////payment/////
 
 user.payadds = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.payment(site_id, employee_type, basic, da, additional_hours, others, subtotala, leave, subtotalb, pf, esi, gratuity, bouns, subtotalc, total, weekly_off, agency_charges, subtotal, rounded_off,id,ebasic,eda,eadditional_hours,eothers,esubtotala,eleave,esubtotalb,epf,eesi,egratuity,ebound,esubtotalc,etotal,eweekly_off,eagency_charges,esubtotal,erounded_off)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37) RETURNING *",
-      [
-        userInput.site_id,
-        userInput.employee_type,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        userInput.amount,
-        userInput.id,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ]
-    )
+  await model.payment
+    .create({
+      site_id: userInput.site_id,
+      employee_type: userInput.employee_type,
+      basic: 0,
+      da: 0,
+      additional_hours: 0,
+      others: 0,
+      subtotala: 0,
+      leave: 0,
+      subtotalb: 0,
+      pf: 0,
+      esi: 0,
+      gratuity: 0,
+      bouns: 0,
+      subtotalc: 0,
+      total: 0,
+      weekly_off: 0,
+      agency_charges: 0,
+      subtotal: 0,
+      rounded_off: userInput.amount,
+      id: userInput.id,
+      ebasic: 0,
+      eda: 0,
+      eadditional_hours: 0,
+      eothers: 0,
+      esubtotala: 0,
+      eleave: 0,
+      esubtotalb: 0,
+      epf: 0,
+      eesi: 0,
+      egratuity: 0,
+      ebound: 0,
+      esubtotalc: 0,
+      etotal: 0,
+      eweekly_off: 0,
+      eagency_charges: 0,
+      esubtotal: 0,
+      erounded_off: 0,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1478,49 +1502,49 @@ user.payadds = async function (userInput, resultCallback) {
 };
 
 user.payupdates = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.payment SET  site_id=$2, employee_type=$3, basic=$4, da=$5, additional_hours=$6, others=$7, subtotala=$8, leave=$9, subtotalb=$10, pf=$11, esi=$12, gratuity=$13, bouns=$14, subtotalc=$15, total=$16, weekly_off=$17, agency_charges=$18, subtotal=$19, rounded_off=$20,ebasic=$21,eda=$22,eadditional_hours=$23,eothers=$24,esubtotala=$25,eleave=$26,esubtotalb=$27,epf=$28,eesi=$29,egratuity=$30,ebound=$31,esubtotalc=$32,etotal=$33,eweekly_off=$34,eagency_charges=$35,esubtotal=$36,erounded_off=$37 WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.site_id,
-        userInput.employee_type,
-        userInput.basic,
-        userInput.da,
-        userInput.additional_hours,
-        userInput.others,
-        userInput.subtotala,
-        userInput.leave,
-        userInput.subtotalb,
-        userInput.pf,
-        userInput.esi,
-        userInput.gratuity,
-        userInput.bouns,
-        userInput.subtotalc,
-        userInput.total,
-        userInput.weekly_off,
-        userInput.agency_charges,
-        userInput.subtotal,
-        userInput.rounded_off,
-        userInput.ebasic,
-        userInput.eda,
-        userInput.eadditional_hours,
-        userInput.eothers,
-        userInput.esubtotala,
-        userInput.eleave,
-        userInput.esubtotalb,
-        userInput.epf,
-        userInput.eesi,
-        userInput.egratuity,
-        userInput.ebound,
-        userInput.esubtotalc,
-        userInput.etotal,
-        userInput.eweekly_off,
-        userInput.eagency_charges,
-        userInput.esubtotal,
-        userInput.erounded_off,
-      ]
+  await model.payment
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        site_id: userInput.site_id,
+        employee_type: userInput.employee_type,
+        basic: userInput.basic,
+        da: userInput.da,
+        additional_hours: userInput.additional_hours,
+        others: userInput.others,
+        subtotala: userInput.subtotala,
+        leave: userInput.leave,
+        subtotalb: userInput.subtotalb,
+        pf: userInput.pf,
+        esi: userInput.esi,
+        gratuity: userInput.gratuity,
+        bouns: userInput.bouns,
+        subtotalc: userInput.subtotalc,
+        total: userInput.total,
+        weekly_off: userInput.weekly_off,
+        agency_charges: userInput.agency_charges,
+        subtotal: userInput.subtotal,
+        rounded_off: userInput.rounded_off,
+        ebasic: userInput.ebasic,
+        eda: userInput.eda,
+        eadditional_hours: userInput.eadditional_hours,
+        eothers: userInput.eothers,
+        esubtotala: userInput.esubtotala,
+        eleave: userInput.eleave,
+        esubtotalb: userInput.esubtotalb,
+        epf: userInput.epf,
+        eesi: userInput.eesi,
+        egratuity: userInput.egratuity,
+        ebound: userInput.ebound,
+        esubtotalc: userInput.esubtotalc,
+        etotal: userInput.etotal,
+        eweekly_off: userInput.eweekly_off,
+        eagency_charges: userInput.eagency_charges,
+        esubtotal: userInput.esubtotal,
+        erounded_off: userInput.erounded_off,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1532,11 +1556,9 @@ user.payupdates = async function (userInput, resultCallback) {
 };
 
 user.updateamounts = async function (userInput, resultCallback) {
-  executor
-    .one("UPDATE public.payment SET  rounded_off=$2 WHERE id=$1 RETURNING *", [
-      userInput.id,
-      userInput.amount,
-    ])
+  await model.payment
+    .findOneAndUpdate({ _id: userInput.id }, { rounded_off: userInput.amount })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1548,8 +1570,10 @@ user.updateamounts = async function (userInput, resultCallback) {
 };
 
 user.payfetchs = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
+  await model.payment
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1560,8 +1584,9 @@ user.payfetchs = async function (userInput, resultCallback) {
 };
 
 user.paydeletes = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."payment" WHERE "id"=($1)', [userInput.id])
+  await model.payment
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1572,10 +1597,9 @@ user.paydeletes = async function (userInput, resultCallback) {
 };
 
 user.paylists = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."payment" WHERE "site_id"=($1)', [
-      userInput.site_id,
-    ])
+  await model.payment
+    .find({ site_id: userInput.site_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1587,9 +1611,10 @@ user.paylists = async function (userInput, resultCallback) {
 
 user.payment_details = async function (userInput, resultCallback) {
   console.log(userInput);
-
-  executor
-    .any('select * FROM public."payment"  ', [userInput.id])
+  await model.payment
+    .find({})
+    // executor
+    //   .any('select * FROM public."payment"  ', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1602,32 +1627,30 @@ user.payment_details = async function (userInput, resultCallback) {
 /////sfafd/////
 
 user.employee_payadds = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.employee_payment(site_id, employee_type, basic, da, additional_hours, others, subtotala, leave, subtotalb, pf, esi, gratuity, bouns, subtotalc, total, weekly_off, agency_charges, subtotal, rounded_off,id)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,$20) RETURNING *",
-      [
-        userInput.site_id,
-        userInput.employee_type,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        userInput.id,
-      ]
-    )
+  await model.employeepayment
+    .create({
+      site_id: userInput.site_id,
+      employee_type: userInput.employee_type,
+      basic: 0,
+      da: 0,
+      additional_hours: 0,
+      others: 0,
+      subtotala: 0,
+      leave: 0,
+      subtotalb: 0,
+      pf: 0,
+      esi: 0,
+      gratuity: 0,
+      bouns: 0,
+      subtotalc: 0,
+      total: 0,
+      weekly_off: 0,
+      agency_charges: 0,
+      subtotal: 0,
+      rounded_off: 0,
+      id: userInput.id,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1639,32 +1662,32 @@ user.employee_payadds = async function (userInput, resultCallback) {
 };
 
 user.employee_payupdates = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.employee_payment SET  client_id=$2, employee_type=$3, basic=$4, da=$5, additional_hours=$6, others=$7, subtotala=$8, leave=$9, subtotalb=$10, pf=$11, esi=$12, gratuity=$13, bouns=$14, subtotalc=$15, total=$16, weekly_off=$17, agency_charges=$18, subtotal=$19, rounded_off=$20 WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.client_id,
-        userInput.employee_type,
-        userInput.basic,
-        userInput.da,
-        userInput.additional_hours,
-        userInput.others,
-        userInput.subtotala,
-        userInput.leave,
-        userInput.subtotalb,
-        userInput.pf,
-        userInput.esi,
-        userInput.gratuity,
-        userInput.bouns,
-        userInput.subtotalc,
-        userInput.total,
-        userInput.weekly_off,
-        userInput.agency_charges,
-        userInput.subtotal,
-        userInput.rounded_off,
-      ]
+  await model.employeepayment
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        client_id: userInput.client_id,
+        employee_type: userInput.employee_type,
+        basic: userInput.basic,
+        da: userInput.da,
+        additional_hours: userInput.additional_hours,
+        others: userInput.others,
+        subtotala: userInput.subtotala,
+        leave: userInput.leave,
+        subtotalb: userInput.subtotalb,
+        pf: userInput.pf,
+        esi: userInput.esi,
+        gratuity: userInput.gratuity,
+        bouns: userInput.bouns,
+        subtotalc: userInput.subtotalc,
+        total: userInput.total,
+        weekly_off: userInput.weekly_off,
+        agency_charges: userInput.agency_charges,
+        subtotal: userInput.subtotal,
+        rounded_off: userInput.rounded_off,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1676,10 +1699,9 @@ user.employee_payupdates = async function (userInput, resultCallback) {
 };
 
 user.employee_payfetchs = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."employee_payment" WHERE "id"=($1)', [
-      userInput.id,
-    ])
+  await model.employeepayment
+    .find({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1690,10 +1712,9 @@ user.employee_payfetchs = async function (userInput, resultCallback) {
 };
 
 user.employee_paydeletes = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."employee_payment" WHERE "id"=($1)', [
-      userInput.id,
-    ])
+  await model.employeepayment
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1704,10 +1725,9 @@ user.employee_paydeletes = async function (userInput, resultCallback) {
 };
 
 user.employee_paylists = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."employee_payment" WHERE "site_id"=($1)', [
-      userInput.site_id,
-    ])
+  await model.employeepayment
+    .find({ site_id: userInput.site_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1719,9 +1739,10 @@ user.employee_paylists = async function (userInput, resultCallback) {
 
 user.employee_payment_details = async function (userInput, resultCallback) {
   console.log(userInput);
-
-  executor
-    .any('select * FROM public."employee_payment"  ', [userInput.id])
+  await model.employeepayment
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."employee_payment"  ', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1732,8 +1753,10 @@ user.employee_payment_details = async function (userInput, resultCallback) {
 };
 
 user.requirement_details = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."requirement" ', [userInput.id])
+  await model.requirement
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."requirement" ', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1746,18 +1769,16 @@ user.requirement_details = async function (userInput, resultCallback) {
 ////requirment/////
 
 user.reqadds = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.requirement(site_id, employee_type, amount, hrs,no_of_employee,total_amount )VALUES ( $1, $2, $3, $4,$5,$6) RETURNING *",
-      [
-        userInput.site_id,
-        userInput.employee_type,
-        userInput.amount,
-        userInput.hrs,
-        userInput.no_of_employee,
-        userInput.total_amount,
-      ]
-    )
+  await model.requirement
+    .create({
+      site_id: userInput.site_id,
+      employee_type: userInput.employee_type,
+      amount: userInput.amount,
+      hrs: userInput.hrs,
+      no_of_employee: userInput.no_of_employee,
+      total_amount: userInput.total_amount,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1769,10 +1790,9 @@ user.reqadds = async function (userInput, resultCallback) {
 };
 
 user.reqlists = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."requirement" WHERE "site_id"=($1)', [
-      userInput.site_id,
-    ])
+  await model.requirement
+    .find({ site_id: userInput.site_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1783,13 +1803,15 @@ user.reqlists = async function (userInput, resultCallback) {
 };
 
 user.reqdeletes = async function (userInput, resultCallback) {
-  executor
-    .any('delete FROM public."requirement" WHERE "id"=($1)', [userInput.id])
-    .then((data) => {
-      resultCallback(null, data);
+  await model.requirement
+    .deleteOne({ _id: userInput.id })
 
-      executor
-        .any('delete FROM public."payment" WHERE "id"=($1)', [userInput.id])
+    .then(async (data) => {
+      resultCallback(null, data);
+      await model.payment
+        .deleteOne({ _id: userInput.id })
+        // executor
+        //   .any('delete FROM public."payment" WHERE "id"=($1)', [userInput.id])
         .then((data) => {
           resultCallback(null, data);
         })
@@ -1805,8 +1827,9 @@ user.reqdeletes = async function (userInput, resultCallback) {
 };
 
 user.reqfetchs = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."requirement" WHERE "id"=($1)', [userInput.id])
+  await model.requirement
+    .find({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1817,19 +1840,19 @@ user.reqfetchs = async function (userInput, resultCallback) {
 };
 
 user.requpdates = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'UPDATE public.requirement SET "site_id" = $2, "employee_type"=$3, "amount"=$4, "hrs"=$5,"no_of_employee"=$6,"total_amount"=$7 WHERE id=$1 RETURNING *',
-      [
-        userInput.id,
-        userInput.site_id,
-        userInput.employee_type,
-        userInput.amount,
-        userInput.hrs,
-        userInput.no_of_employee,
-        userInput.total_amount,
-      ]
+  await model.requirement
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        site_id: userInput.site_id,
+        employee_type: userInput.employee_type,
+        amount: userInput.amount,
+        hrs: userInput.hrs,
+        no_of_employee: userInput.no_of_employee,
+        total_amount: userInput.total_amount,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1841,49 +1864,50 @@ user.requpdates = async function (userInput, resultCallback) {
 };
 
 user.payementupdate = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.payment SET  site_id=$2, employee_type=$3, basic=$4, da=$5, additional_hours=$6, others=$7, subtotala=$8, leave=$9, subtotalb=$10, pf=$11, esi=$12, gratuity=$13, bouns=$14, subtotalc=$15, total=$16, weekly_off=$17, agency_charges =$18, subtotal=$19, rounded_off=$20,ebasic=$21,eda=$22,eadditional_hours=$23,eothers=$24,esubtotala=$25,eleave=$26,esubtotalb=$27,epf=$28,eesi=$29,egratuity=$30,ebound=$31,esubtotalc=$32,etotal=$33,eweekly_off=$34,eagency_charges=$35,esubtotal=$36,erounded_off=$37 WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.site_id,
-        userInput.employee_type,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        userInput.amount,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ]
+  await model.payment
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        site_id: userInput.site_id,
+        employee_type: userInput.employee_type,
+
+        basic: 0,
+        da: 0,
+        additional_hours: 0,
+        others: 0,
+        subtotala: 0,
+        leave: 0,
+        subtotalb: 0,
+        pf: 0,
+        esi: 0,
+        gratuity: 0,
+        bouns: 0,
+        subtotalc: 0,
+        total: userInput.amount,
+        weekly_off: 0,
+        agency_charges: 0,
+        subtotal: 0,
+        rounded_off: 0,
+        ebasic: 0,
+        eda: 0,
+        eadditional_hours: 0,
+        eothers: 0,
+        esubtotala: 0,
+        eleave: 0,
+        esubtotalb: 0,
+        epf: 0,
+        eesi: 0,
+        egratuity: 0,
+        ebound: 0,
+        esubtotalc: 0,
+        etotal: 0,
+        eweekly_off: 0,
+        eagency_charges: 0,
+        esubtotal: 0,
+        erounded_off: 0,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1897,19 +1921,17 @@ user.payementupdate = async function (userInput, resultCallback) {
 ////uniform/////
 
 user.uniformadds = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.uniform(employee_id, item, au, rate, remarks,total_amount,status)VALUES ( $1, $2, $3, $4, $5,$6,$7) RETURNING *",
-      [
-        userInput.employee_id,
-        userInput.item,
-        userInput.au,
-        userInput.rate,
-        userInput.remarks,
-        userInput.total_amount,
-        "not_received",
-      ]
-    )
+  await model.uniform
+    .create({
+      employee_id: userInput.employee_id,
+      item: userInput.item,
+      au: userInput.au,
+      rate: userInput.rate,
+      remarks: userInput.remarks,
+      total_amount: userInput.total_amount,
+      status: "not_received",
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1921,19 +1943,19 @@ user.uniformadds = async function (userInput, resultCallback) {
 };
 
 user.uniformupdates = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.uniform SET  employee_id=$2, item=$3, au=$4, rate=$5, remarks=$6, status=$7 WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.employee_id,
-        userInput.item,
-        userInput.au,
-        userInput.rate,
-        userInput.remarks,
-        userInput.status,
-      ]
+  await model.uniform
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        employee_id: userInput.employee_id,
+        item: userInput.item,
+        au: userInput.au,
+        rate: userInput.rate,
+        remarks: userInput.remarks,
+        status: userInput.status,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -1945,8 +1967,10 @@ user.uniformupdates = async function (userInput, resultCallback) {
 };
 
 user.uniformfetchs = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."uniform" WHERE "id"=($1)', [userInput.id])
+  await model.uniform
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."uniform" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1957,8 +1981,9 @@ user.uniformfetchs = async function (userInput, resultCallback) {
 };
 
 user.uniformdeletes = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."uniform" WHERE "id"=($1)', [userInput.id])
+  await model.uniform
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1969,10 +1994,9 @@ user.uniformdeletes = async function (userInput, resultCallback) {
 };
 
 user.uniformlists = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."uniform" WHERE "employee_id"=($1)', [
-      userInput.employee_id,
-    ])
+  await model.uniform
+    .find({ employee_id: userInput.employee_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1983,11 +2007,36 @@ user.uniformlists = async function (userInput, resultCallback) {
 };
 
 user.deliverds = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'SELECT * FROM public.employeedetails where id in ( select CAST ("employee_id" AS INTEGER) from public.uniform where "status" = $1 ) ORDER BY "Name" ASC',
-      ["received"]
-    )
+  //! need to check
+
+  await model.employeedetails
+    .aggregate([
+      {
+        $lookup: {
+          from: "uniform",
+          localField: "_id",
+          foreignField: "employee_id",
+          as: "result",
+        },
+      },
+      {
+        path: "$result",
+        preserveNullAndEmptyArrays: boolean,
+      },
+      {
+        $match: {
+          status: "received",
+        },
+      },
+      {
+        $sort: { Name: 1 },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT * FROM public.employeedetails where id in ( select CAST ("employee_id" AS INTEGER) from public.uniform where "status" = $1 ) ORDER BY "Name" ASC',
+    //     ["received"]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1998,11 +2047,34 @@ user.deliverds = async function (userInput, resultCallback) {
 };
 
 user.undeliverds = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'SELECT * FROM public.employeedetails where id in ( select CAST ("employee_id" AS INTEGER) from public.uniform where "status" = $1 ) ORDER BY "Name" ASC',
-      ["not_received"]
-    )
+  await model.employeedetails
+    .aggregate([
+      {
+        $lookup: {
+          from: "uniform",
+          localField: "_id",
+          foreignField: "employee_id",
+          as: "result",
+        },
+      },
+      {
+        path: "$result",
+        preserveNullAndEmptyArrays: boolean,
+      },
+      {
+        $match: {
+          status: "not_received",
+        },
+      },
+      {
+        $sort: { Name: 1 },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT * FROM public.employeedetails where id in ( select CAST ("employee_id" AS INTEGER) from public.uniform where "status" = $1 ) ORDER BY "Name" ASC',
+    //     ["not_received"]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2013,8 +2085,10 @@ user.undeliverds = async function (userInput, resultCallback) {
 };
 
 user.deleteattachs = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."attachment" WHERE "id"=($1) ', [userInput.id])
+  await model.attachment
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."attachment" WHERE "id"=($1) ', [userInput.id])
 
     .then((data) => {
       resultCallback(null, data);
@@ -2028,11 +2102,16 @@ user.deleteattachs = async function (userInput, resultCallback) {
 ///master Id////
 
 user.additem = async function (userInput, resultCallback) {
-  executor
-    .one("INSERT INTO public.items(items,rates)VALUES ( $1, $2) RETURNING *", [
-      userInput.items,
-      userInput.rates,
-    ])
+  await model.items
+    .create({
+      items: userInput.items,
+      rates: userInput.rates,
+    })
+    // executor
+    //   .one("INSERT INTO public.items(items,rates)VALUES ( $1, $2) RETURNING *", [
+    //     userInput.items,
+    //     userInput.rates,
+    //   ])
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2044,11 +2123,16 @@ user.additem = async function (userInput, resultCallback) {
 };
 
 user.updateitem = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.items SET  items=$2, rates=$3  WHERE id=$1 RETURNING *",
-      [userInput.id, userInput.items, userInput.rates]
+  await model.items
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      { items: userInput.items, rates: userInput.rates }
     )
+    // executor
+    //   .one(
+    //     "UPDATE public.items SET  items=$2, rates=$3  WHERE id=$1 RETURNING *",
+    //     [userInput.id, userInput.items, userInput.rates]
+    //   )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2060,8 +2144,10 @@ user.updateitem = async function (userInput, resultCallback) {
 };
 
 user.fetchitem = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."items" WHERE "id"=($1)', [userInput.id])
+  await model.items
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."items" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2072,8 +2158,10 @@ user.fetchitem = async function (userInput, resultCallback) {
 };
 
 user.itemsdelete = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."items" WHERE "id"=($1)', [userInput.id])
+  await model.items
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."items" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2084,8 +2172,10 @@ user.itemsdelete = async function (userInput, resultCallback) {
 };
 
 user.itemslist = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."items"', [userInput.id])
+  await model.items
+    .find({})
+    // executor
+    //   .any('select * FROM public."items"', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3015,36 +3105,33 @@ user.paymentstructure = async function (userInput, resultCallback) {
 
 user.insertdata = async function (userInput, resultCallback) {
   console.log(userInput);
+  await model.attendancemark
+    .create({
+      employee_id: userInput[0].employee_id,
+      employee_name: userInput[0].employee_name,
+      employee_type: userInput[0].employee_type,
+      hrs: userInput[0].hrs,
+      site_id: userInput[0].site_id,
+      site_name: userInput[0].site_name,
+      contract_id: userInput[0].contract_id,
+      date: userInput[0].date,
+      status: userInput[0].status,
+      basic: userInput[0].basic,
+      da: userInput[0].da,
+      addhours: userInput[0].addhours,
+      other: userInput[0].other,
+      leave: userInput[0].leave,
+      bouns: userInput[0].bouns,
+      weekly: userInput[0].weekly,
+      gross: userInput[0].gross,
+      epf: userInput[0].epf,
+      esi: userInput[0].esi,
+      net: userInput[0].net,
+      timein: userInput[0].timein,
+      timeout: userInput[0].timeout,
+      duration: userInput[0].duration,
+    })
 
-  executor
-    .any(
-      "INSERT INTO public.attendancemark(employee_id, employee_name, employee_type, hrs, site_id, site_name, contract_id, date, status, basic, da, addhours, other, leave, bouns, weekly, gross, epf, esi, net, timein, timeout, duration) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23) RETURNING *",
-      [
-        userInput[0].employee_id,
-        userInput[0].employee_name,
-        userInput[0].employee_type,
-        userInput[0].hrs,
-        userInput[0].site_id,
-        userInput[0].site_name,
-        userInput[0].contract_id,
-        userInput[0].date,
-        userInput[0].status,
-        userInput[0].basic,
-        userInput[0].da,
-        userInput[0].addhours,
-        userInput[0].other,
-        userInput[0].leave,
-        userInput[0].bouns,
-        userInput[0].weekly,
-        userInput[0].gross,
-        userInput[0].epf,
-        userInput[0].esi,
-        userInput[0].net,
-        userInput[0].timein,
-        userInput[0].timeout,
-        userInput[0].duration,
-      ]
-    )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3057,38 +3144,35 @@ user.insertdata = async function (userInput, resultCallback) {
 
 user.clientinsertdata = async function (userInput, resultCallback) {
   console.log(userInput);
+  await model.clientattendancemark
+    .create({
+      employee_id: userInput[0].employee_id,
+      employee_name: userInput[0].employee_name,
+      client_id: userInput[0].client_id,
+      client_name: userInput[0].client_name,
+      employee_type: userInput[0].employee_type,
+      hrs: userInput[0].hrs,
+      site_id: userInput[0].site_id,
+      site_name: userInput[0].site_name,
+      contract_id: userInput[0].contract_id,
+      date: userInput[0].date,
+      status: userInput[0].status,
+      basic: userInput[0].basic,
+      da: userInput[0].da,
+      addhours: userInput[0].addhours,
+      other: userInput[0].other,
+      leave: userInput[0].leave,
+      bouns: userInput[0].bouns,
+      weekly: userInput[0].weekly,
+      gross: userInput[0].gross,
+      epf: userInput[0].epf,
+      esi: userInput[0].esi,
+      net: userInput[0].net,
+      timein: userInput[0].timein,
+      timeout: userInput[0].timeout,
+      duration: userInput[0].duration,
+    })
 
-  executor
-    .any(
-      "INSERT INTO public.clientattendancemark(employee_id, employee_name, client_id, client_name, employee_type, hrs, site_id, site_name, contract_id, date, status, basic, da, addhours, other, leave, bouns, weekly, gross, epf, esi, net, timein, timeout, duration) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING *",
-      [
-        userInput[0].employee_id,
-        userInput[0].employee_name,
-        userInput[0].client_id,
-        userInput[0].client_name,
-        userInput[0].employee_type,
-        userInput[0].hrs,
-        userInput[0].site_id,
-        userInput[0].site_name,
-        userInput[0].contract_id,
-        userInput[0].date,
-        userInput[0].status,
-        userInput[0].basic,
-        userInput[0].da,
-        userInput[0].addhours,
-        userInput[0].other,
-        userInput[0].leave,
-        userInput[0].bouns,
-        userInput[0].weekly,
-        userInput[0].gross,
-        userInput[0].epf,
-        userInput[0].esi,
-        userInput[0].net,
-        userInput[0].timein,
-        userInput[0].timeout,
-        userInput[0].duration,
-      ]
-    )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3100,11 +3184,19 @@ user.clientinsertdata = async function (userInput, resultCallback) {
 };
 
 user.fetchdetailss = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."attendancemark" WHERE "employee_id"=($1) and date >= ($2) and date <= ($3) ',
-      [userInput.employee_id, userInput.start_date, userInput.end_date]
-    )
+  await model.attendancemark
+    .find({
+      employee_id: userInput.employee_id,
+      date: {
+        $gte: new Date(userInput.start_date),
+        $lte: new Date(userInput.end_date),
+      },
+    })
+    // executor
+    //   .any(
+    //     'select * FROM public."attendancemark" WHERE "employee_id"=($1) and date >= ($2) and date <= ($3) ',
+    //     [userInput.employee_id, userInput.start_date, userInput.end_date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3525,11 +3617,19 @@ user.advancefetchs = async function (userInput, resultCallback) {
 };
 
 user.monthlyfetchs = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."advance" WHERE "employee_id"=($1) and ddate >= ($2) and ddate <= ($3)',
-      [userInput.employee_id, userInput.start_date, userInput.end_date]
-    )
+  await model.advance
+    .find({
+      employee_id: userInput.employee_id,
+      ddate: {
+        $gte: new Date(userInput.start_date),
+        $lte: new Date(userInput.end_date),
+      },
+    })
+    // executor
+    //   .any(
+    //     'select * FROM public."advance" WHERE "employee_id"=($1) and ddate >= ($2) and ddate <= ($3)',
+    //     [userInput.employee_id, userInput.start_date, userInput.end_date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3540,11 +3640,13 @@ user.monthlyfetchs = async function (userInput, resultCallback) {
 };
 
 user.monthlyfetchs1 = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."advance" WHERE "employee_id"=($1) and "status"=($2)',
-      [userInput.employee_id, "Pending"]
-    )
+  await model.advance
+    .find({ employee_id: userInput.employee_id, status: "Pending" })
+    // executor
+    //   .any(
+    //     'select * FROM public."advance" WHERE "employee_id"=($1) and "status"=($2)',
+    //     [userInput.employee_id, "Pending"]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3555,8 +3657,12 @@ user.monthlyfetchs1 = async function (userInput, resultCallback) {
 };
 
 user.fetchloan_numbers = async function (userInput, resultCallback) {
-  executor
-    .any('select max(loan_number) from public."advance"', [])
+  await model.advance
+    .find({}, {}, { sort: { loan_number: -1 } })
+    .limit(1)
+
+    // executor
+    //   .any('select max(loan_number) from public."advance"', [])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3567,8 +3673,11 @@ user.fetchloan_numbers = async function (userInput, resultCallback) {
 };
 
 user.fetchloan_numbers1 = async function (userInput, resultCallback) {
-  executor
-    .any('select max(id) from public."employeedetails"', [])
+  await model.employeedetails
+    .find({}, {}, { sort: { createdAt: -1 } })
+    .limit(1)
+    // executor
+    //   .any('select max(id) from public."employeedetails"', [])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3579,8 +3688,10 @@ user.fetchloan_numbers1 = async function (userInput, resultCallback) {
 };
 
 user.deleteinstalments = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."advance" WHERE "id"=($1)', [userInput.id])
+  await model.advance
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."advance" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3591,10 +3702,12 @@ user.deleteinstalments = async function (userInput, resultCallback) {
 };
 
 user.fetchadvances = async function (userInput, resultCallback) {
-  executor
-    .any('select *  FROM public."advance" WHERE "loan_number"=($1)', [
-      userInput.id,
-    ])
+  await model.advance
+    .find({ loan_number: userInput.id })
+    // executor
+    //   .any('select *  FROM public."advance" WHERE "loan_number"=($1)', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3605,10 +3718,12 @@ user.fetchadvances = async function (userInput, resultCallback) {
 };
 
 user.fetchadvances2 = async function (userInput, resultCallback) {
-  executor
-    .any('select *  FROM public."advance" WHERE "company_name"=($1) and ', [
-      userInput.id,
-    ])
+  await model.advance
+    .find({ company_name: userInput.id })
+    // executor
+    //   .any('select *  FROM public."advance" WHERE "company_name"=($1) and ', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3619,10 +3734,12 @@ user.fetchadvances2 = async function (userInput, resultCallback) {
 };
 
 user.deleteadvances = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."advance" WHERE "loan_number"=($1)', [
-      userInput.id,
-    ])
+  await model.advance
+    .deleteOne({ loan_number: userInput.id })
+    // executor
+    //   .any('Delete FROM public."advance" WHERE "loan_number"=($1)', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3633,55 +3750,54 @@ user.deleteadvances = async function (userInput, resultCallback) {
 };
 
 user.updateadvances = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'UPDATE public.advance SET  "employee_id"=$1 ,employee_name=$2 ,bank=$3,pamount=$4,pbalanceamount=$5,pinstalment=$6,ppendinginstalment=$7,dfullcash=$8,dpaytype=$9,ddate=$10,damount=$11,daddi=$12,dnaration=$13,advance_type=$14,company_name=$15,site=$16,loan_number=$17 WHERE  "id" = $18 RETURNING *',
-      [
-        userInput.employee_id,
-        userInput.employee_name,
-        userInput.bank,
-        userInput.pamount,
-        userInput.pbalanceamount,
-        userInput.pinstalment,
-        userInput.ppendinginstalment,
-        userInput.dfullcash,
-        userInput.dpaytype,
-        userInput.ddate,
-        userInput.damount,
-        userInput.daddi,
-        userInput.dnaration,
-        userInput.advance_type,
-        userInput.company_name,
-        userInput.site,
-        userInput.loan_number,
-        userInput.id,
-      ]
+  await model.advance
+    .findOneAndUpdate(
+      {
+        _id: userInput.id,
+      },
+      {
+        employee_id: userInput.employee_id,
+        employee_name: userInput.employee_name,
+        bank: userInput.bank,
+        pamount: userInput.pamount,
+        pbalanceamount: userInput.pbalanceamount,
+        pinstalment: userInput.pinstalment,
+        ppendinginstalment: userInput.ppendinginstalment,
+        dfullcash: userInput.dfullcash,
+        dpaytype: userInput.dpaytype,
+        ddate: userInput.ddate,
+        damount: userInput.damount,
+        daddi: userInput.daddi,
+        dnaration: userInput.dnaration,
+        advance_type: userInput.advance_type,
+        company_name: userInput.company_name,
+        site: userInput.site,
+        loan_number: userInput.loan_number,
+      }
     )
-    .then((data) => {
-      executor.one(
-        'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
-        [
-          data.employee_id,
-          data.employee_name,
-          data.account_number,
-          data.pamount,
-          data.pbalanceamount,
-          data.pinstalment,
-          data.ppendinginstalment,
-          data.dfullcash,
-          data.dpaytype,
-          data.ddate,
-          data.damount,
-          data.daddi,
-          data.dnaration,
-          data.advance_type,
-          data.company_name,
-          data.site,
-          data.status,
-          data.loan_number,
-          data.id,
-        ]
-      );
+
+    .then(async (data) => {
+      await model.advancehistory.create({
+        employee_id: data.employee_id,
+        employee_name: data.employee_name,
+        account_number: data.account_number,
+        pamount: data.pamount,
+        pbalanceamount: data.pbalanceamount,
+        pinstalment: data.pinstalment,
+        ppendinginstalment: data.ppendinginstalment,
+        dfullcash: data.dfullcash,
+        dpaytype: data.dpaytype,
+        ddate: data.ddate,
+        damount: data.damount,
+        daddi: data.daddi,
+        dnaration: data.dnaration,
+        advance_type: data.advance_type,
+        company_name: data.company_name,
+        site: data.site,
+        status: data.status,
+        loan_number: data.loan_number,
+        id: data.id,
+      });
 
       resultCallback(null, data);
     })
@@ -3692,42 +3808,41 @@ user.updateadvances = async function (userInput, resultCallback) {
 };
 
 user.updateoneinstalments = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.advance SET  ddate=$2,pamount=$3,dpaytype=$4,status=$5  WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.date,
-        userInput.amount,
-        userInput.dpaytype,
-        userInput.status,
-      ]
+  await model.advance
+    .findOneAndUpdate(
+      {
+        _id: userInput.id,
+      },
+      {
+        ddate: userInput.date,
+        pamount: userInput.amount,
+        dpaytype: userInput.dpaytype,
+        status: userInput.status,
+      }
     )
-    .then((data) => {
-      executor.one(
-        'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *',
-        [
-          data.employee_id,
-          data.employee_name,
-          data.account_number,
-          data.pamount,
-          data.pbalanceamount,
-          data.pinstalment,
-          data.ppendinginstalment,
-          data.dfullcash,
-          data.dpaytype,
-          data.ddate,
-          data.damount,
-          data.daddi,
-          data.dnaration,
-          data.advance_type,
-          data.company_name,
-          data.site,
-          data.status,
-          data.loan_number,
-          data.id,
-        ]
-      );
+
+    .then(async (data) => {
+      await model.advancehistory.create({
+        employee_id: data.employee_id,
+        employee_name: data.employee_name,
+        account_number: data.account_number,
+        pamount: data.pamount,
+        pbalanceamount: data.pbalanceamount,
+        pinstalment: data.pinstalment,
+        ppendinginstalment: data.ppendinginstalment,
+        dfullcash: data.dfullcash,
+        dpaytype: data.dpaytype,
+        ddate: data.ddate,
+        damount: data.damount,
+        daddi: data.daddi,
+        dnaration: data.dnaration,
+        advance_type: data.advance_type,
+        company_name: data.company_name,
+        site: data.site,
+        status: data.status,
+        loan_number: data.loan_number,
+        id: data.id,
+      });
 
       console.log(data);
       resultCallback(null, data);
@@ -3758,34 +3873,31 @@ user.addemployeebulkuploads = async function (
   resultCallback
 ) {
   console.log(userInput);
+  await model.employeedetails
+    .create({
+      phone_number: userInput.phone_number,
+      password: userInput.password,
+      ENAME: userInput.ENAME,
+      EGRADE: userInput.EGRADE,
+      GENDER: userInput.GENDER,
+      UANNO: userInput.UANNO,
+      PFNO: userInput.PFNO,
+      PFNO1: userInput.PFNO1,
+      ESINO: userInput.ESINO,
+      dob: dob,
+      doj: doj,
+      EFNAME: userInput.EFNAME,
+      MaritalStatus: userInput.MaritalStatus,
+      Acno: userInput.Acno,
+      Refno: userInput.Refno,
+      BankName: userInput.BankName,
+      WorkStatus: userInput.WorkStatus,
+      ECODE: userInput.ECODE,
+      Uname: userInput.Uname,
+      CCODE: userInput.CCODE,
+      id: userInput.id,
+    })
 
-  executor
-    .one(
-      'INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","ifsc","bankname","resigned","ecode","site_name","company_name","id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING *',
-      [
-        userInput.phone_number,
-        userInput.password,
-        userInput.ENAME,
-        userInput.EGRADE,
-        userInput.GENDER,
-        userInput.UANNO,
-        userInput.PFNO,
-        userInput.PFNO1,
-        userInput.ESINO,
-        dob,
-        doj,
-        userInput.EFNAME,
-        userInput.MaritalStatus,
-        userInput.Acno,
-        userInput.Refno,
-        userInput.BankName,
-        userInput.WorkStatus,
-        userInput.ECODE,
-        userInput.Uname,
-        userInput.CCODE,
-        userInput.id,
-      ]
-    )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3810,10 +3922,12 @@ user.efetchsitedetailss = async function (userInput, resultCallback) {
 };
 
 user.searchecodes = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."employeedetails" where "ecode"=($1)', [
-      userInput.ecode,
-    ])
+  await model.employeedetails
+    .find({ ecode: userInput.ecode })
+    // executor
+    //   .any('select * FROM public."employeedetails" where "ecode"=($1)', [
+    //     userInput.ecode,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3824,46 +3938,44 @@ user.searchecodes = async function (userInput, resultCallback) {
 };
 
 user.addsalaryprocesss = async function (userInput, resultCallback) {
-  executor
-    .any(
-      "INSERT INTO public.salary_details(employee_name, employee_type, employee_id, bank_name, account_number, ifscnumber, phonenumber, emailid, basic, da, hra, others, leave, bouns, weeklyoff, noofdays, gross, pf, esi, prtax, adv, uniform, mess, rent, atm, loan, otherss, totaldedcation, netamount,site_name,date,additional_duty,duty_amount,total_amount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29,$30,$31,$32,$33,$34) RETURNING *",
-      [
-        userInput.employee_name,
-        userInput.employee_type,
-        userInput.employee_id,
-        userInput.bank_name,
-        userInput.account_number,
-        userInput.ifscnumber,
-        userInput.phonenumber,
-        userInput.emailid,
-        userInput.basic,
-        userInput.da,
-        userInput.hra,
-        userInput.others,
-        userInput.leave,
-        userInput.bouns,
-        userInput.weeklyoff,
-        userInput.noofdays,
-        userInput.gross,
-        userInput.pf,
-        userInput.esi,
-        userInput.prtax,
-        userInput.adv,
-        userInput.uniform,
-        userInput.mess,
-        userInput.rent,
-        userInput.atm,
-        userInput.loan,
-        userInput.otherss,
-        userInput.totaldedcation,
-        userInput.netamount,
-        userInput.site_name,
-        userInput.date,
-        userInput.additional_duty,
-        userInput.duty_amount,
-        userInput.total_amount,
-      ]
-    )
+  await model.salarydetails
+    .create({
+      employee_name: userInput.employee_name,
+      employee_type: userInput.employee_type,
+      employee_id: userInput.employee_id,
+      bank_name: userInput.bank_name,
+      account_number: userInput.account_number,
+      ifscnumber: userInput.ifscnumber,
+      phonenumber: userInput.phonenumber,
+      emailid: userInput.emailid,
+      basic: userInput.basic,
+      da: userInput.da,
+      hra: userInput.hra,
+      others: userInput.others,
+      leave: userInput.leave,
+      bouns: userInput.bouns,
+      weeklyoff: userInput.weeklyoff,
+      noofdays: userInput.noofdays,
+      gross: userInput.gross,
+      pf: userInput.pf,
+      esi: userInput.esi,
+      prtax: userInput.prtax,
+      adv: userInput.adv,
+      uniform: userInput.uniform,
+      mess: userInput.mess,
+      rent: userInput.rent,
+      atm: userInput.atm,
+      loan: userInput.loan,
+      otherss: userInput.otherss,
+      totaldedcation: userInput.totaldedcation,
+      netamount: userInput.netamount,
+      site_name: userInput.site_name,
+      date: userInput.date,
+      additional_duty: userInput.additional_duty,
+      duty_amount: userInput.duty_amount,
+      total_amount: userInput.total_amount,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3875,10 +3987,12 @@ user.addsalaryprocesss = async function (userInput, resultCallback) {
 };
 
 user.salaryprocesstatuss = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."salary_details" where "date"= ($1)', [
-      userInput.date,
-    ])
+  await model.salarydetails
+    .find({ date: userInput.date })
+    // executor
+    //   .any('select * FROM public."salary_details" where "date"= ($1)', [
+    //     userInput.date,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3923,38 +4037,39 @@ user.addclientbulks = async function (userInput, resultCallback) {
 // manualentry
 user.manual_entry_unit_adds = async function (userInput, resultCallback) {
   console.log(userInput);
-await model.payrollmanualunitentry.create({
-  company:userInput.company,
-  unit_code:userInput.unit_code,
-  option:userInput.option,
-  salary_type:userInput.salary_type,
-  unit_name:userInput.unit_name,
-  day_month:userInput.day_month,
-  pf_cover:userInput.pf_cover,
-  pf_amount:userInput.pf_amount,
-  esi_cover:userInput.esi_cover,
-  esi_amount:userInput.esi_amount,
-  esi_code:userInput.esi_code,
-  esi_district:userInput.esi_district,
-  pf_basic:userInput.pf_basic,
-  pf_da:userInput.pf_da,
-  pf_hra:userInput.pf_hra,
-  pf_trv:userInput.pf_trv,
-  esi_basic:userInput.esi_basic,
-  esi_da:userInput.esi_da,
-  esi_hra:userInput.esi_hra,
-  esi_trv:userInput.esi_trv,
-  esi_protax:userInput.esi_protax,
-  salary_type_amount:userInput.salary_type_amount,
-  day_month_date:userInput.day_month_date,
-  pf_amount_amount:userInput.pf_amount_amount,
-  prtax_basic:userInput.prtax_basic,
-  prtax_da:userInput.prtax_da,
-  prtax_hra:userInput.prtax_hra,
-  prtax_trv:userInput.prtax_trv,
-  prtax_cover:userInput.prtax_cover,
-})
-  
+  await model.payrollmanualunitentry
+    .create({
+      company: userInput.company,
+      unit_code: userInput.unit_code,
+      option: userInput.option,
+      salary_type: userInput.salary_type,
+      unit_name: userInput.unit_name,
+      day_month: userInput.day_month,
+      pf_cover: userInput.pf_cover,
+      pf_amount: userInput.pf_amount,
+      esi_cover: userInput.esi_cover,
+      esi_amount: userInput.esi_amount,
+      esi_code: userInput.esi_code,
+      esi_district: userInput.esi_district,
+      pf_basic: userInput.pf_basic,
+      pf_da: userInput.pf_da,
+      pf_hra: userInput.pf_hra,
+      pf_trv: userInput.pf_trv,
+      esi_basic: userInput.esi_basic,
+      esi_da: userInput.esi_da,
+      esi_hra: userInput.esi_hra,
+      esi_trv: userInput.esi_trv,
+      esi_protax: userInput.esi_protax,
+      salary_type_amount: userInput.salary_type_amount,
+      day_month_date: userInput.day_month_date,
+      pf_amount_amount: userInput.pf_amount_amount,
+      prtax_basic: userInput.prtax_basic,
+      prtax_da: userInput.prtax_da,
+      prtax_hra: userInput.prtax_hra,
+      prtax_trv: userInput.prtax_trv,
+      prtax_cover: userInput.prtax_cover,
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3966,37 +4081,41 @@ await model.payrollmanualunitentry.create({
 
 user.manual_entry_unit_updates = async function (userInput, resultCallback) {
   console.log(userInput);
-await model.payrollmanualunitentry.findOneAndUpdate({_id:  userInput.id,},{
-  company:userInput.company,
-        unit_code:userInput.unit_code,
-        option:userInput.option,
-        salary_type:userInput.salary_type,
-        unit_name:userInput.unit_name,
-        day_month:userInput.day_month,
-        pf_cover:userInput.pf_cover,
-        pf_amount:userInput.pf_amount,
-        esi_cover:userInput.esi_cover,
-        esi_amount:userInput.esi_amount,
-        esi_code:userInput.esi_code,
-        esi_district:userInput.esi_district,
-        pf_basic:userInput.pf_basic,
-        pf_da:userInput.pf_da,
-        pf_hra:userInput.pf_hra,
-        pf_trv:userInput.pf_trv,
-        esi_basic:userInput.esi_basic,
-        esi_da:userInput.esi_da,
-        esi_hra:userInput.esi_hra,
-        esi_trv:userInput.esi_trv,
-        esi_protax:userInput.esi_protax,
-        salary_type_amount:userInput.salary_type_amount,
-        day_month_date:userInput.day_month_date,
-        pf_amount_amount:userInput.pf_amount_amount,
-        prtax_basic:userInput.prtax_basic,
-        prtax_da:userInput.prtax_da,
-        prtax_hra:userInput.prtax_hra,
-        prtax_trv:userInput.prtax_trv,
-        prtax_cover:userInput.prtax_cover,
-})
+  await model.payrollmanualunitentry
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        company: userInput.company,
+        unit_code: userInput.unit_code,
+        option: userInput.option,
+        salary_type: userInput.salary_type,
+        unit_name: userInput.unit_name,
+        day_month: userInput.day_month,
+        pf_cover: userInput.pf_cover,
+        pf_amount: userInput.pf_amount,
+        esi_cover: userInput.esi_cover,
+        esi_amount: userInput.esi_amount,
+        esi_code: userInput.esi_code,
+        esi_district: userInput.esi_district,
+        pf_basic: userInput.pf_basic,
+        pf_da: userInput.pf_da,
+        pf_hra: userInput.pf_hra,
+        pf_trv: userInput.pf_trv,
+        esi_basic: userInput.esi_basic,
+        esi_da: userInput.esi_da,
+        esi_hra: userInput.esi_hra,
+        esi_trv: userInput.esi_trv,
+        esi_protax: userInput.esi_protax,
+        salary_type_amount: userInput.salary_type_amount,
+        day_month_date: userInput.day_month_date,
+        pf_amount_amount: userInput.pf_amount_amount,
+        prtax_basic: userInput.prtax_basic,
+        prtax_da: userInput.prtax_da,
+        prtax_hra: userInput.prtax_hra,
+        prtax_trv: userInput.prtax_trv,
+        prtax_cover: userInput.prtax_cover,
+      }
+    )
 
     .then((data) => {
       console.log(data);
@@ -4009,8 +4128,9 @@ await model.payrollmanualunitentry.findOneAndUpdate({_id:  userInput.id,},{
 };
 
 user.manual_entry_unit_deletes = async function (userInput, resultCallback) {
-  await model.payrollmanualunitentry.deleteOne({_id:userInput.id})
- 
+  await model.payrollmanualunitentry
+    .deleteOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -4021,8 +4141,9 @@ user.manual_entry_unit_deletes = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_unit_lists = async function (userInput, resultCallback) {
-  await model.payrollmanualunitentry.find({unit_code:userInput.id})
- 
+  await model.payrollmanualunitentry
+    .find({ unit_code: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -4033,8 +4154,9 @@ user.manual_entry_unit_lists = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_unit_fetchs = async function (userInput, resultCallback) {
-  await model.payrollmanualunitentry.find({_id:userInput.id})
- 
+  await model.payrollmanualunitentry
+    .find({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -4046,25 +4168,26 @@ user.manual_entry_unit_fetchs = async function (userInput, resultCallback) {
 
 user.manual_entry_rate_adds = async function (userInput, resultCallback) {
   console.log(userInput);
-await model.payrollmanualunitrate.create({
-  rank:userInput.rank,
-  basic:userInput.basic,
-  da:userInput.da,
-  hra:userInput.hra,
-  trv_exp:userInput.trv_exp,
-  others:userInput.others,
-  medical:userInput.medical,
-  others1:userInput.others1,
-  others2:userInput.others2,
-  others3:userInput.others3,
-  others4:userInput.others4,
-  total_pay:userInput.total_pay,
-  pf:userInput.pf,
-  esi:userInput.esi,
-  dec:userInput.dec,
-  total:userInput.total,
-  unit_id:userInput.unit_id,
-})
+  await model.payrollmanualunitrate
+    .create({
+      rank: userInput.rank,
+      basic: userInput.basic,
+      da: userInput.da,
+      hra: userInput.hra,
+      trv_exp: userInput.trv_exp,
+      others: userInput.others,
+      medical: userInput.medical,
+      others1: userInput.others1,
+      others2: userInput.others2,
+      others3: userInput.others3,
+      others4: userInput.others4,
+      total_pay: userInput.total_pay,
+      pf: userInput.pf,
+      esi: userInput.esi,
+      dec: userInput.dec,
+      total: userInput.total,
+      unit_id: userInput.unit_id,
+    })
 
     .then((data) => {
       console.log(data);
@@ -4077,25 +4200,29 @@ await model.payrollmanualunitrate.create({
 };
 
 user.manual_entry_rate_updatess = async function (userInput, resultCallback) {
-  await model.payrollmanualunitrate.findOneAndUpdate({_id:userInput.id},{
-    rank:userInput.rank,
-  basic:userInput.basic,
-  da:userInput.da,
-  hra:userInput.hra,
-  trv_exp:userInput.trv_exp,
-  others:userInput.others,
-  medical:userInput.medical,
-  others1:userInput.others1,
-  others2:userInput.others2,
-  others3:userInput.others3,
-  others4:userInput.others4,
-  total_pay:userInput.total_pay,
-  pf:userInput.pf,
-  esi:userInput.esi,
-  dec:userInput.dec,
-  total:userInput.total,
-  unit_id:userInput.unit_id,
-  })
+  await model.payrollmanualunitrate
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        rank: userInput.rank,
+        basic: userInput.basic,
+        da: userInput.da,
+        hra: userInput.hra,
+        trv_exp: userInput.trv_exp,
+        others: userInput.others,
+        medical: userInput.medical,
+        others1: userInput.others1,
+        others2: userInput.others2,
+        others3: userInput.others3,
+        others4: userInput.others4,
+        total_pay: userInput.total_pay,
+        pf: userInput.pf,
+        esi: userInput.esi,
+        dec: userInput.dec,
+        total: userInput.total,
+        unit_id: userInput.unit_id,
+      }
+    )
 
     .then((data) => {
       console.log(data);
@@ -4108,10 +4235,11 @@ user.manual_entry_rate_updatess = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_rate_deletes = async function (userInput, resultCallback) {
-  await model.payrollmanualunitrate.deleteOne({
-    _id:userInput.id
-  })
-  
+  await model.payrollmanualunitrate
+    .deleteOne({
+      _id: userInput.id,
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -4122,8 +4250,9 @@ user.manual_entry_rate_deletes = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_rate_lists = async function (userInput, resultCallback) {
-  await model.payrollmanualunitrate.find({unit_id:userInput.id})
- 
+  await model.payrollmanualunitrate
+    .find({ unit_id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -4134,8 +4263,9 @@ user.manual_entry_rate_lists = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_rate_fetchs = async function (userInput, resultCallback) {
-  await model.payrollmanualunitrate.findOne({_id:userInput.id})
- 
+  await model.payrollmanualunitrate
+    .findOne({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -4147,693 +4277,746 @@ user.manual_entry_rate_fetchs = async function (userInput, resultCallback) {
 
 user.manual_entry_emp_adds = async function (userInput, resultCallback) {
   console.log(userInput);
-await model.payrollmanualentry.create({
-  company_name:userInput.company_name,
-  unit_name:userInput.unit_name,
-  date:userInput.date,
-  ecode:userInput.ecode,
-  ename:userInput.ename,
-  etype:userInput.etype,
-  eac:userInput.eac,
-  ebankname:userInput.ebankname,
-  eifsc:userInput.eifsc,
-  designation:userInput.designation,
-  present:userInput.present,
-  dutyoff:userInput.dutyoff,
-  add_duties:userInput.add_duties,
-  payment_type:userInput.payment_type,
-  paymode:userInput.paymode,
-  total_duties:userInput.total_duties,
-  basic:userInput.basic,
-  da:userInput.da,
-  hra:userInput.hra,
-  trv_ex:userInput.trv_ex,
-  others:userInput.others,
-  medical:userInput.medical,
-  others1:userInput.others1,
-  others2:userInput.others2,
-  others3:userInput.others3,
-  others4:userInput.others4,
-  waesi:userInput.waesi,
-  ewdays:userInput.ewdays,
-  ewamount:userInput.ewamount,
-  gross:userInput.gross,
-  advance:userInput.advance,
-  loan:userInput.loan,
-  uniform:userInput.uniform,
-  mess:userInput.mess,
-  rent:userInput.rent,
-  atm:userInput.atm,
-  phone:userInput.phone,
-  pf:userInput.pf,
-  esi:userInput.esi,
-  pr_tax:userInput.pr_tax,
-  staff_wellfare:userInput.staff_wellfare,
-  total_dec:userInput.total_dec,
-  ner_pay:userInput.ner_pay,
-  add_amount:userInput.add_amount,
-  advance_id:userInput.advance_id,
-  loan_id:userInput.loan_id,
-  uniform_id:userInput.uniform_id,
-  mess_id:userInput.mess_id,
-  rent_id:userInput.rent_id,
-  atmcard_id:userInput.atmcard_id,
-  others_id:userInput.others_id,
-  phone_id:userInput.phone_id,
-})
-  
-    .then(async(data) => {
+  await model.payrollmanualentry
+    .create({
+      company_name: userInput.company_name,
+      unit_name: userInput.unit_name,
+      date: userInput.date,
+      ecode: userInput.ecode,
+      ename: userInput.ename,
+      etype: userInput.etype,
+      eac: userInput.eac,
+      ebankname: userInput.ebankname,
+      eifsc: userInput.eifsc,
+      designation: userInput.designation,
+      present: userInput.present,
+      dutyoff: userInput.dutyoff,
+      add_duties: userInput.add_duties,
+      payment_type: userInput.payment_type,
+      paymode: userInput.paymode,
+      total_duties: userInput.total_duties,
+      basic: userInput.basic,
+      da: userInput.da,
+      hra: userInput.hra,
+      trv_ex: userInput.trv_ex,
+      others: userInput.others,
+      medical: userInput.medical,
+      others1: userInput.others1,
+      others2: userInput.others2,
+      others3: userInput.others3,
+      others4: userInput.others4,
+      waesi: userInput.waesi,
+      ewdays: userInput.ewdays,
+      ewamount: userInput.ewamount,
+      gross: userInput.gross,
+      advance: userInput.advance,
+      loan: userInput.loan,
+      uniform: userInput.uniform,
+      mess: userInput.mess,
+      rent: userInput.rent,
+      atm: userInput.atm,
+      phone: userInput.phone,
+      pf: userInput.pf,
+      esi: userInput.esi,
+      pr_tax: userInput.pr_tax,
+      staff_wellfare: userInput.staff_wellfare,
+      total_dec: userInput.total_dec,
+      ner_pay: userInput.ner_pay,
+      add_amount: userInput.add_amount,
+      advance_id: userInput.advance_id,
+      loan_id: userInput.loan_id,
+      uniform_id: userInput.uniform_id,
+      mess_id: userInput.mess_id,
+      rent_id: userInput.rent_id,
+      atmcard_id: userInput.atmcard_id,
+      others_id: userInput.others_id,
+      phone_id: userInput.phone_id,
+    })
+
+    .then(async (data) => {
       console.log(data);
       console.log(+data.advance_id);
       if (+data.advance_id == 0) {
       } else if (+data.advance_id > 0) {
-        await model.advance.find({advance_id:data.advance_id})
-        //! need to check 
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+])
-          .then(async(advanceDetail) => {
+        await model.advance
+          .find({ advance_id: data.advance_id })
+          //! need to check
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+])
+          .then(async (advanceDetail) => {
             console.log(advanceDetail);
             if (data.advance == advanceDetail.pbalanceamount) {
               console.log("Paid");
 
-              await model.advance.findOneAndUpdate({status:"Paid",_id:data.advance_id,pbalanceamount:"0"})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.advance_id, "0"]
-              //   )
-                .then(async(advanceStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "Paid",
+                  _id: data.advance_id,
+                  pbalanceamount: "0",
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.advance_id, "0"]
+                //   )
+                .then(async (advanceStatus) => {
                   console.log(advanceStatus);
                   await model.advancehistory.create({
-                    employee_id:advanceStatus.employee_id,
-                      employee_name:advanceStatus.employee_name,
-                      account_number:advanceStatus.account_number,
-                      pamount:advanceStatus.pamount,
-                      pbalanceamount:advanceStatus.pbalanceamount,
-                      pinstalment:advanceStatus.pinstalment,
-                      ppendinginstalment:advanceStatus.ppendinginstalment,
-                      dfullcash:advanceStatus.dfullcash,
-                      dpaytype:advanceStatus.dpaytype,
-                      ddate:advanceStatus.ddate,
-                      damount:advanceStatus.damount,
-                      daddi:advanceStatus.daddi,
-                      dnaration:advanceStatus.dnaration,
-                      advance_type:advanceStatus.advance_type,
-                      company_name:advanceStatus.company_name,
-                      site:advanceStatus.site,
-                      status:advanceStatus.status,
-                      loan_number:advanceStatus.loan_number,
-                      cdate:advanceStatus.cdate,
-                      id:advanceStatus.id,
-                  })
-               
+                    employee_id: advanceStatus.employee_id,
+                    employee_name: advanceStatus.employee_name,
+                    account_number: advanceStatus.account_number,
+                    pamount: advanceStatus.pamount,
+                    pbalanceamount: advanceStatus.pbalanceamount,
+                    pinstalment: advanceStatus.pinstalment,
+                    ppendinginstalment: advanceStatus.ppendinginstalment,
+                    dfullcash: advanceStatus.dfullcash,
+                    dpaytype: advanceStatus.dpaytype,
+                    ddate: advanceStatus.ddate,
+                    damount: advanceStatus.damount,
+                    daddi: advanceStatus.daddi,
+                    dnaration: advanceStatus.dnaration,
+                    advance_type: advanceStatus.advance_type,
+                    company_name: advanceStatus.company_name,
+                    site: advanceStatus.site,
+                    status: advanceStatus.status,
+                    loan_number: advanceStatus.loan_number,
+                    cdate: advanceStatus.cdate,
+                    id: advanceStatus.id,
+                  });
                 });
             } else if (data.advance < advanceDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({_id:data.advance_id},{pbalanceamount:advanceDetail.pamount - data.advance})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [advanceDetail.pamount - data.advance, +data.advance_id]
-              //   )
-                .then(async(advanceStatus1) => {
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.advance_id },
+                  { pbalanceamount: advanceDetail.pamount - data.advance }
+                )
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [advanceDetail.pamount - data.advance, +data.advance_id]
+                //   )
+                .then(async (advanceStatus1) => {
                   console.log(advanceStatus1);
                   await model.advancehistory.create({
-                    employee_id:advanceStatus1.employee_id,
-                      employee_name:advanceStatus1.employee_name,
-                      account_number:advanceStatus1.account_number,
-                      pamount:advanceStatus1.pamount,
-                      pbalanceamount:advanceStatus1.pbalanceamount,
-                      pinstalment:advanceStatus1.pinstalment,
-                      ppendinginstalment:advanceStatus1.ppendinginstalment,
-                      dfullcash:advanceStatus1.dfullcash,
-                      dpaytype:advanceStatus1.dpaytype,
-                      ddate:advanceStatus1.ddate,
-                      damount:advanceStatus1.damount,
-                      daddi:advanceStatus1.daddi,
-                      dnaration:advanceStatus1.dnaration,
-                      advance_type:advanceStatus1.advance_type,
-                      company_name:advanceStatus1.company_name,
-                      site:advanceStatus1.site,
-                      status:advanceStatus1.status,
-                      loan_number:advanceStatus1.loan_number,
-                      cdate:advanceStatus1.cdate,
-                      id:advanceStatus1.id,
-                  })
-                 
+                    employee_id: advanceStatus1.employee_id,
+                    employee_name: advanceStatus1.employee_name,
+                    account_number: advanceStatus1.account_number,
+                    pamount: advanceStatus1.pamount,
+                    pbalanceamount: advanceStatus1.pbalanceamount,
+                    pinstalment: advanceStatus1.pinstalment,
+                    ppendinginstalment: advanceStatus1.ppendinginstalment,
+                    dfullcash: advanceStatus1.dfullcash,
+                    dpaytype: advanceStatus1.dpaytype,
+                    ddate: advanceStatus1.ddate,
+                    damount: advanceStatus1.damount,
+                    daddi: advanceStatus1.daddi,
+                    dnaration: advanceStatus1.dnaration,
+                    advance_type: advanceStatus1.advance_type,
+                    company_name: advanceStatus1.company_name,
+                    site: advanceStatus1.site,
+                    status: advanceStatus1.status,
+                    loan_number: advanceStatus1.loan_number,
+                    cdate: advanceStatus1.cdate,
+                    id: advanceStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.loan_id == 0) {
       } else if (+data.loan_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
-          .then((loanDetail) => {
+        await model.advance
+          .find({ _id: data.loan_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
+          .then(async (loanDetail) => {
             console.log(loanDetail);
             if (data.loan == loanDetail.pbalanceamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.loan_id, "0"]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.loan_id },
+                  { status: "Paid", pbalanceamount: "0" }
                 )
-                .then((loanStatus) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.loan_id, "0"]
+                //   )
+                .then(async (loanStatus) => {
                   console.log(loanStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      loanStatus.employee_id,
-                      loanStatus.employee_name,
-                      loanStatus.account_number,
-                      loanStatus.pamount,
-                      loanStatus.pbalanceamount,
-                      loanStatus.pinstalment,
-                      loanStatus.ppendinginstalment,
-                      loanStatus.dfullcash,
-                      loanStatus.dpaytype,
-                      loanStatus.ddate,
-                      loanStatus.damount,
-                      loanStatus.daddi,
-                      loanStatus.dnaration,
-                      loanStatus.advance_type,
-                      loanStatus.company_name,
-                      loanStatus.site,
-                      loanStatus.status,
-                      loanStatus.loan_number,
-                      loanStatus.cdate,
-                      loanStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: loanStatus.employee_id,
+                    employee_name: loanStatus.employee_name,
+                    account_number: loanStatus.account_number,
+                    pamount: loanStatus.pamount,
+                    pbalanceamount: loanStatus.pbalanceamount,
+                    pinstalment: loanStatus.pinstalment,
+                    ppendinginstalment: loanStatus.ppendinginstalment,
+                    dfullcash: loanStatus.dfullcash,
+                    dpaytype: loanStatus.dpaytype,
+                    ddate: loanStatus.ddate,
+                    damount: loanStatus.damount,
+                    daddi: loanStatus.daddi,
+                    dnaration: loanStatus.dnaration,
+                    advance_type: loanStatus.advance_type,
+                    company_name: loanStatus.company_name,
+                    site: loanStatus.site,
+                    status: loanStatus.status,
+                    loan_number: loanStatus.loan_number,
+                    cdate: loanStatus.cdate,
+                    id: loanStatus.id,
+                  });
                 });
             } else if (data.loan < loanDetail.pbalanceamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-                  [loanDetail.pamount - data.loan, +data.loan_id]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.loan_id },
+                  { pbalanceamount: loanDetail.pamount - data.loan }
                 )
-                .then((loanStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [loanDetail.pamount - data.loan, +data.loan_id]
+                //   )
+                .then(async (loanStatus1) => {
                   console.log(loanStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      loanStatus1.employee_id,
-                      loanStatus1.employee_name,
-                      loanStatus1.account_number,
-                      loanStatus1.pamount,
-                      loanStatus1.pbalanceamount,
-                      loanStatus1.pinstalment,
-                      loanStatus1.ppendinginstalment,
-                      loanStatus1.dfullcash,
-                      loanStatus1.dpaytype,
-                      loanStatus1.ddate,
-                      loanStatus1.damount,
-                      loanStatus1.daddi,
-                      loanStatus1.dnaration,
-                      loanStatus1.advance_type,
-                      loanStatus1.company_name,
-                      loanStatus1.site,
-                      loanStatus1.status,
-                      loanStatus1.loan_number,
-                      loanStatus1.cdate,
-                      loanStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: loanStatus1.employee_id,
+                    employee_name: loanStatus1.employee_name,
+                    account_number: loanStatus1.account_number,
+                    pamount: loanStatus1.pamount,
+                    pbalanceamount: loanStatus1.pbalanceamount,
+                    pinstalment: loanStatus1.pinstalment,
+                    ppendinginstalment: loanStatus1.ppendinginstalment,
+                    dfullcash: loanStatus1.dfullcash,
+                    dpaytype: loanStatus1.dpaytype,
+                    ddate: loanStatus1.ddate,
+                    damount: loanStatus1.damount,
+                    daddi: loanStatus1.daddi,
+                    dnaration: loanStatus1.dnaration,
+                    advance_type: loanStatus1.advance_type,
+                    company_name: loanStatus1.company_name,
+                    site: loanStatus1.site,
+                    status: loanStatus1.status,
+                    loan_number: loanStatus1.loan_number,
+                    cdate: loanStatus1.cdate,
+                    id: loanStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.uniform_id == 0) {
       } else if (+data.uniform_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
-          .then((uniformDetail) => {
+        await model.advance
+          .find({ _id: data.uniform_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
+          .then(async (uniformDetail) => {
             console.log(uniformDetail);
             if (data.uniform == uniformDetail.pbalanceamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.uniform_id, "0"]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.uniform_id },
+                  { status: "Paid", pbalanceamount: "0" }
                 )
-                .then((uniformStatus) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.uniform_id, "0"]
+                //   )
+                .then(async (uniformStatus) => {
                   console.log(uniformStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      uniformStatus.employee_id,
-                      uniformStatus.employee_name,
-                      uniformStatus.account_number,
-                      uniformStatus.pamount,
-                      uniformStatus.pbalanceamount,
-                      uniformStatus.pinstalment,
-                      uniformStatus.ppendinginstalment,
-                      uniformStatus.dfullcash,
-                      uniformStatus.dpaytype,
-                      uniformStatus.ddate,
-                      uniformStatus.damount,
-                      uniformStatus.daddi,
-                      uniformStatus.dnaration,
-                      uniformStatus.advance_type,
-                      uniformStatus.company_name,
-                      uniformStatus.site,
-                      uniformStatus.status,
-                      uniformStatus.loan_number,
-                      uniformStatus.cdate,
-                      uniformStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: uniformStatus.employee_id,
+                    employee_name: uniformStatus.employee_name,
+                    account_number: uniformStatus.account_number,
+                    pamount: uniformStatus.pamount,
+                    pbalanceamount: uniformStatus.pbalanceamount,
+                    pinstalment: uniformStatus.pinstalment,
+                    ppendinginstalment: uniformStatus.ppendinginstalment,
+                    dfullcash: uniformStatus.dfullcash,
+                    dpaytype: uniformStatus.dpaytype,
+                    ddate: uniformStatus.ddate,
+                    damount: uniformStatus.damount,
+                    daddi: uniformStatus.daddi,
+                    dnaration: uniformStatus.dnaration,
+                    advance_type: uniformStatus.advance_type,
+                    company_name: uniformStatus.company_name,
+                    site: uniformStatus.site,
+                    status: uniformStatus.status,
+                    loan_number: uniformStatus.loan_number,
+                    cdate: uniformStatus.cdate,
+                    id: uniformStatus.id,
+                  });
                 });
             } else if (data.uniform < uniformDetail.pbalanceamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-                  [uniformDetail.pamount - data.uniform, +data.uniform_id]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.uniform_id },
+                  { pbalanceamount: uniformDetail.pamount - data.uniform }
                 )
-                .then((uniformStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [uniformDetail.pamount - data.uniform, +data.uniform_id]
+                //   )
+                .then(async (uniformStatus1) => {
                   console.log(uniformStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      uniformStatus1.employee_id,
-                      uniformStatus1.employee_name,
-                      uniformStatus1.account_number,
-                      uniformStatus1.pamount,
-                      uniformStatus1.pbalanceamount,
-                      uniformStatus1.pinstalment,
-                      uniformStatus1.ppendinginstalment,
-                      uniformStatus1.dfullcash,
-                      uniformStatus1.dpaytype,
-                      uniformStatus1.ddate,
-                      uniformStatus1.damount,
-                      uniformStatus1.daddi,
-                      uniformStatus1.dnaration,
-                      uniformStatus1.advance_type,
-                      uniformStatus1.company_name,
-                      uniformStatus1.site,
-                      uniformStatus1.status,
-                      uniformStatus1.loan_number,
-                      uniformStatus1.cdate,
-                      uniformStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: uniformStatus1.employee_id,
+                    employee_name: uniformStatus1.employee_name,
+                    account_number: uniformStatus1.account_number,
+                    pamount: uniformStatus1.pamount,
+                    pbalanceamount: uniformStatus1.pbalanceamount,
+                    pinstalment: uniformStatus1.pinstalment,
+                    ppendinginstalment: uniformStatus1.ppendinginstalment,
+                    dfullcash: uniformStatus1.dfullcash,
+                    dpaytype: uniformStatus1.dpaytype,
+                    ddate: uniformStatus1.ddate,
+                    damount: uniformStatus1.damount,
+                    daddi: uniformStatus1.daddi,
+                    dnaration: uniformStatus1.dnaration,
+                    advance_type: uniformStatus1.advance_type,
+                    company_name: uniformStatus1.company_name,
+                    site: uniformStatus1.site,
+                    status: uniformStatus1.status,
+                    loan_number: uniformStatus1.loan_number,
+                    cdate: uniformStatus1.cdate,
+                    id: uniformStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.mess_id == 0) {
       } else if (+data.mess_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
-          .then((messDetail) => {
+        await model.advance
+          .find({ _id: data.mess_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
+          .then(async (messDetail) => {
             console.log(messDetail);
             if (data.mess == messDetail.pbalanceamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.mess_id, "0"]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.mess_id },
+                  { status: "Paid", pbalanceamount: "0" }
                 )
-                .then((messStatus) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.mess_id, "0"]
+                //   )
+                .then(async (messStatus) => {
                   console.log(messStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      messStatus.employee_id,
-                      messStatus.employee_name,
-                      messStatus.account_number,
-                      messStatus.pamount,
-                      messStatus.pbalanceamount,
-                      messStatus.pinstalment,
-                      messStatus.ppendinginstalment,
-                      messStatus.dfullcash,
-                      messStatus.dpaytype,
-                      messStatus.ddate,
-                      messStatus.damount,
-                      messStatus.daddi,
-                      messStatus.dnaration,
-                      messStatus.advance_type,
-                      messStatus.company_name,
-                      messStatus.site,
-                      messStatus.status,
-                      messStatus.loan_number,
-                      messStatus.cdate,
-                      messStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: messStatus.employee_id,
+                    employee_name: messStatus.employee_name,
+                    account_number: messStatus.account_number,
+                    pamount: messStatus.pamount,
+                    pbalanceamount: messStatus.pbalanceamount,
+                    pinstalment: messStatus.pinstalment,
+                    ppendinginstalment: messStatus.ppendinginstalment,
+                    dfullcash: messStatus.dfullcash,
+                    dpaytype: messStatus.dpaytype,
+                    ddate: messStatus.ddate,
+                    damount: messStatus.damount,
+                    daddi: messStatus.daddi,
+                    dnaration: messStatus.dnaration,
+                    advance_type: messStatus.advance_type,
+                    company_name: messStatus.company_name,
+                    site: messStatus.site,
+                    status: messStatus.status,
+                    loan_number: messStatus.loan_number,
+                    cdate: messStatus.cdate,
+                    id: messStatus.id,
+                  });
                 });
             } else if (data.mess < messDetail.pbalanceamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-                  [messDetail.pamount - data.mess, +data.mess_id]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.mess_id },
+                  { pbalanceamount: messDetail.pamount - data.mess }
                 )
-                .then((messStatus1) => {
+
+                .then(async (messStatus1) => {
                   console.log(messStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      messStatus1.employee_id,
-                      messStatus1.employee_name,
-                      messStatus1.account_number,
-                      messStatus1.pamount,
-                      messStatus1.pbalanceamount,
-                      messStatus1.pinstalment,
-                      messStatus1.ppendinginstalment,
-                      messStatus1.dfullcash,
-                      messStatus1.dpaytype,
-                      messStatus1.ddate,
-                      messStatus1.damount,
-                      messStatus1.daddi,
-                      messStatus1.dnaration,
-                      messStatus1.advance_type,
-                      messStatus1.company_name,
-                      messStatus1.site,
-                      messStatus1.status,
-                      messStatus1.loan_number,
-                      messStatus1.cdate,
-                      messStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: messStatus1.employee_id,
+                    employee_name: messStatus1.employee_name,
+                    account_number: messStatus1.account_number,
+                    pamount: messStatus1.pamount,
+                    pbalanceamount: messStatus1.pbalanceamount,
+                    pinstalment: messStatus1.pinstalment,
+                    ppendinginstalment: messStatus1.ppendinginstalment,
+                    dfullcash: messStatus1.dfullcash,
+                    dpaytype: messStatus1.dpaytype,
+                    ddate: messStatus1.ddate,
+                    damount: messStatus1.damount,
+                    daddi: messStatus1.daddi,
+                    dnaration: messStatus1.dnaration,
+                    advance_type: messStatus1.advance_type,
+                    company_name: messStatus1.company_name,
+                    site: messStatus1.site,
+                    status: messStatus1.status,
+                    loan_number: messStatus1.loan_number,
+                    cdate: messStatus1.cdate,
+                    id: messStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.rent_id == 0) {
       } else if (+data.rent_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
-          .then((rentDetail) => {
+        await model.advance
+          .find({ _id: data.rent_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
+          .then(async (rentDetail) => {
             console.log(rentDetail);
             if (data.rent == rentDetail.pbalanceamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.rent_id, "0"]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.rent_id },
+                  { pbalanceamount: "0", status: "Paid" }
                 )
-                .then((rentStatus) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.rent_id, "0"]
+                //   )
+                .then(async (rentStatus) => {
                   console.log(rentStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      rentStatus.employee_id,
-                      rentStatus.employee_name,
-                      rentStatus.account_number,
-                      rentStatus.pamount,
-                      rentStatus.pbalanceamount,
-                      rentStatus.pinstalment,
-                      rentStatus.ppendinginstalment,
-                      rentStatus.dfullcash,
-                      rentStatus.dpaytype,
-                      rentStatus.ddate,
-                      rentStatus.damount,
-                      rentStatus.daddi,
-                      rentStatus.dnaration,
-                      rentStatus.advance_type,
-                      rentStatus.company_name,
-                      rentStatus.site,
-                      rentStatus.status,
-                      rentStatus.loan_number,
-                      rentStatus.cdate,
-                      rentStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: rentStatus.employee_id,
+                    employee_name: rentStatus.employee_name,
+                    account_number: rentStatus.account_number,
+                    pamount: rentStatus.pamount,
+                    pbalanceamount: rentStatus.pbalanceamount,
+                    pinstalment: rentStatus.pinstalment,
+                    ppendinginstalment: rentStatus.ppendinginstalment,
+                    dfullcash: rentStatus.dfullcash,
+                    dpaytype: rentStatus.dpaytype,
+                    ddate: rentStatus.ddate,
+                    damount: rentStatus.damount,
+                    daddi: rentStatus.daddi,
+                    dnaration: rentStatus.dnaration,
+                    advance_type: rentStatus.advance_type,
+                    company_name: rentStatus.company_name,
+                    site: rentStatus.site,
+                    status: rentStatus.status,
+                    loan_number: rentStatus.loan_number,
+                    cdate: rentStatus.cdate,
+                    id: rentStatus.id,
+                  });
                 });
             } else if (data.rent < rentDetail.pbalanceamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-                  [rentDetail.pamount - data.rent, +data.rent_id]
+              await model.advance
+                .findOneAndUpdate(
+                  {
+                    _id: data.rent_id,
+                  },
+                  { pbalanceamount: rentDetail.pamount - data.rent }
                 )
-                .then((rentStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [rentDetail.pamount - data.rent, +data.rent_id]
+                //   )
+                .then(async (rentStatus1) => {
                   console.log(rentStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      rentStatus1.employee_id,
-                      rentStatus1.employee_name,
-                      rentStatus1.account_number,
-                      rentStatus1.pamount,
-                      rentStatus1.pbalanceamount,
-                      rentStatus1.pinstalment,
-                      rentStatus1.ppendinginstalment,
-                      rentStatus1.dfullcash,
-                      rentStatus1.dpaytype,
-                      rentStatus1.ddate,
-                      rentStatus1.damount,
-                      rentStatus1.daddi,
-                      rentStatus1.dnaration,
-                      rentStatus1.advance_type,
-                      rentStatus1.company_name,
-                      rentStatus1.site,
-                      rentStatus1.status,
-                      rentStatus1.loan_number,
-                      rentStatus1.cdate,
-                      rentStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: rentStatus1.employee_id,
+                    employee_name: rentStatus1.employee_name,
+                    account_number: rentStatus1.account_number,
+                    pamount: rentStatus1.pamount,
+                    pbalanceamount: rentStatus1.pbalanceamount,
+                    pinstalment: rentStatus1.pinstalment,
+                    ppendinginstalment: rentStatus1.ppendinginstalment,
+                    dfullcash: rentStatus1.dfullcash,
+                    dpaytype: rentStatus1.dpaytype,
+                    ddate: rentStatus1.ddate,
+                    damount: rentStatus1.damount,
+                    daddi: rentStatus1.daddi,
+                    dnaration: rentStatus1.dnaration,
+                    advance_type: rentStatus1.advance_type,
+                    company_name: rentStatus1.company_name,
+                    site: rentStatus1.site,
+                    status: rentStatus1.status,
+                    loan_number: rentStatus1.loan_number,
+                    cdate: rentStatus1.cdate,
+                    id: rentStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.atmcard_id == 0) {
       } else if (+data.atmcard_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
-          .then((atmDetail) => {
+        await model.advance
+          .find({ _id: data.atmcard_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
+          .then(async (atmDetail) => {
             console.log(atmDetail);
             if (data.atm == atmDetail.pbalanceamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.atmcard_id, "0"]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.atmcard_id },
+                  { status: "Paid", pbalanceamount: "0" }
                 )
-                .then((atmStatus) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.atmcard_id, "0"]
+                //   )
+                .then(async (atmStatus) => {
                   console.log(atmStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      atmStatus.employee_id,
-                      atmStatus.employee_name,
-                      atmStatus.account_number,
-                      atmStatus.pamount,
-                      atmStatus.pbalanceamount,
-                      atmStatus.pinstalment,
-                      atmStatus.ppendinginstalment,
-                      atmStatus.dfullcash,
-                      atmStatus.dpaytype,
-                      atmStatus.ddate,
-                      atmStatus.damount,
-                      atmStatus.daddi,
-                      atmStatus.dnaration,
-                      atmStatus.advance_type,
-                      atmStatus.company_name,
-                      atmStatus.site,
-                      atmStatus.status,
-                      atmStatus.loan_number,
-                      atmStatus.cdate,
-                      atmStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: atmStatus.employee_id,
+                    employee_name: atmStatus.employee_name,
+                    account_number: atmStatus.account_number,
+                    pamount: atmStatus.pamount,
+                    pbalanceamount: atmStatus.pbalanceamount,
+                    pinstalment: atmStatus.pinstalment,
+                    ppendinginstalment: atmStatus.ppendinginstalment,
+                    dfullcash: atmStatus.dfullcash,
+                    dpaytype: atmStatus.dpaytype,
+                    ddate: atmStatus.ddate,
+                    damount: atmStatus.damount,
+                    daddi: atmStatus.daddi,
+                    dnaration: atmStatus.dnaration,
+                    advance_type: atmStatus.advance_type,
+                    company_name: atmStatus.company_name,
+                    site: atmStatus.site,
+                    status: atmStatus.status,
+                    loan_number: atmStatus.loan_number,
+                    cdate: atmStatus.cdate,
+                    id: atmStatus.id,
+                  });
                 });
             } else if (data.atm < atmDetail.pbalanceamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-                  [atmDetail.pamount - data.atm, +data.atmcard_id]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.atmcard_id },
+                  { pbalanceamount: atmDetail.pamount - data.atm }
                 )
-                .then((atmStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [atmDetail.pamount - data.atm, +data.atmcard_id]
+                //   )
+                .then(async (atmStatus1) => {
                   console.log(atmStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      atmStatus1.employee_id,
-                      atmStatus1.employee_name,
-                      atmStatus1.account_number,
-                      atmStatus1.pamount,
-                      atmStatus1.pbalanceamount,
-                      atmStatus1.pinstalment,
-                      atmStatus1.ppendinginstalment,
-                      atmStatus1.dfullcash,
-                      atmStatus1.dpaytype,
-                      atmStatus1.ddate,
-                      atmStatus1.damount,
-                      atmStatus1.daddi,
-                      atmStatus1.dnaration,
-                      atmStatus1.advance_type,
-                      atmStatus1.company_name,
-                      atmStatus1.site,
-                      atmStatus1.status,
-                      atmStatus1.loan_number,
-                      atmStatus1.cdate,
-                      atmStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: atmStatus1.employee_id,
+                    employee_name: atmStatus1.employee_name,
+                    account_number: atmStatus1.account_number,
+                    pamount: atmStatus1.pamount,
+                    pbalanceamount: atmStatus1.pbalanceamount,
+                    pinstalment: atmStatus1.pinstalment,
+                    ppendinginstalment: atmStatus1.ppendinginstalment,
+                    dfullcash: atmStatus1.dfullcash,
+                    dpaytype: atmStatus1.dpaytype,
+                    ddate: atmStatus1.ddate,
+                    damount: atmStatus1.damount,
+                    daddi: atmStatus1.daddi,
+                    dnaration: atmStatus1.dnaration,
+                    advance_type: atmStatus1.advance_type,
+                    company_name: atmStatus1.company_name,
+                    site: atmStatus1.site,
+                    status: atmStatus1.status,
+                    loan_number: atmStatus1.loan_number,
+                    cdate: atmStatus1.cdate,
+                    id: atmStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.phone_id == 0) {
       } else if (+data.phone_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
-          .then((phoneDetail) => {
+        await model.advance
+          .find({ _id: data.phone_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
+          .then(async (phoneDetail) => {
             console.log(phoneDetail);
             if (data.phone == phoneDetail.pbalanceamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.phone_id, "0"]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.phone_id },
+                  { status: "Paid", pbalanceamount: "0" }
                 )
-                .then((phoneStatus) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.phone_id, "0"]
+                //   )
+                .then(async (phoneStatus) => {
                   console.log(phoneStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      phoneStatus.employee_id,
-                      phoneStatus.employee_name,
-                      phoneStatus.account_number,
-                      phoneStatus.pamount,
-                      phoneStatus.pbalanceamount,
-                      phoneStatus.pinstalment,
-                      phoneStatus.ppendinginstalment,
-                      phoneStatus.dfullcash,
-                      phoneStatus.dpaytype,
-                      phoneStatus.ddate,
-                      phoneStatus.damount,
-                      phoneStatus.daddi,
-                      phoneStatus.dnaration,
-                      phoneStatus.advance_type,
-                      phoneStatus.company_name,
-                      phoneStatus.site,
-                      phoneStatus.status,
-                      phoneStatus.loan_number,
-                      phoneStatus.cdate,
-                      phoneStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: phoneStatus.employee_id,
+                    employee_name: phoneStatus.employee_name,
+                    account_number: phoneStatus.account_number,
+                    pamount: phoneStatus.pamount,
+                    pbalanceamount: phoneStatus.pbalanceamount,
+                    pinstalment: phoneStatus.pinstalment,
+                    ppendinginstalment: phoneStatus.ppendinginstalment,
+                    dfullcash: phoneStatus.dfullcash,
+                    dpaytype: phoneStatus.dpaytype,
+                    ddate: phoneStatus.ddate,
+                    damount: phoneStatus.damount,
+                    daddi: phoneStatus.daddi,
+                    dnaration: phoneStatus.dnaration,
+                    advance_type: phoneStatus.advance_type,
+                    company_name: phoneStatus.company_name,
+                    site: phoneStatus.site,
+                    status: phoneStatus.status,
+                    loan_number: phoneStatus.loan_number,
+                    cdate: phoneStatus.cdate,
+                    id: phoneStatus.id,
+                  });
                 });
             } else if (data.phone < phoneDetail.pbalanceamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-                  [phoneDetail.pamount - data.phone, +data.phone_id]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.phone_id },
+                  { pbalanceamount: phoneDetail.pamount - data.phone }
                 )
-                .then((phoneStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [phoneDetail.pamount - data.phone, +data.phone_id]
+                //   )
+                .then(async (phoneStatus1) => {
                   console.log(phoneStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      phoneStatus1.employee_id,
-                      phoneStatus1.employee_name,
-                      phoneStatus1.account_number,
-                      phoneStatus1.pamount,
-                      phoneStatus1.pbalanceamount,
-                      phoneStatus1.pinstalment,
-                      phoneStatus1.ppendinginstalment,
-                      phoneStatus1.dfullcash,
-                      phoneStatus1.dpaytype,
-                      phoneStatus1.ddate,
-                      phoneStatus1.damount,
-                      phoneStatus1.daddi,
-                      phoneStatus1.dnaration,
-                      phoneStatus1.advance_type,
-                      phoneStatus1.company_name,
-                      phoneStatus1.site,
-                      phoneStatus1.status,
-                      phoneStatus1.loan_number,
-                      phoneStatus1.cdate,
-                      phoneStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: phoneStatus1.employee_id,
+                    employee_name: phoneStatus1.employee_name,
+                    account_number: phoneStatus1.account_number,
+                    pamount: phoneStatus1.pamount,
+                    pbalanceamount: phoneStatus1.pbalanceamount,
+                    pinstalment: phoneStatus1.pinstalment,
+                    ppendinginstalment: phoneStatus1.ppendinginstalment,
+                    dfullcash: phoneStatus1.dfullcash,
+                    dpaytype: phoneStatus1.dpaytype,
+                    ddate: phoneStatus1.ddate,
+                    damount: phoneStatus1.damount,
+                    daddi: phoneStatus1.daddi,
+                    dnaration: phoneStatus1.dnaration,
+                    advance_type: phoneStatus1.advance_type,
+                    company_name: phoneStatus1.company_name,
+                    site: phoneStatus1.site,
+                    status: phoneStatus1.status,
+                    loan_number: phoneStatus1.loan_number,
+                    cdate: phoneStatus1.cdate,
+                    id: phoneStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.others_id == 0) {
       } else if (+data.others_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.others_id])
-          .then((otherDetail) => {
+        await model.advance
+          .find({ _id: data.others_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.others_id])
+          .then(async (otherDetail) => {
             console.log(otherDetail);
             if (data.others == otherDetail.pbalanceamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.others_id, "0"]
+              await model.advance
+                .findOneAndUpdate(
+                  {
+                    _id: data.others_id,
+                  },
+                  { pbalanceamount: "0", status: "Paid" }
                 )
-                .then((otherStatus) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.others_id, "0"]
+                //   )
+                .then(async (otherStatus) => {
                   console.log(otherStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      otherStatus.employee_id,
-                      otherStatus.employee_name,
-                      otherStatus.account_number,
-                      otherStatus.pamount,
-                      otherStatus.pbalanceamount,
-                      otherStatus.pinstalment,
-                      otherStatus.ppendinginstalment,
-                      otherStatus.dfullcash,
-                      otherStatus.dpaytype,
-                      otherStatus.ddate,
-                      otherStatus.damount,
-                      otherStatus.daddi,
-                      otherStatus.dnaration,
-                      otherStatus.advance_type,
-                      otherStatus.company_name,
-                      otherStatus.site,
-                      otherStatus.status,
-                      otherStatus.loan_number,
-                      otherStatus.cdate,
-                      otherStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: otherStatus.employee_id,
+                    employee_name: otherStatus.employee_name,
+                    account_number: otherStatus.account_number,
+                    pamount: otherStatus.pamount,
+                    pbalanceamount: otherStatus.pbalanceamount,
+                    pinstalment: otherStatus.pinstalment,
+                    ppendinginstalment: otherStatus.ppendinginstalment,
+                    dfullcash: otherStatus.dfullcash,
+                    dpaytype: otherStatus.dpaytype,
+                    ddate: otherStatus.ddate,
+                    damount: otherStatus.damount,
+                    daddi: otherStatus.daddi,
+                    dnaration: otherStatus.dnaration,
+                    advance_type: otherStatus.advance_type,
+                    company_name: otherStatus.company_name,
+                    site: otherStatus.site,
+                    status: otherStatus.status,
+                    loan_number: otherStatus.loan_number,
+                    cdate: otherStatus.cdate,
+                    id: otherStatus.id,
+                  });
                 });
             } else if (data.others < otherDetail.pbalanceamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-                  [otherDetail.pamount - data.others, +data.others_id]
+              await model.advance
+                .findOneAndUpdate(
+                  {
+                    _id: data.others_id,
+                  },
+                  { pbalanceamount: otherDetail.pamount - data.others }
                 )
-                .then((otherStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [otherDetail.pamount - data.others, +data.others_id]
+                // )
+                .then(async (otherStatus1) => {
                   console.log(otherStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      otherStatus1.employee_id,
-                      otherStatus1.employee_name,
-                      otherStatus1.account_number,
-                      otherStatus1.pamount,
-                      otherStatus1.pbalanceamount,
-                      otherStatus1.pinstalment,
-                      otherStatus1.ppendinginstalment,
-                      otherStatus1.dfullcash,
-                      otherStatus1.dpaytype,
-                      otherStatus1.ddate,
-                      otherStatus1.damount,
-                      otherStatus1.daddi,
-                      otherStatus1.dnaration,
-                      otherStatus1.advance_type,
-                      otherStatus1.company_name,
-                      otherStatus1.site,
-                      otherStatus1.status,
-                      otherStatus1.loan_number,
-                      otherStatus1.cdate,
-                      otherStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: otherStatus1.employee_id,
+                    employee_name: otherStatus1.employee_name,
+                    account_number: otherStatus1.account_number,
+                    pamount: otherStatus1.pamount,
+                    pbalanceamount: otherStatus1.pbalanceamount,
+                    pinstalment: otherStatus1.pinstalment,
+                    ppendinginstalment: otherStatus1.ppendinginstalment,
+                    dfullcash: otherStatus1.dfullcash,
+                    dpaytype: otherStatus1.dpaytype,
+                    ddate: otherStatus1.ddate,
+                    damount: otherStatus1.damount,
+                    daddi: otherStatus1.daddi,
+                    dnaration: otherStatus1.dnaration,
+                    advance_type: otherStatus1.advance_type,
+                    company_name: otherStatus1.company_name,
+                    site: otherStatus1.site,
+                    status: otherStatus1.status,
+                    loan_number: otherStatus1.loan_number,
+                    cdate: otherStatus1.cdate,
+                    id: otherStatus1.id,
+                  });
                 });
             }
           });
@@ -4847,694 +5030,751 @@ await model.payrollmanualentry.create({
 };
 
 user.manual_entry_emp_updates = async function (userInput, resultCallback) {
-  await model.payrollmanualentry.findOneAndUpdate({_id:userInput.id},{
-    company_name:userInput.company_name,
-    unit_name:userInput.unit_name,
-    date:userInput.date,
-    ecode:userInput.ecode,
-    ename:userInput.ename,
-    etype:userInput.etype,
-    eac:userInput.eac,
-    ebankname:userInput.ebankname,
-    eifsc:userInput.eifsc,
-    designation:userInput.designation,
-    present:userInput.present,
-    dutyoff:userInput.dutyoff,
-    add_duties:userInput.add_duties,
-    payment_type:userInput.payment_type,
-    paymode:userInput.paymode,
-    total_duties:userInput.total_duties,
-    basic:userInput.basic,
-    da:userInput.da,
-    hra:userInput.hra,
-    trv_ex:userInput.trv_ex,
-    others:userInput.others,
-    medical:userInput.medical,
-    others1:userInput.others1,
-    others2:userInput.others2,
-    others3:userInput.others3,
-    others4:userInput.others4,
-    waesi:userInput.waesi,
-    ewdays:userInput.ewdays,
-    ewamount:userInput.ewamount,
-    gross:userInput.gross,
-    advance:userInput.advance,
-    loan:userInput.loan,
-    uniform:userInput.uniform,
-    mess:userInput.mess,
-    rent:userInput.rent,
-    atm:userInput.atm,
-    phone:userInput.phone,
-    pf:userInput.pf,
-    esi:userInput.esi,
-    pr_tax:userInput.pr_tax,
-    staff_wellfare:userInput.staff_wellfare,
-    total_dec:userInput.total_dec,
-    ner_pay:userInput.ner_pay,
-    add_amount:userInput.add_amount,
-    advance_id:userInput.advance_id,
-    loan_id:userInput.loan_id,
-    uniform_id:userInput.uniform_id,
-    mess_id:userInput.mess_id,
-    rent_id:userInput.rent_id,
-    atmcard_id:userInput.atmcard_id,
-    others_id:userInput.others_id,
-    phone_id:userInput.phone_id,
-  })
-    .then(async(data) => {
+  await model.payrollmanualentry
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        company_name: userInput.company_name,
+        unit_name: userInput.unit_name,
+        date: userInput.date,
+        ecode: userInput.ecode,
+        ename: userInput.ename,
+        etype: userInput.etype,
+        eac: userInput.eac,
+        ebankname: userInput.ebankname,
+        eifsc: userInput.eifsc,
+        designation: userInput.designation,
+        present: userInput.present,
+        dutyoff: userInput.dutyoff,
+        add_duties: userInput.add_duties,
+        payment_type: userInput.payment_type,
+        paymode: userInput.paymode,
+        total_duties: userInput.total_duties,
+        basic: userInput.basic,
+        da: userInput.da,
+        hra: userInput.hra,
+        trv_ex: userInput.trv_ex,
+        others: userInput.others,
+        medical: userInput.medical,
+        others1: userInput.others1,
+        others2: userInput.others2,
+        others3: userInput.others3,
+        others4: userInput.others4,
+        waesi: userInput.waesi,
+        ewdays: userInput.ewdays,
+        ewamount: userInput.ewamount,
+        gross: userInput.gross,
+        advance: userInput.advance,
+        loan: userInput.loan,
+        uniform: userInput.uniform,
+        mess: userInput.mess,
+        rent: userInput.rent,
+        atm: userInput.atm,
+        phone: userInput.phone,
+        pf: userInput.pf,
+        esi: userInput.esi,
+        pr_tax: userInput.pr_tax,
+        staff_wellfare: userInput.staff_wellfare,
+        total_dec: userInput.total_dec,
+        ner_pay: userInput.ner_pay,
+        add_amount: userInput.add_amount,
+        advance_id: userInput.advance_id,
+        loan_id: userInput.loan_id,
+        uniform_id: userInput.uniform_id,
+        mess_id: userInput.mess_id,
+        rent_id: userInput.rent_id,
+        atmcard_id: userInput.atmcard_id,
+        others_id: userInput.others_id,
+        phone_id: userInput.phone_id,
+      }
+    )
+    .then(async (data) => {
       console.log(data);
       console.log(+data.advance_id);
       if (+data.advance_id == 0) {
       } else if (+data.advance_id > 0) {
-        await model.advance.find({_id:data.advance_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
-          .then(async(advanceDetail) => {
+        await model.advance
+          .find({ _id: data.advance_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
+          .then(async (advanceDetail) => {
             console.log(advanceDetail);
             if (data.advance == advanceDetail.pbalanceamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({status:"Paid",pbalanceamount:"0",id:data.advance_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.advance_id, "0"]
-              //   )
-                .then(async(advanceStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "Paid",
+                  pbalanceamount: "0",
+                  id: data.advance_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.advance_id, "0"]
+                //   )
+                .then(async (advanceStatus) => {
                   console.log(advanceStatus);
                   await model.advancehistory.create({
-                    employee_id:advanceStatus.employee_id,
-                    employee_name:advanceStatus.employee_name,
-                    account_number:advanceStatus.account_number,
-                    pamount:advanceStatus.pamount,
-                    pbalanceamount:advanceStatus.pbalanceamount,
-                    pinstalment:advanceStatus.pinstalment,
-                    ppendinginstalment:advanceStatus.ppendinginstalment,
-                    dfullcash:advanceStatus.dfullcash,
-                    dpaytype:advanceStatus.dpaytype,
-                    ddate:advanceStatus.ddate,
-                    damount:advanceStatus.damount,
-                    daddi:advanceStatus.daddi,
-                    dnaration:advanceStatus.dnaration,
-                    advance_type:advanceStatus.advance_type,
-                    company_name:advanceStatus.company_name,
-                    site:advanceStatus.site,
-                    status:advanceStatus.status,
-                    loan_number:advanceStatus.loan_number,
-                    cdate:advanceStatus.cdate,
-                    id:advanceStatus.id,
-                  })
-                 
+                    employee_id: advanceStatus.employee_id,
+                    employee_name: advanceStatus.employee_name,
+                    account_number: advanceStatus.account_number,
+                    pamount: advanceStatus.pamount,
+                    pbalanceamount: advanceStatus.pbalanceamount,
+                    pinstalment: advanceStatus.pinstalment,
+                    ppendinginstalment: advanceStatus.ppendinginstalment,
+                    dfullcash: advanceStatus.dfullcash,
+                    dpaytype: advanceStatus.dpaytype,
+                    ddate: advanceStatus.ddate,
+                    damount: advanceStatus.damount,
+                    daddi: advanceStatus.daddi,
+                    dnaration: advanceStatus.dnaration,
+                    advance_type: advanceStatus.advance_type,
+                    company_name: advanceStatus.company_name,
+                    site: advanceStatus.site,
+                    status: advanceStatus.status,
+                    loan_number: advanceStatus.loan_number,
+                    cdate: advanceStatus.cdate,
+                    id: advanceStatus.id,
+                  });
                 });
             } else if (data.advance < advanceDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({pbalanceamount:advanceDetail.pamount - data.advance,_id:data.advance_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [advanceDetail.pamount - data.advance, +data.advance_id]
-              //   )
-                .then(async(advanceStatus1) => {
+              await model.advance
+                .findOneAndUpdate({
+                  pbalanceamount: advanceDetail.pamount - data.advance,
+                  _id: data.advance_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [advanceDetail.pamount - data.advance, +data.advance_id]
+                //   )
+                .then(async (advanceStatus1) => {
                   console.log(advanceStatus1);
                   await model.advancehistory.create({
-                    employee_id:advanceStatus1.employee_id,
-                      employee_name:advanceStatus1.employee_name,
-                      account_number:advanceStatus1.account_number,
-                      pamount:advanceStatus1.pamount,
-                      pbalanceamount:advanceStatus1.pbalanceamount,
-                      pinstalment:advanceStatus1.pinstalment,
-                      ppendinginstalment:advanceStatus1.ppendinginstalment,
-                      dfullcash:advanceStatus1.dfullcash,
-                      dpaytype:advanceStatus1.dpaytype,
-                      ddate:advanceStatus1.ddate,
-                      damount:advanceStatus1.damount,
-                      daddi:advanceStatus1.daddi,
-                      dnaration:advanceStatus1.dnaration,
-                      advance_type:advanceStatus1.advance_type,
-                      company_name:advanceStatus1.company_name,
-                      site:advanceStatus1.site,
-                      status:advanceStatus1.status,
-                      loan_number:advanceStatus1.loan_number,
-                      cdate:advanceStatus1.cdate,
-                      id:advanceStatus1.id,
-                  })
-                 
+                    employee_id: advanceStatus1.employee_id,
+                    employee_name: advanceStatus1.employee_name,
+                    account_number: advanceStatus1.account_number,
+                    pamount: advanceStatus1.pamount,
+                    pbalanceamount: advanceStatus1.pbalanceamount,
+                    pinstalment: advanceStatus1.pinstalment,
+                    ppendinginstalment: advanceStatus1.ppendinginstalment,
+                    dfullcash: advanceStatus1.dfullcash,
+                    dpaytype: advanceStatus1.dpaytype,
+                    ddate: advanceStatus1.ddate,
+                    damount: advanceStatus1.damount,
+                    daddi: advanceStatus1.daddi,
+                    dnaration: advanceStatus1.dnaration,
+                    advance_type: advanceStatus1.advance_type,
+                    company_name: advanceStatus1.company_name,
+                    site: advanceStatus1.site,
+                    status: advanceStatus1.status,
+                    loan_number: advanceStatus1.loan_number,
+                    cdate: advanceStatus1.cdate,
+                    id: advanceStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.loan_id == 0) {
       } else if (+data.loan_id > 0) {
-        await model.advance.find({id:data.loan_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
-          .then(async(loanDetail) => {
+        await model.advance
+          .find({ id: data.loan_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
+          .then(async (loanDetail) => {
             console.log(loanDetail);
             if (data.loan == loanDetail.pbalanceamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({status:"",pbalanceamount:"0",_id:data.loan_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.loan_id, "0"]
-              //   )
-                .then(async(loanStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "",
+                  pbalanceamount: "0",
+                  _id: data.loan_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.loan_id, "0"]
+                //   )
+                .then(async (loanStatus) => {
                   console.log(loanStatus);
                   await model.advancehistory.create({
-                    employee_id:loanStatus.employee_id,
-                    employee_name:loanStatus.employee_name,
-                    account_number:loanStatus.account_number,
-                    pamount:loanStatus.pamount,
-                    pbalanceamount:loanStatus.pbalanceamount,
-                    pinstalment:loanStatus.pinstalment,
-                    ppendinginstalment:loanStatus.ppendinginstalment,
-                    dfullcash:loanStatus.dfullcash,
-                    dpaytype:loanStatus.dpaytype,
-                    ddate:loanStatus.ddate,
-                    damount:loanStatus.damount,
-                    daddi:loanStatus.daddi,
-                    dnaration:loanStatus.dnaration,
-                    advance_type:loanStatus.advance_type,
-                    company_name:loanStatus.company_name,
-                    site:loanStatus.site,
-                    status:loanStatus.status,
-                    loan_number:loanStatus.loan_number,
-                    cdate:loanStatus.cdate,
-                    id:loanStatus.id,
-                  })
-                 
+                    employee_id: loanStatus.employee_id,
+                    employee_name: loanStatus.employee_name,
+                    account_number: loanStatus.account_number,
+                    pamount: loanStatus.pamount,
+                    pbalanceamount: loanStatus.pbalanceamount,
+                    pinstalment: loanStatus.pinstalment,
+                    ppendinginstalment: loanStatus.ppendinginstalment,
+                    dfullcash: loanStatus.dfullcash,
+                    dpaytype: loanStatus.dpaytype,
+                    ddate: loanStatus.ddate,
+                    damount: loanStatus.damount,
+                    daddi: loanStatus.daddi,
+                    dnaration: loanStatus.dnaration,
+                    advance_type: loanStatus.advance_type,
+                    company_name: loanStatus.company_name,
+                    site: loanStatus.site,
+                    status: loanStatus.status,
+                    loan_number: loanStatus.loan_number,
+                    cdate: loanStatus.cdate,
+                    id: loanStatus.id,
+                  });
                 });
             } else if (data.loan < loanDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({pbalanceamount:loanDetail.pamount - data.loan,_id:data.loan_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [loanDetail.pamount - data.loan, +data.loan_id]
-              //   )
-                .then(async(loanStatus1) => {
+              await model.advance
+                .findOneAndUpdate({
+                  pbalanceamount: loanDetail.pamount - data.loan,
+                  _id: data.loan_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [loanDetail.pamount - data.loan, +data.loan_id]
+                //   )
+                .then(async (loanStatus1) => {
                   console.log(loanStatus1);
                   await model.advancehistory.create({
-                    employee_id:loanStatus1.employee_id,
-                    employee_name:loanStatus1.employee_name,
-                    account_number:loanStatus1.account_number,
-                    pamount:loanStatus1.pamount,
-                    pbalanceamount:loanStatus1.pbalanceamount,
-                    pinstalment:loanStatus1.pinstalment,
-                    ppendinginstalment:loanStatus1.ppendinginstalment,
-                    dfullcash:loanStatus1.dfullcash,
-                    dpaytype:loanStatus1.dpaytype,
-                    ddate:loanStatus1.ddate,
-                    damount:loanStatus1.damount,
-                    daddi:loanStatus1.daddi,
-                    dnaration:loanStatus1.dnaration,
-                    advance_type:loanStatus1.advance_type,
-                    company_name:loanStatus1.company_name,
-                    site:loanStatus1.site,
-                    status:loanStatus1.status,
-                    loan_number:loanStatus1.loan_number,
-                    cdate:loanStatus1.cdate,
-                    id:loanStatus1.id,
-                  })
-                 
+                    employee_id: loanStatus1.employee_id,
+                    employee_name: loanStatus1.employee_name,
+                    account_number: loanStatus1.account_number,
+                    pamount: loanStatus1.pamount,
+                    pbalanceamount: loanStatus1.pbalanceamount,
+                    pinstalment: loanStatus1.pinstalment,
+                    ppendinginstalment: loanStatus1.ppendinginstalment,
+                    dfullcash: loanStatus1.dfullcash,
+                    dpaytype: loanStatus1.dpaytype,
+                    ddate: loanStatus1.ddate,
+                    damount: loanStatus1.damount,
+                    daddi: loanStatus1.daddi,
+                    dnaration: loanStatus1.dnaration,
+                    advance_type: loanStatus1.advance_type,
+                    company_name: loanStatus1.company_name,
+                    site: loanStatus1.site,
+                    status: loanStatus1.status,
+                    loan_number: loanStatus1.loan_number,
+                    cdate: loanStatus1.cdate,
+                    id: loanStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.uniform_id == 0) {
       } else if (+data.uniform_id > 0) {
-        await model.advance.find({_id:data.uniform_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
-          .then(async(uniformDetail) => {
+        await model.advance
+          .find({ _id: data.uniform_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
+          .then(async (uniformDetail) => {
             console.log(uniformDetail);
             if (data.uniform == uniformDetail.pbalanceamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({status:"Paid",pbalanceamount:"0",_id:data.uniform_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.uniform_id, "0"]
-              //   )
-                .then(async(uniformStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "Paid",
+                  pbalanceamount: "0",
+                  _id: data.uniform_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.uniform_id, "0"]
+                //   )
+                .then(async (uniformStatus) => {
                   console.log(uniformStatus);
                   await model.advancehistory.create({
-                    employee_id:uniformStatus.employee_id,
-                    employee_name:uniformStatus.employee_name,
-                    account_number:uniformStatus.account_number,
-                    pamount:uniformStatus.pamount,
-                    pbalanceamount:uniformStatus.pbalanceamount,
-                    pinstalment:uniformStatus.pinstalment,
-                    ppendinginstalment:uniformStatus.ppendinginstalment,
-                    dfullcash:uniformStatus.dfullcash,
-                    dpaytype:uniformStatus.dpaytype,
-                    ddate:uniformStatus.ddate,
-                    damount:uniformStatus.damount,
-                    daddi:uniformStatus.daddi,
-                    dnaration:uniformStatus.dnaration,
-                    advance_type:uniformStatus.advance_type,
-                    company_name:uniformStatus.company_name,
-                    site:uniformStatus.site,
-                    status:uniformStatus.status,
-                    loan_number:uniformStatus.loan_number,
-                    cdate:uniformStatus.cdate,
-                    id:uniformStatus.id,
-                  })
-                 
+                    employee_id: uniformStatus.employee_id,
+                    employee_name: uniformStatus.employee_name,
+                    account_number: uniformStatus.account_number,
+                    pamount: uniformStatus.pamount,
+                    pbalanceamount: uniformStatus.pbalanceamount,
+                    pinstalment: uniformStatus.pinstalment,
+                    ppendinginstalment: uniformStatus.ppendinginstalment,
+                    dfullcash: uniformStatus.dfullcash,
+                    dpaytype: uniformStatus.dpaytype,
+                    ddate: uniformStatus.ddate,
+                    damount: uniformStatus.damount,
+                    daddi: uniformStatus.daddi,
+                    dnaration: uniformStatus.dnaration,
+                    advance_type: uniformStatus.advance_type,
+                    company_name: uniformStatus.company_name,
+                    site: uniformStatus.site,
+                    status: uniformStatus.status,
+                    loan_number: uniformStatus.loan_number,
+                    cdate: uniformStatus.cdate,
+                    id: uniformStatus.id,
+                  });
                 });
             } else if (data.uniform < uniformDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({pbalanceamount:uniformDetail.pamount - data,_id:data.uniform_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [uniformDetail.pamount - data.uniform, +data.uniform_id]
-              //   )
-                .then(async(uniformStatus1) => {
+              await model.advance
+                .findOneAndUpdate({
+                  pbalanceamount: uniformDetail.pamount - data,
+                  _id: data.uniform_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [uniformDetail.pamount - data.uniform, +data.uniform_id]
+                //   )
+                .then(async (uniformStatus1) => {
                   console.log(uniformStatus1);
                   await model.advancehistory.create({
-                    employee_id:uniformStatus1.employee_id,
-                      employee_name:uniformStatus1.employee_name,
-                      account_number:uniformStatus1.account_number,
-                      pamount:uniformStatus1.pamount,
-                      pbalanceamount:uniformStatus1.pbalanceamount,
-                      pinstalment:uniformStatus1.pinstalment,
-                      ppendinginstalment:uniformStatus1.ppendinginstalment,
-                      dfullcash:uniformStatus1.dfullcash,
-                      dpaytype:uniformStatus1.dpaytype,
-                      ddate:uniformStatus1.ddate,
-                      damount:uniformStatus1.damount,
-                      daddi:uniformStatus1.daddi,
-                      dnaration:uniformStatus1.dnaration,
-                      advance_type:uniformStatus1.advance_type,
-                      company_name:uniformStatus1.company_name,
-                      site:uniformStatus1.site,
-                      status:uniformStatus1.status,
-                      loan_number:uniformStatus1.loan_number,
-                      cdate:uniformStatus1.cdate,
-                      id:uniformStatus1.id,
-                  })
-                 
+                    employee_id: uniformStatus1.employee_id,
+                    employee_name: uniformStatus1.employee_name,
+                    account_number: uniformStatus1.account_number,
+                    pamount: uniformStatus1.pamount,
+                    pbalanceamount: uniformStatus1.pbalanceamount,
+                    pinstalment: uniformStatus1.pinstalment,
+                    ppendinginstalment: uniformStatus1.ppendinginstalment,
+                    dfullcash: uniformStatus1.dfullcash,
+                    dpaytype: uniformStatus1.dpaytype,
+                    ddate: uniformStatus1.ddate,
+                    damount: uniformStatus1.damount,
+                    daddi: uniformStatus1.daddi,
+                    dnaration: uniformStatus1.dnaration,
+                    advance_type: uniformStatus1.advance_type,
+                    company_name: uniformStatus1.company_name,
+                    site: uniformStatus1.site,
+                    status: uniformStatus1.status,
+                    loan_number: uniformStatus1.loan_number,
+                    cdate: uniformStatus1.cdate,
+                    id: uniformStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.mess_id == 0) {
       } else if (+data.mess_id > 0) {
-        await model.advance.find({_id:data.mess_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
-          .then(async(messDetail) => {
+        await model.advance
+          .find({ _id: data.mess_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
+          .then(async (messDetail) => {
             console.log(messDetail);
             if (data.mess == messDetail.pbalanceamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({status:"Paid",pbalanceamount:"0",_id:data.mess_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.mess_id, "0"]
-              //   )
-                .then(async(messStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "Paid",
+                  pbalanceamount: "0",
+                  _id: data.mess_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.mess_id, "0"]
+                //   )
+                .then(async (messStatus) => {
                   console.log(messStatus);
                   await model.advancehistory.create({
-                    employee_id:messStatus.employee_id,
-                    employee_name:messStatus.employee_name,
-                    account_number:messStatus.account_number,
-                    pamount:messStatus.pamount,
-                    pbalanceamount:messStatus.pbalanceamount,
-                    pinstalment:messStatus.pinstalment,
-                    ppendinginstalment:messStatus.ppendinginstalment,
-                    dfullcash:messStatus.dfullcash,
-                    dpaytype:messStatus.dpaytype,
-                    ddate:messStatus.ddate,
-                    damount:messStatus.damount,
-                    daddi:messStatus.daddi,
-                    dnaration:messStatus.dnaration,
-                    advance_type:messStatus.advance_type,
-                    company_name:messStatus.company_name,
-                    site:messStatus.site,
-                    status:messStatus.status,
-                    loan_number:messStatus.loan_number,
-                    cdate:messStatus.cdate,
-                    id:messStatus.id,
-                  })
-                 
+                    employee_id: messStatus.employee_id,
+                    employee_name: messStatus.employee_name,
+                    account_number: messStatus.account_number,
+                    pamount: messStatus.pamount,
+                    pbalanceamount: messStatus.pbalanceamount,
+                    pinstalment: messStatus.pinstalment,
+                    ppendinginstalment: messStatus.ppendinginstalment,
+                    dfullcash: messStatus.dfullcash,
+                    dpaytype: messStatus.dpaytype,
+                    ddate: messStatus.ddate,
+                    damount: messStatus.damount,
+                    daddi: messStatus.daddi,
+                    dnaration: messStatus.dnaration,
+                    advance_type: messStatus.advance_type,
+                    company_name: messStatus.company_name,
+                    site: messStatus.site,
+                    status: messStatus.status,
+                    loan_number: messStatus.loan_number,
+                    cdate: messStatus.cdate,
+                    id: messStatus.id,
+                  });
                 });
             } else if (data.mess < messDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findByIdAndUpdate({
-                pbalanceamount:messDetail.pamount - data.mess,_id:data.mess_id
-              })
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [messDetail.pamount - data.mess, +data.mess_id]
-              //   )
-                .then(async(messStatus1) => {
+              await model.advance
+                .findByIdAndUpdate({
+                  pbalanceamount: messDetail.pamount - data.mess,
+                  _id: data.mess_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [messDetail.pamount - data.mess, +data.mess_id]
+                //   )
+                .then(async (messStatus1) => {
                   console.log(messStatus1);
                   await model.advancehistory.create({
-                    employee_id:messStatus1.employee_id,
-                    employee_name:messStatus1.employee_name,
-                    account_number:messStatus1.account_number,
-                    pamount:messStatus1.pamount,
-                    pbalanceamount:messStatus1.pbalanceamount,
-                    pinstalment:messStatus1.pinstalment,
-                    ppendinginstalment:messStatus1.ppendinginstalment,
-                    dfullcash:messStatus1.dfullcash,
-                    dpaytype:messStatus1.dpaytype,
-                    ddate:messStatus1.ddate,
-                    damount:messStatus1.damount,
-                    daddi:messStatus1.daddi,
-                    dnaration:messStatus1.dnaration,
-                    advance_type:messStatus1.advance_type,
-                    company_name:messStatus1.company_name,
-                    site:messStatus1.site,
-                    status:messStatus1.status,
-                    loan_number:messStatus1.loan_number,
-                    cdate:messStatus1.cdate,
-                    id:messStatus1.id,
-                  })
-                 
+                    employee_id: messStatus1.employee_id,
+                    employee_name: messStatus1.employee_name,
+                    account_number: messStatus1.account_number,
+                    pamount: messStatus1.pamount,
+                    pbalanceamount: messStatus1.pbalanceamount,
+                    pinstalment: messStatus1.pinstalment,
+                    ppendinginstalment: messStatus1.ppendinginstalment,
+                    dfullcash: messStatus1.dfullcash,
+                    dpaytype: messStatus1.dpaytype,
+                    ddate: messStatus1.ddate,
+                    damount: messStatus1.damount,
+                    daddi: messStatus1.daddi,
+                    dnaration: messStatus1.dnaration,
+                    advance_type: messStatus1.advance_type,
+                    company_name: messStatus1.company_name,
+                    site: messStatus1.site,
+                    status: messStatus1.status,
+                    loan_number: messStatus1.loan_number,
+                    cdate: messStatus1.cdate,
+                    id: messStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.rent_id == 0) {
       } else if (+data.rent_id > 0) {
-        await model.advance.find({_id:data.rent_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
-          .then(async(rentDetail) => {
+        await model.advance
+          .find({ _id: data.rent_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
+          .then(async (rentDetail) => {
             console.log(rentDetail);
             if (data.rent == rentDetail.pbalanceamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({status:"Paid",_id:data.rent_id,pbalanceamount:"0"})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.rent_id, "0"]
-              //   )
-                .then(async(rentStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "Paid",
+                  _id: data.rent_id,
+                  pbalanceamount: "0",
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.rent_id, "0"]
+                //   )
+                .then(async (rentStatus) => {
                   console.log(rentStatus);
                   await model.advancehistory.create({
-                    employee_id:rentStatus.employee_id,
-                    employee_name:rentStatus.employee_name,
-                    account_number:rentStatus.account_number,
-                    pamount:rentStatus.pamount,
-                    pbalanceamount:rentStatus.pbalanceamount,
-                    pinstalment:rentStatus.pinstalment,
-                    ppendinginstalment:rentStatus.ppendinginstalment,
-                    dfullcash:rentStatus.dfullcash,
-                    dpaytype:rentStatus.dpaytype,
-                    ddate:rentStatus.ddate,
-                    damount:rentStatus.damount,
-                    daddi:rentStatus.daddi,
-                    dnaration:rentStatus.dnaration,
-                    advance_type:rentStatus.advance_type,
-                    company_name:rentStatus.company_name,
-                    site:rentStatus.site,
-                    status:rentStatus.status,
-                    loan_number:rentStatus.loan_number,
-                    cdate:rentStatus.cdate,
-                    id:rentStatus.id,
-                  })
-                 
+                    employee_id: rentStatus.employee_id,
+                    employee_name: rentStatus.employee_name,
+                    account_number: rentStatus.account_number,
+                    pamount: rentStatus.pamount,
+                    pbalanceamount: rentStatus.pbalanceamount,
+                    pinstalment: rentStatus.pinstalment,
+                    ppendinginstalment: rentStatus.ppendinginstalment,
+                    dfullcash: rentStatus.dfullcash,
+                    dpaytype: rentStatus.dpaytype,
+                    ddate: rentStatus.ddate,
+                    damount: rentStatus.damount,
+                    daddi: rentStatus.daddi,
+                    dnaration: rentStatus.dnaration,
+                    advance_type: rentStatus.advance_type,
+                    company_name: rentStatus.company_name,
+                    site: rentStatus.site,
+                    status: rentStatus.status,
+                    loan_number: rentStatus.loan_number,
+                    cdate: rentStatus.cdate,
+                    id: rentStatus.id,
+                  });
                 });
             } else if (data.rent < rentDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({_id:data.rent_id,pbalanceamount:rentDetail.pamount - data.rent})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [rentDetail.pamount - data.rent, +data.rent_id]
-              //   )
-                .then(async(rentStatus1) => {
+              await model.advance
+                .findOneAndUpdate({
+                  _id: data.rent_id,
+                  pbalanceamount: rentDetail.pamount - data.rent,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [rentDetail.pamount - data.rent, +data.rent_id]
+                //   )
+                .then(async (rentStatus1) => {
                   console.log(rentStatus1);
                   await model.advancehistory.create({
-                    employee_id:rentStatus1.employee_id,
-                    employee_name:rentStatus1.employee_name,
-                    account_number:rentStatus1.account_number,
-                    pamount:rentStatus1.pamount,
-                    pbalanceamount:rentStatus1.pbalanceamount,
-                    pinstalment:rentStatus1.pinstalment,
-                    ppendinginstalment:rentStatus1.ppendinginstalment,
-                    dfullcash:rentStatus1.dfullcash,
-                    dpaytype:rentStatus1.dpaytype,
-                    ddate:rentStatus1.ddate,
-                    damount:rentStatus1.damount,
-                    daddi:rentStatus1.daddi,
-                    dnaration:rentStatus1.dnaration,
-                    advance_type:rentStatus1.advance_type,
-                    company_name:rentStatus1.company_name,
-                    site:rentStatus1.site,
-                    status:rentStatus1.status,
-                    loan_number:rentStatus1.loan_number,
-                    cdate:rentStatus1.cdate,
-                    id:rentStatus1.id,
-                  })
-                 
+                    employee_id: rentStatus1.employee_id,
+                    employee_name: rentStatus1.employee_name,
+                    account_number: rentStatus1.account_number,
+                    pamount: rentStatus1.pamount,
+                    pbalanceamount: rentStatus1.pbalanceamount,
+                    pinstalment: rentStatus1.pinstalment,
+                    ppendinginstalment: rentStatus1.ppendinginstalment,
+                    dfullcash: rentStatus1.dfullcash,
+                    dpaytype: rentStatus1.dpaytype,
+                    ddate: rentStatus1.ddate,
+                    damount: rentStatus1.damount,
+                    daddi: rentStatus1.daddi,
+                    dnaration: rentStatus1.dnaration,
+                    advance_type: rentStatus1.advance_type,
+                    company_name: rentStatus1.company_name,
+                    site: rentStatus1.site,
+                    status: rentStatus1.status,
+                    loan_number: rentStatus1.loan_number,
+                    cdate: rentStatus1.cdate,
+                    id: rentStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.atmcard_id == 0) {
       } else if (+data.atmcard_id > 0) {
-        await model.advance.find({_id:data.atmcard_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
-          .then(async(atmDetail) => {
+        await model.advance
+          .find({ _id: data.atmcard_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
+          .then(async (atmDetail) => {
             console.log(atmDetail);
             if (data.atm == atmDetail.pbalanceamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({
-                status:"Paid",_id:data.atmcard_id,pbalanceamount:"0"
-              })
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.atmcard_id, "0"]
-              //   )
-                .then(async(atmStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "Paid",
+                  _id: data.atmcard_id,
+                  pbalanceamount: "0",
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.atmcard_id, "0"]
+                //   )
+                .then(async (atmStatus) => {
                   console.log(atmStatus);
                   await model.advancehistory.create({
-                    employee_id:atmStatus.employee_id,
-                    employee_name:atmStatus.employee_name,
-                    account_number:atmStatus.account_number,
-                    pamount:atmStatus.pamount,
-                    pbalanceamount:atmStatus.pbalanceamount,
-                    pinstalment:atmStatus.pinstalment,
-                    ppendinginstalment:atmStatus.ppendinginstalment,
-                    dfullcash:atmStatus.dfullcash,
-                    dpaytype:atmStatus.dpaytype,
-                    ddate:atmStatus.ddate,
-                    damount:atmStatus.damount,
-                    daddi:atmStatus.daddi,
-                    dnaration:atmStatus.dnaration,
-                    advance_type:atmStatus.advance_type,
-                    company_name:atmStatus.company_name,
-                    site:atmStatus.site,
-                    status:atmStatus.status,
-                    loan_number:atmStatus.loan_number,
-                    cdate:atmStatus.cdate,
-                    id:atmStatus.id,
-                  })
-                 
+                    employee_id: atmStatus.employee_id,
+                    employee_name: atmStatus.employee_name,
+                    account_number: atmStatus.account_number,
+                    pamount: atmStatus.pamount,
+                    pbalanceamount: atmStatus.pbalanceamount,
+                    pinstalment: atmStatus.pinstalment,
+                    ppendinginstalment: atmStatus.ppendinginstalment,
+                    dfullcash: atmStatus.dfullcash,
+                    dpaytype: atmStatus.dpaytype,
+                    ddate: atmStatus.ddate,
+                    damount: atmStatus.damount,
+                    daddi: atmStatus.daddi,
+                    dnaration: atmStatus.dnaration,
+                    advance_type: atmStatus.advance_type,
+                    company_name: atmStatus.company_name,
+                    site: atmStatus.site,
+                    status: atmStatus.status,
+                    loan_number: atmStatus.loan_number,
+                    cdate: atmStatus.cdate,
+                    id: atmStatus.id,
+                  });
                 });
             } else if (data.atm < atmDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({
-                pbalanceamount:atmDetail.pamount - data.atm,_id:data.atmcard_id
-              })
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [atmDetail.pamount - data.atm, +data.atmcard_id]
-              //   )
-                .then(async(atmStatus1) => {
+              await model.advance
+                .findOneAndUpdate({
+                  pbalanceamount: atmDetail.pamount - data.atm,
+                  _id: data.atmcard_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [atmDetail.pamount - data.atm, +data.atmcard_id]
+                //   )
+                .then(async (atmStatus1) => {
                   console.log(atmStatus1);
                   await model.advancehistory.create({
-                    employee_id:atmStatus1.employee_id,
-                    employee_name:atmStatus1.employee_name,
-                    account_number:atmStatus1.account_number,
-                    pamount:atmStatus1.pamount,
-                    pbalanceamount:atmStatus1.pbalanceamount,
-                    pinstalment:atmStatus1.pinstalment,
-                    ppendinginstalment:atmStatus1.ppendinginstalment,
-                    dfullcash:atmStatus1.dfullcash,
-                    dpaytype:atmStatus1.dpaytype,
-                    ddate:atmStatus1.ddate,
-                    damount:atmStatus1.damount,
-                    daddi:atmStatus1.daddi,
-                    dnaration:atmStatus1.dnaration,
-                    advance_type:atmStatus1.advance_type,
-                    company_name:atmStatus1.company_name,
-                    site:atmStatus1.site,
-                    status:atmStatus1.status,
-                    loan_number:atmStatus1.loan_number,
-                    cdate:atmStatus1.cdate,
-                    id:atmStatus1.id,
-                  })
-                
+                    employee_id: atmStatus1.employee_id,
+                    employee_name: atmStatus1.employee_name,
+                    account_number: atmStatus1.account_number,
+                    pamount: atmStatus1.pamount,
+                    pbalanceamount: atmStatus1.pbalanceamount,
+                    pinstalment: atmStatus1.pinstalment,
+                    ppendinginstalment: atmStatus1.ppendinginstalment,
+                    dfullcash: atmStatus1.dfullcash,
+                    dpaytype: atmStatus1.dpaytype,
+                    ddate: atmStatus1.ddate,
+                    damount: atmStatus1.damount,
+                    daddi: atmStatus1.daddi,
+                    dnaration: atmStatus1.dnaration,
+                    advance_type: atmStatus1.advance_type,
+                    company_name: atmStatus1.company_name,
+                    site: atmStatus1.site,
+                    status: atmStatus1.status,
+                    loan_number: atmStatus1.loan_number,
+                    cdate: atmStatus1.cdate,
+                    id: atmStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.phone_id == 0) {
       } else if (+data.phone_id > 0) {
-        await model.advance.find({_id:data.phone_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
-          .then(async(phoneDetail) => {
+        await model.advance
+          .find({ _id: data.phone_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
+          .then(async (phoneDetail) => {
             console.log(phoneDetail);
             if (data.phone == phoneDetail.pbalanceamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({status:"Paid",pbalanceamount:"0",_id:data.phone_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.phone_id, "0"]
-              //   )
-                .then(async(phoneStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "Paid",
+                  pbalanceamount: "0",
+                  _id: data.phone_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.phone_id, "0"]
+                //   )
+                .then(async (phoneStatus) => {
                   console.log(phoneStatus);
                   await model.advancehistory.create({
-                    employee_id:phoneStatus.employee_id,
-                    employee_name:phoneStatus.employee_name,
-                    account_number:phoneStatus.account_number,
-                    pamount:phoneStatus.pamount,
-                    pbalanceamount:phoneStatus.pbalanceamount,
-                    pinstalment:phoneStatus.pinstalment,
-                    ppendinginstalment:phoneStatus.ppendinginstalment,
-                    dfullcash:phoneStatus.dfullcash,
-                    dpaytype:phoneStatus.dpaytype,
-                    ddate:phoneStatus.ddate,
-                    damount:phoneStatus.damount,
-                    daddi:phoneStatus.daddi,
-                    dnaration:phoneStatus.dnaration,
-                    advance_type:phoneStatus.advance_type,
-                    company_name:phoneStatus.company_name,
-                    site:phoneStatus.site,
-                    status:phoneStatus.status,
-                    loan_number:phoneStatus.loan_number,
-                    cdate:phoneStatus.cdate,
-                    id:phoneStatus.id,
-                  })
-                  
+                    employee_id: phoneStatus.employee_id,
+                    employee_name: phoneStatus.employee_name,
+                    account_number: phoneStatus.account_number,
+                    pamount: phoneStatus.pamount,
+                    pbalanceamount: phoneStatus.pbalanceamount,
+                    pinstalment: phoneStatus.pinstalment,
+                    ppendinginstalment: phoneStatus.ppendinginstalment,
+                    dfullcash: phoneStatus.dfullcash,
+                    dpaytype: phoneStatus.dpaytype,
+                    ddate: phoneStatus.ddate,
+                    damount: phoneStatus.damount,
+                    daddi: phoneStatus.daddi,
+                    dnaration: phoneStatus.dnaration,
+                    advance_type: phoneStatus.advance_type,
+                    company_name: phoneStatus.company_name,
+                    site: phoneStatus.site,
+                    status: phoneStatus.status,
+                    loan_number: phoneStatus.loan_number,
+                    cdate: phoneStatus.cdate,
+                    id: phoneStatus.id,
+                  });
                 });
             } else if (data.phone < phoneDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({
-                pbalanceamount:phoneDetail.pamount - data.phone,_id:data.phone_id
-              })
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [phoneDetail.pamount - data.phone, +data.phone_id]
-              //   )
-                .then(async(phoneStatus1) => {
+              await model.advance
+                .findOneAndUpdate({
+                  pbalanceamount: phoneDetail.pamount - data.phone,
+                  _id: data.phone_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [phoneDetail.pamount - data.phone, +data.phone_id]
+                //   )
+                .then(async (phoneStatus1) => {
                   console.log(phoneStatus1);
                   await model.advancehistory.create({
-                    employee_id:phoneStatus1.employee_id,
-                    employee_name:phoneStatus1.employee_name,
-                    account_number:phoneStatus1.account_number,
-                    pamount:phoneStatus1.pamount,
-                    pbalanceamount:phoneStatus1.pbalanceamount,
-                    pinstalment:phoneStatus1.pinstalment,
-                    ppendinginstalment:phoneStatus1.ppendinginstalment,
-                    dfullcash:phoneStatus1.dfullcash,
-                    dpaytype:phoneStatus1.dpaytype,
-                    ddate:phoneStatus1.ddate,
-                    damount:phoneStatus1.damount,
-                    daddi:phoneStatus1.daddi,
-                    dnaration:phoneStatus1.dnaration,
-                    advance_type:phoneStatus1.advance_type,
-                    company_name:phoneStatus1.company_name,
-                    site:phoneStatus1.site,
-                    status:phoneStatus1.status,
-                    loan_number:phoneStatus1.loan_number,
-                    cdate:phoneStatus1.cdate,
-                    id:phoneStatus1.id,
-                  })
-                
+                    employee_id: phoneStatus1.employee_id,
+                    employee_name: phoneStatus1.employee_name,
+                    account_number: phoneStatus1.account_number,
+                    pamount: phoneStatus1.pamount,
+                    pbalanceamount: phoneStatus1.pbalanceamount,
+                    pinstalment: phoneStatus1.pinstalment,
+                    ppendinginstalment: phoneStatus1.ppendinginstalment,
+                    dfullcash: phoneStatus1.dfullcash,
+                    dpaytype: phoneStatus1.dpaytype,
+                    ddate: phoneStatus1.ddate,
+                    damount: phoneStatus1.damount,
+                    daddi: phoneStatus1.daddi,
+                    dnaration: phoneStatus1.dnaration,
+                    advance_type: phoneStatus1.advance_type,
+                    company_name: phoneStatus1.company_name,
+                    site: phoneStatus1.site,
+                    status: phoneStatus1.status,
+                    loan_number: phoneStatus1.loan_number,
+                    cdate: phoneStatus1.cdate,
+                    id: phoneStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.others_id == 0) {
       } else if (+data.others_id > 0) {
-        await model.advance.find({_id:data.others_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.others_id])
-          .then(async(otherDetail) => {
+        await model.advance
+          .find({ _id: data.others_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.others_id])
+          .then(async (otherDetail) => {
             console.log(otherDetail);
             if (data.others == otherDetail.pbalanceamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({
-                status:"Paid",pbalanceamount:"0",_id:data.others_id
-              })
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.others_id, "0"]
-              //   )
-                .then(async(otherStatus) => {
+              await model.advance
+                .findOneAndUpdate({
+                  status: "Paid",
+                  pbalanceamount: "0",
+                  _id: data.others_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 , pbalanceamount=$3 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.others_id, "0"]
+                //   )
+                .then(async (otherStatus) => {
                   console.log(otherStatus);
                   await model.advancehistory.create({
-                    employee_id:otherStatus.employee_id,
-                      employee_name:otherStatus.employee_name,
-                      account_number:otherStatus.account_number,
-                      pamount:otherStatus.pamount,
-                      pbalanceamount:otherStatus.pbalanceamount,
-                      pinstalment:otherStatus.pinstalment,
-                      ppendinginstalment:otherStatus.ppendinginstalment,
-                      dfullcash:otherStatus.dfullcash,
-                      dpaytype:otherStatus.dpaytype,
-                      ddate:otherStatus.ddate,
-                      damount:otherStatus.damount,
-                      daddi:otherStatus.daddi,
-                      dnaration:otherStatus.dnaration,
-                      advance_type:otherStatus.advance_type,
-                      company_name:otherStatus.company_name,
-                      site:otherStatus.site,
-                      status:otherStatus.status,
-                      loan_number:otherStatus.loan_number,
-                      cdate:otherStatus.cdate,
-                      id:otherStatus.id,
-                  })
+                    employee_id: otherStatus.employee_id,
+                    employee_name: otherStatus.employee_name,
+                    account_number: otherStatus.account_number,
+                    pamount: otherStatus.pamount,
+                    pbalanceamount: otherStatus.pbalanceamount,
+                    pinstalment: otherStatus.pinstalment,
+                    ppendinginstalment: otherStatus.ppendinginstalment,
+                    dfullcash: otherStatus.dfullcash,
+                    dpaytype: otherStatus.dpaytype,
+                    ddate: otherStatus.ddate,
+                    damount: otherStatus.damount,
+                    daddi: otherStatus.daddi,
+                    dnaration: otherStatus.dnaration,
+                    advance_type: otherStatus.advance_type,
+                    company_name: otherStatus.company_name,
+                    site: otherStatus.site,
+                    status: otherStatus.status,
+                    loan_number: otherStatus.loan_number,
+                    cdate: otherStatus.cdate,
+                    id: otherStatus.id,
+                  });
                 });
             } else if (data.others < otherDetail.pbalanceamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({
-                pbalanceamount:otherDetail.pamount - data.others,_id:data.others_id
-              })
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
-              //     [otherDetail.pamount - data.others, +data.others_id]
-              //   )
-                .then(async(otherStatus1) => {
+              await model.advance
+                .findOneAndUpdate({
+                  pbalanceamount: otherDetail.pamount - data.others,
+                  _id: data.others_id,
+                })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pbalanceamount=$1 WHERE id=$2 RETURNING *",
+                //     [otherDetail.pamount - data.others, +data.others_id]
+                //   )
+                .then(async (otherStatus1) => {
                   console.log(otherStatus1);
                   await model.advancehistory.create({
-                    employee_id:otherStatus1.employee_id,
-                    employee_name:otherStatus1.employee_name,
-                    account_number:otherStatus1.account_number,
-                    pamount:otherStatus1.pamount,
-                    pbalanceamount:otherStatus1.pbalanceamount,
-                    pinstalment:otherStatus1.pinstalment,
-                    ppendinginstalment:otherStatus1.ppendinginstalment,
-                    dfullcash:otherStatus1.dfullcash,
-                    dpaytype:otherStatus1.dpaytype,
-                    ddate:otherStatus1.ddate,
-                    damount:otherStatus1.damount,
-                    daddi:otherStatus1.daddi,
-                    dnaration:otherStatus1.dnaration,
-                    advance_type:otherStatus1.advance_type,
-                    company_name:otherStatus1.company_name,
-                    site:otherStatus1.site,
-                    status:otherStatus1.status,
-                    loan_number:otherStatus1.loan_number,
-                    cdate:otherStatus1.cdate,
-                    id:otherStatus1.id,
-                  })
-                 
+                    employee_id: otherStatus1.employee_id,
+                    employee_name: otherStatus1.employee_name,
+                    account_number: otherStatus1.account_number,
+                    pamount: otherStatus1.pamount,
+                    pbalanceamount: otherStatus1.pbalanceamount,
+                    pinstalment: otherStatus1.pinstalment,
+                    ppendinginstalment: otherStatus1.ppendinginstalment,
+                    dfullcash: otherStatus1.dfullcash,
+                    dpaytype: otherStatus1.dpaytype,
+                    ddate: otherStatus1.ddate,
+                    damount: otherStatus1.damount,
+                    daddi: otherStatus1.daddi,
+                    dnaration: otherStatus1.dnaration,
+                    advance_type: otherStatus1.advance_type,
+                    company_name: otherStatus1.company_name,
+                    site: otherStatus1.site,
+                    status: otherStatus1.status,
+                    loan_number: otherStatus1.loan_number,
+                    cdate: otherStatus1.cdate,
+                    id: otherStatus1.id,
+                  });
                 });
             }
           });
@@ -5548,687 +5788,723 @@ user.manual_entry_emp_updates = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_rate_updates = async function (userInput, resultCallback) {
-  await model.payrollmanualentry.findOneAndUpdate({
-    _id: userInput.id,
-},{
-  company_name:userInput.company_name,
-  unit_name:userInput.unit_name,
-  date:userInput.date,
-  ecode:userInput.ecode,
-  ename:userInput.ename,
-  etype:userInput.etype,
-  eac:userInput.eac,
-  ebankname:userInput.ebankname,
-  eifsc:userInput.eifsc,
-  designation:userInput.designation,
-  present:userInput.present,
-  dutyoff:userInput.dutyoff,
-  add_duties:userInput.add_duties,
-  payment_type:userInput.payment_type,
-  paymode:userInput.paymode,
-  total_duties:userInput.total_duties,
-  basic:userInput.basic,
-  da:userInput.da,
-  hra:userInput.hra,
-  trv_ex:userInput.trv_ex,
-  others:userInput.others,
-  medical:userInput.medical,
-  others1:userInput.others1,
-  others2:userInput.others2,
-  others3:userInput.others3,
-  others4:userInput.others4,
-  waesi:userInput.waesi,
-  ewdays:userInput.ewdays,
-  ewamount:userInput.ewamount,
-  gross:userInput.gross,
-  advance:userInput.advance,
-  loan:userInput.loan,
-  uniform:userInput.uniform,
-  mess:userInput.mess,
-  rent:userInput.rent,
-  atm:userInput.atm,
-  phone:userInput.phone,
-  pf:userInput.pf,
-  esi:userInput.esi,
-  pr_tax:userInput.pr_tax,
-  staff_wellfare:userInput.staff_wellfare,
-  total_dec:userInput.total_dec,
-  ner_pay:userInput.ner_pay,
-  advance_id:userInput.advance_id,
-  loan_id:userInput.loan_id,
-  uniform_id:userInput.uniform_id,
-  mess_id:userInput.mess_id,
-  rent_id:userInput.rent_id,
-  atmcard_id:userInput.atmcard_id,
-  others_id:userInput.others_id,
-  phone_id:userInput.phone_id,
-})
-  
-    .then(async(data) => {
+  await model.payrollmanualentry
+    .findOneAndUpdate(
+      {
+        _id: userInput.id,
+      },
+      {
+        company_name: userInput.company_name,
+        unit_name: userInput.unit_name,
+        date: userInput.date,
+        ecode: userInput.ecode,
+        ename: userInput.ename,
+        etype: userInput.etype,
+        eac: userInput.eac,
+        ebankname: userInput.ebankname,
+        eifsc: userInput.eifsc,
+        designation: userInput.designation,
+        present: userInput.present,
+        dutyoff: userInput.dutyoff,
+        add_duties: userInput.add_duties,
+        payment_type: userInput.payment_type,
+        paymode: userInput.paymode,
+        total_duties: userInput.total_duties,
+        basic: userInput.basic,
+        da: userInput.da,
+        hra: userInput.hra,
+        trv_ex: userInput.trv_ex,
+        others: userInput.others,
+        medical: userInput.medical,
+        others1: userInput.others1,
+        others2: userInput.others2,
+        others3: userInput.others3,
+        others4: userInput.others4,
+        waesi: userInput.waesi,
+        ewdays: userInput.ewdays,
+        ewamount: userInput.ewamount,
+        gross: userInput.gross,
+        advance: userInput.advance,
+        loan: userInput.loan,
+        uniform: userInput.uniform,
+        mess: userInput.mess,
+        rent: userInput.rent,
+        atm: userInput.atm,
+        phone: userInput.phone,
+        pf: userInput.pf,
+        esi: userInput.esi,
+        pr_tax: userInput.pr_tax,
+        staff_wellfare: userInput.staff_wellfare,
+        total_dec: userInput.total_dec,
+        ner_pay: userInput.ner_pay,
+        advance_id: userInput.advance_id,
+        loan_id: userInput.loan_id,
+        uniform_id: userInput.uniform_id,
+        mess_id: userInput.mess_id,
+        rent_id: userInput.rent_id,
+        atmcard_id: userInput.atmcard_id,
+        others_id: userInput.others_id,
+        phone_id: userInput.phone_id,
+      }
+    )
+
+    .then(async (data) => {
       console.log(data);
       console.log(+data.advance_id);
       if (+data.advance_id == 0) {
       } else if (+data.advance_id > 0) {
-        await model.advance.find({_id:data.advance_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
-          .then(async(advanceDetail) => {
+        await model.advance
+          .find({ _id: data.advance_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.advance_id])
+          .then(async (advanceDetail) => {
             console.log(advanceDetail);
             if (data.advance == advanceDetail.pamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({status:"Paid",_id:data.advance_id})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.advance_id]
-              //   )
-                .then(async(advanceStatus) => {
+              await model.advance
+                .findOneAndUpdate({ status: "Paid", _id: data.advance_id })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.advance_id]
+                //   )
+                .then(async (advanceStatus) => {
                   console.log(advanceStatus);
                   await model.advancehistory.create({
-                    employee_id:advanceStatus.employee_id,
-                    employee_name:advanceStatus.employee_name,
-                    account_number:advanceStatus.account_number,
-                    pamount:advanceStatus.pamount,
-                    pbalanceamount:advanceStatus.pbalanceamount,
-                    pinstalment:advanceStatus.pinstalment,
-                    ppendinginstalment:advanceStatus.ppendinginstalment,
-                    dfullcash:advanceStatus.dfullcash,
-                    dpaytype:advanceStatus.dpaytype,
-                    ddate:advanceStatus.ddate,
-                    damount:advanceStatus.damount,
-                    daddi:advanceStatus.daddi,
-                    dnaration:advanceStatus.dnaration,
-                    advance_type:advanceStatus.advance_type,
-                    company_name:advanceStatus.company_name,
-                    site:advanceStatus.site,
-                    status:advanceStatus.status,
-                    loan_number:advanceStatus.loan_number,
-                    cdate:advanceStatus.cdate,
-                    id:advanceStatus.id,
-                  })
-                 
+                    employee_id: advanceStatus.employee_id,
+                    employee_name: advanceStatus.employee_name,
+                    account_number: advanceStatus.account_number,
+                    pamount: advanceStatus.pamount,
+                    pbalanceamount: advanceStatus.pbalanceamount,
+                    pinstalment: advanceStatus.pinstalment,
+                    ppendinginstalment: advanceStatus.ppendinginstalment,
+                    dfullcash: advanceStatus.dfullcash,
+                    dpaytype: advanceStatus.dpaytype,
+                    ddate: advanceStatus.ddate,
+                    damount: advanceStatus.damount,
+                    daddi: advanceStatus.daddi,
+                    dnaration: advanceStatus.dnaration,
+                    advance_type: advanceStatus.advance_type,
+                    company_name: advanceStatus.company_name,
+                    site: advanceStatus.site,
+                    status: advanceStatus.status,
+                    loan_number: advanceStatus.loan_number,
+                    cdate: advanceStatus.cdate,
+                    id: advanceStatus.id,
+                  });
                 });
             } else if (data.advance < advanceDetail.pamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({_id:data.advance_id,},{pamount:advanceDetail.pamount - data.advance})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
-              //     [advanceDetail.pamount - data.advance, +data.advance_id]
-              //   )
-                .then(async(advanceStatus1) => {
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.advance_id },
+                  { pamount: advanceDetail.pamount - data.advance }
+                )
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                //     [advanceDetail.pamount - data.advance, +data.advance_id]
+                //   )
+                .then(async (advanceStatus1) => {
                   console.log(advanceStatus1);
                   await model.advancehistory.create({
-                    employee_id:advanceStatus1.employee_id,
-                    employee_name:advanceStatus1.employee_name,
-                    account_number:advanceStatus1.account_number,
-                    pamount:advanceStatus1.pamount,
-                    pbalanceamount:advanceStatus1.pbalanceamount,
-                    pinstalment:advanceStatus1.pinstalment,
-                    ppendinginstalment:advanceStatus1.ppendinginstalment,
-                    dfullcash:advanceStatus1.dfullcash,
-                    dpaytype:advanceStatus1.dpaytype,
-                    ddate:advanceStatus1.ddate,
-                    damount:advanceStatus1.damount,
-                    daddi:advanceStatus1.daddi,
-                    dnaration:advanceStatus1.dnaration,
-                    advance_type:advanceStatus1.advance_type,
-                    company_name:advanceStatus1.company_name,
-                    site:advanceStatus1.site,
-                    status:advanceStatus1.status,
-                    loan_number:advanceStatus1.loan_number,
-                    cdate:advanceStatus1.cdate,
-                    id:advanceStatus1.id,
-                  })
-                
+                    employee_id: advanceStatus1.employee_id,
+                    employee_name: advanceStatus1.employee_name,
+                    account_number: advanceStatus1.account_number,
+                    pamount: advanceStatus1.pamount,
+                    pbalanceamount: advanceStatus1.pbalanceamount,
+                    pinstalment: advanceStatus1.pinstalment,
+                    ppendinginstalment: advanceStatus1.ppendinginstalment,
+                    dfullcash: advanceStatus1.dfullcash,
+                    dpaytype: advanceStatus1.dpaytype,
+                    ddate: advanceStatus1.ddate,
+                    damount: advanceStatus1.damount,
+                    daddi: advanceStatus1.daddi,
+                    dnaration: advanceStatus1.dnaration,
+                    advance_type: advanceStatus1.advance_type,
+                    company_name: advanceStatus1.company_name,
+                    site: advanceStatus1.site,
+                    status: advanceStatus1.status,
+                    loan_number: advanceStatus1.loan_number,
+                    cdate: advanceStatus1.cdate,
+                    id: advanceStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.loan_id == 0) {
       } else if (+data.loan_id > 0) {
-        await model.advance.find({_id:data.loan_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
-          .then(async(loanDetail) => {
+        await model.advance
+          .find({ _id: data.loan_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.loan_id])
+          .then(async (loanDetail) => {
             console.log(loanDetail);
             if (data.loan == loanDetail.pamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({_id:data.loan_id},{status:"Paid"})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.loan_id]
-              //   )
-                .then(async(loanStatus) => {
+              await model.advance
+                .findOneAndUpdate({ _id: data.loan_id }, { status: "Paid" })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.loan_id]
+                //   )
+                .then(async (loanStatus) => {
                   console.log(loanStatus);
                   await model.advancehistory.create({
-                    employee_id:loanStatus.employee_id,
-                    employee_name:loanStatus.employee_name,
-                    account_number:loanStatus.account_number,
-                    pamount:loanStatus.pamount,
-                    pbalanceamount:loanStatus.pbalanceamount,
-                    pinstalment:loanStatus.pinstalment,
-                    ppendinginstalment:loanStatus.ppendinginstalment,
-                    dfullcash:loanStatus.dfullcash,
-                    dpaytype:loanStatus.dpaytype,
-                    ddate:loanStatus.ddate,
-                    damount:loanStatus.damount,
-                    daddi:loanStatus.daddi,
-                    dnaration:loanStatus.dnaration,
-                    advance_type:loanStatus.advance_type,
-                    company_name:loanStatus.company_name,
-                    site:loanStatus.site,
-                    status:loanStatus.status,
-                    loan_number:loanStatus.loan_number,
-                    cdate:loanStatus.cdate,
-                    id:loanStatus.id,
-                  })
-                
+                    employee_id: loanStatus.employee_id,
+                    employee_name: loanStatus.employee_name,
+                    account_number: loanStatus.account_number,
+                    pamount: loanStatus.pamount,
+                    pbalanceamount: loanStatus.pbalanceamount,
+                    pinstalment: loanStatus.pinstalment,
+                    ppendinginstalment: loanStatus.ppendinginstalment,
+                    dfullcash: loanStatus.dfullcash,
+                    dpaytype: loanStatus.dpaytype,
+                    ddate: loanStatus.ddate,
+                    damount: loanStatus.damount,
+                    daddi: loanStatus.daddi,
+                    dnaration: loanStatus.dnaration,
+                    advance_type: loanStatus.advance_type,
+                    company_name: loanStatus.company_name,
+                    site: loanStatus.site,
+                    status: loanStatus.status,
+                    loan_number: loanStatus.loan_number,
+                    cdate: loanStatus.cdate,
+                    id: loanStatus.id,
+                  });
                 });
             } else if (data.loan < loanDetail.pamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({_id:data.loan_id},{pamount:loanDetail.pamount - data.loan})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
-              //     [loanDetail.pamount - data.loan, +data.loan_id]
-              //   )
-                .then(async(loanStatus1) => {
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.loan_id },
+                  { pamount: loanDetail.pamount - data.loan }
+                )
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                //     [loanDetail.pamount - data.loan, +data.loan_id]
+                //   )
+                .then(async (loanStatus1) => {
                   console.log(loanStatus1);
                   await model.advancehistory.create({
-                    employee_id:loanStatus1.employee_id,
-                    employee_name:loanStatus1.employee_name,
-                    account_number:loanStatus1.account_number,
-                    pamount:loanStatus1.pamount,
-                    pbalanceamount:loanStatus1.pbalanceamount,
-                    pinstalment:loanStatus1.pinstalment,
-                    ppendinginstalment:loanStatus1.ppendinginstalment,
-                    dfullcash:loanStatus1.dfullcash,
-                    dpaytype:loanStatus1.dpaytype,
-                    ddate:loanStatus1.ddate,
-                    damount:loanStatus1.damount,
-                    daddi:loanStatus1.daddi,
-                    dnaration:loanStatus1.dnaration,
-                    advance_type:loanStatus1.advance_type,
-                    company_name:loanStatus1.company_name,
-                    site:loanStatus1.site,
-                    status:loanStatus1.status,
-                    loan_number:loanStatus1.loan_number,
-                    cdate:loanStatus1.cdate,
-                    id:loanStatus1.id,
-                  })
-                
+                    employee_id: loanStatus1.employee_id,
+                    employee_name: loanStatus1.employee_name,
+                    account_number: loanStatus1.account_number,
+                    pamount: loanStatus1.pamount,
+                    pbalanceamount: loanStatus1.pbalanceamount,
+                    pinstalment: loanStatus1.pinstalment,
+                    ppendinginstalment: loanStatus1.ppendinginstalment,
+                    dfullcash: loanStatus1.dfullcash,
+                    dpaytype: loanStatus1.dpaytype,
+                    ddate: loanStatus1.ddate,
+                    damount: loanStatus1.damount,
+                    daddi: loanStatus1.daddi,
+                    dnaration: loanStatus1.dnaration,
+                    advance_type: loanStatus1.advance_type,
+                    company_name: loanStatus1.company_name,
+                    site: loanStatus1.site,
+                    status: loanStatus1.status,
+                    loan_number: loanStatus1.loan_number,
+                    cdate: loanStatus1.cdate,
+                    id: loanStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.uniform_id == 0) {
       } else if (+data.uniform_id > 0) {
-        await model.advance.find({_id:data.uniform_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
-          .then(async(uniformDetail) => {
+        await model.advance
+          .find({ _id: data.uniform_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.uniform_id])
+          .then(async (uniformDetail) => {
             console.log(uniformDetail);
             if (data.uniform == uniformDetail.pamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({_id:data.uniform_id},{status:"Paid"})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.uniform_id]
-              //   )
-                .then(async(uniformStatus) => {
+              await model.advance
+                .findOneAndUpdate({ _id: data.uniform_id }, { status: "Paid" })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.uniform_id]
+                //   )
+                .then(async (uniformStatus) => {
                   console.log(uniformStatus);
                   await model.advancehistory.create({
-                    employee_id:uniformStatus.employee_id,
-                    employee_name:uniformStatus.employee_name,
-                    account_number:uniformStatus.account_number,
-                    pamount:uniformStatus.pamount,
-                    pbalanceamount:uniformStatus.pbalanceamount,
-                    pinstalment:uniformStatus.pinstalment,
-                    ppendinginstalment:uniformStatus.ppendinginstalment,
-                    dfullcash:uniformStatus.dfullcash,
-                    dpaytype:uniformStatus.dpaytype,
-                    ddate:uniformStatus.ddate,
-                    damount:uniformStatus.damount,
-                    daddi:uniformStatus.daddi,
-                    dnaration:uniformStatus.dnaration,
-                    advance_type:uniformStatus.advance_type,
-                    company_name:uniformStatus.company_name,
-                    site:uniformStatus.site,
-                    status:uniformStatus.status,
-                    loan_number:uniformStatus.loan_number,
-                    cdate:uniformStatus.cdate,
-                    id:uniformStatus.id,
-                  })
-                 
+                    employee_id: uniformStatus.employee_id,
+                    employee_name: uniformStatus.employee_name,
+                    account_number: uniformStatus.account_number,
+                    pamount: uniformStatus.pamount,
+                    pbalanceamount: uniformStatus.pbalanceamount,
+                    pinstalment: uniformStatus.pinstalment,
+                    ppendinginstalment: uniformStatus.ppendinginstalment,
+                    dfullcash: uniformStatus.dfullcash,
+                    dpaytype: uniformStatus.dpaytype,
+                    ddate: uniformStatus.ddate,
+                    damount: uniformStatus.damount,
+                    daddi: uniformStatus.daddi,
+                    dnaration: uniformStatus.dnaration,
+                    advance_type: uniformStatus.advance_type,
+                    company_name: uniformStatus.company_name,
+                    site: uniformStatus.site,
+                    status: uniformStatus.status,
+                    loan_number: uniformStatus.loan_number,
+                    cdate: uniformStatus.cdate,
+                    id: uniformStatus.id,
+                  });
                 });
             } else if (data.uniform < uniformDetail.pamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
-                  [uniformDetail.pamount - data.uniform, +data.uniform_id]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.uniform_id },
+                  { pamount: uniformDetail.pamount - data.uniform }
                 )
-                .then((uniformStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                //     [uniformDetail.pamount - data.uniform, +data.uniform_id]
+                //   )
+                .then(async (uniformStatus1) => {
                   console.log(uniformStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      uniformStatus1.employee_id,
-                      uniformStatus1.employee_name,
-                      uniformStatus1.account_number,
-                      uniformStatus1.pamount,
-                      uniformStatus1.pbalanceamount,
-                      uniformStatus1.pinstalment,
-                      uniformStatus1.ppendinginstalment,
-                      uniformStatus1.dfullcash,
-                      uniformStatus1.dpaytype,
-                      uniformStatus1.ddate,
-                      uniformStatus1.damount,
-                      uniformStatus1.daddi,
-                      uniformStatus1.dnaration,
-                      uniformStatus1.advance_type,
-                      uniformStatus1.company_name,
-                      uniformStatus1.site,
-                      uniformStatus1.status,
-                      uniformStatus1.loan_number,
-                      uniformStatus1.cdate,
-                      uniformStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: uniformStatus1.employee_id,
+                    employee_name: uniformStatus1.employee_name,
+                    account_number: uniformStatus1.account_number,
+                    pamount: uniformStatus1.pamount,
+                    pbalanceamount: uniformStatus1.pbalanceamount,
+                    pinstalment: uniformStatus1.pinstalment,
+                    ppendinginstalment: uniformStatus1.ppendinginstalment,
+                    dfullcash: uniformStatus1.dfullcash,
+                    dpaytype: uniformStatus1.dpaytype,
+                    ddate: uniformStatus1.ddate,
+                    damount: uniformStatus1.damount,
+                    daddi: uniformStatus1.daddi,
+                    dnaration: uniformStatus1.dnaration,
+                    advance_type: uniformStatus1.advance_type,
+                    company_name: uniformStatus1.company_name,
+                    site: uniformStatus1.site,
+                    status: uniformStatus1.status,
+                    loan_number: uniformStatus1.loan_number,
+                    cdate: uniformStatus1.cdate,
+                    id: uniformStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.mess_id == 0) {
       } else if (+data.mess_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
-          .then((messDetail) => {
+        await model.advance
+          .find({ _id: data.mess_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.mess_id])
+          .then(async (messDetail) => {
             console.log(messDetail);
             if (data.mess == messDetail.pamount) {
-              console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.mess_id]
-                )
-                .then((messStatus) => {
+              await model.advance
+                .findOneAndUpdate({ _id: data.mess_id }, { status: "Paid" })
+
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.mess_id]
+                //   )
+                .then(async (messStatus) => {
                   console.log(messStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      messStatus.employee_id,
-                      messStatus.employee_name,
-                      messStatus.account_number,
-                      messStatus.pamount,
-                      messStatus.pbalanceamount,
-                      messStatus.pinstalment,
-                      messStatus.ppendinginstalment,
-                      messStatus.dfullcash,
-                      messStatus.dpaytype,
-                      messStatus.ddate,
-                      messStatus.damount,
-                      messStatus.daddi,
-                      messStatus.dnaration,
-                      messStatus.advance_type,
-                      messStatus.company_name,
-                      messStatus.site,
-                      messStatus.status,
-                      messStatus.loan_number,
-                      messStatus.cdate,
-                      messStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: messStatus.employee_id,
+                    employee_name: messStatus.employee_name,
+                    account_number: messStatus.account_number,
+                    pamount: messStatus.pamount,
+                    pbalanceamount: messStatus.pbalanceamount,
+                    pinstalment: messStatus.pinstalment,
+                    ppendinginstalment: messStatus.ppendinginstalment,
+                    dfullcash: messStatus.dfullcash,
+                    dpaytype: messStatus.dpaytype,
+                    ddate: messStatus.ddate,
+                    damount: messStatus.damount,
+                    daddi: messStatus.daddi,
+                    dnaration: messStatus.dnaration,
+                    advance_type: messStatus.advance_type,
+                    company_name: messStatus.company_name,
+                    site: messStatus.site,
+                    status: messStatus.status,
+                    loan_number: messStatus.loan_number,
+                    cdate: messStatus.cdate,
+                    id: messStatus.id,
+                  });
                 });
             } else if (data.mess < messDetail.pamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
-                  [messDetail.pamount - data.mess, +data.mess_id]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.mess_id },
+                  { pamount: messDetail.pamount - data.mess }
                 )
-                .then((messStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                //     [messDetail.pamount - data.mess, +data.mess_id]
+                //   )
+                .then(async (messStatus1) => {
                   console.log(messStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      messStatus1.employee_id,
-                      messStatus1.employee_name,
-                      messStatus1.account_number,
-                      messStatus1.pamount,
-                      messStatus1.pbalanceamount,
-                      messStatus1.pinstalment,
-                      messStatus1.ppendinginstalment,
-                      messStatus1.dfullcash,
-                      messStatus1.dpaytype,
-                      messStatus1.ddate,
-                      messStatus1.damount,
-                      messStatus1.daddi,
-                      messStatus1.dnaration,
-                      messStatus1.advance_type,
-                      messStatus1.company_name,
-                      messStatus1.site,
-                      messStatus1.status,
-                      messStatus1.loan_number,
-                      messStatus1.cdate,
-                      messStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: messStatus1.employee_id,
+                    employee_name: messStatus1.employee_name,
+                    account_number: messStatus1.account_number,
+                    pamount: messStatus1.pamount,
+                    pbalanceamount: messStatus1.pbalanceamount,
+                    pinstalment: messStatus1.pinstalment,
+                    ppendinginstalment: messStatus1.ppendinginstalment,
+                    dfullcash: messStatus1.dfullcash,
+                    dpaytype: messStatus1.dpaytype,
+                    ddate: messStatus1.ddate,
+                    damount: messStatus1.damount,
+                    daddi: messStatus1.daddi,
+                    dnaration: messStatus1.dnaration,
+                    advance_type: messStatus1.advance_type,
+                    company_name: messStatus1.company_name,
+                    site: messStatus1.site,
+                    status: messStatus1.status,
+                    loan_number: messStatus1.loan_number,
+                    cdate: messStatus1.cdate,
+                    id: messStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.rent_id == 0) {
       } else if (+data.rent_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
-          .then((rentDetail) => {
+        await model.advance
+          .find({ _id: data.rent_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.rent_id])
+          .then(async (rentDetail) => {
             console.log(rentDetail);
             if (data.rent == rentDetail.pamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.rent_id]
-                )
-                .then((rentStatus) => {
+              await model.advance
+                .findOneAndUpdate({ _id: data.rent_id }, { status: "Paid" })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.rent_id]
+                //   )
+                .then(async (rentStatus) => {
                   console.log(rentStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      rentStatus.employee_id,
-                      rentStatus.employee_name,
-                      rentStatus.account_number,
-                      rentStatus.pamount,
-                      rentStatus.pbalanceamount,
-                      rentStatus.pinstalment,
-                      rentStatus.ppendinginstalment,
-                      rentStatus.dfullcash,
-                      rentStatus.dpaytype,
-                      rentStatus.ddate,
-                      rentStatus.damount,
-                      rentStatus.daddi,
-                      rentStatus.dnaration,
-                      rentStatus.advance_type,
-                      rentStatus.company_name,
-                      rentStatus.site,
-                      rentStatus.status,
-                      rentStatus.loan_number,
-                      rentStatus.cdate,
-                      rentStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: rentStatus.employee_id,
+                    employee_name: rentStatus.employee_name,
+                    account_number: rentStatus.account_number,
+                    pamount: rentStatus.pamount,
+                    pbalanceamount: rentStatus.pbalanceamount,
+                    pinstalment: rentStatus.pinstalment,
+                    ppendinginstalment: rentStatus.ppendinginstalment,
+                    dfullcash: rentStatus.dfullcash,
+                    dpaytype: rentStatus.dpaytype,
+                    ddate: rentStatus.ddate,
+                    damount: rentStatus.damount,
+                    daddi: rentStatus.daddi,
+                    dnaration: rentStatus.dnaration,
+                    advance_type: rentStatus.advance_type,
+                    company_name: rentStatus.company_name,
+                    site: rentStatus.site,
+                    status: rentStatus.status,
+                    loan_number: rentStatus.loan_number,
+                    cdate: rentStatus.cdate,
+                    id: rentStatus.id,
+                  });
                 });
             } else if (data.rent < rentDetail.pamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
-                  [rentDetail.pamount - data.rent, +data.rent_id]
+              await model.advance
+                .findOneAndUpdate(
+                  {
+                    _id: data.rent_id,
+                  },
+                  { pamount: rentDetail.pamount - data.rent }
                 )
-                .then((rentStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                //     [rentDetail.pamount - data.rent, +data.rent_id]
+                //   )
+                .then(async (rentStatus1) => {
                   console.log(rentStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      rentStatus1.employee_id,
-                      rentStatus1.employee_name,
-                      rentStatus1.account_number,
-                      rentStatus1.pamount,
-                      rentStatus1.pbalanceamount,
-                      rentStatus1.pinstalment,
-                      rentStatus1.ppendinginstalment,
-                      rentStatus1.dfullcash,
-                      rentStatus1.dpaytype,
-                      rentStatus1.ddate,
-                      rentStatus1.damount,
-                      rentStatus1.daddi,
-                      rentStatus1.dnaration,
-                      rentStatus1.advance_type,
-                      rentStatus1.company_name,
-                      rentStatus1.site,
-                      rentStatus1.status,
-                      rentStatus1.loan_number,
-                      rentStatus1.cdate,
-                      rentStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: rentStatus1.employee_id,
+                    employee_name: rentStatus1.employee_name,
+                    account_number: rentStatus1.account_number,
+                    pamount: rentStatus1.pamount,
+                    pbalanceamount: rentStatus1.pbalanceamount,
+                    pinstalment: rentStatus1.pinstalment,
+                    ppendinginstalment: rentStatus1.ppendinginstalment,
+                    dfullcash: rentStatus1.dfullcash,
+                    dpaytype: rentStatus1.dpaytype,
+                    ddate: rentStatus1.ddate,
+                    damount: rentStatus1.damount,
+                    daddi: rentStatus1.daddi,
+                    dnaration: rentStatus1.dnaration,
+                    advance_type: rentStatus1.advance_type,
+                    company_name: rentStatus1.company_name,
+                    site: rentStatus1.site,
+                    status: rentStatus1.status,
+                    loan_number: rentStatus1.loan_number,
+                    cdate: rentStatus1.cdate,
+                    id: rentStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.atmcard_id == 0) {
       } else if (+data.atmcard_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
-          .then((atmDetail) => {
+        await model.advance
+          .find({ _id: data.atmcard_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.atmcard_id])
+          .then(async (atmDetail) => {
             console.log(atmDetail);
             if (data.atm == atmDetail.pamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.atmcard_id]
-                )
-                .then((atmStatus) => {
+              await model.advance
+                .findOneAndUpdate({ _id: data.atmcard_id }, { status: "Paid" })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.atmcard_id]
+                //   )
+                .then(async (atmStatus) => {
                   console.log(atmStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      atmStatus.employee_id,
-                      atmStatus.employee_name,
-                      atmStatus.account_number,
-                      atmStatus.pamount,
-                      atmStatus.pbalanceamount,
-                      atmStatus.pinstalment,
-                      atmStatus.ppendinginstalment,
-                      atmStatus.dfullcash,
-                      atmStatus.dpaytype,
-                      atmStatus.ddate,
-                      atmStatus.damount,
-                      atmStatus.daddi,
-                      atmStatus.dnaration,
-                      atmStatus.advance_type,
-                      atmStatus.company_name,
-                      atmStatus.site,
-                      atmStatus.status,
-                      atmStatus.loan_number,
-                      atmStatus.cdate,
-                      atmStatus.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: atmStatus.employee_id,
+                    employee_name: atmStatus.employee_name,
+                    account_number: atmStatus.account_number,
+                    pamount: atmStatus.pamount,
+                    pbalanceamount: atmStatus.pbalanceamount,
+                    pinstalment: atmStatus.pinstalment,
+                    ppendinginstalment: atmStatus.ppendinginstalment,
+                    dfullcash: atmStatus.dfullcash,
+                    dpaytype: atmStatus.dpaytype,
+                    ddate: atmStatus.ddate,
+                    damount: atmStatus.damount,
+                    daddi: atmStatus.daddi,
+                    dnaration: atmStatus.dnaration,
+                    advance_type: atmStatus.advance_type,
+                    company_name: atmStatus.company_name,
+                    site: atmStatus.site,
+                    status: atmStatus.status,
+                    loan_number: atmStatus.loan_number,
+                    cdate: atmStatus.cdate,
+                    id: atmStatus.id,
+                  });
                 });
             } else if (data.atm < atmDetail.pamount) {
               console.log("Pending");
-              executor
-                .one(
-                  "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
-                  [atmDetail.pamount - data.atm, +data.atmcard_id]
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.atmcard_id },
+                  { pamount: atmDetail.pamount - data.atm }
                 )
-                .then((atmStatus1) => {
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                //     [atmDetail.pamount - data.atm, +data.atmcard_id]
+                //   )
+                .then(async (atmStatus1) => {
                   console.log(atmStatus1);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      atmStatus1.employee_id,
-                      atmStatus1.employee_name,
-                      atmStatus1.account_number,
-                      atmStatus1.pamount,
-                      atmStatus1.pbalanceamount,
-                      atmStatus1.pinstalment,
-                      atmStatus1.ppendinginstalment,
-                      atmStatus1.dfullcash,
-                      atmStatus1.dpaytype,
-                      atmStatus1.ddate,
-                      atmStatus1.damount,
-                      atmStatus1.daddi,
-                      atmStatus1.dnaration,
-                      atmStatus1.advance_type,
-                      atmStatus1.company_name,
-                      atmStatus1.site,
-                      atmStatus1.status,
-                      atmStatus1.loan_number,
-                      atmStatus1.cdate,
-                      atmStatus1.id,
-                    ]
-                  );
+                  await model.advancehistory.create({
+                    employee_id: atmStatus1.employee_id,
+                    employee_name: atmStatus1.employee_name,
+                    account_number: atmStatus1.account_number,
+                    pamount: atmStatus1.pamount,
+                    pbalanceamount: atmStatus1.pbalanceamount,
+                    pinstalment: atmStatus1.pinstalment,
+                    ppendinginstalment: atmStatus1.ppendinginstalment,
+                    dfullcash: atmStatus1.dfullcash,
+                    dpaytype: atmStatus1.dpaytype,
+                    ddate: atmStatus1.ddate,
+                    damount: atmStatus1.damount,
+                    daddi: atmStatus1.daddi,
+                    dnaration: atmStatus1.dnaration,
+                    advance_type: atmStatus1.advance_type,
+                    company_name: atmStatus1.company_name,
+                    site: atmStatus1.site,
+                    status: atmStatus1.status,
+                    loan_number: atmStatus1.loan_number,
+                    cdate: atmStatus1.cdate,
+                    id: atmStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.phone_id == 0) {
       } else if (+data.phone_id > 0) {
-        executor
-          .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
-          .then((phoneDetail) => {
+        await model.advance
+          .find({ _id: data.phone_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.phone_id])
+          .then(async (phoneDetail) => {
             console.log(phoneDetail);
             if (data.phone == phoneDetail.pamount) {
               console.log("Paid");
-              executor
-                .one(
-                  "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-                  ["Paid", +data.phone_id]
-                )
-                .then(async(phoneStatus) => {
+              await model.advance
+                .findOneAndUpdate({ _id: data.phone_id }, { status: "Paid" })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.phone_id]
+                //   )
+                .then(async (phoneStatus) => {
                   console.log(phoneStatus);
                   await model.advancehistory.create({
-                    employee_id:phoneStatus.employee_id,
-                    employee_name:phoneStatus.employee_name,
-                    account_number:phoneStatus.account_number,
-                    pamount:phoneStatus.pamount,
-                    pbalanceamount:phoneStatus.pbalanceamount,
-                    pinstalment:phoneStatus.pinstalment,
-                    ppendinginstalment:phoneStatus.ppendinginstalment,
-                    dfullcash:phoneStatus.dfullcash,
-                    dpaytype:phoneStatus.dpaytype,
-                    ddate:phoneStatus.ddate,
-                    damount:phoneStatus.damount,
-                    daddi:phoneStatus.daddi,
-                    dnaration:phoneStatus.dnaration,
-                    advance_type:phoneStatus.advance_type,
-                    company_name:phoneStatus.company_name,
-                    site:phoneStatus.site,
-                    status:phoneStatus.status,
-                    loan_number:phoneStatus.loan_number,
-                    cdate:phoneStatus.cdate,
-                    id:phoneStatus.id,
-                  })
-                 
+                    employee_id: phoneStatus.employee_id,
+                    employee_name: phoneStatus.employee_name,
+                    account_number: phoneStatus.account_number,
+                    pamount: phoneStatus.pamount,
+                    pbalanceamount: phoneStatus.pbalanceamount,
+                    pinstalment: phoneStatus.pinstalment,
+                    ppendinginstalment: phoneStatus.ppendinginstalment,
+                    dfullcash: phoneStatus.dfullcash,
+                    dpaytype: phoneStatus.dpaytype,
+                    ddate: phoneStatus.ddate,
+                    damount: phoneStatus.damount,
+                    daddi: phoneStatus.daddi,
+                    dnaration: phoneStatus.dnaration,
+                    advance_type: phoneStatus.advance_type,
+                    company_name: phoneStatus.company_name,
+                    site: phoneStatus.site,
+                    status: phoneStatus.status,
+                    loan_number: phoneStatus.loan_number,
+                    cdate: phoneStatus.cdate,
+                    id: phoneStatus.id,
+                  });
                 });
             } else if (data.phone < phoneDetail.pamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({_id:data.phone_id},{pamount:phoneDetail.pamount - data.phone})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
-              //     [phoneDetail.pamount - data.phone, +data.phone_id]
-              //   )
-                .then(async(phoneStatus1) => {
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.phone_id },
+                  { pamount: phoneDetail.pamount - data.phone }
+                )
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                //     [phoneDetail.pamount - data.phone, +data.phone_id]
+                //   )
+                .then(async (phoneStatus1) => {
                   console.log(phoneStatus1);
                   await model.advancehistory.create({
-                    employee_id:phoneStatus1.employee_id,
-                    employee_name:phoneStatus1.employee_name,
-                    account_number:phoneStatus1.account_number,
-                    pamount:phoneStatus1.pamount,
-                    pbalanceamount:phoneStatus1.pbalanceamount,
-                    pinstalment:phoneStatus1.pinstalment,
-                    ppendinginstalment:phoneStatus1.ppendinginstalment,
-                    dfullcash:phoneStatus1.dfullcash,
-                    dpaytype:phoneStatus1.dpaytype,
-                    ddate:phoneStatus1.ddate,
-                    damount:phoneStatus1.damount,
-                    daddi:phoneStatus1.daddi,
-                    dnaration:phoneStatus1.dnaration,
-                    advance_type:phoneStatus1.advance_type,
-                    company_name:phoneStatus1.company_name,
-                    site:phoneStatus1.site,
-                    status:phoneStatus1.status,
-                    loan_number:phoneStatus1.loan_number,
-                    cdate:phoneStatus1.cdate,
-                    id:phoneStatus1.id,
-                  })
-                 
+                    employee_id: phoneStatus1.employee_id,
+                    employee_name: phoneStatus1.employee_name,
+                    account_number: phoneStatus1.account_number,
+                    pamount: phoneStatus1.pamount,
+                    pbalanceamount: phoneStatus1.pbalanceamount,
+                    pinstalment: phoneStatus1.pinstalment,
+                    ppendinginstalment: phoneStatus1.ppendinginstalment,
+                    dfullcash: phoneStatus1.dfullcash,
+                    dpaytype: phoneStatus1.dpaytype,
+                    ddate: phoneStatus1.ddate,
+                    damount: phoneStatus1.damount,
+                    daddi: phoneStatus1.daddi,
+                    dnaration: phoneStatus1.dnaration,
+                    advance_type: phoneStatus1.advance_type,
+                    company_name: phoneStatus1.company_name,
+                    site: phoneStatus1.site,
+                    status: phoneStatus1.status,
+                    loan_number: phoneStatus1.loan_number,
+                    cdate: phoneStatus1.cdate,
+                    id: phoneStatus1.id,
+                  });
                 });
             }
           });
       }
       if (+data.others_id == 0) {
       } else if (+data.others_id > 0) {
-        await model.advance.find({_id:data.others_id})
-        // executor
-        //   .one("select * from public.advance  WHERE id=$1", [+data.others_id])
-          .then(async(otherDetail) => {
+        await model.advance
+          .find({ _id: data.others_id })
+          // executor
+          //   .one("select * from public.advance  WHERE id=$1", [+data.others_id])
+          .then(async (otherDetail) => {
             console.log(otherDetail);
             if (data.others == otherDetail.pamount) {
               console.log("Paid");
-              await model.advance.findOneAndUpdate({_id:data.others_id},{status:"Paid"})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
-              //     ["Paid", +data.others_id]
-              //   )
-                .then(async(otherStatus) => {
+              await model.advance
+                .findOneAndUpdate({ _id: data.others_id }, { status: "Paid" })
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET status=$1 WHERE id=$2 RETURNING *",
+                //     ["Paid", +data.others_id]
+                //   )
+                .then(async (otherStatus) => {
                   console.log(otherStatus);
                   await model.advancehistory.create({
-                    employee_id:otherStatus.employee_id,
-                    employee_name:otherStatus.employee_name,
-                    account_number:otherStatus.account_number,
-                    pamount:otherStatus.pamount,
-                    pbalanceamount:otherStatus.pbalanceamount,
-                    pinstalment:otherStatus.pinstalment,
-                    ppendinginstalment:otherStatus.ppendinginstalment,
-                    dfullcash:otherStatus.dfullcash,
-                    dpaytype:otherStatus.dpaytype,
-                    ddate:otherStatus.ddate,
-                    damount:otherStatus.damount,
-                    daddi:otherStatus.daddi,
-                    dnaration:otherStatus.dnaration,
-                    advance_type:otherStatus.advance_type,
-                    company_name:otherStatus.company_name,
-                    site:otherStatus.site,
-                    status:otherStatus.status,
-                    loan_number:otherStatus.loan_number,
-                    cdate:otherStatus.cdate,
-                    id:otherStatus.id,
-                  })
-                  
+                    employee_id: otherStatus.employee_id,
+                    employee_name: otherStatus.employee_name,
+                    account_number: otherStatus.account_number,
+                    pamount: otherStatus.pamount,
+                    pbalanceamount: otherStatus.pbalanceamount,
+                    pinstalment: otherStatus.pinstalment,
+                    ppendinginstalment: otherStatus.ppendinginstalment,
+                    dfullcash: otherStatus.dfullcash,
+                    dpaytype: otherStatus.dpaytype,
+                    ddate: otherStatus.ddate,
+                    damount: otherStatus.damount,
+                    daddi: otherStatus.daddi,
+                    dnaration: otherStatus.dnaration,
+                    advance_type: otherStatus.advance_type,
+                    company_name: otherStatus.company_name,
+                    site: otherStatus.site,
+                    status: otherStatus.status,
+                    loan_number: otherStatus.loan_number,
+                    cdate: otherStatus.cdate,
+                    id: otherStatus.id,
+                  });
                 });
             } else if (data.others < otherDetail.pamount) {
               console.log("Pending");
-              await model.advance.findOneAndUpdate({_id:data.others_id},{pamount:otherDetail.pamount - data.others})
-              // executor
-              //   .one(
-              //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
-              //     [otherDetail.pamount - data.others, +data.others_id]
-              //   )
-                .then(async(otherStatus1) => {
+              await model.advance
+                .findOneAndUpdate(
+                  { _id: data.others_id },
+                  { pamount: otherDetail.pamount - data.others }
+                )
+                // executor
+                //   .one(
+                //     "UPDATE  public.advance SET pamount=$1 WHERE id=$2 RETURNING *",
+                //     [otherDetail.pamount - data.others, +data.others_id]
+                //   )
+                .then(async (otherStatus1) => {
                   console.log(otherStatus1);
                   await model.advancehistory.create({
-                    employee_id:otherStatus1.employee_id,
-                    employee_name:otherStatus1.employee_name,
-                    account_number:otherStatus1.account_number,
-                    pamount:otherStatus1.pamount,
-                    pbalanceamount:otherStatus1.pbalanceamount,
-                    pinstalment:otherStatus1.pinstalment,
-                    ppendinginstalment:otherStatus1.ppendinginstalment,
-                    dfullcash:otherStatus1.dfullcash,
-                    dpaytype:otherStatus1.dpaytype,
-                    ddate:otherStatus1.ddate,
-                    damount:otherStatus1.damount,
-                    daddi:otherStatus1.daddi,
-                    dnaration:otherStatus1.dnaration,
-                    advance_type:otherStatus1.advance_type,
-                    company_name:otherStatus1.company_name,
-                    site:otherStatus1.site,
-                    status:otherStatus1.status,
-                    loan_number:otherStatus1.loan_number,
-                    cdate:otherStatus1.cdate,
-                    id:otherStatus1.id,
-                  })
-                 
+                    employee_id: otherStatus1.employee_id,
+                    employee_name: otherStatus1.employee_name,
+                    account_number: otherStatus1.account_number,
+                    pamount: otherStatus1.pamount,
+                    pbalanceamount: otherStatus1.pbalanceamount,
+                    pinstalment: otherStatus1.pinstalment,
+                    ppendinginstalment: otherStatus1.ppendinginstalment,
+                    dfullcash: otherStatus1.dfullcash,
+                    dpaytype: otherStatus1.dpaytype,
+                    ddate: otherStatus1.ddate,
+                    damount: otherStatus1.damount,
+                    daddi: otherStatus1.daddi,
+                    dnaration: otherStatus1.dnaration,
+                    advance_type: otherStatus1.advance_type,
+                    company_name: otherStatus1.company_name,
+                    site: otherStatus1.site,
+                    status: otherStatus1.status,
+                    loan_number: otherStatus1.loan_number,
+                    cdate: otherStatus1.cdate,
+                    id: otherStatus1.id,
+                  });
                 });
             }
           });
@@ -6242,10 +6518,12 @@ user.manual_entry_rate_updates = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_emp_deletes = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."payroll_manual_entry" where "id"= ($1)', [
-      userInput.id,
-    ])
+  await model.payrollmanualentry
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."payroll_manual_entry" where "id"= ($1)', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6256,11 +6534,13 @@ user.manual_entry_emp_deletes = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_emp_lists = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'SELECT * FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)',
-      [userInput.unit_name, userInput.date]
-    )
+  await model.payrollmanualentry
+    .find({ unit_name: userInput.unit_name, date: userInput.date })
+    // executor
+    //   .any(
+    //     'SELECT * FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)',
+    //     [userInput.unit_name, userInput.date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6271,6 +6551,7 @@ user.manual_entry_emp_lists = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_emp_lists1 = async function (userInput, resultCallback) {
+  //! need to check
   executor
     .any(
       'SELECT designation, SUM (present) AS present ,COUNT(designation) as strength ,SUM (add_duties) AS add_duties, SUM (total_duties) AS total_duties FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)  GROUP BY "designation" ',
@@ -6286,11 +6567,13 @@ user.manual_entry_emp_lists1 = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_emp_fetchs = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."payroll_manual_entry" where "ecode"= ($1) and "date" = ($2)   ',
-      [userInput.ecode, userInput.date]
-    )
+  await model.payrollmanualentry
+    .find({ ecode: userInput.ecode, date: userInput.date })
+    // executor
+    //   .any(
+    //     'select * FROM public."payroll_manual_entry" where "ecode"= ($1) and "date" = ($2)   ',
+    //     [userInput.ecode, userInput.date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6301,10 +6584,12 @@ user.manual_entry_emp_fetchs = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_emp_fetch_ids = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."payroll_manual_entry" where "id"= ($1)', [
-      userInput.id,
-    ])
+  await model.payrollmanualentry
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."payroll_manual_entry" where "id"= ($1)', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6315,6 +6600,7 @@ user.manual_entry_emp_fetch_ids = async function (userInput, resultCallback) {
 };
 
 user.manual_entry_emp_lists1 = async function (userInput, resultCallback) {
+  //! need to check
   executor
     .any(
       'SELECT designation, SUM (present) AS present ,COUNT(designation) as strength ,SUM (add_duties) AS add_duties, SUM (total_duties) AS total_duties FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)  GROUP BY "designation" ',
@@ -6330,6 +6616,8 @@ user.manual_entry_emp_lists1 = async function (userInput, resultCallback) {
 };
 
 user.getreportssssss1 = async function (userInput, resultCallback) {
+  //! need to check
+
   executor
     .any(
       'SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  GROUP BY "unit_name" ',
@@ -6345,11 +6633,13 @@ user.getreportssssss1 = async function (userInput, resultCallback) {
 };
 
 user.getreportssssssall1 = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'SELECT * FROM  public."payroll_manual_entry"  ORDER BY "unit_name" ',
-      []
-    )
+  await model.payrollmanualentry
+    .find({}, {}, { sort: { unit_name: 1 } })
+    // executor
+    //   .any(
+    //     'SELECT * FROM  public."payroll_manual_entry"  ORDER BY "unit_name" ',
+    //     []
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6360,10 +6650,12 @@ user.getreportssssssall1 = async function (userInput, resultCallback) {
 };
 
 user.getemployeedetails1 = async function (userInput, resultCallback) {
-  executor
-    .any('SELECT * FROM public.employeedetails where "company_name"= ($1)   ', [
-      userInput.companyName,
-    ])
+  await model.employeedetails
+    .find({ company_name: userInput.companyName })
+    // executor
+    //   .any('SELECT * FROM public.employeedetails where "company_name"= ($1)   ', [
+    //     userInput.companyName,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6373,8 +6665,10 @@ user.getemployeedetails1 = async function (userInput, resultCallback) {
     });
 };
 user.getunitmasterss = async function (element, resultCallback) {
-  executor
-    .any('select * FROM public."payroll_manual_unit_entry"  ', [])
+  await model.payrollmanualunitentry
+    .find({})
+    // executor
+    //   .any('select * FROM public."payroll_manual_unit_entry"  ', [])
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -6385,11 +6679,13 @@ user.getunitmasterss = async function (element, resultCallback) {
     });
 };
 user.getunitmaster2 = async function (id, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."payroll_manual_unit_rate" where "unit_id"= ($1)   ',
-      ["" + id]
-    )
+  await model.payrollmanualunitentry
+    .find({ unit_id: id })
+    // executor
+    //   .any(
+    //     'select * FROM public."payroll_manual_unit_rate" where "unit_id"= ($1)   ',
+    //     ["" + id]
+    //   )
     .then((data) => {
       if (data.length == 0) {
         var a = {};
@@ -6404,11 +6700,13 @@ user.getunitmaster2 = async function (id, resultCallback) {
     });
 };
 user.getwagesheet1 = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'SELECT * FROM public.payroll_manual_entry where "company_name"=($1) and "date"=($2) ',
-      [userInput.companyName, userInput.date]
-    )
+  await model.payrollmanualentry
+    .find({ company_name: userInput.companyName, date: userInput.date })
+    // executor
+    //   .any(
+    //     'SELECT * FROM public.payroll_manual_entry where "company_name"=($1) and "date"=($2) ',
+    //     [userInput.companyName, userInput.date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6418,8 +6716,10 @@ user.getwagesheet1 = async function (userInput, resultCallback) {
     });
 };
 user.getwagesheet12 = async function (ecode, resultCallback) {
-  executor
-    .any("select ecode,esic_no from employeedetails where ecode=($1)", [ecode])
+  await model.employeedetails
+    .find({ ecode: ecode }, { ecode: 1, esic_no: 1 })
+    // executor
+    //   .any("select ecode,esic_no from employeedetails where ecode=($1)", [ecode])
     .then((data) => {
       resultCallback(null, data[0]);
     })
@@ -6429,11 +6729,17 @@ user.getwagesheet12 = async function (ecode, resultCallback) {
     });
 };
 user.cashandbanks = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2  and paymode=$3',
-      [userInput.companyName, userInput.date, userInput.paymode]
-    )
+  await model.payrollmanualentry
+    .find({
+      company_name: userInput.companyName,
+      date: userInput.date,
+      paymode: userInput.paymode,
+    })
+    // executor
+    //   .any(
+    //     'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2  and paymode=$3',
+    //     [userInput.companyName, userInput.date, userInput.paymode]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6443,6 +6749,7 @@ user.cashandbanks = async function (userInput, resultCallback) {
     });
 };
 user.cashandbankss = async function (ecode, unit_name, date, resultCallback) {
+  //! need to check
   executor
     .any(
       'SELECT ecode, SUM (net_pay) AS net_pay FROM public."payroll_manual_entry" where "ecode"=$1 and unit_name=$2 and date=$3 GROUP BY ecode',
@@ -6457,8 +6764,10 @@ user.cashandbankss = async function (ecode, unit_name, date, resultCallback) {
     });
 };
 user.cashandbanksss = async function (ecode, resultCallback) {
-  executor
-    .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [ecode])
+  await model.employeedetails
+    .find({ ecode: ecode })
+    // executor
+    //   .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [ecode])
     .then((data) => {
       resultCallback(null, data[0]);
     })
@@ -6468,11 +6777,17 @@ user.cashandbanksss = async function (ecode, resultCallback) {
     });
 };
 user.getemployeevoucher1 = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'SELECT * FROM public.advance where cdate=$1 and status=$2 ORDER BY "ddate"',
-      [userInput.date, userInput.status]
+  await model.advance
+    .find(
+      { cdate: userInput.date, status: userInput.status },
+      {},
+      { sort: { ddate: 1 } }
     )
+    // executor
+    //   .any(
+    //     'SELECT * FROM public.advance where cdate=$1 and status=$2 ORDER BY "ddate"',
+    //     [userInput.date, userInput.status]
+    //   )
     .then((data) => {
       if (data.length == 0) {
         var a = {};
@@ -6487,10 +6802,12 @@ user.getemployeevoucher1 = async function (userInput, resultCallback) {
     });
 };
 user.getemployeevoucher2 = async function (employee_id, resultCallback) {
-  executor
-    .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [
-      employee_id,
-    ])
+  await model.employeedetails
+    .find({ ecode: employee_id })
+    // executor
+    //   .any('SELECT * FROM public.employeedetails where "ecode"=($1)', [
+    //     employee_id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6500,6 +6817,7 @@ user.getemployeevoucher2 = async function (employee_id, resultCallback) {
     });
 };
 user.getproftaxform1 = async function (userInput, resultCallback) {
+  //! need to check
   executor
     .any(
       'SELECT ecode, ename ,SUM (total_duties) AS total_duties, SUM (gross) AS gross, SUM (pr_tax) AS pr_tax FROM  public."payroll_manual_entry"  where "unit_name"=($1)  GROUP BY "ecode" , "ename" ',
@@ -6514,10 +6832,12 @@ user.getproftaxform1 = async function (userInput, resultCallback) {
     });
 };
 user.getwageslip1 = async function (userInput, resultCallback) {
-  executor
-    .any('SELECT * FROM public.payroll_manual_entry where "id"= ($1) ', [
-      userInput.id,
-    ])
+  await model.payrollmanualentry
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('SELECT * FROM public.payroll_manual_entry where "id"= ($1) ', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6528,11 +6848,12 @@ user.getwageslip1 = async function (userInput, resultCallback) {
 };
 user.getsiteDetails = async function (userInput, resultCallback) {
   console.log(userInput);
-
-  executor
-    .any('select * FROM public."payroll_manual_entry" WHERE "date"=($1)', [
-      userInput.date,
-    ])
+  await model.payrollmanualentry
+    .find({ date: userInput.date })
+    // executor
+    //   .any('select * FROM public."payroll_manual_entry" WHERE "date"=($1)', [
+    //     userInput.date,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6543,8 +6864,10 @@ user.getsiteDetails = async function (userInput, resultCallback) {
 };
 
 user.getEmployeeDetail = async function (ecode, resultCallback) {
-  executor
-    .any('select * FROM public."employeedetails" WHERE "ecode"=($1)', [ecode])
+  await model.payrollmanualentry
+    .find({ ecode: ecode })
+    // executor
+    //   .any('select * FROM public."employeedetails" WHERE "ecode"=($1)', [ecode])
     .then((data) => {
       resultCallback(null, data[0]);
     })
@@ -6555,9 +6878,10 @@ user.getEmployeeDetail = async function (ecode, resultCallback) {
 };
 user.getDesignationss = async function (title, resultCallback) {
   console.log(title);
-
-  executor
-    .any('select * FROM public."payroll_manual_entry" ', [])
+  await model.payrollmanualentry
+    .find({})
+    // executor
+    //   .any('select * FROM public."payroll_manual_entry" ', [])
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -6569,9 +6893,11 @@ user.getDesignationss = async function (title, resultCallback) {
 };
 user.getloanandoutstandings = async function (userInput, resultCallback) {
   console.log(userInput);
+  await model.payrollmanualentry
+    .find({})
 
-  executor
-    .any('select * FROM public."payroll_manual_entry"', [])
+    // executor
+    //   .any('select * FROM public."payroll_manual_entry"', [])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6598,6 +6924,7 @@ user.getloanandoutstandingss = async function (unit_name, resultCallback) {
 };
 
 user.gettotalpays = async function (userInput, resultCallback) {
+  //! need to check
   executor
     .any(
       'SELECT unit_name,"date",company_name,SUM (gross) AS gross , SUM (pf) AS pf , SUM (esi) AS esi, SUM (pr_tax) AS pr_tax ,SUM (advance) AS advance , SUM (loan) AS loan , SUM (uniform) AS uniform, SUM (mess) AS mess ,SUM (rent) AS rent , SUM (atm) AS atm , SUM ("others") AS "others", SUM (total_dec) AS total_dec , SUM (net_pay) AS net_pay  FROM payroll_manual_entry where "company_name"=($1) and "date"=($2) GROUP BY unit_name ,"date",company_name',
@@ -6624,11 +6951,16 @@ user.gettotalpayss = async function (unit_name, resultCallback) {
 };
 
 user.proftaxs = async function (companyName, Start, End, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."payroll_manual_entry" WHERE "company_name"=($1) and date >= ($2) and date <= ($3) order by date',
-      [companyName, Start, End]
-    )
+  await model.payrollmanualentry
+    .find({
+      company_name: companyName,
+      date: { $gte: new Date(Start), $lte: new Date(End) },
+    })
+    // executor
+    //   .any(
+    //     'select * FROM public."payroll_manual_entry" WHERE "company_name"=($1) and date >= ($2) and date <= ($3) order by date',
+    //     [companyName, Start, End]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6638,11 +6970,13 @@ user.proftaxs = async function (companyName, Start, End, resultCallback) {
     });
 };
 user.getpayslip = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."payroll_manual_entry" WHERE "date"=($1) order by date',
-      [userInput.date]
-    )
+  await model.payrollmanualentry
+    .find({ date: userInput.date }, {}, { sort: { date: 1 } })
+    // executor
+    //   .any(
+    //     'select * FROM public."payroll_manual_entry" WHERE "date"=($1) order by date',
+    //     [userInput.date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6652,11 +6986,13 @@ user.getpayslip = async function (userInput, resultCallback) {
     });
 };
 user.getpayslips = async function (ecode, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."employeedetails" WHERE "ecode"=($1) order by ecode',
-      [ecode]
-    )
+  await model.employeedetails
+    .find({ ecode: ecode })
+    // executor
+    //   .any(
+    //     'select * FROM public."employeedetails" WHERE "ecode"=($1) order by ecode',
+    //     [ecode]
+    //   )
     .then((data) => {
       resultCallback(null, data[0]);
     })
@@ -6666,6 +7002,7 @@ user.getpayslips = async function (ecode, resultCallback) {
     });
 };
 user.getrecovery = async function (userInput, resultCallback) {
+  //! need to check
   executor
     .any(
       'select employee_id as ecode, advance_type, pamount as amount FROM public."advance"  WHERE "cdate"=($1) and status=($2) order by employee_id',
@@ -6680,11 +7017,13 @@ user.getrecovery = async function (userInput, resultCallback) {
     });
 };
 user.getrecoverys = async function (ecode, resultCallback) {
-  executor
-    .any(
-      'select ecode, "Name"  FROM public."employeedetails"  WHERE "ecode"=($1)',
-      [ecode]
-    )
+  await model.employeedetails
+    .find({ ecode: ecode }, { ecode: 1, Name: 1 })
+    // executor
+    //   .any(
+    //     'select ecode, "Name"  FROM public."employeedetails"  WHERE "ecode"=($1)',
+    //     [ecode]
+    //   )
     .then((data) => {
       resultCallback(null, data[0]);
     })
@@ -6697,11 +7036,13 @@ user.getgetform36bpayrollmanualentrys = async function (
   userInput,
   resultCallback
 ) {
-  executor
-    .any(
-      'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2',
-      [userInput.companyName, userInput.date]
-    )
+  await model.payrollmanualentry
+    .find({ company_name: userInput.companyName, date: userInput.date })
+    // executor
+    //   .any(
+    //     'select * FROM public."payroll_manual_entry" where company_name=$1 and date=$2',
+    //     [userInput.companyName, userInput.date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6711,8 +7052,10 @@ user.getgetform36bpayrollmanualentrys = async function (
     });
 };
 user.getgetform36bemployeedetails = async function (ecode, resultCallback) {
-  executor
-    .any('select * FROM public."employeedetails" WHERE ecode=($1) ', [ecode])
+  await model.employeedetails
+    .find({ ecode: ecode })
+    // executor
+    //   .any('select * FROM public."employeedetails" WHERE ecode=($1) ', [ecode])
     .then((data) => {
       if (data.length == 0) {
         var a = {};
@@ -6736,45 +7079,42 @@ user.bulkuploadformats = async function (
   console.log(userInput, dob, doj);
 
   console.log(userInput);
+  await model.employeedetails
+    .create({
+      PHONE_NUMBER: userInput.PHONE_NUMBER,
+      PASSWORD: userInput.PASSWORD,
+      NAME: userInput.NAME,
+      RANK: userInput.RANK,
+      GENDER: userInput.GENDER,
+      UANNO: userInput.UANNO,
+      PFNO: userInput.PFNO,
+      PFNO1: userInput.PFNO1,
+      ESINO: userInput.ESINO,
+      dob: dob,
+      doj: doj,
+      FATHER_NAME: userInput.FATHER_NAME,
+      MaritalStatus: userInput.MaritalStatus,
+      ACCOUNT_NUMBER: userInput.ACCOUNT_NUMBER,
+      BANK_NAME: userInput.BANK_NAME,
+      WORKING_STATUS: userInput.WORKING_STATUS,
+      UNIT_NAME: userInput.UNIT_NAME,
+      CCODE: userInput.CCODE,
+      ECODE: userInput.ECODE,
+      PFNO2: userInput.PFNO2,
+      dor: dor,
+      DISPENSORY: userInput.DISPENSORY,
+      MOTHER_NAME: userInput.MOTHER_NAME,
+      HUSBAND_NAME: userInput.HUSBAND_NAME,
+      QUALIFICATION: userInput.QUALIFICATION,
+      PF_FLAG: userInput.PF_FLAG,
+      ESI_FLAG: userInput.ESI_FLAG,
+      PrTax_flag: userInput.PrTax_flag,
+      IFSC_CODE: userInput.IFSC_CODE,
+      UCODE: userInput.UCODE,
+      CCODE: userInput.CCODE,
+      ID: userInput.ID,
+    })
 
-  executor
-    .one(
-      'INSERT INTO public.employeedetails("Mobile_No","Password","Name","employee_type","gender","uan","pf1","pf2","esi","Date_of_birth","date_joining","father_name","material_status","a_c","bankname","workstatus","site_name","ccode","ecode","pf3","dor","dispensary","emname","hname","Edq","pf_action","esi_action","prtax_action","ifsc","ucode","company_name", "id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32) RETURNING *',
-      [
-        userInput.PHONE_NUMBER,
-        userInput.PASSWORD,
-        userInput.NAME,
-        userInput.RANK,
-        userInput.GENDER,
-        userInput.UANNO,
-        userInput.PFNO,
-        userInput.PFNO1,
-        userInput.ESINO,
-        dob,
-        doj,
-        userInput.FATHER_NAME,
-        userInput.MaritalStatus,
-        userInput.ACCOUNT_NUMBER,
-        userInput.BANK_NAME,
-        userInput.WORKING_STATUS,
-        userInput.UNIT_NAME,
-        userInput.CCODE,
-        userInput.ECODE,
-        userInput.PFNO2,
-        dor,
-        userInput.DISPENSORY,
-        userInput.MOTHER_NAME,
-        userInput.HUSBAND_NAME,
-        userInput.QUALIFICATION,
-        userInput.PF_FLAG,
-        userInput.ESI_FLAG,
-        userInput.PrTax_flag,
-        userInput.IFSC_CODE,
-        userInput.UCODE,
-        userInput.CCODE,
-        userInput.ID,
-      ]
-    )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -6788,30 +7128,27 @@ user.manual_unit_rates = async function (userInput, resultCallback) {
   console.log(userInput);
 
   console.log(userInput);
+  await model.payrollmanualunitrate
+    .create({
+      rank: userInput.rank,
+      basic: userInput.basic,
+      da: userInput.da,
+      hra: userInput.hra,
+      trv_exp: userInput.trv_exp,
+      others: userInput.others,
+      medical: userInput.medical,
+      others1: userInput.others1,
+      others2: userInput.others2,
+      others3: userInput.others3,
+      others4: userInput.others4,
+      total_pay: userInput.total_pay,
+      pf: userInput.pf,
+      esi: userInput.esi,
+      dec: userInput.dec,
+      total: userInput.total,
+      unit_id: userInput.unit_id,
+    })
 
-  executor
-    .one(
-      'INSERT INTO public.payroll_manual_unit_rate( "rank", "basic", "da", "hra", "trv_exp", "others", "medical", "others1", "others2", "others3", "others4", "total_pay", "pf", "esi", "dec", "total", "unit_id")VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *',
-      [
-        userInput.rank,
-        userInput.basic,
-        userInput.da,
-        userInput.hra,
-        userInput.trv_exp,
-        userInput.others,
-        userInput.medical,
-        userInput.others1,
-        userInput.others2,
-        userInput.others3,
-        userInput.others4,
-        userInput.total_pay,
-        userInput.pf,
-        userInput.esi,
-        userInput.dec,
-        userInput.total,
-        userInput.unit_id,
-      ]
-    )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -6825,37 +7162,34 @@ user.unit_master_salary_detailss = async function (userInput, resultCallback) {
   console.log(userInput);
 
   console.log(userInput);
+  await model.payrollmanualunitentry
+    .create({
+      company: userInput.company,
+      unit_code: userInput.unit_code,
+      option: userInput.option,
+      salary_type: userInput.salary_type,
+      unit_name: userInput.unit_name,
+      day_month: userInput.day_month,
+      pf_cover: userInput.pf_cover,
+      pf_amount: userInput.pf_amount,
+      esi_cover: userInput.esi_cover,
+      esi_amount: userInput.esi_amount,
+      esi_code: userInput.esi_code,
+      esi_district: userInput.esi_district,
+      pf_basic: userInput.pf_basic,
+      pf_da: userInput.pf_da,
+      pf_hra: userInput.pf_hra,
+      pf_trv: userInput.pf_trv,
+      esi_basic: userInput.esi_basic,
+      esi_da: userInput.esi_da,
+      esi_hra: userInput.esi_hra,
+      esi_trv: userInput.esi_trv,
+      esi_protax: userInput.esi_protax,
+      salary_type_amount: userInput.salary_type_amount,
+      day_month_date: userInput.day_month_date,
+      pf_amount_amount: userInput.pf_amount_amount,
+    })
 
-  executor
-    .one(
-      "INSERT INTO public.payroll_manual_unit_entry( company, unit_code, option, salary_type, unit_name, day_month, pf_cover, pf_amount, esi_cover, esi_amount, esi_code, esi_district, pf_basic, pf_da, pf_hra, pf_trv, esi_basic, esi_da, esi_hra, esi_trv, esi_protax, salary_type_amount, day_month_date, pf_amount_amount)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24) RETURNING *",
-      [
-        userInput.company,
-        userInput.unit_code,
-        userInput.option,
-        userInput.salary_type,
-        userInput.unit_name,
-        userInput.day_month,
-        userInput.pf_cover,
-        userInput.pf_amount,
-        userInput.esi_cover,
-        userInput.esi_amount,
-        userInput.esi_code,
-        userInput.esi_district,
-        userInput.pf_basic,
-        userInput.pf_da,
-        userInput.pf_hra,
-        userInput.pf_trv,
-        userInput.esi_basic,
-        userInput.esi_da,
-        userInput.esi_hra,
-        userInput.esi_trv,
-        userInput.esi_protax,
-        userInput.salary_type_amount,
-        userInput.day_month_date,
-        userInput.pf_amount_amount,
-      ]
-    )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -6867,11 +7201,13 @@ user.unit_master_salary_detailss = async function (userInput, resultCallback) {
 };
 
 user.gettingreportsall1 = async function (unit_name, date, resultCallback) {
-  executor
-    .any(
-      'SELECT * FROM  public."payroll_manual_entry" where "date"=($2) and "unit_name"=($1) ORDER BY "unit_name" ASC',
-      [unit_name, date]
-    )
+  await model.payrollmanualentry
+    .find({ date: date, unit_name: unit_name }, {}, { unit_name: 1 })
+    // executor
+    //   .any(
+    //     'SELECT * FROM  public."payroll_manual_entry" where "date"=($2) and "unit_name"=($1) ORDER BY "unit_name" ASC',
+    //     [unit_name, date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6882,6 +7218,7 @@ user.gettingreportsall1 = async function (unit_name, date, resultCallback) {
 };
 
 user.gettingreportsall12 = async function (unit_name, date, resultCallback) {
+  //! need to check
   executor
     .any(
       'SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewdays) AS ewdays, SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec,SUM (add_amount) AS add_amount, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  where "date"=($2) and "unit_name"=($1) GROUP BY "unit_name" ',
@@ -6902,11 +7239,17 @@ user.gettingreportsall13 = async function (
   type,
   resultCallback
 ) {
-  executor
-    .any(
-      'SELECT * FROM  public."payroll_manual_entry" where "date"=($2) and "unit_name"=($1) and "payment_type"=($3) ORDER BY "unit_name" ASC',
-      [unit_name, date, type]
+  await model.payrollmanualentry
+    .find(
+      { date: date, unit_name: unit_name, payment_type: type },
+      {},
+      { sort: { unit_name: 1 } }
     )
+    // executor
+    //   .any(
+    //     'SELECT * FROM  public."payroll_manual_entry" where "date"=($2) and "unit_name"=($1) and "payment_type"=($3) ORDER BY "unit_name" ASC',
+    //     [unit_name, date, type]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6917,11 +7260,13 @@ user.gettingreportsall13 = async function (
 };
 
 user.manual_entry_unit_list_id = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."payroll_manual_unit_rate" where "unit_id"=($1) and "rank"=($2)',
-      [userInput.unit_id, userInput.rank]
-    )
+  await model.payrollmanualunitrate
+    .find({ unit_id: userInput.unit_id, rank: userInput.rank })
+    // executor
+    //   .any(
+    //     'select * FROM public."payroll_manual_unit_rate" where "unit_id"=($1) and "rank"=($2)',
+    //     [userInput.unit_id, userInput.rank]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6947,10 +7292,14 @@ user.fetch_payment_entryss = async function (
   unit_name,
   resultCallback
 ) {
-  await model.payrollmanualentry.find({
-    designation:userInput.designation, ecode:userInput.ecode,date: userInput.date, unit_name:unit_name
-  })
-  
+  await model.payrollmanualentry
+    .find({
+      designation: userInput.designation,
+      ecode: userInput.ecode,
+      date: userInput.date,
+      unit_name: unit_name,
+    })
+
     .then((data) => {
       console.log(data.length);
       if (data.length > 0) {
@@ -6986,11 +7335,8 @@ user.fetchunit_numbers1 = async function (userInput, resultCallback) {
 };
 
 user.carryForwards = async function (c_date, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."advance" WHERE "status"=($1) and "cdate"=($2)',
-      ["Pending", c_date]
-    )
+  await model.advance
+    .find({ status: "Pending", cdate: c_date })
     .then((data) => {
       resultCallback(null, data);
     })
@@ -7006,11 +7352,14 @@ user.carryForwardss = async function (
   carry_date,
   resultCallback
 ) {
-  executor
-    .any(
-      'select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)',
-      [employee_id, advance_type, "Pending", carry_date]
-    )
+  await model.advance
+    .find({
+      employee_id: employee_id,
+      advance_type: advance_type,
+      status: "Pending",
+      cdate: carry_date,
+    })
+
     .then((data) => {
       if (data.length == 0) {
         let a = {};
@@ -7050,94 +7399,97 @@ user.carryForwardUpdate = async function (
   var cm = months[completedate.getMonth() + 1];
   var ycm = y + "-" + cm;
 
-  executor
-    .any(
-      'select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)',
-      [employee_id, advance_type, "Pending", carry_date]
-    )
-    .then((data) => {
+  await model.advance
+    .find({
+      employee_id: employee_id,
+      advance_type: advance_type,
+      status: "Pending",
+      cdate: carry_date,
+    })
+
+    .then(async (data) => {
       console.log(data);
-      executor
-        .any(
-          'select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "status"=($3) and "cdate"=($4)',
-          [data[0].employee_id, data[0].advance_type, "Pending", ycm]
-        )
-        .then((update) => {
+      await model.advance
+        .find({
+          employee_id: data[0].employee_id,
+          advance_type: data[0].advance_type,
+          status: "Pending",
+          cdate: ycm,
+        })
+
+        .then(async (update) => {
           console.log(update);
-          executor
-            .any(
-              'update advance set pamount=$1 where "employee_id"=$2 and advance_type=$3 and cdate=$4',
-              [
-                update[0].pamount + data[0].pamount,
-                update[0].employee_id,
-                update[0].advance_type,
-                update[0].cdate,
-              ]
+          await model.advance
+            .findOneAndUpdate(
+              {
+                employee_id: update[0].employee_id,
+                advance_type: update[0].advance_type,
+                cdate: update[0].cdate,
+              },
+              { pamount: update[0].pamount + data[0].pamount }
             )
-            .then((updatedNextMonth) => {
-              executor.one(
-                'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                [
-                  updatedNextMonth.employee_id,
-                  updatedNextMonth.employee_name,
-                  updatedNextMonth.account_number,
-                  updatedNextMonth.pamount,
-                  updatedNextMonth.pbalanceamount,
-                  updatedNextMonth.pinstalment,
-                  updatedNextMonth.ppendinginstalment,
-                  updatedNextMonth.dfullcash,
-                  updatedNextMonth.dpaytype,
-                  updatedNextMonth.ddate,
-                  updatedNextMonth.damount,
-                  updatedNextMonth.daddi,
-                  updatedNextMonth.dnaration,
-                  updatedNextMonth.advance_type,
-                  updatedNextMonth.company_name,
-                  updatedNextMonth.site,
-                  updatedNextMonth.status,
-                  updatedNextMonth.loan_number,
-                  updatedNextMonth.cdate,
-                  updatedNextMonth.id,
-                ]
-              );
+
+            .then(async (updatedNextMonth) => {
+              await model.advancehistory.create({
+                employee_id: updatedNextMonth.employee_id,
+                employee_name: updatedNextMonth.employee_name,
+                account_number: updatedNextMonth.account_number,
+                pamount: updatedNextMonth.pamount,
+                pbalanceamount: updatedNextMonth.pbalanceamount,
+                pinstalment: updatedNextMonth.pinstalment,
+                ppendinginstalment: updatedNextMonth.ppendinginstalment,
+                dfullcash: updatedNextMonth.dfullcash,
+                dpaytype: updatedNextMonth.dpaytype,
+                ddate: updatedNextMonth.ddate,
+                damount: updatedNextMonth.damount,
+                daddi: updatedNextMonth.daddi,
+                dnaration: updatedNextMonth.dnaration,
+                advance_type: updatedNextMonth.advance_type,
+                company_name: updatedNextMonth.company_name,
+                site: updatedNextMonth.site,
+                status: updatedNextMonth.status,
+                loan_number: updatedNextMonth.loan_number,
+                cdate: updatedNextMonth.cdate,
+                id: updatedNextMonth.id,
+              });
+
               // console.log(updatedNextMonth);
-              executor
-                .any(
-                  'update advance set status=$1 where "employee_id"=$2 and advance_type=$3 and cdate=$4',
-                  [
-                    "Carry Forward" + " " + ycm,
-                    data[0].employee_id,
-                    data[0].advance_type,
-                    data[0].cdate,
-                  ]
+              await model.advance
+                .findOneAndUpdate(
+                  {
+                    employee_id: data[0].employee_id,
+                    advance_type: data[0].advance_type,
+                    cdate: data[0].cdate,
+                  },
+                  { status: "Carry Forward" + " " + ycm }
                 )
-                .then((updatedLastMonthStatus) => {
+
+                .then(async (updatedLastMonthStatus) => {
                   // console.log(updatedLastMonthStatus);
-                  executor.one(
-                    'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                    [
-                      updatedLastMonthStatus.employee_id,
-                      updatedLastMonthStatus.employee_name,
-                      updatedLastMonthStatus.account_number,
-                      updatedLastMonthStatus.pamount,
-                      updatedLastMonthStatus.pbalanceamount,
-                      updatedLastMonthStatus.pinstalment,
+                  await model.advancehistory.create({
+                    employee_id: updatedLastMonthStatus.employee_id,
+                    employee_name: updatedLastMonthStatus.employee_name,
+                    account_number: updatedLastMonthStatus.account_number,
+                    pamount: updatedLastMonthStatus.pamount,
+                    pbalanceamount: updatedLastMonthStatus.pbalanceamount,
+                    pinstalment: updatedLastMonthStatus.pinstalment,
+                    ppendinginstalment:
                       updatedLastMonthStatus.ppendinginstalment,
-                      updatedLastMonthStatus.dfullcash,
-                      updatedLastMonthStatus.dpaytype,
-                      updatedLastMonthStatus.ddate,
-                      updatedLastMonthStatus.damount,
-                      updatedLastMonthStatus.daddi,
-                      updatedLastMonthStatus.dnaration,
-                      updatedLastMonthStatus.advance_type,
-                      updatedLastMonthStatus.company_name,
-                      updatedLastMonthStatus.site,
-                      updatedLastMonthStatus.status,
-                      updatedLastMonthStatus.loan_number,
-                      updatedLastMonthStatus.cdate,
-                      updatedLastMonthStatus.id,
-                    ]
-                  );
+                    dfullcash: updatedLastMonthStatus.dfullcash,
+                    dpaytype: updatedLastMonthStatus.dpaytype,
+                    ddate: updatedLastMonthStatus.ddate,
+                    damount: updatedLastMonthStatus.damount,
+                    daddi: updatedLastMonthStatus.daddi,
+                    dnaration: updatedLastMonthStatus.dnaration,
+                    advance_type: updatedLastMonthStatus.advance_type,
+                    company_name: updatedLastMonthStatus.company_name,
+                    site: updatedLastMonthStatus.site,
+                    status: updatedLastMonthStatus.status,
+                    loan_number: updatedLastMonthStatus.loan_number,
+                    cdate: updatedLastMonthStatus.cdate,
+                    id: updatedLastMonthStatus.id,
+                  });
+
                   // resultCallback(null,data);
                 })
                 .catch((error) => {
@@ -7165,57 +7517,52 @@ user.carryForwardUpdate = async function (
 };
 
 user.carryForwardInsert = async function (input, ddate, cdate, resultCallback) {
-  executor
-    .one(
-      'INSERT INTO public."advance"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-      [
-        input.employee_id,
-        input.employee_name,
-        input.account_number,
-        input.pamount,
-        input.pbalanceamount,
-        input.pinstalment,
-        input.ppendinginstalment,
-        input.dfullcash,
-        input.dpaytype,
-        ddate,
-        input.damount,
-        input.daddi,
-        input.dnaration,
-        input.advance_type,
-        input.company_name,
-        input.site,
-        "Pending",
-        input.loan_number,
-        cdate,
-      ]
-    )
-    .then((data) => {
-      executor.one(
-        'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-        [
-          data.employee_id,
-          data.employee_name,
-          data.account_number,
-          data.pamount,
-          data.pbalanceamount,
-          data.pinstalment,
-          data.ppendinginstalment,
-          data.dfullcash,
-          data.dpaytype,
-          data.ddate,
-          data.damount,
-          data.daddi,
-          data.dnaration,
-          data.advance_type,
-          data.company_name,
-          data.site,
-          data.status,
-          data.loan_number,
-          data.cdate,
-          data.id,
-        ]
-      );
+  await model.advance
+    .create({
+      employee_id: input.employee_id,
+      employee_name: input.employee_name,
+      account_number: input.account_number,
+      pamount: input.pamount,
+      pbalanceamount: input.pbalanceamount,
+      pinstalment: input.pinstalment,
+      ppendinginstalment: input.ppendinginstalment,
+      dfullcash: input.dfullcash,
+      dpaytype: input.dpaytype,
+      ddate: ddate,
+      damount: input.damount,
+      daddi: input.daddi,
+      dnaration: input.dnaration,
+      advance_type: input.advance_type,
+      company_name: input.company_name,
+      site: input.site,
+      status: "Pending",
+      loan_number: input.loan_number,
+      cdate: cdate,
+    })
+
+    .then(async (data) => {
+      await model.advancehistory.create({
+        employee_id: data.employee_id,
+        employee_name: data.employee_name,
+        account_number: data.account_number,
+        pamount: data.pamount,
+        pbalanceamount: data.pbalanceamount,
+        pinstalment: data.pinstalment,
+        ppendinginstalment: data.ppendinginstalment,
+        dfullcash: data.dfullcash,
+        dpaytype: data.dpaytype,
+        ddate: data.ddate,
+        damount: data.damount,
+        daddi: data.daddi,
+        dnaration: data.dnaration,
+        advance_type: data.advance_type,
+        company_name: data.company_name,
+        site: data.site,
+        status: data.status,
+        loan_number: data.loan_number,
+        cdate: data.cdate,
+        id: data.id,
+      });
     })
     .catch((error) => {
       resultCallback(error, null);
