@@ -892,27 +892,27 @@ user.Updateemployee_ids = async function (userInput, resultCallback) {
 };
 
 user.addassigns = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select *  FROM public.assign WHERE "client_id"=($1) and "employee_id"=($2) and "date"=($3)',
-      [userInput.client_id, userInput.employee_id, userInput.date]
-    )
-    .then((data) => {
+  await model.assign
+    .find({
+      client_id: userInput.client_id,
+      employee_id: userInput.employee_id,
+      date: userInput.date,
+    })
+
+    .then(async (data) => {
       if (data.length == 1) {
         var data = "This Employee Already assigned in That Date";
         resultCallback(null, data);
       } else {
-        executor
-          .one(
-            'INSERT INTO public."assign"( "client_id","employee_id","date","Employee_name","Client_Name")VALUES ($1,$2,$3,$4,$5) RETURNING *',
-            [
-              userInput.client_id,
-              userInput.employee_id,
-              userInput.date,
-              userInput.Employee_name,
-              userInput.Client_Name,
-            ]
-          )
+        await model.assign
+          .create({
+            client_id: userInput.client_id,
+            employee_id: userInput.employee_id,
+            date: userInput.date,
+            Employee_name: userInput.Employee_name,
+            Client_Name: userInput.Client_Name,
+          })
+
           .then((data) => {
             var data = "Employee Added Successfully";
             resultCallback(null, data);
@@ -930,10 +930,9 @@ user.addassigns = async function (userInput, resultCallback) {
 };
 
 user.listassigns = async function (userInput, resultCallback) {
-  executor
-    .any('SELECT * FROM public.assign WHERE "client_id"=($1) ', [
-      userInput.client_id,
-    ])
+  await model.assign
+    .find({ client_id: userInput.client_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -944,10 +943,9 @@ user.listassigns = async function (userInput, resultCallback) {
 };
 
 user.deleteassigns = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."assign" WHERE "assign_id"=($1) ', [
-      userInput.assign_id,
-    ])
+  await model.assign
+    .deleteOne({ assign_id: userInput.assign_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -960,11 +958,9 @@ user.deleteassigns = async function (userInput, resultCallback) {
 ///sms///
 
 user.addsmss = async function (userInput, resultCallback) {
-  executor
-    .one(
-      'INSERT INTO public."sms"("sms","updatetime")VALUES ($1,$2) RETURNING *',
-      [userInput.sms, userInput.updatedtime]
-    )
+  await model.sms
+    .create({ sms: userInput.sms, updatedtime: userInput.updatedtime })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -976,8 +972,10 @@ user.addsmss = async function (userInput, resultCallback) {
 };
 
 user.listsmss = async function (userInput, resultCallback) {
-  executor
-    .any("SELECT * FROM public.sms ", [])
+  await model.sms
+    .find({})
+    // executor
+    //   .any("SELECT * FROM public.sms ", [])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -988,8 +986,10 @@ user.listsmss = async function (userInput, resultCallback) {
 };
 
 user.deletesmss = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."sms" WHERE "id"=($1) ', [userInput.id])
+  await model.sms
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."sms" WHERE "id"=($1) ', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1000,19 +1000,17 @@ user.deletesmss = async function (userInput, resultCallback) {
 };
 
 user.createfeedbacks = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'INSERT INTO public."feedback" (title,description,rating,posted_on,posted_by,image,company_name) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-      [
-        userInput.title,
-        userInput.description,
-        userInput.rating,
-        userInput.posted_on,
-        userInput.posted_by,
-        userInput.image,
-        userInput.company_name,
-      ]
-    )
+  await model.feedback
+    .create({
+      title: userInput.title,
+      description: userInput.description,
+      rating: userInput.rating,
+      posted_on: userInput.posted_on,
+      posted_by: userInput.posted_by,
+      image: userInput.image,
+      company_name: userInput.company_name,
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1023,8 +1021,10 @@ user.createfeedbacks = async function (userInput, resultCallback) {
 };
 
 user.feedbacklists = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."feedback"', [userInput.posted_by])
+  await model.feedback
+    .find({})
+    // executor
+    //   .any('select * FROM public."feedback"', [userInput.posted_by])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1035,10 +1035,12 @@ user.feedbacklists = async function (userInput, resultCallback) {
 };
 
 user.listmyfeedbacks = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."feedback" WHERE "posted_by"=($1)', [
-      userInput.posted_by,
-    ])
+  await model.feedback
+    .find({ posted_by: userInput.posted_by })
+    // executor
+    //   .any('select * FROM public."feedback" WHERE "posted_by"=($1)', [
+    //     userInput.posted_by,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1049,8 +1051,10 @@ user.listmyfeedbacks = async function (userInput, resultCallback) {
 };
 
 user.fetchfeedbacks = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."feedback" WHERE "id"=($1)', [userInput.id])
+  await model.feedback
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."feedback" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -1114,7 +1118,7 @@ user.mylistattachs = async function (userInput, resultCallback) {
 user.mylistattachss = async function (userInput, resultCallback) {
   //! need to check "path"
   await model.attachment
-    .find({ Emp_id: userInput.employee_id, title: "photo" })
+    .find({ Emp_id: userInput.employee_id, title: "photo" }, { path: 1 })
     // executor
     //   .any(
     //     'select "path" FROM public."attachment" WHERE "Emp_id"=($1) And "title" = ($2)',
@@ -2188,11 +2192,15 @@ user.itemslist = async function (userInput, resultCallback) {
 ///Employee adding////
 
 user.addemptypes = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.employee_type(employee_type)VALUES ($1) RETURNING *",
-      [userInput.employee_type]
-    )
+  await model.employeetype
+    .create({
+      employee_type: userInput.employee_type,
+    })
+    // executor
+    //   .one(
+    //     "INSERT INTO public.employee_type(employee_type)VALUES ($1) RETURNING *",
+    //     [userInput.employee_type]
+    //   )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2204,11 +2212,16 @@ user.addemptypes = async function (userInput, resultCallback) {
 };
 
 user.updateemptypes = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.employee_type SET  employee_type=$2   WHERE id=$1 RETURNING *",
-      [userInput.id, userInput.employee_type]
+  await model.employeetype
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      { employee_type: userInput.employee_type }
     )
+    // executor
+    //   .one(
+    //     "UPDATE public.employee_type SET  employee_type=$2   WHERE id=$1 RETURNING *",
+    //     [userInput.id, userInput.employee_type]
+    //   )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2220,8 +2233,10 @@ user.updateemptypes = async function (userInput, resultCallback) {
 };
 
 user.fetchemptypes = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
+  await model.employeetype
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2232,8 +2247,10 @@ user.fetchemptypes = async function (userInput, resultCallback) {
 };
 
 user.emptypedeletes = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
+  await model.employeetype
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."employee_type" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2244,8 +2261,10 @@ user.emptypedeletes = async function (userInput, resultCallback) {
 };
 
 user.emptypelists = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."employee_type"', [userInput.id])
+  await model.employeetype
+    .find({})
+    // executor
+    //   .any('select * FROM public."employee_type"', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2258,17 +2277,15 @@ user.emptypelists = async function (userInput, resultCallback) {
 ///Employee adding////
 
 user.addfinanaces = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.fianance_management (title,descriptions,date,type,total_amount)VALUES ($1,$2,$3,$4,$5) RETURNING *",
-      [
-        userInput.title,
-        userInput.descriptions,
-        userInput.date,
-        userInput.type,
-        userInput.total_amount,
-      ]
-    )
+  await model.financemanagement
+    .create({
+      title: userInput.title,
+      descriptions: userInput.descriptions,
+      date: userInput.date,
+      type: userInput.type,
+      total_amount: userInput.total_amount,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2280,18 +2297,18 @@ user.addfinanaces = async function (userInput, resultCallback) {
 };
 
 user.updatefinanaces = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.fianance_management SET  title=$2,descriptions=$3,date=$4,type=$5,total_amount=$6   WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.title,
-        userInput.descriptions,
-        userInput.date,
-        userInput.type,
-        userInput.total_amount,
-      ]
+  await model.financemanagement
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        title: userInput.title,
+        descriptions: userInput.descriptions,
+        date: userInput.date,
+        type: userInput.type,
+        total_amount: userInput.total_amount,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2303,10 +2320,12 @@ user.updatefinanaces = async function (userInput, resultCallback) {
 };
 
 user.fetchfinanaces = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."fianance_management" WHERE "id"=($1)', [
-      userInput.id,
-    ])
+  await model.financemanagement
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."fianance_management" WHERE "id"=($1)', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2317,16 +2336,21 @@ user.fetchfinanaces = async function (userInput, resultCallback) {
 };
 
 user.finanacedeletes = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."fianance_management" WHERE "id"=($1)', [
-      userInput.id,
-    ])
-    .then((data) => {
-      executor
-        .any(
-          'Delete FROM public."finanace_documents" WHERE "finance_id"=($1)',
-          [userInput.id]
-        )
+  await model.financemanagement
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."fianance_management" WHERE "id"=($1)', [
+    //     userInput.id,
+    //   ])
+    .then(async (data) => {
+      await model.financemanagement
+        .deleteOne({ finance_id: userInput.id })
+
+        // executor
+        //   .any(
+        //     'Delete FROM public."finanace_documents" WHERE "finance_id"=($1)',
+        //     [userInput.id]
+        //   )
         .then((data) => {
           resultCallback(null, data);
         });
@@ -2338,8 +2362,10 @@ user.finanacedeletes = async function (userInput, resultCallback) {
 };
 
 user.finanacelists = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."fianance_management"', [userInput.id])
+  await model.financemanagement
+    .find({})
+    // executor
+    //   .any('select * FROM public."fianance_management"', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2352,35 +2378,33 @@ user.finanacelists = async function (userInput, resultCallback) {
 ///Quality checking////
 
 user.addqualitys = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.qualitycheck (date,time,unit_name,unit_in_charge,contact_no,unit_strength,roll_call,uniform_deficiency,no_of_duty,availability,kl_duty_post,kl_fire_emergency,details_of_bsspl,regularity_of_ops,regularity_of_night,last_training_details,Weak_arears,quality_remarks,client_remarks,client_name,client_contact,mail_id,Remarks_by_cod)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23) RETURNING *",
-      [
-        userInput.date,
-        userInput.time,
-        userInput.unit_name,
-        userInput.unit_in_charge,
-        userInput.contact_no,
-        userInput.unit_strength,
-        userInput.roll_call,
-        userInput.uniform_deficiency,
-        userInput.no_of_duty,
-        userInput.availability,
-        userInput.kl_duty_post,
-        userInput.kl_fire_emergency,
-        userInput.details_of_bsspl,
-        userInput.regularity_of_ops,
-        userInput.regularity_of_night,
-        userInput.last_training_details,
-        userInput.Weak_arears,
-        userInput.quality_remarks,
-        userInput.client_remarks,
-        userInput.client_name,
-        userInput.client_contact,
-        userInput.mail_id,
-        userInput.Remarks_by_cod,
-      ]
-    )
+  await model.qualitychecklist
+    .create({
+      date: userInput.date,
+      time: userInput.time,
+      unit_name: userInput.unit_name,
+      unit_in_charge: userInput.unit_in_charge,
+      contact_no: userInput.contact_no,
+      unit_strength: userInput.unit_strength,
+      roll_call: userInput.roll_call,
+      uniform_deficiency: userInput.uniform_deficiency,
+      no_of_duty: userInput.no_of_duty,
+      availability: userInput.availability,
+      kl_duty_post: userInput.kl_duty_post,
+      kl_fire_emergency: userInput.kl_fire_emergency,
+      details_of_bsspl: userInput.details_of_bsspl,
+      regularity_of_ops: userInput.regularity_of_ops,
+      regularity_of_night: userInput.regularity_of_night,
+      last_training_details: userInput.last_training_details,
+      Weak_arears: userInput.Weak_arears,
+      quality_remarks: userInput.quality_remarks,
+      client_remarks: userInput.client_remarks,
+      client_name: userInput.client_name,
+      client_contact: userInput.client_contact,
+      mail_id: userInput.mail_id,
+      Remarks_by_cod: userInput.Remarks_by_cod,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2392,36 +2416,36 @@ user.addqualitys = async function (userInput, resultCallback) {
 };
 
 user.updatequalitys = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.qualitycheck SET  date = $2,time = $3,unit_name= $4,unit_in_charge= $5,contact_no= $6,unit_strength= $7,roll_call= $8,uniform_deficiency= $9,no_of_duty= $10,availability= $11,kl_duty_post= $12,kl_fire_emergency= $13,details_of_bsspl= $14,regularity_of_ops= $15,regularity_of_night= $16,last_training_details= $17,Weak_arears= $18,quality_remarks= $19,client_remarks= $20,client_name= $21,client_contact= $22,mail_id= $23,Remarks_by_cod= $24   WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.date,
-        userInput.time,
-        userInput.unit_name,
-        userInput.unit_in_charge,
-        userInput.contact_no,
-        userInput.unit_strength,
-        userInput.roll_call,
-        userInput.uniform_deficiency,
-        userInput.no_of_duty,
-        userInput.availability,
-        userInput.kl_duty_post,
-        userInput.kl_fire_emergency,
-        userInput.details_of_bsspl,
-        userInput.regularity_of_ops,
-        userInput.regularity_of_night,
-        userInput.last_training_details,
-        userInput.Weak_arears,
-        userInput.quality_remarks,
-        userInput.client_remarks,
-        userInput.client_name,
-        userInput.client_contact,
-        userInput.mail_id,
-        userInput.Remarks_by_cod,
-      ]
+  await model.qualitychecklist
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        date: userInput.date,
+        time: userInput.time,
+        unit_name: userInput.unit_name,
+        unit_in_charge: userInput.unit_in_charge,
+        contact_no: userInput.contact_no,
+        unit_strength: userInput.unit_strength,
+        roll_call: userInput.roll_call,
+        uniform_deficiency: userInput.uniform_deficiency,
+        no_of_duty: userInput.no_of_duty,
+        availability: userInput.availability,
+        kl_duty_post: userInput.kl_duty_post,
+        kl_fire_emergency: userInput.kl_fire_emergency,
+        details_of_bsspl: userInput.details_of_bsspl,
+        regularity_of_ops: userInput.regularity_of_ops,
+        regularity_of_night: userInput.regularity_of_night,
+        last_training_details: userInput.last_training_details,
+        Weak_arears: userInput.Weak_arears,
+        quality_remarks: userInput.quality_remarks,
+        client_remarks: userInput.client_remarks,
+        client_name: userInput.client_name,
+        client_contact: userInput.client_contact,
+        mail_id: userInput.mail_id,
+        Remarks_by_cod: userInput.Remarks_by_cod,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2433,8 +2457,10 @@ user.updatequalitys = async function (userInput, resultCallback) {
 };
 
 user.fetchqualitys = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
+  await model.qualitychecklist
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2445,8 +2471,10 @@ user.fetchqualitys = async function (userInput, resultCallback) {
 };
 
 user.deletequalitys = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
+  await model.qualitychecklist
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."qualitycheck" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2457,8 +2485,10 @@ user.deletequalitys = async function (userInput, resultCallback) {
 };
 
 user.listqualitys = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."qualitycheck"', [userInput.id])
+  await model.qualitychecklist
+    .find({})
+    // executor
+    //   .any('select * FROM public."qualitycheck"', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2471,23 +2501,21 @@ user.listqualitys = async function (userInput, resultCallback) {
 ///Quality table checking////
 
 user.addqualitytables = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.qualitychecklist (type,am,ao,so,aso,sg,lsg,fg,gm,total,quality_id)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *",
-      [
-        userInput.type,
-        userInput.am,
-        userInput.ao,
-        userInput.so,
-        userInput.aso,
-        userInput.sg,
-        userInput.lsg,
-        userInput.fg,
-        userInput.gm,
-        userInput.total,
-        userInput.quality_id,
-      ]
-    )
+  await model.qualitychecklist
+    .create({
+      type: userInput.type,
+      am: userInput.am,
+      ao: userInput.ao,
+      so: userInput.so,
+      aso: userInput.aso,
+      sg: userInput.sg,
+      lsg: userInput.lsg,
+      fg: userInput.fg,
+      gm: userInput.gm,
+      total: userInput.total,
+      quality_id: userInput.quality_id,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2499,24 +2527,33 @@ user.addqualitytables = async function (userInput, resultCallback) {
 };
 
 user.updatequalitytables = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.qualitychecklist SET  type = $2,am = $3,ao= $4,so= $5,aso= $6,sg= $7,lsg= $8,fg= $9,gm= $10,total= $11,quality_id = $12   WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.type,
-        userInput.am,
-        userInput.ao,
-        userInput.so,
-        userInput.aso,
-        userInput.sg,
-        userInput.lsg,
-        userInput.fg,
-        userInput.gm,
-        userInput.total,
-        userInput.quality_id,
-      ]
+  //! need to check the query
+  await model.qualitychecklist
+    .findOneAndUpdate(
+      {
+        _id: userInput.id,
+      },
+      {
+        type: userInput.type,
+        am: userInput.am,
+        ao: userInput.ao,
+        so: userInput.so,
+        aso: userInput.aso,
+        sg: userInput.sg,
+        lsg: userInput.lsg,
+        fg: userInput.fg,
+        gm: userInput.gm,
+        total: userInput.total,
+        quality_id: userInput.quality_id,
+      }
     )
+    // executor
+    //   .one(
+    //     "UPDATE public.qualitychecklist SET  type = $2,am = $3,ao= $4,so= $5,aso= $6,sg= $7,lsg= $8,fg= $9,gm= $10,total= $11,quality_id = $12   WHERE id=$1 RETURNING *",
+    //     [
+
+    //     ]
+    //   )
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -2528,10 +2565,12 @@ user.updatequalitytables = async function (userInput, resultCallback) {
 };
 
 user.fetchqualitytables = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."qualitychecklist" WHERE "id"=($1)', [
-      userInput.id,
-    ])
+  await model.qualitychecklist
+    .findOne({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."qualitychecklist" WHERE "id"=($1)', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2542,10 +2581,12 @@ user.fetchqualitytables = async function (userInput, resultCallback) {
 };
 
 user.deletequalitytables = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."qualitychecklist" WHERE "id"=($1)', [
-      userInput.id,
-    ])
+  await model.qualitychecklist
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."qualitychecklist" WHERE "id"=($1)', [
+    //     userInput.id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2556,10 +2597,12 @@ user.deletequalitytables = async function (userInput, resultCallback) {
 };
 
 user.listqualitytables = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."qualitychecklist" WHERE "quality_id"=($1)', [
-      userInput.quality_id,
-    ])
+  await model.qualitychecklist
+    .find({ quality_id: userInput.quality_id })
+    // executor
+    //   .any('select * FROM public."qualitychecklist" WHERE "quality_id"=($1)', [
+    //     userInput.quality_id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2911,34 +2954,34 @@ user.fetchnightreporttables = async function (userInput, resultCallback) {
 };
 
 user.addnotificationss = async function (userInput, date, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."notifications" WHERE "contract_id"=($1) and "date"=($2) ',
-      ["" + userInput.contract_id, "" + date]
-    )
-    .then((data) => {
+  await model.notification
+    .find({ contract_id: userInput.contract_id, date: date })
+    // executor
+    //   .any(
+    //     'select * FROM public."notifications" WHERE "contract_id"=($1) and "date"=($2) ',
+    //     ["" + userInput.contract_id, "" + date]
+    //   )
+    .then(async (data) => {
       console.log(data.length);
       if (data.length > 0) {
         resultCallback(null, data);
       } else {
-        executor
-          .one(
-            "INSERT INTO public.notifications (client_id,client_name,site_id,site_name,contract_start_date,contract_end_date,invoice_cycle,contract_type,user_id,status,contract_id,date)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *",
-            [
-              userInput.client_id,
-              userInput.client_name,
-              userInput.site_id,
-              userInput.site_name,
-              userInput.contract_start_date,
-              userInput.contract_end_date,
-              userInput.invoice_cycle,
-              userInput.contract_type,
-              userInput.user_id,
-              userInput.status,
-              userInput.contract_id,
-              date,
-            ]
-          )
+        await model.notification
+          .create({
+            client_id: userInput.client_id,
+            client_name: userInput.client_name,
+            site_id: userInput.site_id,
+            site_name: userInput.site_name,
+            contract_start_date: userInput.contract_start_date,
+            contract_end_date: userInput.contract_end_date,
+            invoice_cycle: userInput.invoice_cycle,
+            contract_type: userInput.contract_type,
+            user_id: userInput.user_id,
+            status: userInput.status,
+            contract_id: userInput.contract_id,
+            date: date,
+          })
+
           .then((data) => {
             console.log(data);
             resultCallback(null, data);
@@ -2982,11 +3025,14 @@ user.listnightreporttables = async function (userInput, resultCallback) {
 };
 
 user.notificationcounts = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select count(*) FROM public."notifications" WHERE "user_id"=($1) And "status"=($2) ',
-      [userInput.user_id, "New"]
-    )
+  await model.notification
+    .find({ user_id: userInput.user_id, status: "New" })
+    .count()
+    // executor
+    //   .any(
+    //     'select count(*) FROM public."notifications" WHERE "user_id"=($1) And "status"=($2) ',
+    //     [userInput.user_id, "New"]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -2997,10 +3043,9 @@ user.notificationcounts = async function (userInput, resultCallback) {
 };
 
 user.listofnotifications = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."notifications" WHERE "user_id"=($1)', [
-      userInput.user_id,
-    ])
+  await model.notification
+    .find({ user_id: userInput.user_id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3011,11 +3056,13 @@ user.listofnotifications = async function (userInput, resultCallback) {
 };
 
 user.updatenotifications = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'Update  public."notifications" SET "id"=$1 , "status"=$2  WHERE "id"=($1)',
-      [userInput.id, "Readed"]
-    )
+  await model.notification
+    .findOneAndUpdate({ _id: userInput.id }, { status: "Readed" })
+    // executor
+    //   .any(
+    //     'Update  public."notifications" SET "id"=$1 , "status"=$2  WHERE "id"=($1)',
+    //     [userInput.id, "Readed"]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3027,26 +3074,23 @@ user.updatenotifications = async function (userInput, resultCallback) {
 
 user.assignemployeeadds = async function (userInput, resultCallback) {
   console.log(userInput);
-  //! need to check
 
-  executor
-    .any(
-      "INSERT INTO public.assignemployee  (date,employee_id,employee_name,client_id,client_name,site_id,site_name,contract_id,employee_type,hrs)  SELECT  x,$4,$5,$6,$7,$8,$9,$10,$11,$12 FROM generate_series(($2)::date, ($3)::date,($1)::interval) a(x) RETURNING *",
-      [
-        "1 days",
-        userInput.startdate,
-        userInput.todate,
-        +userInput.employee_id,
-        userInput.employee_name,
-        +userInput.client_id,
-        userInput.client_name,
-        +userInput.site_id,
-        userInput.site_name,
-        +userInput.contract_id,
-        userInput.employee_type,
-        userInput.hrs,
-      ]
-    )
+  await model.assignemployee
+    .create({
+      date: "1 days",
+      startdate: userInput.startdate,
+      todate: userInput.todate,
+      employee_id: userInput.employee_id,
+      employee_name: userInput.employee_name,
+      client_id: userInput.client_id,
+      client_name: userInput.client_name,
+      site_id: userInput.site_id,
+      site_name: userInput.site_name,
+      contract_id: userInput.contract_id,
+      employee_type: userInput.employee_type,
+      hrs: userInput.hrs,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3058,15 +3102,13 @@ user.assignemployeeadds = async function (userInput, resultCallback) {
 };
 
 user.attendancechecks = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'SELECT * FROM public.assignemployee WHERE "employee_id"=($1) and "contract_id"=($2) and "date"=($3) ',
-      [
-        userInput.employee_id,
-        userInput.contract_id,
-        userInput.date + " 00:00:00-07",
-      ]
-    )
+  await model.assignemployee
+    .find({
+      employee_id: userInput.employee_id,
+      contract_id: userInput.contract_id,
+      date: userInput.date + " 00:00:00-07",
+    })
+
     .then((data) => {
       resultCallback(null, data);
       console.log(data);
@@ -3078,10 +3120,12 @@ user.attendancechecks = async function (userInput, resultCallback) {
 };
 
 user.fetchpaymentdetails = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."payment" WHERE "site_id"=($1)', [
-      userInput.contract_id,
-    ])
+  await model.payment
+    .find({ site_id: userInput.contract_id })
+    // executor
+    //   .any('select * FROM public."payment" WHERE "site_id"=($1)', [
+    //     userInput.contract_id,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3092,8 +3136,10 @@ user.fetchpaymentdetails = async function (userInput, resultCallback) {
 };
 
 user.paymentstructure = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
+  await model.payment
+    .find({ _id: userInput.id })
+    // executor
+    //   .any('select * FROM public."payment" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3212,11 +3258,41 @@ user.fetchsitedpayments = async function (
   end_date,
   resultCallback
 ) {
-  executor
-    .any(
-      'SELECT site_name, SUM (basic) AS basic, SUM (da) AS da, SUM (addhours) AS addhours, SUM (other) AS other, SUM (leave) AS leave, SUM (bouns) AS bouns, SUM (weekly) AS weekly, SUM (gross) AS gross, SUM (epf) AS epf, SUM (esi) AS esi, SUM (net) AS net from public."salary_details" WHERE "site_id"=($1) and date >= ($2)  and date <= ($3)   GROUP BY site_name',
-      [site_id, start_date, end_date]
-    )
+  //! need to check
+
+  await model.salarydetails
+    .aggregate([
+      {
+        $match: {
+          site_id: site_id,
+          date: {
+            $gte: new Date(start_date),
+            $lte: new Date(end_date),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$site_name",
+          basic: { $sum: "$basic" },
+          da: { $sum: "$da" },
+          addhours: { $sum: "$addhours" },
+          other: { $sum: "$other" },
+          leave: { $sum: "$leave" },
+          bouns: { $sum: "$bouns" },
+          weekly: { $sum: "$weekly" },
+          gross: { $sum: "$gross" },
+          epf: { $sum: "$epf" },
+          esi: { $sum: "$esi" },
+          net: { $sum: "$net" },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT site_name, SUM (basic) AS basic, SUM (da) AS da, SUM (addhours) AS addhours, SUM (other) AS other, SUM (leave) AS leave, SUM (bouns) AS bouns, SUM (weekly) AS weekly, SUM (gross) AS gross, SUM (epf) AS epf, SUM (esi) AS esi, SUM (net) AS net from public."salary_details" WHERE "site_id"=($1) and date >= ($2)  and date <= ($3)   GROUP BY site_name',
+    //     [site_id, start_date, end_date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3233,11 +3309,14 @@ user.fetchsitepaymentssss = async function (
 ) {
   console.log("in" + site_id, start_date);
 
-  executor
-    .any(
-      'SELECT * from public."salary_details" WHERE "site_name"=($1) and "date" = ($2)',
-      ["TRITON", start_date]
-    )
+  await model.salarydetails
+    .find({ site_name: "TRITON", date: start_date })
+
+    // executor
+    //   .any(
+    //     'SELECT * from public."salary_details" WHERE "site_name"=($1) and "date" = ($2)',
+    //     ["TRITON", start_date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3248,11 +3327,35 @@ user.fetchsitepaymentssss = async function (
 };
 
 user.checkemployees = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * from public."employeedetails" where id in (select cast("employee_id" as integer)from public."assignemployee" where "employee_type"= $1 and "date">= $2 and "date"<= $3)',
-      [userInput.employee_id, userInput.start_date, userInput.end_date]
-    )
+  await model.employeedetails
+    .aggregate([
+      {
+        $lookup: {
+          from: "assignemployee",
+          localField: "_id",
+          foreignField: "employee_id",
+          as: "result",
+        },
+      },
+      {
+        path: "$result",
+        preserveNullAndEmptyArrays: boolean,
+      },
+      {
+        $match: {
+          employee_type: userInput.employee_id,
+          date: {
+            $gte: new Date(userInput.start_date),
+            $lte: new Date(userInput.end_date),
+          },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'select * from public."employeedetails" where id in (select cast("employee_id" as integer)from public."assignemployee" where "employee_type"= $1 and "date">= $2 and "date"<= $3)',
+    //     [userInput.employee_id, userInput.start_date, userInput.end_date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3263,10 +3366,12 @@ user.checkemployees = async function (userInput, resultCallback) {
 };
 
 user.selectemployee = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."employeedetails" WHERE "employee_type"=($1)', [
-      userInput.employee_type,
-    ])
+  await model.employeedetails
+    .find({ employee_type: userInput.employee_type })
+    // executor
+    //   .any('select * FROM public."employeedetails" WHERE "employee_type"=($1)', [
+    //     userInput.employee_type,
+    //   ])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3277,11 +3382,35 @@ user.selectemployee = async function (userInput, resultCallback) {
 };
 
 user.clientfetchlists = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * from public."employeedetails" where id in (select cast("employee_id" as integer)from public."assignemployee" where "site_id"=$1 and "date">=$2 and "date"<= $3) ',
-      [userInput.site_id, userInput.start_date, userInput.end_date]
-    )
+  await model.employeedetails
+    .aggregate([
+      {
+        $lookup: {
+          from: "assignemployee",
+          localField: "_id",
+          foreignField: "employee_id",
+          as: "result",
+        },
+      },
+      {
+        path: "$result",
+        preserveNullAndEmptyArrays: boolean,
+      },
+      {
+        $match: {
+          site_id: userInput.site_id,
+          date: {
+            $gte: new Date(userInput.start_date),
+            $lte: new Date(userInput.end_date),
+          },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'select * from public."employeedetails" where id in (select cast("employee_id" as integer)from public."assignemployee" where "site_id"=$1 and "date">=$2 and "date"<= $3) ',
+    //     [, , ]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3292,11 +3421,14 @@ user.clientfetchlists = async function (userInput, resultCallback) {
 };
 
 user.employeetfetchlists = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * from public."attendancemark"  where  "date">=$1 and "date"<= $2) ',
-      [userInput.start_date, userInput.end_date]
-    )
+  await model.attendancemark
+    .find({
+      date: {
+        $gte: new Date(userInput.start_date),
+        $lte: new Date(userInput.end_date),
+      },
+    })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3307,8 +3439,10 @@ user.employeetfetchlists = async function (userInput, resultCallback) {
 };
 
 user.assignlistss = async function (userInput, resultCallback) {
-  executor
-    .any('select * from public."assignemployee" ', [])
+  await model.assignemployee
+    .find({})
+    // executor
+    //   .any('select * from public."assignemployee" ', [])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3321,24 +3455,22 @@ user.assignlistss = async function (userInput, resultCallback) {
 //Add company/////
 
 user.addcompanys = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.company(company_name,area,company_address,company_bank_name,company_bank_a_c_no,company_bank_ifsc,company_bank_branch,company_gst_tax_reg_no,company_pan_no,company_cin_no,company_pf_code_no,company_esi_code_no)VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *",
-      [
-        userInput.company_name,
-        userInput.area,
-        userInput.company_address,
-        userInput.company_bank_name,
-        userInput.company_bank_a_c_no,
-        userInput.company_bank_ifsc,
-        userInput.company_bank_branch,
-        userInput.company_gst_tax_reg_no,
-        userInput.company_pan_no,
-        userInput.company_cin_no,
-        userInput.company_pf_code_no,
-        userInput.company_esi_code_no,
-      ]
-    )
+  await model.company
+    .create({
+      company_name: userInput.company_name,
+      area: userInput.area,
+      company_address: userInput.company_address,
+      company_bank_name: userInput.company_bank_name,
+      company_bank_a_c_no: userInput.company_bank_a_c_no,
+      company_bank_ifsc: userInput.company_bank_ifsc,
+      company_bank_branch: userInput.company_bank_branch,
+      company_gst_tax_reg_no: userInput.company_gst_tax_reg_no,
+      company_pan_no: userInput.company_pan_no,
+      company_cin_no: userInput.company_cin_no,
+      company_pf_code_no: userInput.company_pf_code_no,
+      company_esi_code_no: userInput.company_esi_code_no,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3350,25 +3482,25 @@ user.addcompanys = async function (userInput, resultCallback) {
 };
 
 user.updatecompanys = async function (userInput, resultCallback) {
-  executor
-    .one(
-      "UPDATE public.company SET  company_name=$2, area=$3,company_address=$4 ,company_bank_name=$5 ,company_bank_a_c_no=$6 ,company_bank_ifsc=$7 ,company_bank_branch=$8 ,company_gst_tax_reg_no=$9 ,company_pan_no=$10 ,company_cin_no=$11 ,company_pf_code_no=$12 ,company_esi_code_no=$13  WHERE id=$1 RETURNING *",
-      [
-        userInput.id,
-        userInput.company_name,
-        userInput.area,
-        userInput.company_address,
-        userInput.company_bank_name,
-        userInput.company_bank_a_c_no,
-        userInput.company_bank_ifsc,
-        userInput.company_bank_branch,
-        userInput.company_gst_tax_reg_no,
-        userInput.company_pan_no,
-        userInput.company_cin_no,
-        userInput.company_pf_code_no,
-        userInput.company_esi_code_no,
-      ]
+  await model.company
+    .findOneAndUpdate(
+      { _id: userInput.id },
+      {
+        company_name: userInput.company_name,
+        area: userInput.area,
+        company_address: userInput.company_address,
+        company_bank_name: userInput.company_bank_name,
+        company_bank_a_c_no: userInput.company_bank_a_c_no,
+        company_bank_ifsc: userInput.company_bank_ifsc,
+        company_bank_branch: userInput.company_bank_branch,
+        company_gst_tax_reg_no: userInput.company_gst_tax_reg_no,
+        company_pan_no: userInput.company_pan_no,
+        company_cin_no: userInput.company_cin_no,
+        company_pf_code_no: userInput.company_pf_code_no,
+        company_esi_code_no: userInput.company_esi_code_no,
+      }
     )
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3380,8 +3512,10 @@ user.updatecompanys = async function (userInput, resultCallback) {
 };
 
 user.deletecompanys = async function (userInput, resultCallback) {
-  executor
-    .any('Delete FROM public."company" WHERE "id"=($1)', [userInput.id])
+  await model.company
+    .deleteOne({ _id: userInput.id })
+    // executor
+    //   .any('Delete FROM public."company" WHERE "id"=($1)', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3392,8 +3526,9 @@ user.deletecompanys = async function (userInput, resultCallback) {
 };
 
 user.fetchcompanys = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."company" WHERE "id"=($1)', [userInput.id])
+  await model.company
+    .find({ _id: userInput.id })
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3404,8 +3539,10 @@ user.fetchcompanys = async function (userInput, resultCallback) {
 };
 
 user.companylistss = async function (userInput, resultCallback) {
-  executor
-    .any('select * FROM public."company"', [userInput.id])
+  await model.company
+    .find({})
+    // executor
+    //   .any('select * FROM public."company"', [userInput.id])
     .then((data) => {
       resultCallback(null, data);
     })
@@ -3426,62 +3563,56 @@ user.advanceaddsss = async function (
 ) {
   console.log("test1");
   console.log(userInput);
+  await model.advance
+    .find({
+      employee_id: userInput.employee_id,
+      company_name: userInput.company_name,
+      advance_type: userInput.advance_type,
+      cdate: date1,
+      employee_name: userInput.employee_name,
+    })
 
-  executor
-    .any(
-      'select * FROM public."advance" where "employee_id"=$1 and "company_name"=$2 and "advance_type"=$3 and  "cdate"=$4 and  "employee_name"=$5 ',
-      [
-        userInput.employee_id,
-        userInput.company_name,
-        userInput.advance_type,
-        date1,
-        userInput.employee_name,
-      ]
-    )
-    .then((data) => {
+    .then(async (data) => {
       if (data.length > 0) {
         console.log("update");
         console.log("test2");
-        executor
-          .one(
-            'UPDATE public.advance SET  pamount=$1, pbalanceamount=$4 WHERE  "id"= $2  and cdate=$3 RETURNING *',
-            [
-              Math.round(+data[0].pamount + +amount),
-              data[0].id,
-              data[0].cdate,
-              Math.round(+data[0].pbalanceamount + +amount),
-            ]
+        await model.advance
+          .findOneAndUpdate(
+            { _id: data[0].id, cdate: data[0].cdate },
+            {
+              pamount: Math.round(+data[0].pamount + +amount),
+              pbalanceamount: Math.round(+data[0].pbalanceamount + +amount),
+            }
           )
-          .then((data1) => {
+
+          .then(async (data1) => {
             console.log("test3");
             // resultCallback(null, data1);
-            executor
-              .one(
-                'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                [
-                  data1.employee_id,
-                  data1.employee_name,
-                  data1.account_number,
-                  data1.pamount,
-                  data1.pbalanceamount,
-                  data1.pinstalment,
-                  data1.ppendinginstalment,
-                  data1.dfullcash,
-                  data1.dpaytype,
-                  data1.ddate,
-                  data1.damount,
-                  data1.daddi,
-                  data1.dnaration,
-                  data1.advance_type,
-                  data1.company_name,
-                  data1.site,
-                  data1.status,
-                  data1.loan_number,
-                  data1.cdate,
-                  data1.id,
-                ]
-              )
-              .then((historyys) => {
+            await model.advancehistory
+              .create({
+                employee_id: data1.employee_id,
+                employee_name: data1.employee_name,
+                account_number: data1.account_number,
+                pamount: data1.pamount,
+                pbalanceamount: data1.pbalanceamount,
+                pinstalment: data1.pinstalment,
+                ppendinginstalment: data1.ppendinginstalment,
+                dfullcash: data1.dfullcash,
+                dpaytype: data1.dpaytype,
+                ddate: data1.ddate,
+                damount: data1.damount,
+                daddi: data1.daddi,
+                dnaration: data1.dnaration,
+                advance_type: data1.advance_type,
+                company_name: data1.company_name,
+                site: data1.site,
+                status: data1.status,
+                loan_number: data1.loan_number,
+                cdate: data1.cdate,
+                id: data1.id,
+              })
+
+              .then(async (historyys) => {
                 resultCallback(null, historyys);
               });
           })
@@ -3493,60 +3624,56 @@ user.advanceaddsss = async function (
         console.log("test4");
         console.log(userInput.loan_number);
         console.log("insert");
-        executor
-          .one(
-            "INSERT INTO public.advance(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *",
-            [
-              userInput.employee_id,
-              userInput.employee_name,
-              userInput.bank,
-              Math.round(amount),
-              Math.round(amount),
-              userInput.pinstalment,
-              userInput.ppendinginstalment,
-              userInput.dfullcash,
-              userInput.dpaytype,
-              date,
-              userInput.damount,
-              userInput.daddi,
-              userInput.dnaration,
-              userInput.advance_type,
-              userInput.company_name,
-              userInput.site,
-              "Pending",
-              userInput.loan_number,
-              date1,
-            ]
-          )
-          .then((data2) => {
+        await model.advance
+          .create({
+            employee_id: userInput.employee_id,
+            employee_name: userInput.employee_name,
+            bank: userInput.bank,
+            pamount: Math.round(amount),
+            pbalanceamount: Math.round(amount),
+            pinstalment: userInput.pinstalment,
+            ppendinginstalment: userInput.ppendinginstalment,
+            dfullcash: userInput.dfullcash,
+            dpaytype: userInput.dpaytype,
+            date: date,
+            damount: userInput.damount,
+            daddi: userInput.daddi,
+            dnaration: userInput.dnaration,
+            advance_type: userInput.advance_type,
+            company_name: userInput.company_name,
+            site: userInput.site,
+            status: "Pending",
+            loan_number: userInput.loan_number,
+            cdate: date1,
+          })
+
+          .then(async (data2) => {
             console.log("test5");
             // resultCallback(null, data2);
-            executor
-              .one(
-                'INSERT INTO public."advance_history"(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,cdate,id)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *',
-                [
-                  data2.employee_id,
-                  data2.employee_name,
-                  data2.account_number,
-                  data2.pamount,
-                  data2.pbalanceamount,
-                  data2.pinstalment,
-                  data2.ppendinginstalment,
-                  data2.dfullcash,
-                  data2.dpaytype,
-                  data2.ddate,
-                  data2.damount,
-                  data2.daddi,
-                  data2.dnaration,
-                  data2.advance_type,
-                  data2.company_name,
-                  data2.site,
-                  data2.status,
-                  data2.loan_number,
-                  data2.cdate,
-                  data2.id,
-                ]
-              )
+            await model.advancehistory
+              .create({
+                employee_id: data2.employee_id,
+                employee_name: data2.employee_name,
+                account_number: data2.account_number,
+                pamount: data2.pamount,
+                pbalanceamount: data2.pbalanceamount,
+                pinstalment: data2.pinstalment,
+                ppendinginstalment: data2.ppendinginstalment,
+                dfullcash: data2.dfullcash,
+                dpaytype: data2.dpaytype,
+                ddate: data2.ddate,
+                damount: data2.damount,
+                daddi: data2.daddi,
+                dnaration: data2.dnaration,
+                advance_type: data2.advance_type,
+                company_name: data2.company_name,
+                site: data2.site,
+                status: data2.status,
+                loan_number: data2.loan_number,
+                cdate: data2.cdate,
+                id: data2.id,
+              })
+
               .then((historyy) => {
                 resultCallback(null, historyy);
               });
@@ -3566,31 +3693,29 @@ user.advanceaddsss = async function (
 };
 
 user.advanceaddss = async function (userInput, date, amount, resultCallback) {
-  executor
-    .one(
-      "INSERT INTO public.advance(employee_id,employee_name,account_number,pamount,pbalanceamount,pinstalment,ppendinginstalment,dfullcash,dpaytype,ddate,damount,daddi,dnaration,advance_type,company_name,site,status,loan_number,ifsc)VALUES ( $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *",
-      [
-        userInput.Employee_ID,
-        userInput.Employee_Name,
-        userInput.account_number,
-        amount,
-        amount,
-        userInput.Installment,
-        0,
-        "-",
-        userInput.PayType,
-        date,
-        0,
-        0,
-        "NO",
-        userInput.Advance_Type,
-        userInput.Company_Name,
-        userInput.site,
-        "Pending",
-        userInput.loan_number,
-        userInput.ifsc,
-      ]
-    )
+  await model.advance
+    .create({
+      employee_id: userInput.Employee_ID,
+      employee_name: userInput.Employee_Name,
+      account_number: userInput.account_number,
+      pamount: amount,
+      pbalanceamount: amount,
+      pinstalment: userInput.Installment,
+      ppendinginstalment: 0,
+      dfullcash: "-",
+      dpaytype: userInput.PayType,
+      ddate: date,
+      damount: 0,
+      daddi: 0,
+      dnaration: "NO",
+      advance_type: userInput.Advance_Type,
+      company_name: userInput.Company_Name,
+      site: userInput.site,
+      status: "Pending",
+      loan_number: userInput.loan_number,
+      ifsc: userInput.ifsc,
+    })
+
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
@@ -3602,11 +3727,17 @@ user.advanceaddss = async function (userInput, date, amount, resultCallback) {
 };
 
 user.advancefetchs = async function (userInput, resultCallback) {
-  executor
-    .any(
-      'select * FROM public."advance" WHERE "employee_id"=($1) and "advance_type"=($2) and "company_name"=($3) ORDER BY "ddate" ASC',
-      [userInput.employee_id, userInput.advance_type, userInput.company_name]
+  await model.advance
+    .find(
+      {
+        employee_id: userInput.employee_id,
+        advance_type: userInput.advance_type,
+        company_name: userInput.company_name,
+      },
+      {},
+      { sort: { ddate: 1 } }
     )
+
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6552,11 +6683,30 @@ user.manual_entry_emp_lists = async function (userInput, resultCallback) {
 
 user.manual_entry_emp_lists1 = async function (userInput, resultCallback) {
   //! need to check
-  executor
-    .any(
-      'SELECT designation, SUM (present) AS present ,COUNT(designation) as strength ,SUM (add_duties) AS add_duties, SUM (total_duties) AS total_duties FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)  GROUP BY "designation" ',
-      [userInput.unit_name, userInput.date]
-    )
+
+  await model.payrollmanualentry
+    .aggregate([
+      {
+        $match: {
+          unit_name: userInput.unit_name,
+          date: new Date(userInput.date),
+        },
+      },
+      {
+        $group: {
+          _id: "$designation",
+          present: { $sum: "$present" },
+          strength: { $count: "$designation" },
+          add_duties: { $sum: "$add_duties" },
+          total_duties: { $sum: "$total_duties" },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT designation, SUM (present) AS present ,COUNT(designation) as strength ,SUM (add_duties) AS add_duties, SUM (total_duties) AS total_duties FROM  public."payroll_manual_entry" where "unit_name"=($1) and "date"=($2)  GROUP BY "designation" ',
+    //     [userInput.unit_name, userInput.date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6617,12 +6767,39 @@ user.manual_entry_emp_lists1 = async function (userInput, resultCallback) {
 
 user.getreportssssss1 = async function (userInput, resultCallback) {
   //! need to check
-
-  executor
-    .any(
-      'SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  GROUP BY "unit_name" ',
-      []
-    )
+  await model.payrollmanualentry
+    .aggregate([
+      {
+        $group: {
+          _id: "$unit_name",
+          present: { $sum: "$present" },
+          basic: { $sum: "$basic" },
+          da: { $sum: "$da" },
+          hra: { $sum: "$hra" },
+          trv_ex: { $sum: "$trv_ex" },
+          others: { $sum: "$others" },
+          ewamount: { $sum: "$ewamount" },
+          gross: { $sum: "$gross" },
+          advance: { $sum: "$advance" },
+          loan: { $sum: "$loan" },
+          uniform: { $sum: "$uniform" },
+          mess: { $sum: "$mess" },
+          rent: { $sum: "$rent" },
+          atm: { $sum: "$atm" },
+          phone: { $sum: "$phone" },
+          pf: { $sum: "$pf" },
+          esi: { $sum: "$esi" },
+          pr_tax: { $sum: "$pr_tax" },
+          total_dec: { $sum: "$total_dec" },
+          net_pay: { $sum: "$net_pay" },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  GROUP BY "unit_name" ',
+    //     []
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6750,11 +6927,27 @@ user.cashandbanks = async function (userInput, resultCallback) {
 };
 user.cashandbankss = async function (ecode, unit_name, date, resultCallback) {
   //! need to check
-  executor
-    .any(
-      'SELECT ecode, SUM (net_pay) AS net_pay FROM public."payroll_manual_entry" where "ecode"=$1 and unit_name=$2 and date=$3 GROUP BY ecode',
-      [ecode, unit_name, date]
-    )
+  await model.payrollmanualentry
+    .aggregate([
+      {
+        $match: {
+          ecode: ecode,
+          unit_name: unit_name,
+          date: date,
+        },
+      },
+      {
+        $group: {
+          _id: "$ecode",
+          net_pay: { $sum: "$net_pay" },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT ecode, SUM (net_pay) AS net_pay FROM public."payroll_manual_entry" where "ecode"=$1 and unit_name=$2 and date=$3 GROUP BY ecode',
+    //     [ecode, unit_name, date]
+    //   )
     .then((data) => {
       resultCallback(null, data[0]);
     })
@@ -6818,11 +7011,28 @@ user.getemployeevoucher2 = async function (employee_id, resultCallback) {
 };
 user.getproftaxform1 = async function (userInput, resultCallback) {
   //! need to check
-  executor
-    .any(
-      'SELECT ecode, ename ,SUM (total_duties) AS total_duties, SUM (gross) AS gross, SUM (pr_tax) AS pr_tax FROM  public."payroll_manual_entry"  where "unit_name"=($1)  GROUP BY "ecode" , "ename" ',
-      [userInput.title]
-    )
+
+  await model.payrollmanualentry
+    .aggregate([
+      {
+        $match: {
+          unit_name: userInput.title,
+        },
+      },
+      {
+        $group: {
+          _id: { ecode: "$ecode", ename: "$ename" },
+          total_duties: { $sum: "$total_duties" },
+          gross: { $sum: "$gross" },
+          pr_tax: { $sum: "$pr_tax" },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT ecode, ename ,SUM (total_duties) AS total_duties, SUM (gross) AS gross, SUM (pr_tax) AS pr_tax FROM  public."payroll_manual_entry"  where "unit_name"=($1)  GROUP BY "ecode" , "ename" ',
+    //     [userInput.title]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -6925,11 +7135,40 @@ user.getloanandoutstandingss = async function (unit_name, resultCallback) {
 
 user.gettotalpays = async function (userInput, resultCallback) {
   //! need to check
-  executor
-    .any(
-      'SELECT unit_name,"date",company_name,SUM (gross) AS gross , SUM (pf) AS pf , SUM (esi) AS esi, SUM (pr_tax) AS pr_tax ,SUM (advance) AS advance , SUM (loan) AS loan , SUM (uniform) AS uniform, SUM (mess) AS mess ,SUM (rent) AS rent , SUM (atm) AS atm , SUM ("others") AS "others", SUM (total_dec) AS total_dec , SUM (net_pay) AS net_pay  FROM payroll_manual_entry where "company_name"=($1) and "date"=($2) GROUP BY unit_name ,"date",company_name',
-      [userInput.companyName, userInput.date]
-    )
+  await model.payrollmanualentry
+    .aggregate([
+      {
+        company_name: userInput.companyName,
+        date: userInput.date,
+      },
+      {
+        $group: {
+          _id: {
+            unit_name: "$unit_name",
+            date: "$date",
+            company_name: "$company_name",
+          },
+          gross: { $um: "$gross" },
+          pf: { $um: "$pf" },
+          esi: { $um: "$esi" },
+          pr_tax: { $um: "$pr_tax" },
+          advance: { $um: "$advance" },
+          loan: { $um: "$loan" },
+          uniform: { $um: "$uniform" },
+          mess: { $um: "$mess" },
+          rent: { $um: "$rent" },
+          atm: { $um: "$atm" },
+          others: { $um: "$others" },
+          total_dec: { $um: "$total_dec" },
+          net_pay: { $um: "$net_pay" },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT unit_name,"date",company_name,SUM (gross) AS gross , SUM (pf) AS pf , SUM (esi) AS esi, SUM (pr_tax) AS pr_tax ,SUM (advance) AS advance , SUM (loan) AS loan , SUM (uniform) AS uniform, SUM (mess) AS mess ,SUM (rent) AS rent , SUM (atm) AS atm , SUM ("others") AS "others", SUM (total_dec) AS total_dec , SUM (net_pay) AS net_pay  FROM payroll_manual_entry where "company_name"=($1) and "date"=($2) GROUP BY unit_name ,"date",company_name',
+    //     [userInput.companyName, userInput.date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -7003,11 +7242,30 @@ user.getpayslips = async function (ecode, resultCallback) {
 };
 user.getrecovery = async function (userInput, resultCallback) {
   //! need to check
-  executor
-    .any(
-      'select employee_id as ecode, advance_type, pamount as amount FROM public."advance"  WHERE "cdate"=($1) and status=($2) order by employee_id',
-      [userInput.date, "Paid"]
-    )
+  await model.advance
+    .aggregate([
+      {
+        $match: {
+          cdate: new Date(userInput.date),
+          status: "Paid",
+        },
+      },
+      {
+        $project: {
+          ecode: "$employee_id",
+          advance_type: 1,
+          amount: "$pamount",
+        },
+      },
+      {
+        $sort: { employee_id: 1 },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'select employee_id as ecode, advance_type, pamount as amount FROM public."advance"  WHERE "cdate"=($1) and status=($2) order by employee_id',
+    //     [userInput.date, "Paid"]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -7219,11 +7477,44 @@ user.gettingreportsall1 = async function (unit_name, date, resultCallback) {
 
 user.gettingreportsall12 = async function (unit_name, date, resultCallback) {
   //! need to check
-  executor
-    .any(
-      'SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewdays) AS ewdays, SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec,SUM (add_amount) AS add_amount, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  where "date"=($2) and "unit_name"=($1) GROUP BY "unit_name" ',
-      [unit_name, date]
-    )
+  await model.payrollmanualentry
+    .aggregate([
+      {
+        $match: { unit_name: unit_name, date: new Date(date) },
+      },
+      {
+        $group: {
+          _id: "$unit_name",
+          present: { $sum: "$present" },
+          basic: { $sum: "$basic" },
+          da: { $sum: "$da" },
+          hra: { $sum: "$hra" },
+          trv_ex: { $sum: "$trv_ex" },
+          others: { $sum: "$others" },
+          ewdays: { $sum: "$ewdays" },
+          ewamount: { $sum: "$ewamount" },
+          gross: { $sum: "$gross" },
+          advance: { $sum: "$advance" },
+          loan: { $sum: "$loan" },
+          uniform: { $sum: "$uniform" },
+          mess: { $sum: "$mess" },
+          rent: { $sum: "$rent" },
+          atm: { $sum: "$atm" },
+          phone: { $sum: "$phone" },
+          pf: { $sum: "$pf" },
+          esi: { $sum: "$esi" },
+          pr_tax: { $sum: "$pr_tax" },
+          total_dec: { $sum: "$total_dec" },
+          add_amount: { $sum: "$add_amount" },
+          net_pay: { $sum: "$net_pay" },
+        },
+      },
+    ])
+    // executor
+    //   .any(
+    //     'SELECT unit_name,SUM (present) AS present, SUM (basic) AS basic, SUM (da) AS da, SUM (hra) AS hra , SUM (trv_ex) AS trv_ex, SUM (others) AS others , SUM (ewdays) AS ewdays, SUM (ewamount) AS ewamount , SUM (gross) AS gross, SUM (advance) AS advance, SUM (loan) AS loan, SUM (uniform) AS uniform, SUM (mess) AS mess, SUM (rent) AS rent, SUM (atm) AS atm, SUM (phone) AS phone, SUM (pf) AS pf, SUM (esi) AS esi, SUM (pr_tax) AS pr_tax, SUM (total_dec) AS total_dec,SUM (add_amount) AS add_amount, SUM (net_pay) AS net_pay FROM  public."payroll_manual_entry"  where "date"=($2) and "unit_name"=($1) GROUP BY "unit_name" ',
+    //     [unit_name, date]
+    //   )
     .then((data) => {
       resultCallback(null, data);
     })
