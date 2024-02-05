@@ -10,7 +10,10 @@ const model = require("../model/index");
 
 login_page.bsslogincheck = async function (userInput, resultCallback) {
   await model.usermanage
-    .findOne({ Email_id: userInput.Email_id, Password: userInput.password })
+    .findOne({
+      Phone_number: userInput.Phone_number,
+      Password: userInput.password,
+    })
     .then((data) => {
       console.log(data.length);
       if (data.length == 0) {
@@ -44,8 +47,8 @@ login_page.clientlogincheck = async function (userInput, resultCallback) {
 };
 
 login_page.securitytlogins = async function (userInput, resultCallback) {
-  
-  await model.employeedetails.findOne({Email_id:userInput.Email_id,Password:userInput.password})
+  await model.employeedetails
+    .findOne({ Email_id: userInput.Email_id, Password: userInput.password })
     .then((data) => {
       console.log(data.length);
       if (data.length == 0) {

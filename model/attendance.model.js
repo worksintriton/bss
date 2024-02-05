@@ -4,7 +4,7 @@ const objectId = mongoose.Types.ObjectId;
 const attendanceSchema = new mongoose.Schema({
   employee_id: { type: String },
   name: { type: String },
-  time_in: { type: Date },
+  time: { type: String },
   status: { type: String },
   date: { type: Date },
   check: { type: String },

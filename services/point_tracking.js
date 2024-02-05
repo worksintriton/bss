@@ -245,12 +245,13 @@ point_tracking.Addpointsweb = async function (userInput, resultCallback) {
   await model.pointtrackmap
     .create({
       Emp_id: userInput.Emp_id,
+      site_id:userInput.site_id,
+      site_name:userInput.site_name,
       Employee_Name: userInput.Employee_Name,
       createdtime: userInput.createdtime,
       description: userInput.description,
       title: userInput.title,
       updatedtime: userInput.updatedtime,
-      status: userInput.status,
       notification_title: "create map",
     })
 
@@ -494,9 +495,44 @@ point_tracking.addmapuseweb = async function (userInput, resultCallback) {
     });
 };
 
-point_tracking.addmapuserlistweb = async function (userInput, resultCallback) {
+point_tracking.addmapuserlistweb = async function (
+  userInput,
+  payload,
+  resultCallback
+) {
+  const { searchKey, skip, limit, sortkey, sortOrder, Map_id } = payload;
+
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+  const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+
   await model.mapusers
-    .find({ Map_id: userInput.Map_id })
+    .aggregate([
+      {
+        $match: Map_id
+          ? {
+              Map_id: Map_id,
+            }
+          : {},
+      },
+      {
+        $match: searchKey
+          ? {
+              $or: [{ Employee_name: searchRegex }],
+            }
+          : {},
+      },
+
+      {
+        $sort: sort,
+      },
+      {
+        $facet: {
+          pagination: [{ $count: "totalCount" }],
+          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+        },
+      },
+    ])
 
     .then((data) => {
       resultCallback(null, data);

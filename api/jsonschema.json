@@ -7,12 +7,13 @@
           "Email_id": {
             "type": "string"
           },
+          "Phone_number": { "type": "string" },
           "password": {
             "type": "string"
           }
         },
-        "additionalProperties": false,
-        "required": ["Email_id", "password"],
+        "additionalProperties": true,
+        "required": ["password"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
@@ -2162,7 +2163,7 @@
         "type": "object",
         "properties": {
           "Empolyee_id": {
-            "type": "number"
+            "type": "string"
           },
           "Name": {
             "type": "string"
@@ -2180,7 +2181,7 @@
             "type": "string"
           },
           "client_ID": {
-            "type": "number"
+            "type": "string"
           },
           "client_place": {
             "type": "string"
@@ -2282,7 +2283,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "string"
           },
           "Name": {
             "type": "string"

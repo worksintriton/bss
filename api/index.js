@@ -389,7 +389,7 @@ addRoute("/authentication/deleteallqr", "POST", [middleware.deleteallqr]);
 /*Attendance mark */
 addRoute("/Attendance/MarkAttendance", "POST", [middleware.MarkAttendance]);
 addRoute("/Attendance/dailystatus", "POST", [middleware.dailystatus]);
-addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus]);
+addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus]);  
 addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus]);
 
 /*Employee Type report */

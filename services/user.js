@@ -6,6 +6,7 @@ var _ = require("lodash"),
 
 const model = require("../model/index");
 const { mode } = require("crypto-js");
+const { qrcodeGenerator } = require("../utils/qrcode");
 
 async function user() {}
 
@@ -32,6 +33,7 @@ user.createusers = async function (userInput, resultCallback) {
             Email_id: userInput.Email_id,
             Password: userInput.Password,
             Add_by: userInput.Add_by,
+            Empolyee_id: userInput.Empolyee_id,
           })
 
           .then((data) => {
@@ -790,6 +792,7 @@ user.deleteusers = async function (userInput, resultCallback) {
     });
 };
 user.addqrweb = async function (userInput, resultCallback) {
+  const qrData = await qrcodeGenerator({ Empolyee_id: userInput.Empolyee_id });
   await model.qrcode
     .create({
       Empolyee_id: userInput.Empolyee_id,
@@ -797,7 +800,7 @@ user.addqrweb = async function (userInput, resultCallback) {
       Email_ID: userInput.Email_ID,
       Mobile_No: userInput.Mobile_No,
       created: userInput.created,
-      qrdata: userInput.qrdata,
+      qrdata: qrData,
       client_ID: userInput.client_ID,
       client_place: userInput.client_place,
       date: userInput.date,
@@ -1252,7 +1255,7 @@ user.newclientsites = async function (userInput, resultCallback) {
 
 user.sitelists = async function (userInput, resultCallback) {
   await model.clientsite
-    .find({ company_name: userInput.company_name })
+    .find({})
 
     .then((data) => {
       resultCallback(null, data);

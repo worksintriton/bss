@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const timestamps = require("mongoose-timestamp");
 const objectId = mongoose.Types.ObjectId;
 const mapUsersSchema = new mongoose.Schema({
-  Emp_id: { type: String },
+  Emp_id: { type: objectId, ref: "usermanage" },
   Employee_name: { type: String },
   Map_id: { type: objectId },
   gender: { type: String },

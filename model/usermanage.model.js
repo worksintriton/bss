@@ -3,6 +3,7 @@ const timestamps = require("mongoose-timestamp");
 const objectId = mongoose.Types.ObjectId;
 const userManageSchema = new mongoose.Schema({
   Name: { type: String },
+  Empolyee_id: { type: String },
   Designation: { type: String },
   Level: { type: String },
   Phone_number: { type: String },

@@ -7,81 +7,98 @@ var _ = require("lodash"),
 function attendance() {}
 
 const model = require("../model/index");
+// attendance.MarkAttendancemob = async function (userInput, resultCallback) {
+//   await model.attendance
+//     .find({ employee_id: userInput.id, check: "Out", date: new Date(userInput.date) })
+
+//     .then(async (data) => {
+//       console.log(data);
+//       if (data.length == 1) {
+//         var data = "You are already Singed-Out";
+//         resultCallback(null, data);
+//       } else {
+//         await model.attendance
+//           .find({
+//             employee_id: userInput.id,
+//             check: "In",
+//             date: new Date(userInput.date),
+//           })
+
+//           .then(async (data) => {
+//             if (data.length < 1) {
+//               await model.attendance
+//                 .create({
+//                   employee_id: userInput.id,
+//                   check: "Out",
+//                   date: new Date(userInput.date),
+//                   Name: userInput.Name,
+//                   time: userInput.time,
+//                   status: "Present",
+//                 })
+
+//                 .then((data) => {
+//                   console.log(data);
+//                   resultCallback(null, data);
+//                 })
+//                 .catch((error) => {
+//                   resultCallback(error, null);
+//                   console.log("ERROR:", error);
+//                 });
+//             } else {
+//               await model.attendance
+//                 .findOneAndUpdate(
+//                   { employee_id: userInput.id, date: userInput.date },
+//                   { time: userInput.time, check: "Out" }
+//                 )
+//                 .then(async (data) => {
+//                   await model.attendance
+//                     .findOneAndUpdate(
+//                       {
+//                         employee_id: userInput.id,
+//                         check: "Out",
+//                         date: userInput.date,
+//                       },
+//                       { ...userInput }
+//                     )
+//                     //! need to check "work_duration"= "time_out" - "time_in"
+//                     // executor
+//                     //   .one(
+//                     //     'UPDATE public.attendance  SET  "work_duration"= "time_out" - "time_in" where "employee_id"=$1 and "check"=$2  and "date"=$3 RETURNING * ',
+//                     //     [userInput.id, "Out", userInput.date]
+//                     //   )
+//                     .then((data) => {
+//                       resultCallback(null, data);
+//                     })
+//                     .catch((error) => {
+//                       resultCallback(error, null);
+//                       console.log("ERROR:", error);
+//                     });
+//                 });
+//             }
+//           })
+//           .catch((error) => {
+//             resultCallback(error, null);
+//             console.log("ERROR:", error);
+//           });
+//       }
+//     })
+//     .catch((error) => {
+//       resultCallback(error, null);
+//       console.log("ERROR:", error);
+//     });
+// };
+
 attendance.MarkAttendancemob = async function (userInput, resultCallback) {
   await model.attendance
-    .find({ employee_id: userInput.id, check: "Out", date: userInput.date })
-
-    .then(async (data) => {
-      console.log(data);
-      if (data.length == 1) {
-        var data = "You are already Singed-Out";
-        resultCallback(null, data);
-      } else {
-        await model.attendance
-          .find({
-            employee_id: userInput.id,
-            check: "In",
-            date: userInput.date,
-          })
-
-          .then(async (data) => {
-            if (data.length < 1) {
-              await model.attendance
-                .create({
-                  employee_id: userInput.id,
-                  check: "Out",
-                  date: userInput.date,
-                  Name: userInput.Name,
-                  time: userInput.time,
-                  check: "In",
-                  status: "Present",
-                })
-
-                .then((data) => {
-                  console.log(data);
-                  resultCallback(null, data);
-                })
-                .catch((error) => {
-                  resultCallback(error, null);
-                  console.log("ERROR:", error);
-                });
-            } else {
-              await model.attendance
-                .findOneAndUpdate(
-                  { employee_id: userInput.id, date: userInput.date },
-                  { time: userInput.time, check: "Out" }
-                )
-                .then(async (data) => {
-                  await model.attendance
-                    .findOneAndUpdate(
-                      {
-                        employee_id: userInput.id,
-                        check: "Out",
-                        date: userInput.date,
-                      },
-                      { ...userInput }
-                    )
-                    //! need to check "work_duration"= "time_out" - "time_in"
-                    // executor
-                    //   .one(
-                    //     'UPDATE public.attendance  SET  "work_duration"= "time_out" - "time_in" where "employee_id"=$1 and "check"=$2  and "date"=$3 RETURNING * ',
-                    //     [, "Out", ]
-                    //   )
-                    .then((data) => {
-                      resultCallback(null, data);
-                    })
-                    .catch((error) => {
-                      resultCallback(error, null);
-                      console.log("ERROR:", error);
-                    });
-                });
-            }
-          })
-          .catch((error) => {
-            resultCallback(error, null);
-            console.log("ERROR:", error);
-          });
-      }
+    .create({
+      employee_id: userInput.employee_id,
+      date: userInput.date,
+      check: userInput.check,
+      time: userInput.time,
+      status: "Present",
+    })
+    .then((data) => {
+      resultCallback(null, data);
     })
     .catch((error) => {
       resultCallback(error, null);
@@ -127,7 +144,11 @@ attendance.Weeklyreports = async function (userInput, resultCallback) {
 
 attendance.Allstatusweb = async function (userInput, resultCallback) {
   await model.attendance
-    .find({})
+    .find(
+      { employee_id: userInput.employee_id },
+      {},
+      { sort: { createdAt: -1 } }
+    )
     .then((data) => {
       resultCallback(null, data);
     })
@@ -139,7 +160,12 @@ attendance.Allstatusweb = async function (userInput, resultCallback) {
 
 attendance.dailystatusweb = async function (userInput, resultCallback) {
   await model.attendance
-    .find({ data: userInput.date })
+    .find(
+      { employee_id: userInput.employee_id },
+      {},
+      { sort: { createdAt: -1 } }
+    )
+    .limit(1)
     .then((data) => {
       resultCallback(null, data);
     })

@@ -54,6 +54,7 @@
     "pg-promise": "^8.4.6",
     "play-sound": "^1.1.2",
     "pm2": "^3.2.4",
+    "qrcode": "^1.5.3",
     "strip-whitespace": "^1.0.7",
     "strtotime": "^1.0.0",
     "superagent": "^3.8.3",

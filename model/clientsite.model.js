@@ -20,6 +20,7 @@ const clientSiteSchema = new mongoose.Schema({
   sitelogin: { type: String },
   sitepassword: { type: String },
   billing_address: { type: String },
+  isActive: { type: Boolean, default: true },
 });
 clientSiteSchema.plugin(timestamps);
 mongoose.model("client_site", clientSiteSchema);

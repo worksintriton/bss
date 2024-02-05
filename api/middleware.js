@@ -2894,6 +2894,7 @@ function addmapuserlist(req, res, next) {
     function (waterfallCallback) {
       services.point_tracking.addmapuserlistweb(
         req.body,
+        req.query,
         function (err, result) {
           if (err) {
             req.log.error(

@@ -2,9 +2,11 @@ const mongoose = require("mongoose");
 const timestamps = require("mongoose-timestamp");
 const objectId = mongoose.Types.ObjectId;
 const pointTrackMapSchema = new mongoose.Schema({
-  Emp_id:{type:String},
-  Employee_Name:{type:String},
-  notification_title:{type:String},
+  Emp_id: { type: String },
+  Employee_Name: { type: String },
+  site_id: { type: objectId },
+  site_name: { type: String },
+  notification_title: { type: String },
   title: { type: String },
   description: { type: String },
   totaltime: { type: String },
