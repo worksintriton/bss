@@ -792,7 +792,7 @@ user.deleteusers = async function (userInput, resultCallback) {
     });
 };
 user.addqrweb = async function (userInput, resultCallback) {
-  const qrData = await qrcodeGenerator({ Empolyee_id: userInput.Empolyee_id });
+  const qrData = await qrcodeGenerator( userInput.Empolyee_id );
   await model.qrcode
     .create({
       Empolyee_id: userInput.Empolyee_id,
@@ -803,6 +803,7 @@ user.addqrweb = async function (userInput, resultCallback) {
       qrdata: qrData,
       client_ID: userInput.client_ID,
       client_place: userInput.client_place,
+      point_id : userInput.point_id,
       date: userInput.date,
     })
 

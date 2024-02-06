@@ -4,6 +4,9 @@ var _ = require("lodash"),
   db = require("../db"),
   async = require("async");
 const model = require("../model/index");
+const Schema = require("mongoose");
+const { qrcodeGenerator } = require("../utils/qrcode");
+const objectId = Schema.Types.ObjectId;
 function point_tracking() {}
 
 point_tracking.PointTrackMaps = async function (userInput, resultCallback) {
@@ -65,8 +68,8 @@ point_tracking.PointTrackMaplistmobile = async function (
   userInput,
   resultCallback
 ) {
-  await model.pointtrackmap
-    .find({})
+  await model.pointtrackmapspot
+    .find({PointTrackMaprefid:new objectId(userInput.PointTrackMaprefid)})
 
     .then((data) => {
       resultCallback(null, data);
@@ -245,8 +248,8 @@ point_tracking.Addpointsweb = async function (userInput, resultCallback) {
   await model.pointtrackmap
     .create({
       Emp_id: userInput.Emp_id,
-      site_id:userInput.site_id,
-      site_name:userInput.site_name,
+      site_id: userInput.site_id,
+      site_name: userInput.site_name,
       Employee_Name: userInput.Employee_Name,
       createdtime: userInput.createdtime,
       description: userInput.description,
@@ -255,7 +258,11 @@ point_tracking.Addpointsweb = async function (userInput, resultCallback) {
       notification_title: "create map",
     })
 
-    .then((data) => {
+    .then(async (data) => {
+      const qrcode = await qrcodeGenerator([
+        data._id.toString(),
+      ]);
+      await model.pointtrackmap.findOneAndUpdate({_id:new objectId(data._id)},{qrcode:qrcode});
       resultCallback(null, data);
     })
     .catch((error) => {
@@ -277,7 +284,7 @@ point_tracking.pointsupdateweb = async function (userInput, resultCallback) {
 
 point_tracking.pointslistweb = async function (userInput, resultCallback) {
   await model.pointtrackmap
-    .find({ Employee_id: userInput.Employee_id })
+    .find({ site_id: userInput.site_id })
 
     .then((data) => {
       resultCallback(null, data);
@@ -511,7 +518,7 @@ point_tracking.addmapuserlistweb = async function (
       {
         $match: Map_id
           ? {
-              Map_id: Map_id,
+              Map_id: new objectId(Map_id),
             }
           : {},
       },

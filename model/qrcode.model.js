@@ -10,6 +10,7 @@ const qrcodeSchema = new mongoose.Schema({
   qrdata: { type: String },
   client_ID: { type: String },
   client_place: { type: String },
+  point_id:{type:objectId},
   date: { type: String },
 });
 qrcodeSchema.plugin(timestamps);

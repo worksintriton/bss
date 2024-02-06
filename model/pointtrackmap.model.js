@@ -15,9 +15,10 @@ const pointTrackMapSchema = new mongoose.Schema({
   startlon: { type: String },
   endlat: { type: String },
   endlon: { type: String },
-  isactive: { type: String },
+  isactive: { type: Boolean, default: true },
   createdby: { type: String },
   createdtime: { type: String },
+  qrcode: { type: String },
   updatedby: { type: String },
   updatedtime: { type: String },
 });

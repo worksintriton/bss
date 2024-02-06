@@ -56,7 +56,7 @@ app.use(api.router);
 
 function runServer() {
   api.init();
-  var port = process.env.PORT || 84;
+  var port = process.env.PORT || 3000;
   app.listen(port, function () {
     console.info("Application listening on port " + port);
   });

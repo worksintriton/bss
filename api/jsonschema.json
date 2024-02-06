@@ -2091,10 +2091,10 @@
         "type": "object",
         "properties": {
           "position": {
-            "type": "number"
+            "type": "string"
           },
           "PointTrackMaprefid": {
-            "type": "number"
+            "type": "string"
           },
           "title": {
             "type": "string"
@@ -2103,13 +2103,13 @@
             "type": "string"
           },
           "lat": {
-            "type": "number"
+            "type": "string"
           },
           "lon": {
-            "type": "number"
+            "type": "string"
           },
           "accepteddistinmeter": {
-            "type": "number"
+            "type": "string"
           },
           "isactive": {
             "type": "boolean"
@@ -2130,16 +2130,16 @@
             "type": "string"
           },
           "marked_lat": {
-            "type": "number"
+            "type": "string"
           },
           "marked_lon": {
-            "type": "number"
+            "type": "string"
           },
           "marked_by": {
             "type": "string"
           },
           "is_marked": {
-            "type": "boolean"
+            "type": "string"
           }
         },
         "additionalProperties": true,
@@ -3268,8 +3268,9 @@
             "type": "string"
           }
         },
-        "additionalProperties": false,
-        "required": ["Emp_id"],
+        "additionalProperties": true,
+
+        "required": [],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
@@ -3327,19 +3328,19 @@
       "body": {
         "type": "object",
         "properties": {
-          "Employee_id": {
+          "site_id": {
             "type": "string"
           }
         },
         "additionalProperties": false,
-        "required": ["Employee_id"],
+        "required": ["site_id"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
-            "Employee_id": "should have required property LoginKey"
+            "site_id": "should have required property LoginKey"
           },
           "properties": {
-            "Employee_id": "userId must be string"
+            "site_id": "userId must be string"
           }
         }
       }
@@ -3546,19 +3547,19 @@
       "body": {
         "type": "object",
         "properties": {
-          "ukey": {
+          "PointTrackMaprefid": {
             "type": "string"
           }
         },
         "additionalProperties": false,
-        "required": ["ukey"],
+        "required": ["PointTrackMaprefid"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
-            "ukey": "should have required property LoginKey"
+            "PointTrackMaprefid": "should have required property LoginKey"
           },
           "properties": {
-            "ukey": "userId must be string"
+            "PointTrackMaprefid": "userId must be string"
           }
         }
       }
@@ -4152,13 +4153,7 @@
         "additionalProperties": true,
         "required": [],
         "errorMessage": {
-          "additionalProperties": "should not have additional properties",
-          "required": {
-            "Emp_id": "should have required property userId"
-          },
-          "properties": {
-            "Emp_id": "userId must be string"
-          }
+          "additionalProperties": "should not have additional properties"
         }
       }
     }

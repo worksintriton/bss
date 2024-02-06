@@ -3,21 +3,22 @@ const timestamps = require("mongoose-timestamp");
 const objectId = mongoose.Types.ObjectId;
 const pointTrackMapSpotSchema = new mongoose.Schema({
   position: { type: String },
-  PointTrackMaprefid: { type: String },
+  PointTrackMaprefid: { type: objectId },
   title: { type: String },
   description: { type: String },
   lat: { type: String },
   lon: { type: String },
   accepteddistinmeter: { type: String },
-  isactive: { type: String },
+  isactive: { type: Boolean, default: true },
+  date: { type: Date },
   createdby: { type: String },
   createdtime: { type: String },
-  updatedby: { type: String },
+  updatedby: { type: objectId },
   updatedtime: { type: String },
   marked_time: { type: String },
   marked_lat: { type: String },
   marked_lon: { type: String },
-  marked_by: { type: String },
+  marked_by: { type: objectId },
   is_marked: { type: String },
 });
 pointTrackMapSpotSchema.plugin(timestamps);
