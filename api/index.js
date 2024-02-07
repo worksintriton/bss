@@ -95,6 +95,10 @@ addRoute("/authentication/userlist", "POST", [middleware.userlist]);
 addRoute("/authentication/deleteuser", "POST", [middleware.deleteuser]);
 
 /*Add Configure*/
+addRoute("/authentication/createconfignumber", "POST", [
+  middleware.createConfignumber,
+]);
+
 addRoute("/authentication/confignumber", "POST", [middleware.confignumber]);
 addRoute("/authentication/getconfignumber", "POST", [
   middleware.getconfignumber,

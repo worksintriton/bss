@@ -1357,6 +1357,35 @@
     }
   },
 
+  "/authentication/createconfignumber": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "number": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false,
+        "required": ["field", "number"],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {
+            "field": "should have required property field",
+            "number": "should have required property number"
+          },
+          "properties": {
+            "field": "userId must be string",
+            "number": "userId must be number"
+          }
+        }
+      }
+    }
+  },
+
   "/authentication/confignumber": {
     "POST": {
       "body": {
@@ -1415,16 +1444,12 @@
             "type": "string"
           }
         },
-        "additionalProperties": false,
-        "required": ["client_ID"],
+        "additionalProperties": true,
+        "required": [],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
-          "required": {
-            "client_ID": "should have required property client_ID"
-          },
-          "properties": {
-            "client_ID": "userId must be number"
-          }
+          "required": {},
+          "properties": {}
         }
       }
     }

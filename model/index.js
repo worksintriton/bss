@@ -53,6 +53,7 @@ const uniform = require("./uniform.model");
 const user = require("./user.model");
 const usermanage = require("./usermanage.model");
 const shiftmeeting = require("./shiftmeeting.model");
+const confignumbers = require("./configurenumber.model");
 
 module.exports = {
   advance,
@@ -107,4 +108,5 @@ module.exports = {
   user,
   usermanage,
   shiftmeeting,
+  confignumbers,
 };

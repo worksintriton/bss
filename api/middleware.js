@@ -437,6 +437,35 @@ function Changepassword(req, res, next) {
 
 ///Configurenumber//////
 
+function createConfignumber(req, res, next) {
+  async.waterfall([
+    function (waterfallCallback) {
+      services.user.createConfignumbers(req.body, function (err, result) {
+        if (err) {
+          req.log.error(
+            {
+              error: err,
+            },
+            "Error while getting available users by mobiles"
+          );
+          return res.json(utils.errors["500"]);
+        }
+        waterfallCallback(null, result);
+      });
+    },
+    function (mydata, waterfallCallback) {
+      return res.json(
+        _.merge(
+          {
+            data: mydata,
+          },
+          utils.errors["200"]
+        )
+      );
+    },
+  ]);
+}
+
 function confignumber(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
@@ -10615,7 +10644,7 @@ exports.fetchclient = fetchclient;
 exports.updateclients = updateclients;
 
 /*Add Configure*/
-
+exports.createConfignumber = createConfignumber;
 exports.confignumber = confignumber;
 exports.getconfignumber = getconfignumber;
 

@@ -50,6 +50,23 @@ user.createusers = async function (userInput, resultCallback) {
     });
 };
 
+user.createConfignumbers = async function (userInput, resultCallback) {
+  await model.confignumbers
+    .create({
+      field: userInput.field,
+      number: userInput.number,
+    })
+    .then((data) => {
+      console.log("1");
+      resultCallback(null, data);
+    })
+
+    .catch((error) => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+
 user.confignumbers = async function (userInput, resultCallback) {
   //\''+userInput.appartment_ukey+'\
 
@@ -123,8 +140,8 @@ user.Changepasswords = async function (userInput, resultCallback) {
 };
 
 user.getsconfignumbers = async function (userInput, resultCallback) {
-  executor
-    .any("SELECT * FROM public.configurenumber", [userInput.client_ID])
+  await model.confignumbers
+    .find({})
     .then((data) => {
       resultCallback(null, data);
     })
