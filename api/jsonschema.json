@@ -5996,6 +5996,26 @@
     }
   },
 
+  "/upload/list": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "site_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": [],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {},
+          "properties": {}
+        }
+      }
+    }
+  },
+
   "/advance/advcancebulk": {
     "POST": {
       "body": {

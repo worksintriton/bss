@@ -389,7 +389,7 @@ addRoute("/authentication/deleteallqr", "POST", [middleware.deleteallqr]);
 /*Attendance mark */
 addRoute("/Attendance/MarkAttendance", "POST", [middleware.MarkAttendance]);
 addRoute("/Attendance/dailystatus", "POST", [middleware.dailystatus]);
-addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus]);  
+addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus]);
 addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus]);
 
 /*Employee Type report */
@@ -453,6 +453,8 @@ addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 
 /*File Upload*/
 addRoute("/upload/file", "POST", [middleware.uploadingfile]);
+
+addRoute("/upload/list", "POST", [middleware.listUploadedFile]);
 
 addRoute("/employee_tracking/fetchemployees", "GET", [
   middleware.fetchemployees,
@@ -698,6 +700,10 @@ addRoute("/bulkupload/bulkupload_unit_master_salary_details", "POST", [
 addRoute("/advance/carryForward", "GET", [middleware.carryForward]);
 
 // report ========================================
+
+//shift meeting
+
+// addRoute("/shiftmeeting/upload","POST",[middleware])
 
 app.use(router);
 

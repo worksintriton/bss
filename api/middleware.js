@@ -18,6 +18,9 @@ var moment = require("moment");
 var dateFormat = require("dateformat");
 var XLSX = require("xlsx");
 var strtotime = require("strtotime");
+const model = require("../model/index");
+const { Schema } = require("mongoose");
+const objectId = Schema.Types.ObjectId;
 
 //var FORGOT_PASSWORD_HTML = fs.readFileSync("www/resetpassword.html", "utf8");
 /*
@@ -4099,14 +4102,49 @@ function uploadingfile(req, res, next) {
       var time_details = moment().format("YYYYMMDDHHmmss");
       var path = "www/pics/" + time_details + "_" + sampleFile.name;
       var lpath = "/pics/" + time_details + "_" + sampleFile.name;
-      sampleFile.mv(path, function (err) {
+      sampleFile.mv(path, async function (err) {
         if (err) return res.status(500).send(err);
         var result = {
           path: lpath,
           uploadstatus: true,
         };
+        await model.shiftmeeting.create({
+          Empolyee_id: req.body.Empolyee_id,
+          Name: req.body.Name,
+          image: lpath,
+          site_id: req.body.site_id,
+          site_name: req.body.site_name,
+        });
         waterfallCallback(null, result);
       });
+    },
+    function (mydata, waterfallCallback) {
+      return res.json(
+        _.merge(
+          {
+            data: mydata,
+          },
+          utils.errors["200"]
+        )
+      );
+    },
+  ]);
+}
+
+function listUploadedFile(req, res, next) {
+  async.waterfall([
+    function (waterfallCallback) {
+      services.user.listUploadedFile(
+        req.body,
+        req.query,
+        function (err, result) {
+          if (result.length == 0) {
+            return res.json(_.merge({}, utils.errors["402"]));
+          } else {
+            waterfallCallback(null, result);
+          }
+        }
+      );
     },
     function (mydata, waterfallCallback) {
       return res.json(
@@ -10918,6 +10956,8 @@ exports.fetch_payment_entry = fetch_payment_entry;
 
 /*file upload*/
 exports.uploadingfile = uploadingfile;
+
+exports.listUploadedFile = listUploadedFile;
 
 exports.fetchunit_number1 = fetchunit_number1;
 

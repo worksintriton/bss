@@ -7,6 +7,8 @@ var _ = require("lodash"),
 const model = require("../model/index");
 const { mode } = require("crypto-js");
 const { qrcodeGenerator } = require("../utils/qrcode");
+const { Schema } = require("mongoose");
+const objectId = Schema.Types.ObjectId;
 
 async function user() {}
 
@@ -792,7 +794,7 @@ user.deleteusers = async function (userInput, resultCallback) {
     });
 };
 user.addqrweb = async function (userInput, resultCallback) {
-  const qrData = await qrcodeGenerator( userInput.Empolyee_id );
+  const qrData = await qrcodeGenerator(userInput.Empolyee_id);
   await model.qrcode
     .create({
       Empolyee_id: userInput.Empolyee_id,
@@ -803,7 +805,7 @@ user.addqrweb = async function (userInput, resultCallback) {
       qrdata: qrData,
       client_ID: userInput.client_ID,
       client_place: userInput.client_place,
-      point_id : userInput.point_id,
+      point_id: userInput.point_id,
       date: userInput.date,
     })
 
@@ -2886,6 +2888,49 @@ user.listnightreports = async function (userInput, resultCallback) {
 user.updateprofilephotos = async function (userInput, resultCallback) {
   await model.attachment
     .findOneAndUpdate({ title: userInput.photo }, { Emp_id: userInput.id })
+
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+
+user.listUploadedFile = async function (userInput, query, resultCallback) {
+  const { searchKey, skip, limit, sortkey, sortOrder, site_id } = query;
+
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+  const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+  await model.shiftmeeting
+    .aggregate([
+      {
+        $match: site_id
+          ? {
+              site_id: new objectId(site_id),
+            }
+          : {},
+      },
+      {
+        $match: searchKey
+          ? {
+              $or: [{ Empolyee_id: searchRegex }],
+            }
+          : {},
+      },
+
+      {
+        $sort: sort,
+      },
+      {
+        $facet: {
+          pagination: [{ $count: "totalCount" }],
+          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+        },
+      },
+    ])
 
     .then((data) => {
       resultCallback(null, data);
