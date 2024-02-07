@@ -1367,7 +1367,8 @@
           },
           "number": {
             "type": "number"
-          }
+          },
+          "image": { "type": "string" }
         },
         "additionalProperties": false,
         "required": ["field", "number"],
@@ -10751,6 +10752,63 @@
             "employee_id": "userId must be string"
           }
         }
+      }
+    }
+  },
+
+  "/shiftmeeting/create": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "Empolyee_id": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "site_id": {
+            "type": "string"
+          },
+          "site_name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": ["Empolyee_id"],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {
+            "employee_id": "should have required property client_id"
+          },
+          "properties": {
+            "employee_id": "userId must be string"
+          }
+        }
+      }
+    }
+  },
+
+  "/shiftmeeting/list": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true,
+        "required": [],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {},
+          "properties": {}
+        }
+      },
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
       }
     }
   }

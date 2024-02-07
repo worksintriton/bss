@@ -4137,13 +4137,6 @@ function uploadingfile(req, res, next) {
           path: lpath,
           uploadstatus: true,
         };
-        await model.shiftmeeting.create({
-          Empolyee_id: req.body.Empolyee_id,
-          Name: req.body.Name,
-          image: lpath,
-          site_id: req.body.site_id,
-          site_name: req.body.site_name,
-        });
         waterfallCallback(null, result);
       });
     },
@@ -10607,8 +10600,96 @@ function carryForward(req, res, next) {
   ]);
 }
 
+function shiftmeeting(req, res, next) {
+  async.waterfall([
+    function (waterfallCallback) {
+      services.shiftMeeting.checkUniform(
+        req.body,
+        function (err, result, status) {
+          if (err) {
+            console.log(err);
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, result, status);
+        }
+      );
+    },
+    function (mydata, status, waterfallCallback) {
+      console.log(mydata);
+      console.log(status);
+
+      if (status == true) {
+        return res.json(
+          _.merge(
+            {
+              data: mydata,
+            },
+            utils.errors["200"]
+          )
+        );
+      } else {
+        return res.json(
+          _.merge(
+            {
+              data: mydata,
+            },
+            utils.errors["401a"]
+          )
+        );
+      }
+    },
+  ]);
+}
+
+function listShiftmeeting(req, res, next) {
+  async.waterfall([
+    function (waterfallCallback) {
+      services.shiftMeeting.listUser(
+        req.body,
+        req.query,
+        function (err, result, status) {
+          if (err) {
+            console.log(err);
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, result, status);
+        }
+      );
+    },
+    function (mydata, status, waterfallCallback) {
+      console.log(mydata);
+      console.log(status);
+
+      if (status == true) {
+        return res.json(
+          _.merge(
+            {
+              data: mydata,
+            },
+            utils.errors["200"]
+          )
+        );
+      } else {
+        return res.json(
+          _.merge(
+            {
+              data: mydata,
+            },
+            utils.errors["401a"]
+          )
+        );
+      }
+    },
+  ]);
+}
+
 exports.init = init;
 exports.passport = passport;
+
+/** shift Meeting */
+
+exports.shiftmeeting = shiftmeeting;
+exports.listShiftmeeting = listShiftmeeting;
 
 /*BSS Web Portal*/
 

@@ -4,6 +4,7 @@ const objectId = mongoose.Types.ObjectId;
 const configureNumberSchema = new mongoose.Schema({
   field: { type: String },
   number: { type: Number },
+  image: { type: String },
 });
 configureNumberSchema.plugin(timestamps);
 mongoose.model("configure_number", configureNumberSchema);

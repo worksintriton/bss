@@ -55,6 +55,7 @@ user.createConfignumbers = async function (userInput, resultCallback) {
     .create({
       field: userInput.field,
       number: userInput.number,
+      image: userInput.image,
     })
     .then((data) => {
       console.log("1");

@@ -7,6 +7,7 @@ var express = require("express"),
   middleware_emp = require("./middleware_emp"),
   cors = require("cors");
 const fileUpload = require("express-fileupload");
+const { shiftMeeting } = require("../services");
 
 var app = express(),
   router = express.Router();
@@ -707,7 +708,8 @@ addRoute("/advance/carryForward", "GET", [middleware.carryForward]);
 
 //shift meeting
 
-// addRoute("/shiftmeeting/upload","POST",[middleware])
+addRoute("/shiftmeeting/create", "POST", [middleware.shiftmeeting]);
+addRoute("/shiftmeeting/list", "POST", [middleware.listShiftmeeting]);
 
 app.use(router);
 
