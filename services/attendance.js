@@ -143,19 +143,53 @@ attendance.Weeklyreports = async function (userInput, resultCallback) {
 };
 
 attendance.Allstatusweb = async function (userInput, resultCallback) {
-  await model.attendance
-    .find(
-      { employee_id: userInput.employee_id },
-      {},
-      { sort: { createdAt: -1 } }
-    )
-    .then((data) => {
-      resultCallback(null, data);
-    })
-    .catch((error) => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
+  const record = [];
+
+  const getEmployeeIds = await model.attendance.aggregate([
+    {
+      $group: {
+        _id: "$employee_id",
+      },
+    },
+  ]);
+  for (const iterator of getEmployeeIds) {
+    const data = await model.attendance.find({
+      employee_id: iterator._id,
     });
+
+    record.push(data[0]);
+    if (data.length > 1) {
+      record.push(data[data.length - 1]);
+    }
+  }
+  const responseData = [];
+
+  function groupByEmployeeId(records) {
+    const groupedRecords = {};
+
+    records.forEach((record) => {
+      const { employee_id, time, check } = record;
+      if (!groupedRecords[employee_id]) {
+        groupedRecords[employee_id] = [{ [check]: time }];
+      } else {
+        groupedRecords[employee_id][0][check] = time;
+      }
+    });
+
+    return groupedRecords;
+  }
+  const groupedByEmployeeId = groupByEmployeeId(record);
+
+  resultCallback(null, groupedByEmployeeId);
+};
+
+attendance.History = async function (userInput, resultCallback) {
+  const data = await model.attendance.find(
+    { employee_id: userInput.employee_id, date: userInput.date },
+    { time: 1, date: 1, check: 1,employee_id:1 }
+  );
+
+  resultCallback(null, data);
 };
 
 attendance.dailystatusweb = async function (userInput, resultCallback) {

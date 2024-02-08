@@ -8,6 +8,9 @@ const attendanceSchema = new mongoose.Schema({
   status: { type: String },
   date: { type: Date },
   check: { type: String },
+  lat: { type: String },
+  lon: { type: String },
+  supervisor_id: { type: objectId },
 });
 attendanceSchema.plugin(timestamps);
 mongoose.model("attendance", attendanceSchema);

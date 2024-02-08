@@ -2462,6 +2462,33 @@
     }
   },
 
+  "/Attendance/Allhistory": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "employee_id": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true,
+        "required": ["employee_id"],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {
+            "employee_id": "should have required property userId"
+          },
+          "properties": {
+            "date": "userId must be string"
+          }
+        }
+      }
+    }
+  },
+
   "/Attendance/dailystatus": {
     "POST": {
       "body": {

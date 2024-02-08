@@ -3323,6 +3323,35 @@ function Allstatus(req, res, next) {
   ]);
 }
 
+function AllHistory(req, res, next) {
+  async.waterfall([
+    function (waterfallCallback) {
+      services.attendance.History(req.body, function (err, result) {
+        if (err) {
+          req.log.error(
+            {
+              error: err,
+            },
+            "Error while getting available users by mobiles"
+          );
+          return res.json(utils.errors["500"]);
+        }
+        waterfallCallback(null, result);
+      });
+    },
+    function (mydata, waterfallCallback) {
+      return res.json(
+        _.merge(
+          {
+            data: mydata,
+          },
+          utils.errors["200"]
+        )
+      );
+    },
+  ]);
+}
+
 function Forgotpasswordweb(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
@@ -10821,6 +10850,7 @@ exports.MarkAttendance = MarkAttendance;
 exports.Weeklystatus = Weeklystatus;
 exports.Allstatus = Allstatus;
 exports.dailystatus = dailystatus;
+exports.AllHistory = AllHistory;
 
 /*forgot*/
 exports.Forgotpasswordweb = Forgotpasswordweb;
