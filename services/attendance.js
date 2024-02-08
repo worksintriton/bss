@@ -95,6 +95,7 @@ attendance.MarkAttendancemob = async function (userInput, resultCallback) {
       date: userInput.date,
       check: userInput.check,
       time: userInput.time,
+      site_id: userInput.site_id,
       status: "Present",
     })
     .then((data) => {
@@ -185,8 +186,12 @@ attendance.Allstatusweb = async function (userInput, resultCallback) {
 
 attendance.History = async function (userInput, resultCallback) {
   const data = await model.attendance.find(
-    { employee_id: userInput.employee_id, date: userInput.date },
-    { time: 1, date: 1, check: 1,employee_id:1 }
+    {
+      employee_id: userInput.employee_id,
+      date: userInput.date,
+      site_id: userInput.site_id,
+    },
+    { time: 1, date: 1, check: 1, employee_id: 1 }
   );
 
   resultCallback(null, data);
