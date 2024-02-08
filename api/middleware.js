@@ -2542,7 +2542,7 @@ function PointTrackMapSpotlist(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
       services.point_tracking.PointTrackMapSpotlistmobile(
-        req.body,
+        req.body,req.query,
         function (err, result) {
           if (err) {
             req.log.error(

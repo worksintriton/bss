@@ -3,6 +3,7 @@ const timestamps = require("mongoose-timestamp");
 const objectId = mongoose.Types.ObjectId;
 const pointTrackMapSpotSchema = new mongoose.Schema({
   position: { type: String },
+  site_id: { type: objectId },
   PointTrackMaprefid: { type: objectId },
   title: { type: String },
   description: { type: String },

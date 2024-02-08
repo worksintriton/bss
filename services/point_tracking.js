@@ -69,7 +69,7 @@ point_tracking.PointTrackMaplistmobile = async function (
   resultCallback
 ) {
   await model.pointtrackmapspot
-    .find({PointTrackMaprefid:new objectId(userInput.PointTrackMaprefid)})
+    .find({ PointTrackMaprefid: new objectId(userInput.PointTrackMaprefid) })
 
     .then((data) => {
       resultCallback(null, data);
@@ -160,6 +160,7 @@ point_tracking.PointTrackMapRecordslistmobile = async function (
 point_tracking.PointTrackMapSpots = async function (userInput, resultCallback) {
   await model.pointtrackmapspot
     .create({
+      site_id: userInput.site_id,
       position: userInput.position,
       PointTrackMaprefid: userInput.PointTrackMaprefid,
       title: userInput.title,
@@ -177,6 +178,7 @@ point_tracking.PointTrackMapSpots = async function (userInput, resultCallback) {
       marked_lon: userInput.marked_lon,
       marked_by: userInput.marked_by,
       is_marked: userInput.is_marked,
+      date: userInput.date,
     })
 
     .then((data) => {
@@ -192,7 +194,14 @@ point_tracking.updatePointTrackMapSpotmobile = async function (
   resultCallback
 ) {
   await model.pointtrackmapspot
-    .updateOne({ _id: userInput.id }, { ...userInput })
+    .findOneAndUpdate(
+      {
+        PointTrackMaprefid: userInput.PointTrackMaprefid,
+        marked_by: userInput.marked_by,
+        date: userInput.date,
+      },
+      { ...userInput }
+    )
 
     .then((data) => {
       resultCallback(null, data);
@@ -219,10 +228,58 @@ point_tracking.DeletePointTrackMapSpotmobile = async function (
 
 point_tracking.PointTrackMapSpotlistmobile = async function (
   userInput,
+  query,
   resultCallback
 ) {
+  const {
+    searchKey,
+    skip,
+    limit,
+    sortkey,
+    sortOrder,
+    PointTrackMaprefid,
+    site_id,
+  } = query;
+
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+  const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+
   await model.pointtrackmapspot
-    .find({ PointTrackMaprefid: userInput.PointTrackMaprefid })
+    .aggregate([
+      {
+        $match: site_id
+          ? {
+              site_id: new objectId(site_id),
+            }
+          : {},
+      },
+      {
+        $match: PointTrackMaprefid
+          ? {
+              PointTrackMaprefid: new objectId(PointTrackMaprefid),
+            }
+          : {},
+      },
+
+      {
+        $match: searchKey
+          ? {
+              $or: [{}],
+            }
+          : {},
+      },
+
+      {
+        $sort: sort,
+      },
+      {
+        $facet: {
+          pagination: [{ $count: "totalCount" }],
+          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+        },
+      },
+    ])
 
     .then((data) => {
       resultCallback(null, data);
@@ -234,7 +291,12 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
 
 point_tracking.FetchMapSpotmobile = async function (userInput, resultCallback) {
   await model.pointtrackmapspot
-    .find({ _id: userInput.id })
+    .find({
+      PointTrackMaprefid: userInput.PointTrackMaprefid,
+      site_id: userInput.site_id,
+      marked_by: userInput.marked_by,
+      date: userInput.date,
+    })
 
     .then((data) => {
       resultCallback(null, data);
@@ -259,10 +321,11 @@ point_tracking.Addpointsweb = async function (userInput, resultCallback) {
     })
 
     .then(async (data) => {
-      const qrcode = await qrcodeGenerator([
-        data._id.toString(),
-      ]);
-      await model.pointtrackmap.findOneAndUpdate({_id:new objectId(data._id)},{qrcode:qrcode});
+      const qrcode = await qrcodeGenerator([data._id.toString()]);
+      await model.pointtrackmap.findOneAndUpdate(
+        { _id: new objectId(data._id) },
+        { qrcode: qrcode }
+      );
       resultCallback(null, data);
     })
     .catch((error) => {

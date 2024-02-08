@@ -2119,6 +2119,7 @@
           "position": {
             "type": "string"
           },
+          "site_id": { "type": "string" },
           "PointTrackMaprefid": {
             "type": "string"
           },
@@ -3624,70 +3625,36 @@
       "body": {
         "type": "object",
         "properties": {
-          "position": {
-            "type": "number"
-          },
-          "PointTrackMaprefid": {
-            "type": "number"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "lat": {
-            "type": "number"
-          },
-          "lon": {
-            "type": "number"
-          },
-          "accepteddistinmeter": {
-            "type": "number"
-          },
-          "isactive": {
-            "type": "boolean"
-          },
-          "createdby": {
-            "type": "string"
-          },
-          "createdtime": {
-            "type": "string"
-          },
-          "updatedby": {
-            "type": "string"
-          },
-          "updatedtime": {
-            "type": "string"
-          },
-          "marked_time": {
-            "type": "string"
-          },
-          "marked_lat": {
-            "type": "number"
-          },
-          "marked_lon": {
-            "type": "number"
-          },
-          "marked_by": {
-            "type": "string"
-          },
-          "is_marked": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "number"
-          }
+          "position": { "type": "string" },
+          "site_id": { "type": "string" },
+          "PointTrackMaprefid": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "lat": { "type": "string" },
+          "lon": { "type": "string" },
+          "accepteddistinmeter": { "type": "string" },
+          "date": { "type": "string" },
+          "createdby": { "type": "string" },
+          "createdtime": { "type": "string" },
+          "updatedby": { "type": "string" },
+          "updatedtime": { "type": "string" },
+          "marked_time": { "type": "string" },
+          "marked_lat": { "type": "string" },
+          "marked_lon": { "type": "string" },
+          "marked_by": { "type": "string" },
+          "is_marked": { "type": "string" }
         },
         "additionalProperties": true,
-        "required": [],
+        "required": ["PointTrackMaprefid", "marked_by"],
         "errorMessage": {
-          "PointTrackMaprefid": "should not have additional properties",
+          "additionalProperties": "should not have additional properties",
           "required": {
-            "PointTrackMaprefid": "should have required property userId"
+            "PointTrackMaprefid": "should have required property PointTrackMaprefid",
+            "marked_by": "should have required property marked_by"
           },
           "properties": {
-            "PointTrackMaprefid": "userId must be string"
+            "PointTrackMaprefid": "PointTrackMaprefid must be string",
+            "marked_by": "marked_by must be string"
           }
         }
       }
@@ -3724,11 +3691,11 @@
         "type": "object",
         "properties": {
           "PointTrackMaprefid": {
-            "type": "number"
+            "type": "string"
           }
         },
         "additionalProperties": false,
-        "required": ["PointTrackMaprefid"],
+        "required": [],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
@@ -3748,11 +3715,11 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "string"
           }
         },
-        "additionalProperties": false,
-        "required": ["id"],
+        "additionalProperties": true,
+        "required": [],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
