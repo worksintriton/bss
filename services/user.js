@@ -1274,10 +1274,15 @@ user.newclientsites = async function (userInput, resultCallback) {
     });
 };
 
-user.sitelists = async function (userInput, resultCallback) {
+user.sitelists = async function (userInput, query, resultCallback) {
+  const { searchKey, skip, limit, sortkey, sortOrder } = query;
+
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+  const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
   await model.clientsite
     .aggregate([
-      {},
+      { $match: {} },
       {
         $match: searchKey
           ? {

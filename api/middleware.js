@@ -4366,7 +4366,7 @@ function newclientsite(req, res, next) {
 function sitelist(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
-      services.user.sitelists(req.body, function (err, result) {
+      services.user.sitelists(req.body,req.query, function (err, result) {
         if (err) {
           req.log.error(
             {
