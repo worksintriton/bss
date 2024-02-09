@@ -10,6 +10,7 @@ const userManageSchema = new mongoose.Schema({
   Email_id: { type: String },
   Password: { type: String },
   Add_by: { type: String },
+  profile_image: { type: String },
 });
 userManageSchema.plugin(timestamps);
 mongoose.model("usermanage", userManageSchema);

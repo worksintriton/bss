@@ -1,5 +1,6 @@
+const { Schema } = require("mongoose");
 const model = require("../model/index");
-
+const objectId = Schema.Types.ObjectId;
 function shiftMeeting() {}
 
 shiftMeeting.checkUniform = async function (userInput, resultCallback) {
@@ -26,33 +27,17 @@ shiftMeeting.listUser = async function (userInput, query, resultCallback) {
   const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
 
   const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
-  await model.shiftmeeting
-    .aggregate([
-      {
-        $match: site_id
-          ? {
-              site_id: new objectId(site_id),
-            }
-          : {},
-      },
-      {
-        $match: searchKey
-          ? {
-              $or: [{ Empolyee_id: searchRegex }],
-            }
-          : {},
-      },
 
-      {
-        $sort: sort,
-      },
-      {
-        $facet: {
-          pagination: [{ $count: "totalCount" }],
-          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
-        },
-      },
-    ])
+  let filter;
+
+  if (site_id) {
+    filter = { site_id: site_id };
+  } else {
+    filter = {};
+  }
+
+  await model.shiftmeeting
+    .find(filter)
 
     .then((data) => {
       resultCallback(null, data, true);
