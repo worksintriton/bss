@@ -6230,21 +6230,13 @@
     "POST": {
       "body": {
         "type": "object",
-        "properties": {
-          "company_name": {
-            "type": "string"
-          }
-        },
+        "properties": {},
         "additionalProperties": true,
         "required": [],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
-          "required": {
-            "client_id": "should have required property userId"
-          },
-          "properties": {
-            "client_id": "userId must be string"
-          }
+          "required": {},
+          "properties": {}
         }
       }
     }
