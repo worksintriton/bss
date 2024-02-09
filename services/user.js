@@ -38,7 +38,12 @@ user.createusers = async function (userInput, resultCallback) {
             Empolyee_id: userInput.Empolyee_id,
           })
 
-          .then((data) => {
+          .then(async (data) => {
+            const userQrCode = await qrcodeGenerator(data.Empolyee_id);
+            await model.usermanage.findOneAndUpdate(
+              { _id: data._id },
+              { qrcode: userQrCode }
+            );
             console.log("1");
             resultCallback(null, data);
           });

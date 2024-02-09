@@ -11,6 +11,7 @@ const userManageSchema = new mongoose.Schema({
   Password: { type: String },
   Add_by: { type: String },
   profile_image: { type: String },
+  qrcode: { type: String },
 });
 userManageSchema.plugin(timestamps);
 mongoose.model("usermanage", userManageSchema);
