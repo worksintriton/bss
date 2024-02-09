@@ -59,6 +59,7 @@ app.options("*", cors());
 
 /*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
+addRoute("/authentication/bsslogout", "POST", [middleware.bsslogout]);
 
 /*Add Employee*/
 

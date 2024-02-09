@@ -81,6 +81,10 @@ function bsslogin(req, res, next) {
   ]);
 }
 
+function bsslogout(req, res, next) {
+  res.json({ message: "user logged Out Successfully", status: "Success" });
+}
+
 //////Clientlogin/////////
 
 function Clientlogin(req, res, next) {
@@ -2542,7 +2546,8 @@ function PointTrackMapSpotlist(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
       services.point_tracking.PointTrackMapSpotlistmobile(
-        req.body,req.query,
+        req.body,
+        req.query,
         function (err, result) {
           if (err) {
             req.log.error(
@@ -2953,7 +2958,6 @@ function addmapuserlist(req, res, next) {
     },
   ]);
 }
-
 
 function sitelistbyuser(req, res, next) {
   async.waterfall([
@@ -10760,6 +10764,7 @@ exports.Clientlogin = Clientlogin;
 
 /*BSS Web Portal*/
 exports.bsslogin = bsslogin;
+exports.bsslogout = bsslogout;
 
 /*Add Employee*/
 exports.updateemployee = updateemployee;
@@ -10855,7 +10860,7 @@ exports.addmapuser = addmapuser;
 exports.addmapuserlist = addmapuserlist;
 exports.mapuserdelete = mapuserdelete;
 exports.fetchmapuserpoints = fetchmapuserpoints;
-exports.sitelistbyuser=sitelistbyuser
+exports.sitelistbyuser = sitelistbyuser;
 
 /*FAQ*/
 

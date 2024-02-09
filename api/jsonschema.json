@@ -28,6 +28,22 @@
     }
   },
 
+  "/authentication/bsslogout": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {}
+      },
+      "additionalProperties": true,
+      "required": [],
+      "errorMessage": {
+        "additionalProperties": "should not have additional properties",
+        "required": {},
+        "properties": {}
+      }
+    }
+  },
+
   "/authentication/checkuser": {
     "POST": {
       "body": {

@@ -20,7 +20,7 @@ const pointTrackMapSpotSchema = new mongoose.Schema({
   marked_lat: { type: String },
   marked_lon: { type: String },
   marked_by: { type: objectId },
-  is_marked: { type: String },
+  is_marked: { type: String, enum: ["checked", "not checked"] },
 });
 pointTrackMapSpotSchema.plugin(timestamps);
 mongoose.model("point_track_map_spot", pointTrackMapSpotSchema);
