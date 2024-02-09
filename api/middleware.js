@@ -2954,6 +2954,40 @@ function addmapuserlist(req, res, next) {
   ]);
 }
 
+
+function sitelistbyuser(req, res, next) {
+  async.waterfall([
+    function (waterfallCallback) {
+      services.user.sitelistsbyuserid(
+        req.body,
+        req.query,
+        function (err, result) {
+          if (err) {
+            req.log.error(
+              {
+                error: err,
+              },
+              "Error while getting available users by mobiles"
+            );
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, result);
+        }
+      );
+    },
+    function (mydata, waterfallCallback) {
+      return res.json(
+        _.merge(
+          {
+            data: mydata,
+          },
+          utils.errors["200"]
+        )
+      );
+    },
+  ]);
+}
+
 function mapuserdelete(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
@@ -10821,6 +10855,7 @@ exports.addmapuser = addmapuser;
 exports.addmapuserlist = addmapuserlist;
 exports.mapuserdelete = mapuserdelete;
 exports.fetchmapuserpoints = fetchmapuserpoints;
+exports.sitelistbyuser=sitelistbyuser
 
 /*FAQ*/
 

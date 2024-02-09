@@ -1276,7 +1276,81 @@ user.newclientsites = async function (userInput, resultCallback) {
 
 user.sitelists = async function (userInput, resultCallback) {
   await model.clientsite
-    .find({})
+    .aggregate([
+      {},
+      {
+        $match: searchKey
+          ? {
+              $or: [{}],
+            }
+          : {},
+      },
+
+      {
+        $sort: sort,
+      },
+      {
+        $facet: {
+          pagination: [{ $count: "totalCount" }],
+          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+        },
+      },
+    ])
+
+    .then((data) => {
+      resultCallback(null, data);
+    })
+    .catch((error) => {
+      resultCallback(error, null);
+      console.log("ERROR:", error);
+    });
+};
+
+user.sitelistsbyuserid = async function (userInput,query, resultCallback) {
+  const { searchKey, skip, limit, sortkey, sortOrder, Emp_id } = query;
+
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+  const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+
+  await model.mapusers
+    .aggregate([
+      {
+        $match: {
+          Emp_id: Emp_id,
+        },
+      },
+      {
+        $lookup: {
+          from: "client_sites",
+          localField: "Map_id",
+          foreignField: "_id",
+          as: "result",
+        },
+      },
+      {
+        $unwind: {
+          path: "$result",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          result: 1,
+          _id: 0,
+        },
+      },
+
+      {
+        $sort: sort,
+      },
+      {
+        $facet: {
+          pagination: [{ $count: "totalCount" }],
+          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+        },
+      },
+    ])
 
     .then((data) => {
       resultCallback(null, data);

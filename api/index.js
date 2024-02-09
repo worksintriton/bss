@@ -384,6 +384,7 @@ addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete]);
 addRoute("/mapTracking/fetchmapuserpoints", "POST", [
   middleware.fetchmapuserpoints,
 ]);
+addRoute("/mapTracking/sitelistbyuser", "POST", [middleware.sitelistbyuser]);
 
 /*QR Code */
 addRoute("/authentication/addqr", "POST", [middleware.addqr]);

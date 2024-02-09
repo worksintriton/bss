@@ -3732,6 +3732,25 @@
       }
     }
   },
+  "/mapTracking/sitelistbyuser": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {}
+      },
+      "additionalProperties": true,
+      "required": [],
+      "errorMessage": {
+        "additionalProperties": "should not have additional properties",
+        "required": {
+          "id": "should have required property LoginKey"
+        },
+        "properties": {
+          "id": "userId must be string"
+        }
+      }
+    }
+  },
 
   "/mapTracking/FetchMapSpotrecord": {
     "POST": {
