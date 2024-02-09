@@ -1306,7 +1306,7 @@ user.sitelists = async function (userInput, resultCallback) {
     });
 };
 
-user.sitelistsbyuserid = async function (userInput,query, resultCallback) {
+user.sitelistsbyuserid = async function (userInput, query, resultCallback) {
   const { searchKey, skip, limit, sortkey, sortOrder, Emp_id } = query;
 
   const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
@@ -1353,7 +1353,12 @@ user.sitelistsbyuserid = async function (userInput,query, resultCallback) {
     ])
 
     .then((data) => {
-      resultCallback(null, data);
+      const record = [];
+
+      data[0].data.forEach((el) => {
+        record.push(el.result);
+      });
+      resultCallback(null, record);
     })
     .catch((error) => {
       resultCallback(error, null);
