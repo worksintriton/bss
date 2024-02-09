@@ -12,7 +12,7 @@ shiftMeeting.checkUniform = async function (userInput, resultCallback) {
       site_name: userInput.site_name,
     })
     .then((data) => {
-      resultCallback(null, data);
+      resultCallback(null, data, true);
     })
     .catch((error) => {
       resultCallback(error, null);
@@ -55,7 +55,7 @@ shiftMeeting.listUser = async function (userInput, query, resultCallback) {
     ])
 
     .then((data) => {
-      resultCallback(null, data);
+      resultCallback(null, data, true);
     })
     .catch((error) => {
       resultCallback(error, null);
