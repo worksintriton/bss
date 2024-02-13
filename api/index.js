@@ -8,6 +8,7 @@ var express = require("express"),
   cors = require("cors");
 const fileUpload = require("express-fileupload");
 const { shiftMeeting } = require("../services");
+const { verifyToken } = require("../utils/jwt");
 
 var app = express(),
   router = express.Router();
@@ -59,7 +60,10 @@ app.options("*", cors());
 
 /*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
-addRoute("/authentication/bsslogout", "POST", [middleware.bsslogout]);
+addRoute("/authentication/bsslogout", "POST", [
+  verifyToken,
+  middleware.bsslogout,
+]);
 
 /*Add Employee*/
 
@@ -463,6 +467,8 @@ addRoute("/issue/clearissue", "POST", [middleware.clearissue]);
 addRoute("/upload/file", "POST", [middleware.uploadingfile]);
 
 addRoute("/upload/list", "POST", [middleware.listUploadedFile]);
+
+addRoute("/upload/delete", "POST", middleware.deleteUploadedFile);
 
 addRoute("/employee_tracking/fetchemployees", "GET", [
   middleware.fetchemployees,

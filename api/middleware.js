@@ -4248,6 +4248,16 @@ function listUploadedFile(req, res, next) {
   ]);
 }
 
+function deleteUploadedFile(req, res, next) {
+  try {
+    const { path } = req.body;
+    fs.unlinkSync(path);
+    console.log("File Deleted Successfully");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function advcancebulk(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
@@ -4366,7 +4376,7 @@ function newclientsite(req, res, next) {
 function sitelist(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
-      services.user.sitelists(req.body,req.query, function (err, result) {
+      services.user.sitelists(req.body, req.query, function (err, result) {
         if (err) {
           req.log.error(
             {
@@ -11138,6 +11148,7 @@ exports.fetch_payment_entry = fetch_payment_entry;
 exports.uploadingfile = uploadingfile;
 
 exports.listUploadedFile = listUploadedFile;
+exports.deleteUploadedFile = deleteUploadedFile;
 
 exports.fetchunit_number1 = fetchunit_number1;
 

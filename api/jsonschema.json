@@ -6051,6 +6051,26 @@
     }
   },
 
+  "/upload/delete": {
+    "POST": {
+      "body": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [],
+        "errorMessage": {
+          "additionalProperties": "should not have additional properties",
+          "required": {},
+          "properties": {}
+        }
+      }
+    }
+  },
+
   "/upload/list": {
     "POST": {
       "body": {
