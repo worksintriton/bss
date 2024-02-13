@@ -201,7 +201,7 @@ attendance.History = async function (userInput, resultCallback) {
     {
       employee_id: userInput.employee_id,
       date: userInput.date,
-      site_id: userInput.site_id,
+      site_id: new objectId(userInput.site_id),
     },
     { time: 1, date: 1, check: 1, employee_id: 1 }
   );
