@@ -12,6 +12,7 @@ const attendanceSchema = new mongoose.Schema({
   lon: { type: String },
   supervisor_id: { type: objectId },
   site_id: { type: objectId },
+  remark: { type: String }
 });
 attendanceSchema.plugin(timestamps);
 mongoose.model("attendance", attendanceSchema);
