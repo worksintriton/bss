@@ -7,6 +7,8 @@ var _ = require("lodash"),
 function attendance() {}
 
 const model = require("../model/index");
+const Schema = require("mongoose");
+const objectId = Schema.Types.ObjectId;
 // attendance.MarkAttendancemob = async function (userInput, resultCallback) {
 //   await model.attendance
 //     .find({ employee_id: userInput.id, check: "Out", date: new Date(userInput.date) })
@@ -147,6 +149,16 @@ attendance.Allstatusweb = async function (userInput, resultCallback) {
   const record = [];
 
   const getEmployeeIds = await model.attendance.aggregate([
+    {
+      $match: {
+        site_id: new objectId(userInput.site_id),
+      },
+    },
+    {
+      $match: {
+        date: new Date(userInput.date),
+      },
+    },
     {
       $group: {
         _id: "$employee_id",
