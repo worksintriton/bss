@@ -14,16 +14,28 @@ async function user() {}
 
 user.createusers = async function (userInput, resultCallback) {
   await model.usermanage
-    .findOne({ Email_id: userInput.Email_id })
+    .findOne({
+      Email_id: userInput.Email_id,
+    })
 
     .then(async (data) => {
       if (data?.Email_id.length) {
-        //eruthuchuna
         var string = {
           message: "This Email_id already exits!",
           status: "failed",
         };
         resultCallback(null, string);
+      } else if (data?.employee_id.length || !data?.employee_id.length) {
+        const empNumberExist = await model.usermanage.findOne({
+          Empolyee_id: userInput.Empolyee_id,
+        });
+        if (empNumberExist) {
+          var string = {
+            message: "This Employee Id is already exits!",
+            status: "failed",
+          };
+          resultCallback(null, string);
+        }
       } else {
         console.log("2");
         await model.usermanage
