@@ -7,6 +7,7 @@ var _ = require("lodash"),
 function login_page() {}
 
 const model = require("../model/index");
+const { generateToken } = require("../utils/jwt");
 
 login_page.bsslogincheck = async function (userInput, resultCallback) {
   await model.usermanage
@@ -14,12 +15,14 @@ login_page.bsslogincheck = async function (userInput, resultCallback) {
       Phone_number: userInput.Phone_number,
       Password: userInput.password,
     })
-    .then((data) => {
-      console.log(data.length);
-      if (data.length == 0) {
-        var string = "Invalid Account";
+    .then(async (data) => {
+      if (data?.length == 0 || data == null) {
+        var string = "Invalid phone number or Password";
         resultCallback(null, string);
       } else {
+        const token = await generateToken(data);
+        console.log(data.length);
+        data["_doc"].token = token;
         resultCallback(null, data);
       }
     })
