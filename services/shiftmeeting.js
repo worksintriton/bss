@@ -33,9 +33,9 @@ shiftMeeting.listUser = async function (userInput, query, resultCallback) {
   let filter;
 
   if (site_id) {
-    filter = { site_id: site_id };
+    filter = { site_id: site_id, isActive: true };
   } else {
-    filter = {};
+    filter = { isActive: true };
   }
 
   await model.shiftmeeting

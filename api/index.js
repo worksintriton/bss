@@ -60,10 +60,7 @@ app.options("*", cors());
 
 /*BSS Web Portal*/
 addRoute("/authentication/bsslogin", "POST", [middleware.bsslogin]);
-addRoute("/authentication/bsslogout", "POST", [
-  verifyToken,
-  middleware.bsslogout,
-]);
+addRoute("/authentication/bsslogout", "POST", [middleware.bsslogout]);
 
 /*Add Employee*/
 
@@ -470,9 +467,7 @@ addRoute("/upload/list", "POST", [middleware.listUploadedFile]);
 
 addRoute("/upload/delete", "POST", middleware.deleteUploadedFile);
 
-addRoute("/employee_tracking/fetchemployees", "GET", [
-  middleware.fetchemployees,
-]);
+addRoute("/employee_tracking/create", "POST", [middleware.fetchemployees]);
 addRoute("/employee_tracking/fetchTrackinglist", "POST", [
   middleware.fetchTrackinglist,
 ]);

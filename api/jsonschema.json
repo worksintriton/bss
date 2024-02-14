@@ -1899,17 +1899,33 @@
     }
   },
 
-  "/employee_tracking/fetchemployees": {
-    "GET": {
+  "/employee_tracking/create": {
+    "POST": {
       "body": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "Employee_id": { "type": "string" },
+          "Lat": { "type": "String" },
+          "Long": { "type": "String" },
+          "updated_at": { "type": "Date" },
+          "Name": { "type": "String" }
+        },
         "additionalProperties": false,
-        "required": [],
+        "required": ["Lat", "Long", "Employee_id", "Name"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
-          "required": {},
-          "properties": {}
+          "required": {
+            "Employee_id": "should have required property id",
+            "Lat": "should have required property Lat",
+            "Long": "should have required property Long",
+            "Name": "should have required property Name"
+          },
+          "properties": {
+            "Employee_id": "Employee_id must be string",
+            "Lat": "Lat must be string",
+            "Long": "Long must be string",
+            "Name": "Name must be string"
+          }
         }
       }
     }
