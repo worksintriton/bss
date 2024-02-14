@@ -2555,6 +2555,10 @@
           },
           "Add_by": {
             "type": "string"
+          },
+
+          "isactive": {
+            "type": "boolean"
           }
         },
         "additionalProperties": true,

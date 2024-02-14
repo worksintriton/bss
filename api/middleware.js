@@ -250,7 +250,7 @@ function updateqr(req, res, next) {
 function addusers(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
-      services.user.createusers(req.body, function (err, result) {
+      services.user.createusers(req.body.adduser, function (err, result) {
         if (err) {
           req.log.error(
             {
@@ -615,7 +615,7 @@ function resigned(req, res, next) {
 function userlist(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
-      services.user.userlists(req.body, function (err, result) {
+      services.user.userlists(req.body, req.query, function (err, result) {
         if (err) {
           req.log.error(
             {

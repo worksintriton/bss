@@ -11,6 +11,8 @@ shiftMeeting.checkUniform = async function (userInput, resultCallback) {
       image: userInput.image,
       site_id: userInput.site_id,
       site_name: userInput.site_name,
+      lat: userInput.lat,
+      lon: userInput.lon,
     })
     .then((data) => {
       resultCallback(null, data, true);

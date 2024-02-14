@@ -21,44 +21,44 @@ user.createusers = async function (userInput, resultCallback) {
     .then(async (data) => {
       if (data?.Email_id.length) {
         var string = {
-          message: "This Email_id already exits!",
+          message: "This Email_id or already exits!",
           status: "failed",
         };
         resultCallback(null, string);
-      } else if (data?.employee_id.length || !data?.employee_id.length) {
-        const empNumberExist = await model.usermanage.findOne({
+      } else if (!data?.length) {
+        const empNoExist = await model.usermanage.findOne({
           Empolyee_id: userInput.Empolyee_id,
         });
-        if (empNumberExist) {
-          var string = {
+        if (empNoExist) {
+          const string = {
             message: "This Employee Id is already exits!",
             status: "failed",
           };
           resultCallback(null, string);
-        }
-      } else {
-        console.log("2");
-        await model.usermanage
-          .create({
-            Name: userInput.Name,
-            Designation: userInput.Designation,
-            Level: userInput.Level,
-            Phone_number: userInput.Phone_number,
-            Email_id: userInput.Email_id,
-            Password: userInput.Password,
-            Add_by: userInput.Add_by,
-            Empolyee_id: userInput.Empolyee_id,
-          })
+        } else {
+          console.log("2");
+          await model.usermanage
+            .create({
+              Name: userInput.Name,
+              Designation: userInput.Designation,
+              Level: userInput.Level,
+              Phone_number: userInput.Phone_number,
+              Email_id: userInput.Email_id,
+              Password: userInput.Password,
+              Add_by: userInput.Add_by,
+              Empolyee_id: userInput.Empolyee_id,
+            })
 
-          .then(async (data) => {
-            const userQrCode = await qrcodeGenerator(data.Empolyee_id);
-            await model.usermanage.findOneAndUpdate(
-              { _id: data._id },
-              { qrcode: userQrCode }
-            );
-            console.log("1");
-            resultCallback(null, data);
-          });
+            .then(async (data) => {
+              const userQrCode = await qrcodeGenerator(data.Empolyee_id);
+              await model.usermanage.findOneAndUpdate(
+                { _id: data._id },
+                { qrcode: userQrCode }
+              );
+              console.log("1");
+              resultCallback(null, data);
+            });
+        }
       }
     })
     .catch((error) => {
@@ -586,9 +586,33 @@ user.uniformundelivered = async function (userInput, resultCallback) {
 };
 
 //userList//
-user.userlists = async function (userInput, resultCallback) {
+user.userlists = async function (userInput, query, resultCallback) {
+  const { searchKey, skip, limit, sortkey, sortOrder } = query;
+
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+  const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
   await model.usermanage
-    .find({})
+    .aggregate([
+      { $match: { isActive: true } },
+      {
+        $match: searchKey
+          ? {
+              $or: [{}],
+            }
+          : {},
+      },
+
+      {
+        $sort: sort,
+      },
+      {
+        $facet: {
+          pagination: [{ $count: "totalCount" }],
+          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+        },
+      },
+    ])
 
     .then((data) => {
       resultCallback(null, data);

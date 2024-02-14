@@ -8,6 +8,9 @@ const shiftMeetingSchema = new mongoose.Schema({
   site_id: { type: objectId },
   site_name: { type: String },
   date: { type: Date, default: new Date() },
+  lat: { type: String },
+  lon: { type: String },
+  isActive: { type: Boolean, default: true },
 });
 shiftMeetingSchema.plugin(timestamps);
 mongoose.model("shift_meeting", shiftMeetingSchema);
