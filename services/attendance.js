@@ -94,6 +94,7 @@ attendance.MarkAttendancemob = async function (userInput, resultCallback) {
   await model.attendance
     .create({
       employee_id: userInput.employee_id,
+      name: userInput.name,
       date: userInput.date,
       check: userInput.check,
       time: userInput.time,
@@ -181,11 +182,12 @@ attendance.Allstatusweb = async function (userInput, resultCallback) {
     const groupedRecords = {};
 
     records.forEach((record) => {
-      const { employee_id, time, check } = record;
+      const { employee_id, time, check, name } = record;
       if (!groupedRecords[employee_id]) {
-        groupedRecords[employee_id] = [{ [check]: time }];
+        groupedRecords[employee_id] = [{ [check]: time, ["name"]: name }];
       } else {
         groupedRecords[employee_id][0][check] = time;
+        groupedRecords[employee_id][0]["name"] = name;
       }
     });
 
