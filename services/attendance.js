@@ -172,7 +172,7 @@ attendance.Allstatusweb = async function (userInput, resultCallback) {
     });
 
     record.push(data[0]);
-    if (data.length > 1) {
+    if (data.length > 1 && data[data.length - 1].check !== "In") {
       record.push(data[data.length - 1]);
     }
   }

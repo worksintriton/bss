@@ -12,6 +12,7 @@ const userManageSchema = new mongoose.Schema({
   Add_by: { type: String },
   profile_image: { type: String },
   qrcode: { type: String },
+  isActive: { type: Boolean, default: true },
 });
 userManageSchema.plugin(timestamps);
 mongoose.model("usermanage", userManageSchema);

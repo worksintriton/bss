@@ -4250,9 +4250,12 @@ function listUploadedFile(req, res, next) {
 
 function deleteUploadedFile(req, res, next) {
   try {
-    const { path } = req.body;
-    fs.unlinkSync(path);
-    console.log("File Deleted Successfully");
+    const { filePath } = req.body;
+    const delPath = path.join(__dirname, "../www");
+    fs.unlinkSync(`${delPath}${filePath}`);
+    return res.json({
+      message: "File Deleted Successfully",
+    });
   } catch (error) {
     console.log(error);
   }
