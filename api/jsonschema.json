@@ -10820,17 +10820,27 @@
           },
           "site_name": {
             "type": "string"
+          },
+          "lat": {
+            "type": "string"
+          },
+          "lon": {
+            "type": "string"
           }
         },
         "additionalProperties": true,
-        "required": ["Empolyee_id"],
+        "required": ["Empolyee_id", "lat", "lon"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
-            "employee_id": "should have required property client_id"
+            "employee_id": "should have required property client_id",
+            "lat": "should have required property lat",
+            "lon": "should have required property lon"
           },
           "properties": {
-            "employee_id": "userId must be string"
+            "employee_id": "userId must be string",
+            "lat": "userId must be string",
+            "lon": "userId must be string"
           }
         }
       }
