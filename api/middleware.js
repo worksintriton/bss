@@ -250,7 +250,7 @@ function updateqr(req, res, next) {
 function addusers(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
-      services.user.createusers(req.body.adduser, function (err, result) {
+      services.user.createusers(req.body, function (err, result) {
         if (err) {
           req.log.error(
             {
