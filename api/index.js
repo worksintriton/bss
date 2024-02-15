@@ -467,7 +467,9 @@ addRoute("/upload/list", "POST", [middleware.listUploadedFile]);
 
 addRoute("/upload/delete", "POST", middleware.deleteUploadedFile);
 
-addRoute("/employee_tracking/create", "POST", [middleware.fetchemployees]);
+addRoute("/employee_tracking/create", "POST", [
+  middleware.fetchemployeeLocation,
+]);
 addRoute("/employee_tracking/fetchTrackinglist", "POST", [
   middleware.fetchTrackinglist,
 ]);

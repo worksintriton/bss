@@ -396,24 +396,15 @@ point_tracking.employee_fetchpointsmobile = async function (
     });
 };
 
-point_tracking.fetchemployeess = async function (userInput, resultCallback) {
-  await model.employeedetails
-    .aggregate([
-      {
-        $lookup: {
-          from: "employee_track",
-          localField: "_id",
-          foreignField: "Employee_id",
-          as: "data",
-        },
-      },
-      {
-        $unwind: {
-          path: "$data",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-    ])
+point_tracking.createTrackPoint = async function (userInput, resultCallback) {
+  await model.employeetrack
+    .create({
+      Employee_id: userInput.Employee_id,
+      Lat: userInput.Lat,
+      Long: userInput.Long,
+      updated_at: userInput.updated_at,
+      Name: userInput.Name,
+    })
     .then((data) => {
       resultCallback(null, data);
     })
