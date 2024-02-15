@@ -3219,10 +3219,10 @@ function MarkAttendance(req, res, next) {
   ]);
 }
 
-function dailystatus(req, res, next) {
+function getcheckin(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
-      services.attendance.dailystatusweb(req.body, function (err, result) {
+      services.attendance.getcheckinlist(req.body, function (err, result) {
         if (err) {
           req.log.error(
             {
@@ -10914,7 +10914,7 @@ exports.deleteallqr = deleteallqr;
 exports.MarkAttendance = MarkAttendance;
 exports.Weeklystatus = Weeklystatus;
 exports.Allstatus = Allstatus;
-exports.dailystatus = dailystatus;
+exports.getcheckin = getcheckin;
 exports.AllHistory = AllHistory;
 
 /*forgot*/

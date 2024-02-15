@@ -396,8 +396,8 @@ addRoute("/authentication/deleteallqr", "POST", [middleware.deleteallqr]);
 
 /*Attendance mark */
 addRoute("/Attendance/MarkAttendance", "POST", [middleware.MarkAttendance]);
-addRoute("/Attendance/dailystatus", "POST", [middleware.dailystatus]);
-addRoute("/Attendance/Weeklystatus", "POST", [middleware.Weeklystatus]);
+addRoute("/Attendance/checkin", "POST", [middleware.getcheckin]);
+addRoute("/Attendance/adminlist", "POST", [middleware.Weeklystatus]);
 addRoute("/Attendance/Allstatus", "POST", [middleware.Allstatus]);
 addRoute("/Attendance/Allhistory", "POST", [middleware.AllHistory]);
 

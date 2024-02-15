@@ -2388,7 +2388,7 @@
       }
     }
   },
-  "/Attendance/Weeklystatus": {
+  "/Attendance/adminlist": {
     "POST": {
       "body": {
         "type": "object",
@@ -2463,24 +2463,24 @@
       }
     }
   },
-  "/Attendance/dailystatus": {
+  "/Attendance/checkin": {
     "POST": {
       "body": {
         "type": "object",
         "properties": {
-          "date": {
+          "check": {
             "type": "string"
           }
         },
         "additionalProperties": true,
-        "required": [],
+        "required": ["check"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
-            "date": "should have required property userId"
+            "check": "should have required property userId"
           },
           "properties": {
-            "date": "userId must be string"
+            "check": "userId must be string"
           }
         }
       }

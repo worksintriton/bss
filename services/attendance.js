@@ -212,21 +212,35 @@ attendance.History = async function (userInput, resultCallback) {
   resultCallback(null, data);
 };
 
-attendance.dailystatusweb = async function (userInput, resultCallback) {
-  await model.attendance
-    .find(
-      { employee_id: userInput.employee_id },
-      {},
-      { sort: { createdAt: -1 } }
-    )
-    .limit(1)
-    .then((data) => {
-      resultCallback(null, data);
-    })
-    .catch((error) => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
-    });
+attendance.getcheckinlist = async function (userInput, resultCallback) {
+  try {
+    const checkInData = [];
+    const checkOutData = [];
+    const data = [];
+    const empId = await model.usermanage.find({}, { Empolyee_id: 1 });
+
+    for (const el of empId) {
+      const attendanceLastRecord = await model.attendance
+        .find({ employee_id: el.Empolyee_id }, {}, { sort: { createdAt: -1 } })
+        .limit(1);
+      if (attendanceLastRecord.length) {
+        data.push(attendanceLastRecord[0]["_doc"]);
+      } else {
+        checkOutData.push(el);
+      }
+    }
+    for (const iterator of data) {
+      if (iterator.check === "In") {
+        checkInData.push(iterator);
+      } else {
+        checkOutData.push(iterator);
+      }
+    }
+    resultCallback(null, {checkInData, checkOutData});
+  } catch (error) {
+    resultCallback(error, null);
+    console.log("ERROR:", error);
+  }
 };
 
 attendance.dailyreports = async function (userInput, resultCallback) {
