@@ -52,6 +52,40 @@ app.use(bodyParser.json());
 
 app.use("/", express.static(path.join(__dirname, "www")));
 
+// Geo-location
+const apiKey = "AIzaSyCQ4r9BQzgAXLZHaxL7u1OZxAOILRjoSOE";
+
+app.post("/search_places", async (req, res) => {
+  console.log("req.body.query", req.body);
+  const query = req.body.query;
+  const apiUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${query}&key=${apiKey}`;
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
+// select place on geo location
+
+app.post("/select_places", async (req, res) => {
+  console.log("req.body.query", req.body);
+  const query = req.body.query;
+  const apiUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${query}&key=${apiKey}`;
+  // const api = ''
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
 app.use(api.router);
 
 function runServer() {

@@ -6199,16 +6199,10 @@
           "client_id": {
             "type": "string"
           },
-          "billing_address": {
-            "type": "string"
-          },
-          "sitelogin": {
-            "type": "string"
-          },
-          "sitepassword": {
-            "type": "string"
-          },
           "title": {
+            "type": "string"
+          },
+          "billing_address": {
             "type": "string"
           },
           "description": {
@@ -6220,35 +6214,41 @@
           "company_name": {
             "type": "string"
           },
-          "contactperson1": {
+          "contactDetails": {
+            "type": "array"
+          },
+          "lat1": {
             "type": "string"
           },
-          "contactnumber1": {
+          "lat2": {
             "type": "string"
           },
-          "contactemail1": {
+          "lat3": {
             "type": "string"
           },
-          "contactperson2": {
+          "lat4": {
             "type": "string"
           },
-          "contactnumber2": {
+          "lat5": {
             "type": "string"
           },
-          "contactemail2": {
+          "lon1": {
             "type": "string"
           },
-          "contactperson3": {
+          "lon2": {
             "type": "string"
           },
-          "contactnumber3": {
+          "lon3": {
             "type": "string"
           },
-          "contactemail3": {
+          "lon4": {
             "type": "string"
           },
-          "status": {
+          "lon5": {
             "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
           }
         },
         "additionalProperties": true,

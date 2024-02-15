@@ -13,6 +13,7 @@ shiftMeeting.checkUniform = async function (userInput, resultCallback) {
       site_name: userInput.site_name,
       lat: userInput.lat,
       lon: userInput.lon,
+      date: userInput.date,
     })
     .then((data) => {
       resultCallback(null, data, true);

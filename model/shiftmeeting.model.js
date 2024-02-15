@@ -7,7 +7,7 @@ const shiftMeetingSchema = new mongoose.Schema({
   image: { type: String },
   site_id: { type: objectId },
   site_name: { type: String },
-  date: { type: Date, default: new Date() },
+  date: { type: Date },
   lat: { type: String },
   lon: { type: String },
   isActive: { type: Boolean, default: true },
