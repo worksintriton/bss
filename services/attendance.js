@@ -169,6 +169,7 @@ attendance.Allstatusweb = async function (userInput, resultCallback) {
   for (const iterator of getEmployeeIds) {
     const data = await model.attendance.find({
       employee_id: iterator._id,
+      date: new Date(userInput.date),
     });
 
     record.push(data[0]);

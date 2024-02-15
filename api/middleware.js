@@ -4255,6 +4255,8 @@ function deleteUploadedFile(req, res, next) {
     fs.unlinkSync(`${delPath}${filePath}`);
     return res.json({
       message: "File Deleted Successfully",
+      status: "Success",
+      code: 200,
     });
   } catch (error) {
     console.log(error);
