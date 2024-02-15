@@ -4252,6 +4252,13 @@ function deleteUploadedFile(req, res, next) {
   try {
     const { filePath } = req.body;
     const delPath = path.join(__dirname, "../www");
+    if (!fs.existsSync(`${delPath}${filePath}`)) {
+      return res.json({
+        message: "Path Not Exist",
+        status: "Failure",
+        code: 404,
+      });
+    }
     fs.unlinkSync(`${delPath}${filePath}`);
     return res.json({
       message: "File Deleted Successfully",
