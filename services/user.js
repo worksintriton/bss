@@ -598,7 +598,7 @@ user.userlists = async function (userInput, query, resultCallback) {
       {
         $match: searchKey
           ? {
-              $or: [{}],
+              $or: [{ Name: searchRegex }],
             }
           : {},
       },
