@@ -110,14 +110,44 @@ attendance.MarkAttendancemob = async function (userInput, resultCallback) {
     });
 };
 
-attendance.Weeklystatusweb = async function (userInput, resultCallback) {
+attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
+  const { searchKey, skip, limit, sortkey, sortOrder } = query;
+
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+  const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+
   await model.attendance
-    .find({
-      date: {
-        $gte: new Date(userInput.start_date),
-        $lte: new Date(userInput.end_date),
+    .aggregate([
+      {
+        $match: userInput.start_date
+          ? {
+              date: {
+                $gte: new Date(userInput.start_date),
+                $lte: new Date(userInput.end_date),
+              },
+            }
+          : {},
       },
-    })
+
+      {
+        $match: searchKey
+          ? {
+              $or: [{}],
+            }
+          : {},
+      },
+
+      {
+        $sort: sort,
+      },
+      {
+        $facet: {
+          pagination: [{ $count: "totalCount" }],
+          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+        },
+      },
+    ])
 
     .then((data) => {
       resultCallback(null, data);
@@ -236,7 +266,7 @@ attendance.getcheckinlist = async function (userInput, resultCallback) {
         checkOutData.push(iterator);
       }
     }
-    resultCallback(null, {checkInData, checkOutData});
+    resultCallback(null, { checkInData, checkOutData });
   } catch (error) {
     resultCallback(error, null);
     console.log("ERROR:", error);
