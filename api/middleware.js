@@ -3251,18 +3251,22 @@ function getcheckin(req, res, next) {
 function Weeklystatus(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
-      services.attendance.Weeklystatusweb(req.body, function (err, result) {
-        if (err) {
-          req.log.error(
-            {
-              error: err,
-            },
-            "Error while getting available users by mobiles"
-          );
-          return res.json(utils.errors["500"]);
+      services.attendance.Weeklystatusweb(
+        req.body,
+        req.query,
+        function (err, result) {
+          if (err) {
+            req.log.error(
+              {
+                error: err,
+              },
+              "Error while getting available users by mobiles"
+            );
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, result);
         }
-        waterfallCallback(null, result);
-      });
+      );
     },
     function (mydata, waterfallCallback) {
       return res.json(

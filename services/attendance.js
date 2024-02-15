@@ -117,45 +117,38 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
 
   const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
 
-  await model.attendance
-    .aggregate([
-      {
-        $match: userInput.start_date
-          ? {
-              date: {
-                $gte: new Date(userInput.start_date),
-                $lte: new Date(userInput.end_date),
-              },
-            }
-          : {},
-      },
+  const data = await model.attendance.aggregate([
+    {
+      $match: userInput.start_date
+        ? {
+            date: {
+              $gte: new Date(userInput.start_date),
+              $lte: new Date(userInput.end_date),
+            },
+          }
+        : {},
+    },
 
-      {
-        $match: searchKey
-          ? {
-              $or: [{}],
-            }
-          : {},
-      },
+    {
+      $match: searchKey
+        ? {
+            $or: [{}],
+          }
+        : {},
+    },
 
-      {
-        $sort: sort,
+    {
+      $sort: sort,
+    },
+    {
+      $facet: {
+        pagination: [{ $count: "totalCount" }],
+        data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
       },
-      {
-        $facet: {
-          pagination: [{ $count: "totalCount" }],
-          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
-        },
-      },
-    ])
+    },
+  ]);
 
-    .then((data) => {
-      resultCallback(null, data);
-    })
-    .catch((error) => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
-    });
+  resultCallback(null, data);
 };
 
 attendance.Weeklyreports = async function (userInput, resultCallback) {
