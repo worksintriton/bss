@@ -1287,7 +1287,7 @@ user.newclientsites = async function (userInput, resultCallback) {
       client_id: userInput.client_id,
       title: userInput.title,
       description: userInput.description,
-      address: userInput.address,
+      address: userInput.fullAddress,
       lat1: userInput.result.points[0].lat,
       lon1: userInput.result.points[0].lng,
       lat2: userInput.result.points[1].lat,
