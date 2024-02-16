@@ -57,13 +57,15 @@ function bsslogin(req, res, next) {
     function (waterfallCallback) {
       services.loginpage.bsslogincheck(req.body, function (err, result) {
         if (err) {
-          req.log.error(
-            {
-              error: err,
-            },
-            "Error while getting available users by mobiles"
-          );
-          return res.json(utils.errors["500"]);
+          // req.log.error(
+          //   {
+          //     error: err,
+          //   },
+          //   "Error while getting available users by mobiles"
+          // );
+          return res
+            .status(400)
+            .json({ data: {}, message: err, status: "Failure", code: 400 });
         }
         waterfallCallback(null, result);
       });

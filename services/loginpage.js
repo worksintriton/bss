@@ -18,7 +18,8 @@ login_page.bsslogincheck = async function (userInput, resultCallback) {
     .then(async (data) => {
       if (data?.length == 0 || data == null) {
         var string = "Invalid phone number or Password";
-        resultCallback(null, string);
+        // resultCallback(null, string);
+        throw new Error(string);
       } else {
         const token = await generateToken(data);
         console.log(data.length);
@@ -27,8 +28,7 @@ login_page.bsslogincheck = async function (userInput, resultCallback) {
       }
     })
     .catch((error) => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
+      resultCallback(error.message, null);
     });
 };
 
