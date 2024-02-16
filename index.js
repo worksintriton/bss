@@ -68,6 +68,23 @@ app.post("/search_places", async (req, res) => {
   }
 });
 
+//nearby place
+
+app.post("/search_nearby_places", async (req, res) => {
+  const { latitude, longitude, radius, type } = req.body;
+  // Construct the API URL
+  const apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${apiKey}`;
+  try {
+    // Make a request to the Google Places API
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
 // select place on geo location
 
 app.post("/select_places", async (req, res) => {
