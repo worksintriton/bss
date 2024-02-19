@@ -2418,11 +2418,7 @@
     "POST": {
       "body": {
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          }
-        },
+        "properties": {},
         "additionalProperties": true,
         "required": [],
         "errorMessage": {
@@ -2468,19 +2464,19 @@
       "body": {
         "type": "object",
         "properties": {
-          "check": {
+          "site_id": {
             "type": "string"
           }
         },
         "additionalProperties": true,
-        "required": ["check"],
+        "required": ["site_id"],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
           "required": {
-            "check": "should have required property userId"
+            "site_id": "should have required property site_id"
           },
           "properties": {
-            "check": "userId must be string"
+            "site_id": "userId must be site_id"
           }
         }
       }
