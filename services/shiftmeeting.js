@@ -14,6 +14,7 @@ shiftMeeting.checkUniform = async function (userInput, resultCallback) {
       lat: userInput.lat,
       lon: userInput.lon,
       date: userInput.date,
+      submittedBy: userInput.submittedBy,
     })
     .then((data) => {
       resultCallback(null, data, true);
@@ -25,7 +26,7 @@ shiftMeeting.checkUniform = async function (userInput, resultCallback) {
 };
 
 shiftMeeting.listUser = async function (userInput, query, resultCallback) {
-  const { searchKey, skip, limit, sortkey, sortOrder, site_id } = query;
+  const { searchKey, skip, limit, sortkey, sortOrder, siteId } = query;
 
   const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
 
@@ -33,8 +34,23 @@ shiftMeeting.listUser = async function (userInput, query, resultCallback) {
 
   let filter;
 
-  if (site_id) {
-    filter = { site_id: site_id, isActive: true };
+  const endOfDay = new Date(userInput.date);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  if (siteId) {
+    filter = { site_id: siteId, isActive: true };
+  } else if (userInput.date) {
+    filter = {
+      createdAt: {
+        $gte: new Date(userInput.date),
+        $lte: endOfDay,
+      },
+      isActive: true,
+    };
+  } else if (searchRegex) {
+    filter = {
+      $or: [{ site_name: searchRegex }],
+    };
   } else {
     filter = { isActive: true };
   }
