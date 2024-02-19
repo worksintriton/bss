@@ -11,6 +11,7 @@ var stripWhitespace = require("strip-whitespace");
 const https = require("https");
 var middleware = require("./api/middleware");
 var cors = require("cors");
+const model = require("./model/index");
 require("./db/database");
 require("./model/index");
 var app = express();
@@ -99,6 +100,37 @@ app.post("/select_places", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "An error occurred" });
   }
+});
+
+app.get("/list", async (req, res) => {
+  const record = await model.clientsite.find({});
+  return res.json({ data: record });
+});
+
+app.get("/filterduserlist", async (req, res) => {
+  const empIds = [];
+  const record = await model.mapusers.find({ status: "open" }, { Emp_id: 1 });
+  for (const iterator of record) {
+    empIds.push(iterator.Emp_id);
+  }
+  const employees = await model.usermanage.find({
+    Empolyee_id: { $nin: empIds },
+  });
+  return res.json({ data: employees, status: "Success", code: 200 });
+});
+
+app.post("/updateuserstatus", async (req, res) => {
+  const record = await model.mapusers.findOneAndUpdate(
+    { Emp_id: req.body.Emp_id },
+    { $set: { status: req.body.status } }
+  );
+
+  return res.json({
+    data: {},
+    message: "updated successfully",
+    status: "Success",
+    code: 200,
+  });
 });
 
 app.use(api.router);
