@@ -211,7 +211,11 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
         emp_name: groupedRecords[key].at(0).name,
         status: groupedRecords[key].at(0).status,
         checkIn: groupedRecords[key].at(0).time,
+        checkInlat: groupedRecords[key].at(0).lat,
+        checkInlon: groupedRecords[key].at(0).lon,
         checkOut: groupedRecords[key].at(-1).time,
+        checkOutlat: groupedRecords[key].at(-1).lat,
+        checkOutlon: groupedRecords[key].at(-1).lon,
         date: groupedRecords[key].at(0).date,
       });
     }
