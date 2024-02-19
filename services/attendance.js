@@ -171,7 +171,7 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
   } else if (userInput.date) {
     filter = {
       $match: {
-        date: new Date(date),
+        date: new Date(userInput.date),
       },
     };
   } else {
@@ -213,6 +213,7 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
         checkIn: groupedRecords[key].at(0).time,
         checkInlat: groupedRecords[key].at(0).lat,
         checkInlon: groupedRecords[key].at(0).lon,
+        emp_id: groupedRecords[key].at(0).employee_id,
         checkOut: groupedRecords[key].at(-1).time,
         checkOutlat: groupedRecords[key].at(-1).lat,
         checkOutlon: groupedRecords[key].at(-1).lon,
