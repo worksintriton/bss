@@ -336,7 +336,10 @@ attendance.getcheckinlist = async function (userInput, resultCallback) {
     const checkInData = [];
     const checkOutData = [];
     const data = [];
-    const empId = await model.usermanage.find({}, { Empolyee_id: 1 });
+    const empId = await model.usermanage.find(
+      { site_id: userInput.site_id },
+      { Empolyee_id: 1 }
+    );
 
     for (const el of empId) {
       const attendanceLastRecord = await model.attendance
