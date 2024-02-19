@@ -239,11 +239,15 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
     sortOrder,
     PointTrackMaprefid,
     site_id,
+    date,
   } = query;
 
   const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
 
   const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+
+  const endOfDay = new Date(date);
+  endOfDay.setHours(23, 59, 59, 999);
 
   await model.pointtrackmapspot
     .aggregate([
@@ -258,6 +262,13 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
         $match: PointTrackMaprefid
           ? {
               PointTrackMaprefid: new objectId(PointTrackMaprefid),
+            }
+          : {},
+      },
+      {
+        $match: date
+          ? {
+              createdAt: { $gte: new Date(date), $lte: endOfDay },
             }
           : {},
       },
