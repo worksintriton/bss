@@ -345,9 +345,58 @@ point_tracking.pointsupdateweb = async function (userInput, resultCallback) {
     });
 };
 
-point_tracking.pointslistweb = async function (userInput, resultCallback) {
+point_tracking.pointslistweb = async function (
+  userInput,
+  query,
+  resultCallback
+) {
+  const { searchKey, skip, limit, sortkey, sortOrder } = query;
+
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+  const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+
+  const startDate = new Date(userInput.date);
+  // currentDate.setHours(0, 0, 0, 0);
+
+  const endDate = new Date(userInput.date);
+  endDate.setHours(23, 59, 59, 999);
+
   await model.pointtrackmap
-    .find({ site_id: userInput.site_id })
+    .aggregate([
+      {
+        $match: userInput.site_id
+          ? {
+              site_id: new objectId(userInput.site_id),
+            }
+          : {},
+      },
+      {
+        $match: userInput.date
+          ? {
+              createdAt: { $gte: startDate, $lte: endDate },
+            }
+          : {},
+      },
+
+      {
+        $match: searchKey
+          ? {
+              $or: [{}],
+            }
+          : {},
+      },
+
+      {
+        $sort: sort,
+      },
+      {
+        $facet: {
+          pagination: [{ $count: "totalCount" }],
+          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+        },
+      },
+    ])
 
     .then((data) => {
       resultCallback(null, data);

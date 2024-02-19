@@ -3330,16 +3330,12 @@
             "type": "string"
           }
         },
-        "additionalProperties": false,
-        "required": ["site_id"],
+        "additionalProperties": true,
+        "required": [],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
-          "required": {
-            "site_id": "should have required property LoginKey"
-          },
-          "properties": {
-            "site_id": "userId must be string"
-          }
+          "required": {},
+          "properties": {}
         }
       }
     }
