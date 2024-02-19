@@ -3660,7 +3660,7 @@
             "type": "string"
           }
         },
-        "additionalProperties": false,
+        "additionalProperties": true,
         "required": [],
         "errorMessage": {
           "additionalProperties": "should not have additional properties",
@@ -10642,11 +10642,6 @@
           "required": {},
           "properties": {}
         }
-      },
-      "query": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": true
       }
     }
   }

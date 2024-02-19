@@ -246,7 +246,7 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
 
   const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
 
-  const endOfDay = new Date(date);
+  const endOfDay = new Date(userInput.date);
   endOfDay.setHours(23, 59, 59, 999);
 
   await model.pointtrackmapspot
@@ -254,21 +254,21 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
       {
         $match: site_id
           ? {
-              site_id: new objectId(site_id),
+              site_id: new objectId(userInput.site_id),
             }
           : {},
       },
       {
         $match: PointTrackMaprefid
           ? {
-              PointTrackMaprefid: new objectId(PointTrackMaprefid),
+              PointTrackMaprefid: new objectId(userInput.PointTrackMaprefid),
             }
           : {},
       },
       {
         $match: date
           ? {
-              createdAt: { $gte: new Date(date), $lte: endOfDay },
+              createdAt: { $gte: new Date(userInput.date), $lte: endOfDay },
             }
           : {},
       },
