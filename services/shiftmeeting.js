@@ -37,9 +37,9 @@ shiftMeeting.listUser = async function (userInput, query, resultCallback) {
   const endOfDay = new Date(userInput.date);
   endOfDay.setHours(23, 59, 59, 999);
 
-  if (siteId) {
-    filter = { site_id: siteId, isActive: true };
-  } else if (userInput.date) {
+  if (userInput.siteId && !userInput.date) {
+    filter = { site_id: userInput.siteId, isActive: true };
+  } else if (userInput.date && !userInput.siteId) {
     filter = {
       createdAt: {
         $gte: new Date(userInput.date),
@@ -47,9 +47,13 @@ shiftMeeting.listUser = async function (userInput, query, resultCallback) {
       },
       isActive: true,
     };
-  } else if (searchRegex) {
+  } else if (userInput.siteId && userInput.date) {
     filter = {
-      $or: [{ site_name: searchRegex }],
+      site_id: userInput.siteId,
+      createdAt: {
+        $gte: new Date(userInput.date),
+        $lte: endOfDay,
+      }
     };
   } else {
     filter = { isActive: true };
