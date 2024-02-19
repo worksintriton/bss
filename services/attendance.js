@@ -3,6 +3,7 @@
 var _ = require("lodash"),
   db = require("../db"),
   async = require("async");
+const moment = require("moment");
 
 function attendance() {}
 
@@ -100,6 +101,8 @@ attendance.MarkAttendancemob = async function (userInput, resultCallback) {
       time: userInput.time,
       site_id: userInput.site_id,
       status: "Present",
+      lat: userInput.lat,
+      lon: userInput.lon,
     })
     .then((data) => {
       resultCallback(null, data);
@@ -111,44 +114,133 @@ attendance.MarkAttendancemob = async function (userInput, resultCallback) {
 };
 
 attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
+  const currentDate = moment();
+
+  const record = [];
+
   const { searchKey, skip, limit, sortkey, sortOrder } = query;
 
   const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
 
   const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+  // const getEmployeeIds = await model.usermanage.aggregate([
+  //   {
+  //     $match: userInput.site_id
+  //       ? {
+  //           site_id: new objectId(userInput.site_id),
+  //         }
+  //       : {},
+  //   },
+  //   {
+  //     $match: userInput.date
+  //       ? {
+  //           date: new Date(userInput.date),
+  //         }
+  //       : {},
+  //   },
+  //   {
+  //     $group: {
+  //       _id: "$employee_id",
+  //       name: {
+  //         $first: "$name",
+  //       },
+  //     },
+  //   },
+  // ]);
 
-  const data = await model.attendance.aggregate([
-    {
-      $match: userInput.start_date
-        ? {
-            date: {
-              $gte: new Date(userInput.start_date),
-              $lte: new Date(userInput.end_date),
-            },
-          }
-        : {},
-    },
+  const getEmployeeIds = await model.usermanage.find(
+    {},
+    { Empolyee_id: 1, Name: 1 }
+  );
 
-    {
-      $match: searchKey
-        ? {
-            $or: [{}],
-          }
-        : {},
-    },
+  const userAttendance = [];
 
-    {
-      $sort: sort,
-    },
-    {
-      $facet: {
-        pagination: [{ $count: "totalCount" }],
-        data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+  const attendanceRecords = [];
+
+  let filter;
+
+  if (userInput.start_date && userInput.end_date) {
+    filter = {
+      $match: {
+        date: {
+          $gte: new Date(userInput.start_date),
+          $lte: new Date(userInput.end_date),
+        },
       },
-    },
-  ]);
+    };
+  } else if (userInput.date) {
+    filter = {
+      $match: {
+        date: new Date(date),
+      },
+    };
+  } else {
+    filter = {
+      $match: {
+        date: new Date(currentDate.format("YYYY-MM-DD")),
+      },
+    };
+  }
 
-  resultCallback(null, data);
+  for (const iterator of getEmployeeIds) {
+    const getAttendanceList = await model.attendance.aggregate([
+      {
+        $match: {
+          employee_id: iterator.Empolyee_id,
+        },
+      },
+      {
+        ...filter,
+      },
+    ]);
+
+    //group records based on date
+
+    const groupedRecords = getAttendanceList.reduce((acc, rec) => {
+      const date = String(rec.date.toISOString()).split("T")[0]; // Extracting date without time
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(rec);
+      return acc;
+    }, {});
+
+    //iterate object
+    for (const key in groupedRecords) {
+      userAttendance.push({
+        emp_name: groupedRecords[key].at(0).name,
+        status: groupedRecords[key].at(0).status,
+        checkIn: groupedRecords[key].at(0).time,
+        checkOut: groupedRecords[key].at(-1).time,
+        date: groupedRecords[key].at(0).date,
+      });
+    }
+    // if (getAttendanceList.length) {
+    //   userAttendance.push({
+    // emp_name: getAttendanceList[0].name,
+    // status: getAttendanceList[0].status,
+    // checkIn: getAttendanceList[0].time,
+    // checkOut: getAttendanceList.at(-1).time,
+    // date: getAttendanceList[0].date,
+    //   });
+    // } else {
+    //   attendanceRecords.push({
+    //     emp_name: iterator.name,
+    //     status: "-",
+    //     checkIn: "-",
+    //     checkOut: "-",
+    //   });
+    // }
+  }
+  // userAttendance.push({
+  //   emp_name: attendanceRecords[0].name,
+  //   status: attendanceRecords[0].status,
+  //   checkIn: attendanceRecords[0].time,
+  //   checkOut: attendanceRecords.at(-1).time,
+  //   date: attendanceRecords[0].date,
+  // });
+
+  resultCallback(null, userAttendance);
 };
 
 attendance.Weeklyreports = async function (userInput, resultCallback) {
