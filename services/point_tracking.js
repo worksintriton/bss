@@ -252,21 +252,21 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
   await model.pointtrackmapspot
     .aggregate([
       {
-        $match: site_id
+        $match: userInput.site_id
           ? {
-              site_id: new objectId(userInput.site_id),
+              site_id: new objectId(userInput.siteId),
             }
           : {},
       },
       {
-        $match: PointTrackMaprefid
+        $match: userInput.PointTrackMaprefid
           ? {
               PointTrackMaprefid: new objectId(userInput.PointTrackMaprefid),
             }
           : {},
       },
       {
-        $match: date
+        $match: userInput.date
           ? {
               createdAt: { $gte: new Date(userInput.date), $lte: endOfDay },
             }
@@ -295,8 +295,23 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
         },
       },
       {
+        $lookup: {
+          from: "client_sites",
+          localField: "site_id",
+          foreignField: "_id",
+          as: "site",
+        },
+      },
+      {
+        $unwind: {
+          path: "$site",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $addFields: {
           supervisor_name: "$result.Name",
+          site_name: "$site.company_name",
         },
       },
       {
