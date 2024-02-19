@@ -280,7 +280,30 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
             }
           : {},
       },
-
+      {
+        $lookup: {
+          from: "usermanages",
+          localField: "marked_by",
+          foreignField: "_id",
+          as: "result",
+        },
+      },
+      {
+        $unwind: {
+          path: "$result",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $addFields: {
+          supervisor_name: "$result.Name",
+        },
+      },
+      {
+        $project: {
+          result: 0,
+        },
+      },
       {
         $sort: sort,
       },
