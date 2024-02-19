@@ -337,14 +337,14 @@ attendance.getcheckinlist = async function (userInput, resultCallback) {
     const checkInData = [];
     const checkOutData = [];
     const data = [];
-    const empId = await model.usermanage.find(
-      { site_id: userInput.site_id },
-      { Empolyee_id: 1 }
+    const empId = await model.mapusers.find(
+      { Map_id: new objectId(userInput.site_id) },
+      { Emp_id: 1 }
     );
 
     for (const el of empId) {
       const attendanceLastRecord = await model.attendance
-        .find({ employee_id: el.Empolyee_id }, {}, { sort: { createdAt: -1 } })
+        .find({ employee_id: el.Emp_id }, {}, { sort: { createdAt: -1 } })
         .limit(1);
       if (attendanceLastRecord.length) {
         data.push(attendanceLastRecord[0]["_doc"]);
