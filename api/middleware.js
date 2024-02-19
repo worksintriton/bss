@@ -2271,18 +2271,22 @@ function pointsupdate(req, res, next) {
 function pointslist(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
-      services.point_tracking.pointslistweb(req.body, function (err, result) {
-        if (err) {
-          req.log.error(
-            {
-              error: err,
-            },
-            "Error while getting available users by mobiles"
-          );
-          return res.json(utils.errors["500"]);
+      services.point_tracking.pointslistweb(
+        req.body,
+        req.query,
+        function (err, result) {
+          if (err) {
+            req.log.error(
+              {
+                error: err,
+              },
+              "Error while getting available users by mobiles"
+            );
+            return res.json(utils.errors["500"]);
+          }
+          waterfallCallback(null, result);
         }
-        waterfallCallback(null, result);
-      });
+      );
     },
     function (mydata, waterfallCallback) {
       return res.json(

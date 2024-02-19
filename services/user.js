@@ -1313,6 +1313,14 @@ user.newclientsites = async function (userInput, resultCallback) {
       sitepassword: userInput.sitepassword,
       sitelogin: userInput.sitelogin,
       billing_address: userInput.billing_address,
+      result: userInput.result,
+      city: userInput.city,
+      street: userInput.street,
+      state: userInput.state,
+      country: userInput.country,
+      area: userInput.area,
+      googleMapLocation: userInput.googleMapLocation,
+      postalCode: userInput.postalCode,
     })
 
     .then((data) => {

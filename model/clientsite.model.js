@@ -25,8 +25,16 @@ const clientSiteSchema = new mongoose.Schema({
   contactperson3: { type: String },
   contactnumber3: { type: String },
   contactemail3: { type: String },
-  company_name: { type: String},
+  company_name: { type: String },
   billing_address: { type: String },
+  city: { type: String },
+  street: { type: String },
+  state: { type: String },
+  country: { type: String },
+  area: { type: String },
+  googleMapLocation: { type: String },
+  postalCode: { type: String },
+  result: { type: Object },
   isActive: { type: Boolean, default: true },
 });
 clientSiteSchema.plugin(timestamps);
