@@ -668,9 +668,9 @@ point_tracking.addmapuserlistweb = async function (
   await model.mapusers
     .aggregate([
       {
-        $match: Map_id
+        $match: userInput.Map_id
           ? {
-              Map_id: new objectId(Map_id),
+              Map_id: new objectId(userInput.Map_id),
             }
           : {},
       },
