@@ -12,6 +12,8 @@ const https = require("https");
 var middleware = require("./api/middleware");
 var cors = require("cors");
 const model = require("./model/index");
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 require("./db/database");
 require("./model/index");
 var app = express();
@@ -133,6 +135,125 @@ app.post("/updateuserstatus", async (req, res) => {
   });
 });
 
+app.post("/checkin", async (req, res) => {
+  try {
+    const endOfDay = new Date(req.body.date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const record = await model.attendance.aggregate([
+      {
+        $match: {
+          site_id: new ObjectId(req.body.site_id),
+        },
+      },
+      {
+        $match: {
+          createdAt: { $gte: new Date(req.body.date), $lte: endOfDay },
+        },
+      },
+      {
+        $group: {
+          _id: "$employee_id",
+          record: {
+            $first: "$$ROOT",
+          },
+        },
+      },
+      {
+        $unwind: {
+          path: "$record",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+    ]);
+    const rec = [];
+    if (record.length > 0) {
+      record.forEach((el) => {
+        rec.push(el.record);
+      });
+    }
+
+    return res.json({ status: "Success", code: 200, data: rec });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//checkout
+
+app.post("/checkout", async (req, res) => {
+  try {
+    const endOfDay = new Date(req.body.date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const record = await model.attendance.aggregate([
+      {
+        $match: {
+          site_id: new ObjectId(req.body.site_id),
+        },
+      },
+      {
+        $match: {
+          createdAt: { $gte: new Date(req.body.date), $lte: endOfDay },
+        },
+      },
+      {
+        $group: {
+          _id: "$employee_id",
+          record: {
+            $last: "$$ROOT",
+          },
+        },
+      },
+      {
+        $unwind: {
+          path: "$record",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+    ]);
+    const rec = [];
+    if (record.length > 0) {
+      record.forEach((el) => {
+        if (el.record.check === "Out") {
+          rec.push(el.record);
+        }
+      });
+    }
+
+    const empIds = await model.attendance.find({}, { employee_id: 1 });
+
+    const ids = [];
+
+    empIds.forEach((el) => {
+      ids.push(el.Empolyee_id);
+    });
+
+    const getRemainingRec = await model.usermanage.find({
+      Empolyee_id: { $nin: ids },
+      createdAt: { $gte: new Date(req.body.date), $lte: endOfDay },
+    });
+    if (getRemainingRec.length > 0) {
+      getRemainingRec.forEach((el) => {
+        rec.push(el);
+      });
+    }
+
+    return res.json({ status: "Success", code: 200, data: rec });
+  } catch (error) {
+    console.log(error);
+  }
+});
 app.use(api.router);
 
 function runServer() {
