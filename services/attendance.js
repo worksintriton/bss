@@ -339,7 +339,7 @@ attendance.getcheckinlist = async function (userInput, resultCallback) {
     const data = [];
     const empId = await model.mapusers.find(
       { Map_id: new objectId(userInput.site_id) },
-      { Emp_id: 1 }
+      { Emp_id: 1, Employee_name: 1 }
     );
 
     for (const el of empId) {
@@ -349,14 +349,17 @@ attendance.getcheckinlist = async function (userInput, resultCallback) {
       if (attendanceLastRecord.length) {
         data.push(attendanceLastRecord[0]["_doc"]);
       } else {
+        const userName = await model.usermanage.findOne(
+          { Empolyee_id: el.Emp_id },
+          { Name: 1 }
+        );
+        el.name = userName.Name;
         checkOutData.push(el);
       }
     }
     for (const iterator of data) {
-      if (iterator.check === "In") {
+      if (iterator.check !== "In") {
         checkInData.push(iterator);
-      } else {
-        checkOutData.push(iterator);
       }
     }
     resultCallback(null, { checkInData, checkOutData });
