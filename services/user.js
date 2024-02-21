@@ -513,7 +513,7 @@ user.updateemployees = async function (userInput, resultCallback) {
 user.updateuser = async function (userInput, resultCallback) {
   await model.usermanage
     .findOneAndUpdate(
-      { _id: userInput.user_id },
+      { _id: userInput._id },
       {
         ...userInput,
       }
