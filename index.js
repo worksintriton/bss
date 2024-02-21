@@ -155,27 +155,24 @@ app.post("/checkin", async (req, res) => {
       {
         $group: {
           _id: "$employee_id",
-          record: {
-            $first: "$$ROOT",
+          rec: {
+            $last: "$$ROOT",
           },
         },
       },
       {
         $unwind: {
-          path: "$record",
+          path: "$rec",
           preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          _id: 0,
         },
       },
     ]);
     const rec = [];
     if (record.length > 0) {
       record.forEach((el) => {
-        rec.push(el.record);
+        if (el.rec.check === "In") {
+          rec.push(el.rec);
+        }
       });
     }
 
@@ -240,7 +237,8 @@ app.post("/checkout", async (req, res) => {
       ids.push(el.Empolyee_id);
     });
 
-    const getRemainingRec = await model.usermanage.find({
+    const getRemainingRec = await model.mapusers.find({
+      site_id: req.body.site_id,
       Empolyee_id: { $nin: ids },
       createdAt: { $gte: new Date(req.body.date), $lte: endOfDay },
     });
@@ -255,6 +253,7 @@ app.post("/checkout", async (req, res) => {
     console.log(error);
   }
 });
+
 app.use(api.router);
 
 function runServer() {

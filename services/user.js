@@ -1425,7 +1425,9 @@ user.sitelistsbyuserid = async function (userInput, query, resultCallback) {
       const record = [];
 
       data[0].data.forEach((el) => {
-        record.push(el.result);
+        if (Object.keys(el).length > 0) {
+          record.push(el.result);
+        }
       });
       resultCallback(null, record);
     })
