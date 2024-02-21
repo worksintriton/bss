@@ -632,10 +632,14 @@ point_tracking.FetchMapSpotrecordmobile = async function (
 };
 
 point_tracking.addmapuseweb = async function (userInput, resultCallback) {
+  const userName = await model.usermanage.findOne({
+    Empolyee_id: userInput.Emp_id,
+  });
+  console.log(userName);
   await model.mapusers
     .create({
       Emp_id: userInput.Emp_id,
-      Employee_name: userInput.Employee_name,
+      Employee_name: userName.Name,
       Map_id: userInput.Map_id,
       gender: userInput.gender,
       contact_no: userInput.contact_no,
