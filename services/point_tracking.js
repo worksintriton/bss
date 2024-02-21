@@ -675,6 +675,7 @@ point_tracking.addmapuserlistweb = async function (
         $match: userInput.Map_id
           ? {
               Map_id: new objectId(userInput.Map_id),
+              status: "Open",
             }
           : {},
       },

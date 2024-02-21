@@ -111,13 +111,14 @@ app.get("/list", async (req, res) => {
 
 app.get("/filterduserlist", async (req, res) => {
   const empIds = [];
-  const record = await model.mapusers.find({ status: "open" }, { Emp_id: 1 });
+  const record = await model.mapusers.find({ status: "Open" }, { Emp_id: 1 });
   for (const iterator of record) {
     empIds.push(iterator.Emp_id);
   }
   const employees = await model.usermanage.find({
     Empolyee_id: { $nin: empIds },
   });
+  console.log(employees);
   return res.json({ data: employees, status: "Success", code: 200 });
 });
 
