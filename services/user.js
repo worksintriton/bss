@@ -524,7 +524,7 @@ user.updateuser = async function (userInput, resultCallback) {
       resultCallback(null, data);
     })
     .catch((error) => {
-      resultCallback(error, {});
+      resultCallback(error, null);
       console.log("ERROR:", error);
     });
 };
