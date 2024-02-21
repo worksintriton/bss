@@ -124,7 +124,7 @@ app.get("/filterduserlist", async (req, res) => {
 
 app.post("/updateuserstatus", async (req, res) => {
   const record = await model.mapusers.findOneAndUpdate(
-    { Emp_id: req.body.Emp_id },
+    { Emp_id: req.body.Emp_id, Map_id: req.body.Map_id },
     { $set: { status: req.body.status } }
   );
 
