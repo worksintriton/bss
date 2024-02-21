@@ -511,6 +511,9 @@ user.updateemployees = async function (userInput, resultCallback) {
 
 //updateuser///
 user.updateuser = async function (userInput, resultCallback) {
+  delete userInput.createdAt;
+  delete userInput.updatedAt;
+  delete userInput.__v;
   await model.usermanage
     .findOneAndUpdate(
       { _id: userInput._id },
@@ -518,7 +521,6 @@ user.updateuser = async function (userInput, resultCallback) {
         ...userInput,
       }
     )
-
     .then((data) => {
       console.log(data);
       resultCallback(null, data);
