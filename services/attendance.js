@@ -160,24 +160,33 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
   let filter;
 
   if (userInput.start_date && userInput.end_date) {
+    const endOfDay = new Date(userInput.end_date);
+    endOfDay.setHours(23, 59, 59, 999);
     filter = {
       $match: {
-        date: {
+        createdAt: {
           $gte: new Date(userInput.start_date),
-          $lte: new Date(userInput.end_date),
+          $lte: endOfDay,
         },
       },
     };
   } else if (userInput.date) {
+    const endOfDay = new Date(userInput.date);
+    endOfDay.setHours(23, 59, 59, 999);
     filter = {
       $match: {
-        date: new Date(userInput.date),
+        createdAt: { $gte: new Date(userInput.date), $lte: endOfDay },
       },
     };
   } else {
+    const endOfDay = new Date(currentDate.format("YYYY-MM-DD"));
+    endOfDay.setHours(23, 59, 59, 999);
     filter = {
       $match: {
-        date: new Date(currentDate.format("YYYY-MM-DD")),
+        createdAt: {
+          $gte: new Date(currentDate.format("YYYY-MM-DD")),
+          $lte: endOfDay,
+        },
       },
     };
   }
@@ -207,18 +216,46 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
 
     //iterate object
     for (const key in groupedRecords) {
-      userAttendance.push({
-        emp_name: groupedRecords[key].at(0).name,
-        status: groupedRecords[key].at(0).status,
-        checkIn: groupedRecords[key].at(0).time,
-        checkInlat: groupedRecords[key].at(0).lat,
-        checkInlon: groupedRecords[key].at(0).lon,
-        emp_id: groupedRecords[key].at(0).employee_id,
-        checkOut: groupedRecords[key].at(-1).time,
-        checkOutlat: groupedRecords[key].at(-1).lat,
-        checkOutlon: groupedRecords[key].at(-1).lon,
-        date: groupedRecords[key].at(0).date,
-      });
+      if (groupedRecords[key].length > 1) {
+        userAttendance.push({
+          emp_name: groupedRecords[key].at(0).name,
+          status: groupedRecords[key].at(0).status,
+          checkIn: groupedRecords[key].at(0).time,
+          checkInlat: groupedRecords[key].at(0).lat,
+          checkInlon: groupedRecords[key].at(0).lon,
+          emp_id: groupedRecords[key].at(0).employee_id,
+          date: groupedRecords[key].at(0).date,
+          checkOut: groupedRecords[key].at(-1).time,
+          checkOutlat: groupedRecords[key].at(-1).lat,
+          checkOutlon: groupedRecords[key].at(-1).lon,
+        });
+      } else if (groupedRecords[key].length === 0) {
+        userAttendance.push({
+          emp_name: groupedRecords[key].at(0).name,
+          status: groupedRecords[key].at(0).status,
+          checkIn: groupedRecords[key].at(0).time,
+          checkInlat: groupedRecords[key].at(0).lat,
+          checkInlon: groupedRecords[key].at(0).lon,
+          emp_id: groupedRecords[key].at(0).employee_id,
+          date: groupedRecords[key].at(0).date,
+          checkOut: "",
+          checkOutlat: "",
+          checkOutlon: "",
+        });
+      } else if (getAttendanceList.length) {
+        userAttendance.push({
+          emp_name: iterator.Name,
+          status: "",
+          checkIn: "",
+          checkInlat: "",
+          checkInlon: "",
+          emp_id: iterator.Empolyee_id,
+          date: userInput.date || currentDate.format("YYYY-MM-DD"),
+          checkOut: "",
+          checkOutlat: "",
+          checkOutlon: "",
+        });
+      }
     }
     // if (getAttendanceList.length) {
     //   userAttendance.push({
