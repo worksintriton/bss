@@ -244,7 +244,21 @@ app.post("/checkout", async (req, res) => {
     });
     if (getRemainingRec.length > 0) {
       getRemainingRec.forEach((el) => {
-        rec.push(el);
+        rec.push({
+          _id: el._id,
+          employee_id: el.Emp_id,
+          name: el.Employee_name,
+          site_id: el.Map_id,
+          gender: el.gender,
+          contact_no: el.contact_no,
+          Client_place: el.Client_place,
+          Address: el.Address,
+          status: el.status,
+          notification_title: el.notification_title,
+          updatedAt: el.updatedAt,
+          createdAt: el.createdAt,
+          __v: el.__v,
+        });
       });
     }
 
