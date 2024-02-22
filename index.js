@@ -234,12 +234,12 @@ app.post("/checkout", async (req, res) => {
     const ids = [];
 
     empIds.forEach((el) => {
-      ids.push(el.Empolyee_id);
+      ids.push(el.employee_id);
     });
 
     const getRemainingRec = await model.mapusers.find({
-      site_id: req.body.site_id,
-      Empolyee_id: { $nin: ids },
+      Map_id: new ObjectId(req.body.site_id),
+      Emp_id: { $nin: ids },
       createdAt: { $gte: new Date(req.body.date), $lte: endOfDay },
     });
     if (getRemainingRec.length > 0) {
