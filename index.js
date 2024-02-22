@@ -254,6 +254,17 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
+app.get("/supervisor", async (req, res) => {
+  try {
+    const supervisorList = await model.usermanage.find({
+      Designation: "Supervisor",
+    });
+    return res.json({ data: supervisorList, status: "success", code: 200 });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.use(api.router);
 
 function runServer() {
