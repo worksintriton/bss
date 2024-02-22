@@ -216,7 +216,7 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
 
     //iterate object
     for (const key in groupedRecords) {
-      if (groupedRecords[key].length > 1) {
+      if (groupedRecords[key].length === 2) {
         userAttendance.push({
           emp_name: groupedRecords[key].at(0).name,
           status: groupedRecords[key].at(0).status,
@@ -229,7 +229,7 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
           checkOutlat: groupedRecords[key].at(-1).lat,
           checkOutlon: groupedRecords[key].at(-1).lon,
         });
-      } else if (groupedRecords[key].length === 0) {
+      } else if (groupedRecords[key].length === 1) {
         userAttendance.push({
           emp_name: groupedRecords[key].at(0).name,
           status: groupedRecords[key].at(0).status,
@@ -242,7 +242,7 @@ attendance.Weeklystatusweb = async function (userInput, query, resultCallback) {
           checkOutlat: "",
           checkOutlon: "",
         });
-      } else if (getAttendanceList.length) {
+      } else if (Object.keys(groupedRecords).length === 0) {
         userAttendance.push({
           emp_name: iterator.Name,
           status: "",
