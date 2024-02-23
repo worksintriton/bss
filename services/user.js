@@ -1400,6 +1400,11 @@ user.sitelistsbyuserid = async function (
           $match: {},
         },
         {
+          $project: {
+            result: 0,
+          },
+        },
+        {
           $facet: {
             pagination: [{ $count: "totalCount" }],
             data: [
