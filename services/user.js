@@ -1411,14 +1411,7 @@ user.sitelistsbyuserid = async function (
       ])
 
       .then((data) => {
-        const record = [];
-
-        data[0].data.forEach((el) => {
-          if (Object.keys(el).length > 0) {
-            record.push(el.result);
-          }
-        });
-        resultCallback(null, record);
+        resultCallback(null, data);
       })
       .catch((error) => {
         resultCallback(error, null);
