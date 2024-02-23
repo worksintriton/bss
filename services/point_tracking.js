@@ -419,7 +419,9 @@ point_tracking.pointslistweb = async function (
     await model.pointtrackmap
       .aggregate([
         {
-          $match: {},
+          $match: {
+            site_id: new objectId(userInput.site_id),
+          },
         },
         {
           $match: searchKey
@@ -728,13 +730,6 @@ point_tracking.addmapuserlistweb = async function (
                 $or: [{ Employee_name: searchRegex }],
               }
             : {},
-        },
-        {
-          $project: {
-            Emp_id: 1,
-            Employee_name: 1,
-            Map_id: 1,
-          },
         },
         {
           $sort: sort,
