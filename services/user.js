@@ -9,6 +9,7 @@ const { mode } = require("crypto-js");
 const { qrcodeGenerator } = require("../utils/qrcode");
 const { Schema } = require("mongoose");
 const objectId = Schema.Types.ObjectId;
+const { generateToken } = require("../utils/jwt");
 
 async function user() {}
 
@@ -37,6 +38,7 @@ user.createusers = async function (userInput, resultCallback) {
           resultCallback(null, string);
         } else {
           console.log("2");
+
           await model.usermanage
             .create({
               Name: userInput.Name,
@@ -51,6 +53,7 @@ user.createusers = async function (userInput, resultCallback) {
 
             .then(async (data) => {
               const userQrCode = await qrcodeGenerator(data.Empolyee_id);
+
               await model.usermanage.findOneAndUpdate(
                 { _id: data._id },
                 { qrcode: userQrCode }
@@ -1375,66 +1378,110 @@ user.sitelists = async function (userInput, query, resultCallback) {
     });
 };
 
-user.sitelistsbyuserid = async function (userInput, query, resultCallback) {
+user.sitelistsbyuserid = async function (
+  userInput,
+  query,
+  loggedUser,
+  resultCallback
+) {
   const { searchKey, skip, limit, sortkey, sortOrder, Emp_id } = query;
 
   const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
 
   const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
 
-  await model.mapusers
-    .aggregate([
-      {
-        $match: {
-          Emp_id: Emp_id,
+  if (
+    loggedUser.Designation === "Operations Executive" ||
+    loggedUser.Designation === "Operations Manager"
+  ) {
+    await model.clientsite
+      .aggregate([
+        {
+          $match: {},
         },
-      },
-      {
-        $lookup: {
-          from: "client_sites",
-          localField: "Map_id",
-          foreignField: "_id",
-          as: "result",
+        {
+          $facet: {
+            pagination: [{ $count: "totalCount" }],
+            data: [
+              { $skip: Number(skip) || 0 },
+              { $limit: Number(limit) || 10 },
+            ],
+          },
         },
-      },
-      {
-        $unwind: {
-          path: "$result",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          result: 1,
-          _id: 0,
-        },
-      },
+      ])
 
-      {
-        $sort: sort,
-      },
-      {
-        $facet: {
-          pagination: [{ $count: "totalCount" }],
-          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
-        },
-      },
-    ])
+      .then((data) => {
+        const record = [];
 
-    .then((data) => {
-      const record = [];
-
-      data[0].data.forEach((el) => {
-        if (Object.keys(el).length > 0) {
-          record.push(el.result);
-        }
+        data[0].data.forEach((el) => {
+          if (Object.keys(el).length > 0) {
+            record.push(el.result);
+          }
+        });
+        resultCallback(null, record);
+      })
+      .catch((error) => {
+        resultCallback(error, null);
+        console.log("ERROR:", error);
       });
-      resultCallback(null, record);
-    })
-    .catch((error) => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
-    });
+  } else {
+    await model.mapusers
+      .aggregate([
+        {
+          $match: {
+            Emp_id: Emp_id,
+          },
+        },
+        {
+          $lookup: {
+            from: "client_sites",
+            localField: "Map_id",
+            foreignField: "_id",
+            as: "result",
+          },
+        },
+        {
+          $unwind: {
+            path: "$result",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            result: 1,
+            _id: 0,
+          },
+        },
+
+        {
+          $sort: sort,
+        },
+        {
+          $facet: {
+            pagination: [{ $count: "totalCount" }],
+            data: [
+              { $skip: Number(skip) || 0 },
+              { $limit: Number(limit) || 10 },
+            ],
+          },
+        },
+      ])
+
+      .then((data) => {
+        const record = [];
+
+        data[0].data.forEach((el) => {
+          if (Object.keys(el).length > 0) {
+            record.push(el.result);
+          }
+        });
+        resultCallback(null, record);
+      })
+      .catch((error) => {
+        resultCallback(error, null);
+        console.log("ERROR:", error);
+      });
+  }
 };
 
 user.updateclientsites = async function (userInput, resultCallback) {

@@ -397,6 +397,7 @@ point_tracking.pointsupdateweb = async function (userInput, resultCallback) {
 point_tracking.pointslistweb = async function (
   userInput,
   query,
+  loggedUser,
   resultCallback
 ) {
   const { searchKey, skip, limit, sortkey, sortOrder } = query;
@@ -411,48 +412,90 @@ point_tracking.pointslistweb = async function (
   const endDate = new Date(userInput.date);
   endDate.setHours(23, 59, 59, 999);
 
-  await model.pointtrackmap
-    .aggregate([
-      {
-        $match: userInput.site_id
-          ? {
-              site_id: new objectId(userInput.site_id),
-            }
-          : {},
-      },
-      {
-        $match: userInput.date
-          ? {
-              createdAt: { $gte: startDate, $lte: endDate },
-            }
-          : {},
-      },
-
-      {
-        $match: searchKey
-          ? {
-              $or: [{}],
-            }
-          : {},
-      },
-
-      {
-        $sort: sort,
-      },
-      {
-        $facet: {
-          pagination: [{ $count: "totalCount" }],
-          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+  if (
+    loggedUser.Designation === "Operations Executive" ||
+    loggedUser.Designation === "Operations Manager"
+  ) {
+    await model.pointtrackmap
+      .aggregate([
+        {
+          $match: {},
         },
-      },
-    ])
+        {
+          $match: searchKey
+            ? {
+                $or: [{}],
+              }
+            : {},
+        },
 
-    .then((data) => {
-      resultCallback(null, data);
-    })
-    .catch((error) => {
-      resultCallback(null, error);
-    });
+        {
+          $sort: sort,
+        },
+        {
+          $facet: {
+            pagination: [{ $count: "totalCount" }],
+            data: [
+              { $skip: Number(skip) || 0 },
+              { $limit: Number(limit) || 10 },
+            ],
+          },
+        },
+      ])
+
+      .then((data) => {
+        resultCallback(null, data);
+      })
+      .catch((error) => {
+        resultCallback(null, error);
+      });
+  } else {
+    await model.pointtrackmap
+      .aggregate([
+        {
+          $match: userInput.site_id
+            ? {
+                site_id: new objectId(userInput.site_id),
+              }
+            : {},
+        },
+        {
+          $match: userInput.date
+            ? {
+                createdAt: { $gte: startDate, $lte: endDate },
+              }
+            : {},
+        },
+
+        {
+          $match: searchKey
+            ? {
+                $or: [{}],
+              }
+            : {},
+        },
+
+        {
+          $sort: sort,
+        },
+        {
+          $facet: {
+            pagination: [{ $count: "totalCount" }],
+            data: [
+              { $skip: Number(skip) || 0 },
+              { $limit: Number(limit) || 10 },
+            ],
+          },
+        },
+      ])
+
+      .then((data) => {
+        resultCallback(null, data);
+      })
+      .catch((error) => {
+        resultCallback(null, error);
+      });
+  }
 };
 
 point_tracking.deletepointsweb = async function (userInput, resultCallback) {
@@ -661,6 +704,7 @@ point_tracking.addmapuseweb = async function (userInput, resultCallback) {
 point_tracking.addmapuserlistweb = async function (
   userInput,
   payload,
+  loggedUser,
   resultCallback
 ) {
   const { searchKey, skip, limit, sortkey, sortOrder, Map_id } = payload;
@@ -669,41 +713,89 @@ point_tracking.addmapuserlistweb = async function (
 
   const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
 
-  await model.mapusers
-    .aggregate([
-      {
-        $match: userInput.Map_id
-          ? {
-              Map_id: new objectId(userInput.Map_id),
-              status: "Open",
-            }
-          : {},
-      },
-      {
-        $match: searchKey
-          ? {
-              $or: [{ Employee_name: searchRegex }],
-            }
-          : {},
-      },
-
-      {
-        $sort: sort,
-      },
-      {
-        $facet: {
-          pagination: [{ $count: "totalCount" }],
-          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+  if (
+    loggedUser.Designation === "Operations Executive" ||
+    loggedUser.Designation === "Operations Manager"
+  ) {
+    await model.mapusers
+      .aggregate([
+        {
+          $match: {},
         },
-      },
-    ])
+        {
+          $match: searchKey
+            ? {
+                $or: [{ Employee_name: searchRegex }],
+              }
+            : {},
+        },
+        {
+          $project: {
+            Emp_id: 1,
+            Employee_name: 1,
+            Map_id: 1,
+          },
+        },
+        {
+          $sort: sort,
+        },
+        {
+          $facet: {
+            pagination: [{ $count: "totalCount" }],
+            data: [
+              { $skip: Number(skip) || 0 },
+              { $limit: Number(limit) || 10 },
+            ],
+          },
+        },
+      ])
 
-    .then((data) => {
-      resultCallback(null, data);
-    })
-    .catch((error) => {
-      resultCallback(null, error);
-    });
+      .then((data) => {
+        resultCallback(null, data);
+      })
+      .catch((error) => {
+        resultCallback(null, error);
+      });
+  } else {
+    await model.mapusers
+      .aggregate([
+        {
+          $match: userInput.Map_id
+            ? {
+                Map_id: new objectId(userInput.Map_id),
+                status: "Open",
+              }
+            : {},
+        },
+        {
+          $match: searchKey
+            ? {
+                $or: [{ Employee_name: searchRegex }],
+              }
+            : {},
+        },
+
+        {
+          $sort: sort,
+        },
+        {
+          $facet: {
+            pagination: [{ $count: "totalCount" }],
+            data: [
+              { $skip: Number(skip) || 0 },
+              { $limit: Number(limit) || 10 },
+            ],
+          },
+        },
+      ])
+
+      .then((data) => {
+        resultCallback(null, data);
+      })
+      .catch((error) => {
+        resultCallback(null, error);
+      });
+  }
 };
 
 point_tracking.mapuserdeleteweb = async function (userInput, resultCallback) {

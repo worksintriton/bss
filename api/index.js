@@ -6,9 +6,9 @@ var express = require("express"),
   middleware = require("./middleware"),
   middleware_emp = require("./middleware_emp"),
   cors = require("cors");
+
 const fileUpload = require("express-fileupload");
 const { shiftMeeting } = require("../services");
-const { verifyToken } = require("../utils/jwt");
 
 var app = express(),
   router = express.Router();
@@ -375,18 +375,24 @@ addRoute("/authentication/Questionlist", "POST", [middleware.Questionlist]);
 /*PointTracking For Web*/
 addRoute("/PointTracking/Addpoints", "POST", [middleware.Addpoints]);
 addRoute("/PointTracking/pointsupdate", "POST", [middleware.pointsupdate]);
-addRoute("/PointTracking/pointslist", "POST", [middleware.pointslist]);
+addRoute("/PointTracking/pointslist", "POST", [utils.tokens.verifyToken,middleware.pointslist]);
 addRoute("/PointTracking/deletepoints", "POST", [middleware.deletepoints]);
 addRoute("/PointTracking/fetchpoints", "POST", [middleware.fetchpoints]);
 
 /* Mapuser */
 addRoute("/mapTracking/addmapuser", "POST", [middleware.addmapuser]);
-addRoute("/mapTracking/addmapuserlist", "POST", [middleware.addmapuserlist]);
+addRoute("/mapTracking/addmapuserlist", "POST", [
+  utils.tokens.verifyToken,
+  middleware.addmapuserlist,
+]);
 addRoute("/mapTracking/mapuserdelete", "POST", [middleware.mapuserdelete]);
 addRoute("/mapTracking/fetchmapuserpoints", "POST", [
   middleware.fetchmapuserpoints,
 ]);
-addRoute("/mapTracking/sitelistbyuser", "POST", [middleware.sitelistbyuser]);
+addRoute("/mapTracking/sitelistbyuser", "POST", [
+  utils.tokens.verifyToken,
+  middleware.sitelistbyuser,
+]);
 
 /*QR Code */
 addRoute("/authentication/addqr", "POST", [middleware.addqr]);

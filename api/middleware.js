@@ -2274,6 +2274,7 @@ function pointslist(req, res, next) {
       services.point_tracking.pointslistweb(
         req.body,
         req.query,
+        req.loggedUser,
         function (err, result) {
           if (err) {
             req.log.error(
@@ -2941,6 +2942,7 @@ function addmapuserlist(req, res, next) {
       services.point_tracking.addmapuserlistweb(
         req.body,
         req.query,
+        req.loggedUser,
         function (err, result) {
           if (err) {
             req.log.error(
@@ -2969,36 +2971,39 @@ function addmapuserlist(req, res, next) {
 }
 
 function sitelistbyuser(req, res, next) {
-  async.waterfall([
-    function (waterfallCallback) {
-      services.user.sitelistsbyuserid(
-        req.body,
-        req.query,
-        function (err, result) {
-          if (err) {
-            req.log.error(
-              {
-                error: err,
-              },
-              "Error while getting available users by mobiles"
-            );
-            return res.json(utils.errors["500"]);
+ 
+    async.waterfall([
+      function (waterfallCallback) {
+        services.user.sitelistsbyuserid(
+          req.body,
+          req.query,
+          req.loggedUser,
+          function (err, result) {
+            if (err) {
+              req.log.error(
+                {
+                  error: err,
+                },
+                "Error while getting available users by mobiles"
+              );
+              return res.json(utils.errors["500"]);
+            }
+            waterfallCallback(null, result);
           }
-          waterfallCallback(null, result);
-        }
-      );
-    },
-    function (mydata, waterfallCallback) {
-      return res.json(
-        _.merge(
-          {
-            data: mydata,
-          },
-          utils.errors["200"]
-        )
-      );
-    },
-  ]);
+        );
+      },
+      function (mydata, waterfallCallback) {
+        return res.json(
+          _.merge(
+            {
+              data: mydata,
+            },
+            utils.errors["200"]
+          )
+        );
+      },
+    ]);
+  
 }
 
 function mapuserdelete(req, res, next) {
@@ -3229,6 +3234,35 @@ function getcheckin(req, res, next) {
   async.waterfall([
     function (waterfallCallback) {
       services.attendance.getcheckinlist(req.body, function (err, result) {
+        if (err) {
+          req.log.error(
+            {
+              error: err,
+            },
+            "Error while getting available users by mobiles"
+          );
+          return res.json(utils.errors["500"]);
+        }
+        waterfallCallback(null, result);
+      });
+    },
+    function (mydata, waterfallCallback) {
+      return res.json(
+        _.merge(
+          {
+            data: mydata,
+          },
+          utils.errors["200"]
+        )
+      );
+    },
+  ]);
+}
+
+function getcheckOut(req, res, next) {
+  async.waterfall([
+    function (waterfallCallback) {
+      services.attendance.getcheckOutlist(req.body, function (err, result) {
         if (err) {
           req.log.error(
             {
@@ -10925,6 +10959,7 @@ exports.MarkAttendance = MarkAttendance;
 exports.Weeklystatus = Weeklystatus;
 exports.Allstatus = Allstatus;
 exports.getcheckin = getcheckin;
+exports.getcheckOut = getcheckOut;
 exports.AllHistory = AllHistory;
 
 /*forgot*/
