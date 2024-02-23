@@ -237,10 +237,12 @@ app.post("/checkout", async (req, res) => {
       ids.push(el.employee_id);
     });
 
+    let uniqueIds = Array.from(new Set(ids));
+
     const getRemainingRec = await model.mapusers.find({
       Map_id: new ObjectId(req.body.site_id),
-      Emp_id: { $nin: ids },
-      createdAt: { $gte: new Date(req.body.date), $lte: endOfDay },
+      Emp_id: { $nin: uniqueIds },
+      // createdAt: { $gte: new Date(req.body.date), $lte: endOfDay },
     });
     if (getRemainingRec.length > 0) {
       getRemainingRec.forEach((el) => {
