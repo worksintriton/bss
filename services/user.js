@@ -1404,15 +1404,6 @@ user.sitelistsbyuserid = async function (
             result: 0,
           },
         },
-        {
-          $facet: {
-            pagination: [{ $count: "totalCount" }],
-            data: [
-              { $skip: Number(skip) || 0 },
-              { $limit: Number(limit) || 10 },
-            ],
-          },
-        },
       ])
 
       .then((data) => {
