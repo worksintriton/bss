@@ -229,7 +229,13 @@ app.post("/checkout", async (req, res) => {
       });
     }
 
-    const empIds = await model.attendance.find({}, { employee_id: 1 });
+    const empIds = await model.attendance.find(
+      {
+        site_id: new ObjectId(req.body.site_id),
+        createdAt: { $gte: new Date(req.body.date), $lte: endOfDay },
+      },
+      { employee_id: 1 }
+    );
 
     const ids = [];
 
