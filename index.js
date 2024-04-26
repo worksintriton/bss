@@ -287,6 +287,20 @@ app.get("/supervisor", async (req, res) => {
   }
 });
 
+app.post("/resetdeviceid", async (req, res) => {
+  try {
+    const resetDeviceId = await model.usermanage.findOneAndUpdate(
+      {
+        Phone_number: req.body.Phone_number,
+      },
+      { $set: { device_id: "" } }
+    );
+    return res.json({ data: resetDeviceId, status: "success", code: 200 });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.use(api.router);
 
 function runServer() {

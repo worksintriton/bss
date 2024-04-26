@@ -10,21 +10,43 @@ const model = require("../model/index");
 const { generateToken } = require("../utils/jwt");
 
 login_page.bsslogincheck = async function (userInput, resultCallback) {
+  console.log(userInput, "userinput>>>>>>>>>");
   await model.usermanage
     .findOne({
       Phone_number: userInput.Phone_number,
       Password: userInput.password,
     })
     .then(async (data) => {
+      console.log(data, ">>>>>>");
       if (data?.length == 0 || data == null) {
         var string = "Invalid phone number or Password";
         // resultCallback(null, string);
         throw new Error(string);
       } else {
-        const token = await generateToken(data);
-        console.log(data.length);
-        data["_doc"].token = token;
-        resultCallback(null, data);
+        if (data.device_id && userInput.Phone_number !== "0166689447") {
+          if (data.device_id === userInput.device_id) {
+            const token = await generateToken(data);
+            console.log(data.length);
+            data["_doc"].token = token;
+            resultCallback(null, data);
+          } else {
+            var string = "Logged in Unknown device";
+            // resultCallback(null, string);
+            throw new Error(string);
+          }
+        } else {
+          await model.usermanage.findOneAndUpdate(
+            {
+              Phone_number: userInput.Phone_number,
+              Password: userInput.password,
+            },
+            { $set: { device_id: userInput.device_id } }
+          );
+          const token = await generateToken(data);
+          console.log(data.length);
+          data["_doc"].token = token;
+          resultCallback(null, data);
+        }
       }
     })
     .catch((error) => {
