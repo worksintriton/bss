@@ -13,6 +13,7 @@ const userManageSchema = new mongoose.Schema({
   profile_image: { type: String },
   qrcode: { type: String },
   isActive: { type: Boolean, default: true },
+  device_id: { type: String },
 });
 userManageSchema.plugin(timestamps);
 mongoose.model("usermanage", userManageSchema);
