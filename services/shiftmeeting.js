@@ -53,7 +53,7 @@ shiftMeeting.listUser = async function (userInput, query, resultCallback) {
       createdAt: {
         $gte: new Date(userInput.date),
         $lte: endOfDay,
-      }
+      },
     };
   } else {
     filter = { isActive: true };
@@ -61,6 +61,7 @@ shiftMeeting.listUser = async function (userInput, query, resultCallback) {
 
   await model.shiftmeeting
     .find(filter)
+    .populate("submittedBy")
 
     .then((data) => {
       resultCallback(null, data, true);

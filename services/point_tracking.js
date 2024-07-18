@@ -242,12 +242,18 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
     date,
   } = query;
 
-  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+  const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? 1 : -1 };
 
   const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
 
-  const endOfDay = new Date(userInput.date);
+  const currentDate = userInput.date
+    ? userInput.date
+    : new Date().toISOString().split("T")[0];
+  const endOfDay = new Date(currentDate);
   endOfDay.setHours(23, 59, 59, 999);
+
+  console.log(endOfDay, ">>>>>>>>>endofday");
+  console.log(currentDate, ">>>>>>>>>>currentDate");
 
   await model.pointtrackmapspot
     .aggregate([
@@ -266,9 +272,9 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
           : {},
       },
       {
-        $match: userInput.date
+        $match: currentDate
           ? {
-              createdAt: { $gte: new Date(userInput.date), $lte: endOfDay },
+              createdAt: { $gte: new Date(currentDate), $lte: endOfDay },
             }
           : {},
       },
@@ -303,6 +309,20 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
         },
       },
       {
+        $lookup: {
+          from: "point_track_maps",
+          localField: "PointTrackMaprefid",
+          foreignField: "_id",
+          as: "PointTrackMapInfo",
+        },
+      },
+      {
+        $unwind: {
+          path: "$PointTrackMapInfo",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $unwind: {
           path: "$site",
           preserveNullAndEmptyArrays: true,
@@ -312,11 +332,19 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
         $addFields: {
           supervisor_name: "$result.Name",
           site_name: "$site.company_name",
+          title: "$PointTrackMapInfo.title",
+          marked_time: {
+            $dateToString: {
+              format: "%d-%m-%Y ,%H:%M",
+              date: "$createdAt",
+            },
+          },
         },
       },
       {
         $project: {
           result: 0,
+          PointTrackMapInfo: 0,
         },
       },
       {
@@ -426,7 +454,7 @@ point_tracking.pointslistweb = async function (
         {
           $match: searchKey
             ? {
-                $or: [{}],
+                $or: [{ title: searchRegex }],
               }
             : {},
         },

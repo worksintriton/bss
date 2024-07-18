@@ -6,10 +6,11 @@ var _ = require("lodash"),
 
 const model = require("../model/index");
 const { mode } = require("crypto-js");
-const { qrcodeGenerator } = require("../utils/qrcode");
+const { qrcodeGenerator, qrcodeWithBottomText } = require("../utils/qrcode");
 const { Schema } = require("mongoose");
 const objectId = Schema.Types.ObjectId;
 const { generateToken } = require("../utils/jwt");
+const { sendMailNotification } = require("../utils/mailservice");
 
 async function user() {}
 
@@ -24,16 +25,28 @@ user.createusers = async function (userInput, resultCallback) {
         var string = {
           message: "This Email_id or already exits!",
           status: "failed",
+          code: "400",
         };
         resultCallback(null, string);
       } else if (!data?.length) {
         const empNoExist = await model.usermanage.findOne({
           Empolyee_id: userInput.Empolyee_id,
         });
+        const empPHNoExist = await model.usermanage.findOne({
+          Phone_number: userInput.Phone_number,
+        });
         if (empNoExist) {
           const string = {
             message: "This Employee Id is already exits!",
             status: "failed",
+            code: "400",
+          };
+          resultCallback(null, string);
+        } else if (empPHNoExist) {
+          const string = {
+            message: "This Phone Number is already exits!",
+            status: "failed",
+            code: "400",
           };
           resultCallback(null, string);
         } else {
@@ -52,7 +65,11 @@ user.createusers = async function (userInput, resultCallback) {
             })
 
             .then(async (data) => {
-              const userQrCode = await qrcodeGenerator(data.Empolyee_id);
+              // const userQrCode = await qrcodeGenerator(data.Empolyee_id);
+              const userQrCode = await qrcodeWithBottomText(
+                data.Empolyee_id,
+                data.Name
+              );
 
               await model.usermanage.findOneAndUpdate(
                 { _id: data._id },
@@ -941,7 +958,35 @@ user.checkusers = async function (userInput, resultCallback) {
   await model.usermanage
     .findOne({ Email_id: userInput.Email_id })
 
-    .then((data) => {
+    .then(async (data) => {
+      const template = `
+        <div style="font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow:auto; line-height: 2">
+          <div style="margin: 50px auto; width: 70%; padding: 20px 0">
+            <div style="border-bottom: 1px solid #eee">
+              <a href="" style="font-size: 1.4em; color: #00466a; text-decoration: none; font-weight: 600">DCS MAJU</a>
+            </div>
+            <p style="font-size: 1.1em">Hello,</p>
+            <p>We received a request to Get your Credential for your DCS account. Use the following Credential for Login</p>
+            <h2 style="background: #00466a; margin: 0 auto; width: max-content; padding: 0 10px; color: #fff; border-radius: 4px;">${data.Empolyee_id}</h2>
+            <h2 style="background: #00466a; margin: 0 auto; width: max-content; padding: 0 10px; color: #fff; border-radius: 4px;">${data.Password}</h2>
+            <p style="font-size: 0.9em;">If you didn't request a password reset, you can ignore this email.</p>
+            <p style="font-size: 0.9em;">Regards,<br />DCS MAJU</p>
+            <hr style="border: none; border-top: 1px solid #eee" />
+            <div style="float: right; padding: 8px 0; color: #aaa; font-size: 0.8em; line-height: 1; font-weight: 300">
+              <p>DCS MAJU (M) SDN BHD</p>
+              <p>Kaula Lumpur</p>
+              <p>Federal Territory of Kuala Lumpur</p>
+              <p>Malaysia</p>
+            </div>
+          </div>
+        </div>
+      `;
+      await sendMailNotification(
+        userInput.Email_id,
+        "Credential Information",
+        "User Info",
+        template
+      );
       resultCallback(null, data);
     })
     .catch((error) => {
@@ -1400,6 +1445,13 @@ user.sitelistsbyuserid = async function (
           $match: {},
         },
         {
+          $match: searchKey
+            ? {
+                $or: [{ title: searchRegex }],
+              }
+            : {},
+        },
+        {
           $project: {
             result: 0,
           },
@@ -1474,9 +1526,10 @@ user.sitelistsbyuserid = async function (
 };
 
 user.updateclientsites = async function (userInput, resultCallback) {
+  delete userInput.createdAt;
   await model.clientsite
     .findOneAndUpdate(
-      { _id: userInput.id },
+      { _id: userInput._id },
       {
         ...userInput,
       }
@@ -1486,8 +1539,8 @@ user.updateclientsites = async function (userInput, resultCallback) {
       resultCallback(null, data);
     })
     .catch((error) => {
-      resultCallback(error, null);
       console.log("ERROR:", error);
+      resultCallback(error, null);
     });
 };
 

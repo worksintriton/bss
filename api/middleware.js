@@ -266,12 +266,12 @@ function addusers(req, res, next) {
       });
     },
     function (mydata, waterfallCallback) {
-      return res.json(
+      return res.status(mydata.code).json(
         _.merge(
           {
             data: mydata,
           },
-          utils.errors["200"]
+          utils.errors[mydata.code|| "200"]
         )
       );
     },

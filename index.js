@@ -59,8 +59,9 @@ app.use("/", express.static(path.join(__dirname, "www")));
 const apiKey = "AIzaSyCQ4r9BQzgAXLZHaxL7u1OZxAOILRjoSOE";
 
 app.post("/search_places", async (req, res) => {
+  const region = "my";
   const query = req.body.query;
-  const apiUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${query}&key=${apiKey}`;
+  const apiUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${query}&key=${apiKey}&region=${region}`;
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
@@ -76,7 +77,8 @@ app.post("/search_places", async (req, res) => {
 app.post("/search_nearby_places", async (req, res) => {
   const { latitude, longitude, radius, type } = req.body;
   // Construct the API URL
-  const apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${apiKey}`;
+  const region = "my";
+  const apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${apiKey}&region=${region}`;
   try {
     // Make a request to the Google Places API
     const response = await fetch(apiUrl);
@@ -91,8 +93,9 @@ app.post("/search_nearby_places", async (req, res) => {
 // select place on geo location
 
 app.post("/select_places", async (req, res) => {
+  const region = "my";
   const query = req.body.query;
-  const apiUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${query}&key=${apiKey}`;
+  const apiUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${query}&key=${apiKey}&region=${region}`;
 
   try {
     const response = await fetch(apiUrl);
@@ -141,7 +144,26 @@ app.post("/checkin", async (req, res) => {
     const endOfDay = new Date(req.body.date);
     endOfDay.setHours(23, 59, 59, 999);
 
+    const searchRegex = new RegExp(
+      ["^.*", req.query.searchKey, ".*$"].join(""),
+      "i"
+    );
+
     const record = await model.attendance.aggregate([
+      {
+        $match: searchKey
+          ? {
+              $or: [
+                {
+                  name: searchRegex,
+                },
+                {
+                  employee_id: searchRegex,
+                },
+              ],
+            }
+          : {},
+      },
       {
         $match: {
           site_id: new ObjectId(req.body.site_id),
@@ -189,7 +211,25 @@ app.post("/checkout", async (req, res) => {
     const endOfDay = new Date(req.body.date);
     endOfDay.setHours(23, 59, 59, 999);
 
+    const searchRegex = new RegExp(
+      ["^.*", req.query.searchKey, ".*$"].join(""),
+      "i"
+    );
     const record = await model.attendance.aggregate([
+      {
+        $match: searchKey
+          ? {
+              $or: [
+                {
+                  name: searchRegex,
+                },
+                {
+                  employee_id: searchRegex,
+                },
+              ],
+            }
+          : {},
+      },
       {
         $match: {
           site_id: new ObjectId(req.body.site_id),
@@ -296,6 +336,58 @@ app.post("/resetdeviceid", async (req, res) => {
       { $set: { device_id: "" } }
     );
     return res.json({ data: resetDeviceId, status: "success", code: 200 });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// user location based on site
+
+app.get("/lastlocation", async (req, res) => {
+  try {
+    const { searchKey, skip, limit, sortkey, sortOrder, site_id } = req.query;
+
+    const sort = { [sortkey]: !sortOrder || sortOrder === "DESC" ? -1 : 1 };
+
+    const searchRegex = new RegExp(["^.*", searchKey, ".*$"].join(""), "i");
+
+    const record = await model.mapusers.aggregate([
+      {
+        $match: site_id ? { Map_id: new mongoose.Types.ObjectId(site_id) } : {},
+      },
+      {
+        $lookup: {
+          from: "employee_tracks",
+          localField: "Emp_id",
+          foreignField: "Employee_id",
+          as: "result",
+        },
+      },
+      {
+        $unwind: {
+          path: "$result",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$result.Employee_id",
+          lastRecord: { $last: "$$ROOT" },
+        },
+      },
+    ]);
+    const finalData = [];
+    for (const iterator of record) {
+      if (iterator._id !== null) {
+        finalData.push({
+          emp_id: iterator.lastRecord.result.Employee_id,
+          emp_name: iterator.lastRecord.result.Name,
+          lat: iterator.lastRecord.result.Lat,
+          lng: iterator.lastRecord.result.Long,
+        });
+      }
+    }
+    return res.json({ data: finalData, status: "success", code: 200 });
   } catch (error) {
     console.log(error);
   }
