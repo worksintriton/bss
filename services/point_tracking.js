@@ -6,6 +6,7 @@ var _ = require("lodash"),
 const model = require("../model/index");
 const Schema = require("mongoose");
 const { qrcodeWithBottomText } = require("../utils/qrcode");
+const { default: mongoose } = require("mongoose");
 const objectId = Schema.Types.ObjectId;
 function point_tracking() {}
 
@@ -400,13 +401,17 @@ point_tracking.Addpointsweb = async function (userInput, resultCallback) {
 
     .then(async (data) => {
       console.log(data, "site name");
+      const siteData = await model.clientsite.findOne({
+        _id: new mongoose.Types.ObjectId(data.site_id),
+      });
+      console.log(siteData, ">>>>>>>>>site data");
       const qrcode = await qrcodeWithBottomText(
         data._id.toString(),
+        siteData.company_name,
+        siteData.company_name,
         data.title,
-        data.title,
-        "",
         "Site Name : ",
-        ""
+        "Point Name : "
       );
       await model.pointtrackmap.findOneAndUpdate(
         { _id: new objectId(data._id) },

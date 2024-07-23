@@ -62,10 +62,10 @@ user.createusers = async function (userInput, resultCallback) {
       const userQrCode = await qrcodeWithBottomText(
         newUser.Empolyee_id,
         newUser.Name,
-        newUser.Empolyee_id,
         newUser.Name,
-        "EmpId : ",
-        "Name : "
+        newUser.Empolyee_id,
+        "Name : ",
+        "Employee Id : "
       );
       console.log(userQrCode, ">>>>>>>>>>>>> qr code");
       await model.usermanage.findOneAndUpdate(
