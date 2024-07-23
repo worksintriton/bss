@@ -7,50 +7,87 @@ const qrcodeGenerator = async (payload) => {
   return code;
 };
 
-const qrcodeWithBottomText = async (empId, name) => {
+const qrcodeWithBottomText = async (empId, name, line1, line2,label1,label2) => {
   // Configuration
-  const text = `EMPID:${empId}, Name:${name}`;
-  const qrData = `${empId}`;
-  const qrCodeSize = 400; // Size of the QR code
-  const fontSize = 20; // Font size of the text
-  const margin = -20; // Margin between QR code and text
+  const text1 = `${label1}${line1}`;
+  const text2 = `${label2}${line2}`;
+  const fontSize = 8; // Font size of the text
+  const margin = 10; // Margin between QR code and text
+  const lineSpacing = 5; // Spacing between the two lines of text
+  const backgroundColor = "white"; // Background color for the text
+  const canvasBackgroundColor = "white"; // Background color for the canvas
+  const textColor = "black"; // Text color
+  const qrCodeText = `${empId}, ${name}`; // Text to encode in the QR code
+  const qrCodeSize = 200; // Size of the QR code
 
-  // Calculate total height for canvas (QR code + margin + text)
-  const canvasHeight = qrCodeSize + margin + fontSize;
+  try {
+    // Generate the QR code
+    const qrDataUrl = await QRCode.toDataURL(qrCodeText, {
+      width: qrCodeSize,
+      margin: 3,
+    });
 
-  // Create a canvas
-  const canvas = createCanvas(qrCodeSize, canvasHeight);
-  const ctx = canvas.getContext("2d");
+    // Load the QR code image
+    const qrImage = await loadImage(qrDataUrl);
+    const canvasHeight = qrCodeSize + margin + fontSize * 2 + lineSpacing;
 
-  // Generate QR code
-  QRCode.toCanvas(
-    createCanvas(qrCodeSize, qrCodeSize),
-    qrData,
-    { width: qrCodeSize },
-    (error, qrCanvas) => {
-      if (error) {
-        console.error("Error generating QR code:", error);
-        return;
-      }
+    // Create a canvas
+    const canvas = createCanvas(qrCodeSize, canvasHeight);
+    const ctx = canvas.getContext("2d");
 
-      // Draw QR code on the main canvas
-      ctx.drawImage(qrCanvas, 0, 0, qrCodeSize, qrCodeSize);
+    // Set the background color for the canvas
+    ctx.fillStyle = canvasBackgroundColor;
+    ctx.fillRect(0, 0, qrCodeSize, canvasHeight);
 
-      // Set text properties
-      ctx.font = `${fontSize}px Arial`;
-      ctx.textAlign = "center";
-      ctx.fillStyle = "black";
+    // Draw the QR code onto the canvas
+    ctx.drawImage(qrImage, 0, 0, qrCodeSize, qrCodeSize);
 
-      // Add text below the QR code
-      ctx.fillText(text, qrCodeSize / 2, qrCodeSize + margin + fontSize / 2);
+    // Set text properties
+    ctx.font = `${fontSize}px Arial`;
+    ctx.textAlign = "center";
 
-      // Save the result to a file
-      const buffer = canvas.toBuffer("image/png");
-      // fs.writeFileSync("qr_code_with_text.png", buffer);
-      console.log("QR code with text has been generated.");
-      const dataUri = `data:image/png;base64,${buffer.toString("base64")}`;
-      return dataUri;
-    }
-  );
+    // Calculate text positions
+    const textY1 = qrCodeSize + margin + fontSize / 2;
+    const textY2 = textY1 + fontSize + lineSpacing;
+
+    // Calculate the width of the text
+    const textWidth1 = ctx.measureText(text1).width;
+    const textWidth2 = ctx.measureText(text2).width;
+
+    // Draw background rectangles for the text
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(
+      (qrCodeSize - textWidth1) / 2 - 2,
+      textY1 - fontSize,
+      textWidth1 + 4,
+      fontSize + 4
+    );
+    ctx.fillRect(
+      (qrCodeSize - textWidth2) / 2 - 2,
+      textY2 - fontSize,
+      textWidth2 + 4,
+      fontSize + 4
+    );
+
+    // Set fill style for the text again
+    ctx.fillStyle = textColor;
+
+    // Add first line of text below the QR code
+    ctx.fillText(text1, qrCodeSize / 2, textY1);
+
+    // Add second line of text below the first line
+    ctx.fillText(text2, qrCodeSize / 2, textY2);
+
+    // Convert buffer to base64
+    const buffer = canvas.toBuffer("image/jpeg");
+    const base64Image = buffer.toString("base64");
+    const dataUri = `data:image/png;base64,${base64Image}`;
+
+    // console.log("Base64 encoded image:", dataUri);
+
+    return dataUri;
+  } catch (err) {
+    console.error("Error:", err);
+  }
 };
 module.exports = { qrcodeGenerator, qrcodeWithBottomText };

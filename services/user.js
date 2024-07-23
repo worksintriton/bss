@@ -15,76 +15,74 @@ const { sendMailNotification } = require("../utils/mailservice");
 async function user() {}
 
 user.createusers = async function (userInput, resultCallback) {
-  await model.usermanage
-    .findOne({
+  try {
+    const existingUserByEmail = await model.usermanage.findOne({
       Email_id: userInput.Email_id,
-    })
-
-    .then(async (data) => {
-      if (data?.Email_id.length) {
-        var string = {
-          message: "This Email_id or already exits!",
-          status: "failed",
-          code: "400",
-        };
-        resultCallback(null, string);
-      } else if (!data?.length) {
-        const empNoExist = await model.usermanage.findOne({
-          Empolyee_id: userInput.Empolyee_id,
-        });
-        const empPHNoExist = await model.usermanage.findOne({
-          Phone_number: userInput.Phone_number,
-        });
-        if (empNoExist) {
-          const string = {
-            message: "This Employee Id is already exits!",
-            status: "failed",
-            code: "400",
-          };
-          resultCallback(null, string);
-        } else if (empPHNoExist) {
-          const string = {
-            message: "This Phone Number is already exits!",
-            status: "failed",
-            code: "400",
-          };
-          resultCallback(null, string);
-        } else {
-          console.log("2");
-
-          await model.usermanage
-            .create({
-              Name: userInput.Name,
-              Designation: userInput.Designation,
-              Level: userInput.Level,
-              Phone_number: userInput.Phone_number,
-              Email_id: userInput.Email_id,
-              Password: userInput.Password,
-              Add_by: userInput.Add_by,
-              Empolyee_id: userInput.Empolyee_id,
-            })
-
-            .then(async (data) => {
-              // const userQrCode = await qrcodeGenerator(data.Empolyee_id);
-              const userQrCode = await qrcodeWithBottomText(
-                data.Empolyee_id,
-                data.Name
-              );
-
-              await model.usermanage.findOneAndUpdate(
-                { _id: data._id },
-                { qrcode: userQrCode }
-              );
-              console.log("1");
-              resultCallback(null, data);
-            });
-        }
-      }
-    })
-    .catch((error) => {
-      resultCallback(error, null);
-      console.log("ERROR:", error);
     });
+    const existingUserByEmpId = await model.usermanage.findOne({
+      Empolyee_id: userInput.Empolyee_id,
+    });
+    const existingUserByPhoneNumber = await model.usermanage.findOne({
+      Phone_number: userInput.Phone_number,
+    });
+    console.log("existingUserByEmail", existingUserByEmail);
+    console.log("existingUserByEmpId", existingUserByEmpId);
+    console.log("existingUserByPhoneNumber", existingUserByPhoneNumber);
+
+    if (existingUserByEmail) {
+      return resultCallback(null, {
+        message: "This Email_id already exists!",
+        status: "failed",
+        code: "400",
+      });
+    } else if (existingUserByEmpId) {
+      return resultCallback(null, {
+        message: "This Employee Id already exists!",
+        status: "failed",
+        code: "400",
+      });
+    } else if (existingUserByPhoneNumber) {
+      return resultCallback(null, {
+        message: "This Phone Number already exists!",
+        status: "failed",
+        code: "400",
+      });
+    } else {
+      const newUser = await model.usermanage.create({
+        Name: userInput.Name,
+        Designation: userInput.Designation,
+        Level: userInput.Level,
+        Phone_number: userInput.Phone_number,
+        Email_id: userInput.Email_id,
+        Password: userInput.Password,
+        Add_by: userInput.Add_by,
+        Empolyee_id: userInput.Empolyee_id,
+      });
+
+      const userQrCode = await qrcodeWithBottomText(
+        newUser.Empolyee_id,
+        newUser.Name,
+        newUser.Empolyee_id,
+        newUser.Name,
+        "EmpId : ",
+        "Name : "
+      );
+      console.log(userQrCode, ">>>>>>>>>>>>> qr code");
+      await model.usermanage.findOneAndUpdate(
+        { _id: newUser._id },
+        { qrcode: userQrCode }
+      );
+
+      resultCallback(null, {
+        message: "User created successfully!",
+        status: "Success",
+        code: 200,
+      });
+    }
+  } catch (error) {
+    resultCallback(error, null);
+    console.log("ERROR:", error);
+  }
 };
 
 user.createConfignumbers = async function (userInput, resultCallback) {
@@ -1409,7 +1407,10 @@ user.sitelists = async function (userInput, query, resultCallback) {
       {
         $facet: {
           pagination: [{ $count: "totalCount" }],
-          data: [{ $skip: Number(skip) || 0 }, { $limit: Number(limit) || 10 }],
+          data: [
+            { $skip: Number(skip) || 0 },
+            { $limit: Number(limit) || 10000 },
+          ],
         },
       },
     ])

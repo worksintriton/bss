@@ -5,7 +5,7 @@ var _ = require("lodash"),
   async = require("async");
 const model = require("../model/index");
 const Schema = require("mongoose");
-const { qrcodeGenerator } = require("../utils/qrcode");
+const { qrcodeWithBottomText } = require("../utils/qrcode");
 const objectId = Schema.Types.ObjectId;
 function point_tracking() {}
 
@@ -260,7 +260,7 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
       {
         $match: userInput.site_id
           ? {
-              site_id: new objectId(userInput.siteId),
+              site_id: new objectId(userInput.site_id),
             }
           : {},
       },
@@ -337,6 +337,7 @@ point_tracking.PointTrackMapSpotlistmobile = async function (
             $dateToString: {
               format: "%d-%m-%Y ,%H:%M",
               date: "$createdAt",
+              timezone: "Asia/Kuala_Lumpur",
             },
           },
         },
@@ -398,7 +399,15 @@ point_tracking.Addpointsweb = async function (userInput, resultCallback) {
     })
 
     .then(async (data) => {
-      const qrcode = await qrcodeGenerator([data._id.toString()]);
+      console.log(data, "site name");
+      const qrcode = await qrcodeWithBottomText(
+        data._id.toString(),
+        data.title,
+        data.title,
+        "",
+        "Site Name : ",
+        ""
+      );
       await model.pointtrackmap.findOneAndUpdate(
         { _id: new objectId(data._id) },
         { qrcode: qrcode }
@@ -568,6 +577,7 @@ point_tracking.employee_fetchpointsmobile = async function (
 };
 
 point_tracking.createTrackPoint = async function (userInput, resultCallback) {
+  console.log("create point tracking success", userInput.Employee_id);
   await model.employeetrack
     .create({
       Employee_id: userInput.Employee_id,
